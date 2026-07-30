@@ -31,12 +31,38 @@ const APPLE_ISSUER = 'https://appleid.apple.com';
 const APPLE_JWKS_URL = 'https://appleid.apple.com/auth/keys';
 
 /**
- * Overridable so the verification logic can be exercised against a locally
- * generated key pair. Real Apple tokens cannot be obtained in a test, but the
- * checks above can and must be — especially the rejection cases.
+ * The issuer and key source are overridable ONLY behind an explicit flag.
+ *
+ * Tests need to point these at a local key pair — real Apple tokens cannot be
+ * obtained in a test, and the rejection cases are the ones that matter. But an
+ * override is also a complete bypass of this file's entire purpose: anyone who
+ * can set `APPLE_JWKS_URL` can serve their own signing key and mint a token
+ * for any account.
+ *
+ * Requiring `ALLOW_APPLE_TEST_ISSUER=1` means that cannot happen by accident —
+ * a stray variable copied from a test script into a deployment is ignored, and
+ * says so in the log, rather than silently disabling authentication.
  */
-const ISSUER = process.env.APPLE_ISSUER ?? APPLE_ISSUER;
-const JWKS_URL = process.env.APPLE_JWKS_URL ?? APPLE_JWKS_URL;
+const ALLOW_TEST_ISSUER = process.env.ALLOW_APPLE_TEST_ISSUER === '1';
+
+function overridden(name: string, fallback: string): string {
+  const value = process.env[name];
+  if (!value || value === fallback) return fallback;
+
+  if (!ALLOW_TEST_ISSUER) {
+    console.error(
+      `✖  ${name} is set but ALLOW_APPLE_TEST_ISSUER is not — IGNORING it and using Apple.\n` +
+        `   Overriding it in production would let anyone forge a sign-in.`,
+    );
+    return fallback;
+  }
+
+  console.warn(`⚠  ${name} overridden to ${value} — Apple sign-in is NOT verifying against Apple.`);
+  return value;
+}
+
+const ISSUER = overridden('APPLE_ISSUER', APPLE_ISSUER);
+const JWKS_URL = overridden('APPLE_JWKS_URL', APPLE_JWKS_URL);
 
 /**
  * The iOS bundle identifier. Apple sets `aud` to this, so it must match

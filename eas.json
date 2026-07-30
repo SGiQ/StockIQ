@@ -1,0 +1,60 @@
+{
+  "cli": {
+    "version": ">= 5.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "//": [
+        "The build to install on your own iPhone.",
+        "",
+        "developmentClient bundles the dev menu and lets the app load JS from",
+        "your machine, so you edit and reload without rebuilding. You only",
+        "rebuild when native code changes — adding a package with a native",
+        "module, or changing app.json's plugins or entitlements.",
+        "",
+        "distribution 'internal' means installed by link rather than through",
+        "TestFlight, which needs your device registered against an Apple",
+        "Developer account. See docs/deployment.md."
+      ],
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+      }
+    },
+    "preview": {
+      "//": "A release build, no dev menu — what the app actually feels like.",
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+      }
+    },
+    "production": {
+      "//": [
+        "EXPO_PUBLIC_ASK_PROXY_URL is deliberately absent until the Cloudflare",
+        "Worker is deployed. Empty means ASK falls back to bring-your-own-key",
+        "rather than pointing at a URL that does not answer.",
+        "",
+        "Only public endpoint URLs belong in these env blocks — they are inlined",
+        "into the bundle and readable by anyone with the app."
+      ],
+      "autoIncrement": true,
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

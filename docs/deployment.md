@@ -301,6 +301,103 @@ few. It is a cost guard, not a security control.
 
 ---
 
+## Testing on your iPhone
+
+### Expo Go — works now, costs nothing
+
+`expo-apple-authentication` is the **only** dependency Expo Go cannot load.
+Everything else — the player, SQLite, the keychain, sync against the live
+Railway service, pairing, and email sign-in — runs in Expo Go today.
+
+```bash
+npm start          # then scan the QR code with Expo Go
+```
+
+`.env` already points at the deployed sync service, so a second device can be
+paired and the merge watched happening for real. Do this before paying for
+anything: it exercises everything except one button.
+
+### Development build — needed only for Sign in with Apple
+
+**This costs money.** Installing a build on a physical iPhone needs a
+provisioning profile, which needs the **Apple Developer Program at $99/year**.
+There is no way around that for on-device installs; it is Apple's gate, not
+Expo's. A free Expo account covers the build itself.
+
+```bash
+npx eas-cli login                          # free Expo account
+npx eas-cli build:configure                # links the project, writes the project id
+npx eas-cli build --profile development --platform ios
+```
+
+EAS will ask for Apple credentials and register the device. When it finishes it
+prints a QR code that installs the build.
+
+Then run the JS from your machine against it:
+
+```bash
+npx expo start --dev-client
+```
+
+`eas.json` sets `EXPO_PUBLIC_SYNC_URL` for every profile, so builds reach the
+deployed service without a local `.env`.
+
+**You rebuild only when native code changes** — adding a package with a native
+module, or editing `app.json`'s plugins or entitlements. JS and content changes
+reload instantly, exactly like Expo Go.
+
+**The free alternative:** with Xcode installed, `npx expo run:ios --device`
+sideloads using a free Apple ID. The build expires after 7 days and has to be
+reinstalled, but it costs nothing. Xcode is a ~7 GB download.
+
+## Which variable goes where
+
+Putting a key in the wrong service is the easy mistake here, so:
+
+### Railway — `stockiq-sync`
+
+| Variable | Status | Notes |
+|---|---|---|
+| `DATABASE_URL` | **set** | A `${{Postgres.DATABASE_URL}}` reference, not a copied value |
+| `APPLE_BUNDLE_ID` | **set** | `com.stockiq.app`. Apple sign-in is refused without it |
+| `RESEND_API_KEY` | **you add** | Enables email sign-in |
+| `EMAIL_FROM` | **you add** | Must be at your verified domain |
+| `PORT` | automatic | Injected by Railway |
+| `APP_LINK_BASE` | optional | Deep-link base in the sign-in email. Defaults to `stockiq://sign-in` |
+| `PG_POOL_MAX` | optional | Defaults to 10 |
+| `EMAIL_TRANSPORT` | **do not set** | `console` prints codes to the log instead of sending |
+
+So: **two variables, `RESEND_API_KEY` and `EMAIL_FROM`.** Nothing else is
+needed, and everything else is already set.
+
+> **`ANTHROPIC_API_KEY` does not go on Railway.** It belongs to the Cloudflare
+> Worker, set with `wrangler secret put`. The sync service never calls Claude,
+> so a key here would sit unused in an extra place it could leak from.
+
+> **Never set `APPLE_ISSUER` or `APPLE_JWKS_URL` in production.** They exist so
+> tests can point verification at a local key pair, and setting them lets
+> anyone serve their own signing key and forge a sign-in for any account. The
+> server now ignores both unless `ALLOW_APPLE_TEST_ISSUER=1` is also set, and
+> logs loudly when it does — but do not set them.
+
+### Cloudflare — `stockiq-ask`
+
+| Variable | How |
+|---|---|
+| `ANTHROPIC_API_KEY` | `npx wrangler secret put ANTHROPIC_API_KEY` |
+| `RATE_LIMIT` (KV) | `npm run setup` |
+| `DAILY_LIMIT` | Already in `wrangler.toml`, defaults to 100 |
+
+### The app — `.env` / `eas.json`
+
+| Variable | Value |
+|---|---|
+| `EXPO_PUBLIC_SYNC_URL` | `https://stockiq-sync-production.up.railway.app` |
+| `EXPO_PUBLIC_ASK_PROXY_URL` | Empty until the Worker is deployed |
+
+Both are inlined into the bundle and readable by anyone with the app, so only
+public URLs belong there.
+
 ## 3. Point the app at both
 
 Put the two variables in `.env` (git-ignored) or your EAS build profile:

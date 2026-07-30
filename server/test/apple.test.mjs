@@ -41,6 +41,7 @@ const jwksServer = createServer((req, res) => {
 });
 await new Promise((r) => jwksServer.listen(8799, '127.0.0.1', r));
 
+process.env.ALLOW_APPLE_TEST_ISSUER = '1';
 process.env.APPLE_ISSUER = ISSUER;
 process.env.APPLE_JWKS_URL = `${ISSUER}/keys`;
 process.env.APPLE_BUNDLE_ID = BUNDLE_ID;
