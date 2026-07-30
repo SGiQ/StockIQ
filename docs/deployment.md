@@ -255,20 +255,38 @@ The proxy exists because **an API key cannot be kept secret inside a client
 app** — anyone can pull the bundle off a device and read it. This is the only
 ASK mode fit to ship publicly.
 
+**Not deployed.** Everything is prepared and the Worker builds (verified with
+`wrangler deploy --dry-run`: 4.59 KiB, bindings resolved), but it needs a
+Cloudflare login and your Anthropic key, and both are yours.
+
 ```bash
 cd workers/ask
 npm install
 
-# Cost guard. The Worker REFUSES to serve without this binding, because an
-# uncapped endpoint that spends money per call is a bill waiting to happen.
-npx wrangler kv namespace create RATE_LIMIT
-# paste the returned id into wrangler.toml
+# 1. Authorise. Opens a browser; only you can complete it.
+npx wrangler login
 
-# Write-only; never lands in the repo or the deployed source.
+# 2. Creates the KV namespace and writes its id into wrangler.toml.
+#    The id is opaque hex, and a wrong one fails at request time rather than
+#    at deploy time — the Worker starts, then refuses every question because
+#    the binding resolves to nothing. Hence a script rather than copy-paste.
+npm run setup
+
+# 3. Prompts for the key and sends it straight to Cloudflare. It never passes
+#    through the repo, this document, or anything I can see.
 npx wrangler secret put ANTHROPIC_API_KEY
 
-npx wrangler deploy
+# 4. Ship.
+npm run deploy
 ```
+
+The KV binding is a **cost guard**, not an optional extra: the Worker refuses
+to serve without it, because an uncapped endpoint that spends money on every
+call is a bill waiting to happen.
+
+Until step 3 is done the Worker deploys but answers `500 proxy is not
+configured` — fail-closed by design, so a half-finished deployment cannot
+quietly serve without its key.
 
 Then:
 
