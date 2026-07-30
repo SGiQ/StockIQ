@@ -1,0 +1,31 @@
+{
+  "id": "risk-and-position-sizing",
+  "title": "Risk and Position Sizing: Staying in the Game",
+  "author": "StockIQ",
+  "category": "risk",
+  "cover": { "kind": "glyph", "name": "shield", "bg": "blush" },
+  "blurb": "Returns get the attention, but survival is the constraint. Learn the arithmetic that decides how long you last.",
+  "order": 4,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "THE ARITHMETIC OF LOSS",
+      "lessonIds": ["why-losses-hurt-more", "drawdown-and-recovery", "risk-of-ruin"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "SIZING A POSITION",
+      "lessonIds": ["position-sizing", "stop-losses", "thinking-in-r"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "SPREADING THE RISK",
+      "lessonIds": ["diversification-and-correlation"]
+    }
+  ],
+  "totalXp": 140
+}

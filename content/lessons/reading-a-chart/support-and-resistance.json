@@ -1,0 +1,157 @@
+{
+  "id": "support-and-resistance",
+  "courseId": "reading-a-chart",
+  "title": "Support and Resistance",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Price keeps stopping in the same places.",
+      "body": "Pull up almost any chart and you will see it. Price falls to roughly the same number, turns, climbs to roughly the same number, turns again. That repetition is the most visible thing on a chart, and the most misread."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Two names for two habits.",
+      "body": "A level where price repeatedly stopped falling is called **support**. A level where it repeatedly stopped rising is called **resistance**. Same idea, opposite direction. Both are just prices where the falling, or the rising, ran out.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Turns near 100 and near 120",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 118, "h": 119, "l": 112, "c": 113 },
+            { "o": 113, "h": 114, "l": 105, "c": 106 },
+            { "o": 106, "h": 107, "l": 100.5, "c": 103 },
+            { "o": 103, "h": 109, "l": 102, "c": 108 },
+            { "o": 108, "h": 115, "l": 107, "c": 114 },
+            { "o": 114, "h": 119.5, "l": 113, "c": 115 },
+            { "o": 115, "h": 116, "l": 108, "c": 109 },
+            { "o": 109, "h": 110, "l": 101, "c": 102 },
+            { "o": 102, "h": 106, "l": 99.5, "c": 105 },
+            { "o": 105, "h": 112, "l": 104, "c": 111 },
+            { "o": 111, "h": 118, "l": 110, "c": 117 },
+            { "o": 117, "h": 120.5, "l": 115, "c": 116 }
+          ],
+          "levels": [
+            { "value": 100, "label": "Support ~100" },
+            { "value": 120, "label": "Resistance ~120" }
+          ]
+        }
+      },
+      "caption": "The three turning lows are 100.50, 101 and 99.50. The two turning highs are 119.50 and 120.50. Near the same numbers every time, never at exactly the same price."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "refs": ["lesson:market-foundations/what-moves-a-price"],
+      "headline": "Nothing is holding the price up.",
+      "body": "There is no floor under 100. There is memory. Buyers who bought near 100 last time remember it. Sellers who wish they had sold at 120 remember that. Enough of them act the same way again, and the level appears to hold."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Support sits at 100. Price dips to 99.50 during the day, then closes back at 105. Did support break?",
+      "options": [
+        { "id": "broke", "label": "Yes, it traded below 100", "correct": false },
+        { "id": "zone", "label": "Not clearly — 100 is a zone", "correct": true }
+      ],
+      "explanation": "Levels are drawn from messy highs and lows, so treat them as bands a few percent wide. A wick through **100** that closes back above it is noise, not a break."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "A level is a record of decisions already made. It marks where enough people acted before. It does not tell you what happens next.",
+      "stickers": [
+        {
+          "label": "Where buyers showed up",
+          "art": { "kind": "glyph", "name": "people", "bg": "mint" },
+          "anchor": { "x": 0.32, "y": 0.18 },
+          "rotation": -5
+        },
+        {
+          "label": "Where sellers showed up",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.5 },
+          "rotation": 6
+        },
+        {
+          "label": "Not what comes next",
+          "art": { "kind": "glyph", "name": "cross", "bg": "ink" },
+          "anchor": { "x": 0.36, "y": 0.82 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Levels break, and they break often.",
+      "body": "Every trend that ever ran had to break a resistance to get going. A level that held three times can fail on the fourth. Nothing in the chart promises otherwise. The memory that built the level fades as those holders sell out.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "butter" }
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "The same level, a new job",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 112, "h": 116, "l": 111, "c": 115 },
+            { "o": 115, "h": 119, "l": 114, "c": 118 },
+            { "o": 118, "h": 120.5, "l": 117, "c": 119 },
+            { "o": 119, "h": 126, "l": 118.5, "c": 125 },
+            { "o": 125, "h": 129, "l": 124, "c": 128 },
+            { "o": 128, "h": 129, "l": 123, "c": 124 },
+            { "o": 124, "h": 125, "l": 119.5, "c": 121 },
+            { "o": 121, "h": 124, "l": 120, "c": 123 },
+            { "o": 123, "h": 127, "l": 122, "c": 126 },
+            { "o": 126, "h": 130, "l": 125, "c": 129 }
+          ],
+          "levels": [{ "value": 120, "label": "Old resistance 120" }]
+        }
+      },
+      "caption": "Price breaks through 120, comes back to it, and holds — a low of 119.50, then a close at 123. The level that stopped rallies now stops falls."
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "When price breaks above a resistance level and later falls back to it without cutting through, that old level is often described as becoming [[1]].",
+      "wordBank": ["support", "a target", "volume"],
+      "answer": "support",
+      "explanation": "The story is that buyers who missed the move now treat 120 as cheap. It happens often enough to have a name, and fails often enough that the name is not a promise."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "It works because people watch it.",
+      "body": "A level matters to the degree that enough participants are looking at the same number. Round numbers and obvious old highs get watched most. That makes the effect partly self-fulfilling, and it means a level nobody watches does very little."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "Support and resistance are crowd memory drawn on a chart: useful, approximate, and breakable.",
+      "bullets": [
+        "Support is where falling repeatedly stopped; resistance is where rising stopped.",
+        "Draw them as zones a few percent wide, never as exact lines.",
+        "They hold only while enough people still act on them, and they break."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "anchor", "bg": "neon" },
+      "insight": "A price level is not a wall. It is a place where a lot of people once made up their minds, and some of them still remember.",
+      "attribution": { "source": "Day 4", "detail": "Reading a Chart" }
+    }
+  ]
+}

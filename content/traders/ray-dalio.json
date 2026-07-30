@@ -1,0 +1,73 @@
+{
+  "id": "ray-dalio",
+  "name": "Ray Dalio",
+  "era": "1949–present",
+  "portrait": { "kind": "glyph", "name": "scale", "bg": "sky" },
+  "oneLiner": "Built Bridgewater around balancing risk rather than forecasting markets.",
+  "bio": "Ray Dalio founded **Bridgewater Associates** in 1975, working out of a two-bedroom apartment in New York, and it grew into one of the largest hedge fund firms in the world. Bridgewater's own published history dates the firm to that year, the actively traded Pure Alpha strategy to 1991, and the All Weather allocation strategy to 1996.\n\nThe house method is systematic macro. Bridgewater writes down how it believes economies and markets work, converts those views into explicit rules, and lets the rules size positions across many markets at once rather than concentrating on a few calls. Dalio has published a great deal of that thinking himself, in **Principles: Life and Work** (2017) and **Principles for Navigating Big Debt Crises** (2018), the second of which reprints the firm's own client notes from 2007 and 2008 alongside the framework behind them.\n\nIn October 2022 he stepped down as one of Bridgewater's co-chief investment officers and transferred his voting rights to the firm's board, taking the title of founder and CIO mentor.",
+  "philosophy": [
+    "**Diversification is the first decision, not the last.** Dalio has argued in public writing that diversifying well is the single most valuable thing an investor can do, because combining return streams that do not move together improves return relative to risk more than any other change available. The corollary is that the number of genuinely independent bets matters more than the quality of any one of them.",
+    "**Balance risk, not dollars.** The All Weather strategy, launched in 1996, sizes holdings by how much risk each contributes rather than by how much money sits in each. Bridgewater's published account describes the idea as holding several portfolios of equal risk, each built to do well in a different combination of rising or falling growth and rising or falling inflation, so that no single economic environment decides the whole outcome.",
+    "**Assume the forecast is uncertain.** Dalio repeats an old market saying about what happens to people who live by the crystal ball. The working version is that a portfolio should be constructed to survive being wrong, rather than to pay off only if a particular call turns out right.",
+    "**Write the rule down, then test it.** His stated method is to turn each decision into an explicit written principle, check it against long historical records, and where possible encode it so it can be examined rather than re-argued each time. That is the through-line of **Principles: Life and Work**, and it is the reason Bridgewater's process is systematic rather than discretionary.",
+    "**Study long history, not recent history.** **Principles for Navigating Big Debt Crises** works through debt cycles across many countries and many decades. The argument is that the events that matter most are rare enough that a short sample of recent data will simply not contain them.",
+    "**Where this sits among the strategies in this library.** Bridgewater's trading is systematic global macro, which is not one of the named techniques here. The closest fits are trend rules, which take positions in the direction of a persistent move across many markets at once, and reversion rules, which lean against prices that have travelled far from the firm's own estimate of fair value. Neither label describes the whole approach, and the distinctive part is the diversification across many such rules rather than any single one of them."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Bridgewater Associates founded",
+      "value": "1975",
+      "note": "Started from a two-bedroom apartment in New York.",
+      "source": "Bridgewater Associates firm publication, The All Weather Story (bridgewater.com)"
+    },
+    {
+      "metric": "Pure Alpha strategy launched",
+      "value": "1991",
+      "note": "Bridgewater's actively traded macro strategy.",
+      "source": "Bridgewater Associates firm publication, The All Weather Story (bridgewater.com)"
+    },
+    {
+      "metric": "All Weather strategy launched",
+      "value": "1996",
+      "note": "The allocation approach that popularised the term risk parity. Dalio first built the concept for a family trust.",
+      "source": "Bridgewater Associates firm publication, The All Weather Story (bridgewater.com)"
+    },
+    {
+      "metric": "Role at Bridgewater",
+      "value": "Stepped down as co-chief investment officer in October 2022",
+      "note": "He transferred his voting rights to the firm's board and took the title of founder and CIO mentor.",
+      "source": "Bloomberg News, Ray Dalio Gives Up Control of Bridgewater in Final Succession Step, 4 October 2022"
+    }
+  ],
+  "signatureStrategies": ["trend-following", "mean-reversion"],
+  "famousTrades": [
+    {
+      "title": "The depression call that did not arrive",
+      "year": "1982",
+      "story": "By his own account, Dalio became convinced in the early 1980s that the debt problems of developing countries would drag the United States into a depression, and he said so publicly and repeatedly. The market went the other way and began a long bull run.\n\nThe damage was severe. He has described having to let his staff go and borrowing four thousand dollars from his father to cover family bills. He treats the episode as the point where the question changed from whether he was right to how he could possibly know whether he was right, and dates the written, testable rules that Bridgewater runs on to that shift.",
+      "source": "Ray Dalio, Principles: Life and Work (Simon and Schuster, 2017), and his 2017 TED talk How to Build a Company Where the Best Ideas Win"
+    },
+    {
+      "title": "Reading the debt numbers before 2008",
+      "year": "2007",
+      "story": "Bridgewater's research through 2007 concluded that debt service obligations across the financial system had grown faster than the incomes available to service them, and the firm set that reasoning out in its client note, **Daily Observations**.\n\nDalio later published those notes with their original dates and wording alongside the general framework he had drawn from studying past debt crises, so the reasoning can be checked against what was written at the time rather than reconstructed afterwards. In his telling the exercise was mechanical rather than intuitive: work out what the debt schedule required, then check whether the cash flows to meet it existed.",
+      "source": "Ray Dalio, Principles for Navigating Big Debt Crises (Bridgewater Associates, 2018), which reprints Bridgewater's Daily Observations from 2007 and 2008"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "Diversifying well is the most important thing you need to do in order to invest well.",
+      "context": "The title and central claim of his 2019 essay on diversification, published under his own byline on LinkedIn."
+    },
+    {
+      "text": "He who lives by the crystal ball is destined to eat ground glass.",
+      "context": "A market saying Dalio has said he picked up as a teenager and returns to when discussing the limits of forecasting."
+    },
+    {
+      "text": "Pain plus reflection equals progress.",
+      "context": "A recurring formula in Principles: Life and Work, 2017."
+    }
+  ],
+  "recommendedReading": ["market-wizards"],
+  "relatedTraders": ["paul-tudor-jones", "stanley-druckenmiller"]
+}

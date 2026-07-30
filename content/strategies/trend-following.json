@@ -1,0 +1,63 @@
+{
+  "id": "trend-following",
+  "name": "Trend Following",
+  "family": "trend",
+  "oneLiner": "Trading the direction already in motion instead of forecasting the next one.",
+  "thesis": "Trend following starts from a refusal rather than a prediction. Its practitioners have generally said they do not know where a market is going, and have built rules that respond to what a price is already doing instead. A market moving up is treated as a reason to be long, a market moving down as a reason to be out or short, and the analyst's opinion about whether either move is deserved is treated as irrelevant.\n\nThe structure that follows is asymmetric. Losses are cut quickly at a level fixed before entry, while winning positions are left alone for as long as the trend persists — the old formulation, associated with Jesse Livermore and repeated by generations of traders after him, is to **cut losers fast and let winners run**. Most individual trades in such a system lose money. The whole thing rests on a small number of large moves being big enough to cover a long series of small losses, which means the approach can look broken for a considerable time before it does not.\n\nIts documented weakness is the range-bound market. When price oscillates without committing, a trend system is repeatedly stopped out in both directions — **whipsaw** — and trend followers have publicly reported drawdowns lasting months or years. Being right about direction is not required; sitting through those stretches is. Nothing here says the approach works, is profitable, or is appropriate for any reader.",
+  "timeframe": "position",
+  "riskLevel": 4,
+  "entryRules": [
+    "Trend followers typically wait until a price has already established direction — a move above a prior range high, or a shorter moving average crossing above a longer one — and treat that move itself as the signal rather than any view about the underlying business.",
+    "Many describe requiring the move to clear a level that mattered before, such as a prior resistance area, on the reasoning that a level nobody was watching says nothing when it breaks.",
+    "Entries are commonly staged rather than taken all at once. Livermore described adding to a position only after it had already moved in his favour, and never averaging into one moving against him.",
+    "The stop is generally chosen before the position exists, because in this framework the distance from entry to stop is what determines how large the position is allowed to be.",
+    "Practitioners have repeatedly said no forecast is required: the same rules are applied to whatever markets are moving, without an opinion about why they are moving."
+  ],
+  "exitRules": [
+    "The primary exit described across this school is a fixed adverse level set before entry and honoured mechanically. Traders in the Market Wizards interviews return to this point more than any other.",
+    "Winning positions are typically exited by a trailing rule — a stop that follows the price up but never moves down — rather than at a profit target, since a target would cap the rare large move the whole approach depends on.",
+    "A trend structure breaking down, such as price closing back below the level it broke out from, is treated as the trend ending and is acted on whether the position is up or down.",
+    "Trend followers commonly describe scaling out in stages during an extended move, keeping part of the position while the trend persists.",
+    "Livermore and others wrote about exiting on a change in behaviour rather than on a fixed number of points, though every account of him also records the periods when he did not follow his own rules."
+  ],
+  "riskManagement": [
+    "**Whipsaw** in a range-bound market is the defining failure mode. Price crosses the signal level repeatedly without following through, and the system takes loss after loss on both sides while the market ends where it started.",
+    "The win rate is low by design — frequently well under half. This is not a defect of a particular implementation; it is what the asymmetry between small losses and large gains requires, and it makes the approach psychologically difficult to keep applying.",
+    "Extended drawdowns are documented in the public records of trend-following funds, sometimes lasting years. Nothing guarantees a trend arrives to end one.",
+    "Position size is usually derived from the distance to the stop rather than chosen first, so that a wider stop means a smaller position and every loss is roughly the same size.",
+    "Gaps and overnight moves mean a stop is an instruction, not a guarantee. Livermore's career, which ended in bankruptcy more than once, is a documented illustration of what leverage does to this structure when it fails.",
+    "The **riskLevel** here is a rough comparative signal against the other strategies in this app. It is not a measurement of risk and implies nothing about suitability for any reader."
+  ],
+  "practicedBy": ["paul-tudor-jones", "jesse-livermore", "stanley-druckenmiller"],
+  "furtherReading": ["reminiscences-of-a-stock-operator", "market-wizards"],
+  "prerequisiteLessons": [
+    "reading-a-chart/trend-and-structure",
+    "reading-a-chart/moving-averages",
+    "risk-and-position-sizing/stop-losses"
+  ],
+  "illustrativeChart": {
+    "type": "candles",
+    "candles": [
+      { "o": 50.1, "h": 51.4, "l": 48.9, "c": 49.5 },
+      { "o": 49.5, "h": 51.8, "l": 49.1, "c": 51.2 },
+      { "o": 51.2, "h": 51.9, "l": 49.7, "c": 50.0 },
+      { "o": 50.0, "h": 51.3, "l": 48.6, "c": 48.9 },
+      { "o": 48.9, "h": 51.7, "l": 48.7, "c": 51.4 },
+      { "o": 51.4, "h": 52.0, "l": 50.3, "c": 50.5 },
+      { "o": 50.5, "h": 51.1, "l": 48.8, "c": 49.3 },
+      { "o": 49.3, "h": 51.6, "l": 49.0, "c": 51.5 },
+      { "o": 51.5, "h": 54.3, "l": 51.3, "c": 53.9 },
+      { "o": 53.9, "h": 55.7, "l": 53.2, "c": 55.1 },
+      { "o": 55.1, "h": 56.4, "l": 54.0, "c": 54.7 },
+      { "o": 54.7, "h": 58.3, "l": 54.4, "c": 57.9 }
+    ],
+    "annotations": [
+      { "at": 8, "label": "Breakout above range", "emphasis": true },
+      { "at": 3, "label": "Range, no signal" }
+    ],
+    "levels": [
+      { "value": 52.0, "label": "Prior range high" },
+      { "value": 48.6, "label": "Prior range low" }
+    ]
+  }
+}

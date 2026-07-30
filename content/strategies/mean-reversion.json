@@ -1,0 +1,55 @@
+{
+  "id": "mean-reversion",
+  "name": "Mean Reversion",
+  "family": "mean-reversion",
+  "oneLiner": "Prices stretched far from a reference level have often snapped back — sometimes.",
+  "thesis": "Mean reversion is the mirror image of momentum. It rests on the observation that over short horizons, prices which move a long way from some reference level — a moving average, a longer-run valuation, the spread against a related asset — have historically had a tendency to move back toward it. The behavioural story is that forced sellers, panic, and thin liquidity push price further than the underlying news warrants, and that the overshoot is later paid back.\n\nThe fatal flaw is stated plainly by everyone who has traded it honestly: a stretched price and a genuine repricing look identical while they are happening. Nothing in the chart distinguishes an overshoot that will snap back from the first leg of a permanent revaluation — an accounting fraud coming to light, a product going obsolete, a balance sheet that cannot be refinanced. In that case **cheap keeps getting cheaper**, and the very rule that says a bigger deviation is a better opportunity says to keep adding on the way down. The payoff shape is the opposite of momentum's: many small wins punctuated by rare, very large losses, which makes a track record look excellent right up until it does not."
+  ,
+  "timeframe": "swing",
+  "riskLevel": 3,
+  "entryRules": [
+    "Practitioners describe first choosing an explicit reference level and stating it in advance — a moving average, a longer-run valuation multiple, or the historical spread between two related instruments. Without a defined reference, there is no measurable deviation and the approach collapses into a hunch.",
+    "The deviation is then usually measured rather than eyeballed, most often in standard deviations or in a bounded oscillator, so that today's stretch can be compared against the instrument's own history rather than against how dramatic the chart looks.",
+    "Most published descriptions add a context filter before acting on the deviation: many traders describe declining to fade a move at all when the longer-term trend is falling, on the grounds that the strongest downside deviations cluster inside genuine repricings.",
+    "A common discipline is waiting for evidence that the move has actually stalled — a failure to make a further low, or a close back inside a prior range — instead of acting at the moment the deviation reaches a threshold, precisely because the deviation can widen indefinitely."
+  ],
+  "exitRules": [
+    "The natural exit is the reference level itself. Traders describing this approach usually close as price returns toward the mean rather than holding for a full trend, since the thesis says nothing about what happens once the gap has closed.",
+    "A time stop is unusually common here. If the snapback has not occurred within the window the thesis implies — a handful of days or weeks — many practitioners describe leaving regardless of price, treating elapsed time as evidence the premise was wrong.",
+    "Because the deviation is defined against a level, a decisive move further away is itself the disconfirming signal, and most descriptions treat it as an exit rather than as a reason to add.",
+    "Where the trade is a spread between two instruments, the exit is usually framed on the spread rather than either leg, since either leg alone can move a long way while the relationship behaves exactly as expected."
+  ],
+  "riskManagement": [
+    "The dominant failure mode is catching a falling knife: entering because a decline looks extreme and discovering it was the start of a repricing that never returns. Averaging down amplifies this directly — the position grows fastest exactly when the premise is most likely to be wrong.",
+    "A predefined invalidation level matters more here than almost anywhere else, because the strategy's own logic argues against ever cutting. Someone who fades a decline without deciding in advance what price would prove them wrong has no exit but capitulation.",
+    "The return distribution is deeply asymmetric — frequent small gains and infrequent very large losses — so win rate is close to meaningless as a measure of whether the approach is working. Historical results dominated by many small wins can hide a single unrealised loss large enough to erase all of them.",
+    "Leverage interacts badly with this shape: a strategy that survives a deviation widening to three standard deviations unlevered can be closed out at four by a margin call, which converts a temporary drawdown into a permanent one.",
+    "riskLevel here is a rough comparative marker against the other strategies in this library. A lower number does not mean smaller losses — it reflects that positions are typically shorter-held and smaller, not that the tail is benign."
+  ],
+  "practicedBy": ["paul-tudor-jones", "ray-dalio"],
+  "furtherReading": ["trading-in-the-zone", "market-wizards"],
+  "prerequisiteLessons": [
+    "reading-a-chart/support-and-resistance",
+    "reading-a-chart/momentum-indicators"
+  ],
+  "illustrativeChart": {
+    "type": "candles",
+    "candles": [
+      { "o": 104, "h": 106, "l": 103, "c": 105 },
+      { "o": 105, "h": 106, "l": 101, "c": 102 },
+      { "o": 102, "h": 103, "l": 98, "c": 99 },
+      { "o": 99, "h": 100, "l": 94, "c": 95 },
+      { "o": 95, "h": 96, "l": 89, "c": 90 },
+      { "o": 90, "h": 92, "l": 86, "c": 88 },
+      { "o": 88, "h": 94, "l": 87, "c": 93 },
+      { "o": 93, "h": 97, "l": 92, "c": 96 },
+      { "o": 96, "h": 98, "l": 92, "c": 93 },
+      { "o": 93, "h": 94, "l": 84, "c": 85 }
+    ],
+    "levels": [{ "value": 100, "label": "Reference average" }],
+    "annotations": [
+      { "at": 5, "label": "Stretched below" },
+      { "at": 9, "label": "Bounce fails", "emphasis": true }
+    ]
+  }
+}

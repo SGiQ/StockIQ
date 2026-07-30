@@ -1,0 +1,139 @@
+{
+  "id": "position-sizing",
+  "courseId": "risk-and-position-sizing",
+  "title": "Sizing a Position",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": [
+    "strategy:covered-call-wheel"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Two people, one trade, two outcomes.",
+      "body": "Same stock, same entry, same exit. One puts 2% of the account at risk, the other puts 40%. The idea was identical. Only the size was different, and only one of them still has an account to trade with.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "blush" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Size is a loss decision.",
+      "body": "Most people size a position by how much they want to make. The question that actually sets the number is the opposite one: how much are you prepared to lose if this goes wrong? Answer that first and the share count falls out of it.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "ink" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Three numbers, one formula.",
+      "body": "Pick a maximum loss per trade as a fraction of the account. That is your risk budget, in dollars. Divide it by the distance from your entry price to your exit price. **Shares = (account x risk fraction) / (entry - exit).**",
+      "art": { "kind": "glyph", "name": "percent", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Run it once with round numbers.",
+      "body": "A 10,000 account. Cap the loss on one trade at 1%, so 100 is the risk budget. Entry at 50, exit at 45, so each share can lose 5. 100 divided by 5 is **20 shares**. That is 1,000 of stock — a tenth of the account.",
+      "art": { "kind": "glyph", "name": "target", "bg": "mint" }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Same account, same 100 risk budget, same entry at 50. You move the exit down from 45 to 40. What happens to the share count?",
+      "options": [
+        { "id": "half", "label": "It halves, to 10 shares", "correct": true },
+        { "id": "double", "label": "It doubles, to 40 shares", "correct": false }
+      ],
+      "explanation": "Per-share risk doubled from 5 to 10, so the size has to halve: 100 divided by 10 is **10 shares**. A wider exit does not buy you room. It buys you fewer shares."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "Wider exit, smaller position",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [50, 20, 10, 5],
+          "labels": ["Exit 48", "Exit 45", "Exit 40", "Exit 30"],
+          "highlightIndex": 1,
+          "yLabel": "Shares"
+        }
+      },
+      "caption": "Entry stays at 50 and the risk budget stays at 100. As the exit moves further away, per-share risk grows and the position collapses. Every bar risks the same 100."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Your risk budget in dollars, divided by the [[1]] risk, gives you the number of shares.",
+      "wordBank": ["per-share", "total", "percent"],
+      "answer": "per-share",
+      "explanation": "Dollars at risk, divided by dollars at risk per share, equals shares. Notice what the formula never asks about: the price you hope to sell at."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The fraction is a dial, not a law.",
+      "body": "Roughly one to two percent per trade is what most risk-management texts describe. It is a convention, and it is yours to set — nobody else can set it for you. Halve the fraction and every position halves with it. The arithmetic is fixed. The input is personal.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" }
+    },
+    {
+      "id": "c9",
+      "type": "diagram",
+      "title": "Turning the dial",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [10, 20, 40, 60],
+          "labels": ["0.5%", "1%", "2%", "3%"],
+          "highlightIndex": 1,
+          "yLabel": "Shares"
+        }
+      },
+      "caption": "Same 10,000 account, entry at 50, exit at 45. Only the risk fraction moves. Shares track it in a straight line: double the fraction, double the position."
+    },
+    {
+      "id": "c10",
+      "type": "sticker_reveal",
+      "body": "Only three inputs move the share count. Change one and the size changes with it. Nothing else about the trade enters the arithmetic.",
+      "stickers": [
+        {
+          "label": "Account size",
+          "art": { "kind": "glyph", "name": "bank", "bg": "sky" },
+          "anchor": { "x": 0.32, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Risk fraction",
+          "art": { "kind": "glyph", "name": "percent", "bg": "butter" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Distance to the exit",
+          "art": { "kind": "glyph", "name": "ladder", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "Position size is arithmetic, not ambition. Decide the loss you can carry, then let the share count follow.",
+      "bullets": [
+        "Shares = (account x risk fraction) / (entry - exit).",
+        "A wider exit always means fewer shares, never more.",
+        "The risk fraction is a dial you set yourself, not a rule handed to you."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "shield", "bg": "neon" },
+      "insight": "Size a position by what it can cost you, never by what you hope it pays. The arithmetic only runs in one direction.",
+      "attribution": { "source": "Unit 2", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}

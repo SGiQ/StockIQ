@@ -1,0 +1,145 @@
+{
+  "id": "momentum-indicators",
+  "courseId": "reading-a-chart",
+  "title": "Momentum Indicators",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": [
+    "strategy:momentum-investing",
+    "strategy:mean-reversion"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Your indicator knows nothing the price did not tell it.",
+      "body": "Add RSI to a chart and a new line appears under the price. It looks like extra information. It is not. It is the same prices, rearranged into arithmetic. Every indicator you will ever add is downstream of the one series you already had."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "RSI compares average gains to average losses.",
+      "body": "Over a lookback — 14 periods is the default — RSI averages the up moves and the down moves, then expresses the up share on a **0 to 100** scale. All gains and no losses reads 100. All losses reads 0.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Eight weeks above 70",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [46, 54, 63, 70, 75, 78, 76, 82, 79, 75, 72],
+          "shadeFrom": 3,
+          "shadeLabel": "Above 70",
+          "markers": [
+            { "at": 3, "label": "First 70 print" },
+            { "at": 7, "label": "Peak 82", "emphasis": true }
+          ],
+          "xLabel": "Weeks",
+          "yLabel": "RSI"
+        }
+      },
+      "caption": "RSI crossed 70 in week 4 and stayed at or above it for eight straight weekly readings, peaking at 82. Overbought was not a countdown. It described a trend that was still running."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock's RSI prints 74. What does that tell you about where the price goes next?",
+      "options": [
+        { "id": "due", "label": "It is due to fall", "correct": false },
+        { "id": "nothing", "label": "Nothing, on its own", "correct": true }
+      ],
+      "explanation": "RSI above 70 is a statement about the recent past: gains have outweighed losses. In a strong trend it can hold there for weeks. **Overbought is not a countdown timer.**"
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "In that trend, every 70 print was early.",
+      "body": "Look again at that stretch. A trader following a sell-at-70 rule exited on week 4 while RSI held above the line for seven more readings. {{strategy:momentum-investing|Momentum}} systems exist because that persistence is common, not rare."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "An RSI of 78 is three facts about the past, stacked. None of them is a fact about tomorrow.",
+      "stickers": [
+        {
+          "label": "Recent gains beat losses",
+          "art": { "kind": "glyph", "name": "chart-up", "bg": "butter" },
+          "anchor": { "x": 0.32, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "Only the lookback window",
+          "art": { "kind": "glyph", "name": "clock", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "No claim about tomorrow",
+          "art": { "kind": "glyph", "name": "cross", "bg": "blush" },
+          "anchor": { "x": 0.36, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "MACD is the gap between two moving averages.",
+      "body": "Subtract a slower moving average from a faster one and you get MACD. That is the whole calculation. Averages are backward-looking by construction, so MACD inherits their lag: it confirms a turn that already happened rather than announcing one.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "butter" }
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "The average turns one week late",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 100, 100, 106, 112, 118, 124, 118, 109, 100, 94, 91],
+          "compareSeries": [100, 100, 100, 102, 106, 112, 118, 120, 117, 109, 101, 95],
+          "compareLabel": "3-week average",
+          "markers": [{ "at": 6, "label": "Price peaks 124", "emphasis": true }],
+          "xLabel": "Weeks",
+          "yLabel": "Price"
+        }
+      },
+      "caption": "Price peaked in week 7 at 124. Its three-week average, dashed, peaked in week 8 at 120 — a week later. Every indicator built from averages inherits that delay."
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "MACD is nothing more than the distance between two [[1]], which is why it can only confirm a turn after the turn has happened.",
+      "wordBank": ["moving averages", "order books", "earnings reports"],
+      "answer": "moving averages",
+      "explanation": "Two averages, one subtraction. Nothing in that arithmetic can see forward, because nothing in the input does."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "An indicator is a lens, not an oracle.",
+      "body": "A lens can make one thing easier to see and everything else harder. RSI makes the balance of recent gains legible. MACD makes a change of slope legible. Neither adds a single fact to the price series they were computed from.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "mint" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "RSI and MACD are arithmetic on price. They rearrange what you had; they do not add to it.",
+      "bullets": [
+        "RSI runs 0 to 100 and compares average gains with average losses.",
+        "Above 70 means recent strength, not a due date for a fall.",
+        "MACD is two moving averages subtracted, so it inherits their lag."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "eye", "bg": "neon" },
+      "insight": "An indicator cannot know more than the price it was computed from. It only makes one part of that price easier to see.",
+      "attribution": { "source": "Day 7", "detail": "Reading a Chart" }
+    }
+  ]
+}

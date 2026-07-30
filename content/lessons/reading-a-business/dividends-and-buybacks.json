@@ -1,0 +1,143 @@
+{
+  "id": "dividends-and-buybacks",
+  "courseId": "reading-a-business",
+  "title": "Getting Paid: Dividends and Buybacks",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Earnings only count when they reach you.",
+      "body": "A profitable company has two ways to hand cash to its owners. It can pay a **dividend** straight into your account. Or it can buy back its own shares, leaving each remaining share owning a larger piece of the business."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A dividend is cash, per share.",
+      "body": "A tool maker earns **200 million dollars** and has 100 million shares, so each share earned 2 dollars. It pays 1.20 of that out as a dividend. At a 40 dollar share price, that is a **3 percent** yield: 1.20 divided by 40.",
+      "art": {
+        "kind": "glyph",
+        "name": "coin",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "The payout ratio shows the strain.",
+      "body": "That 1.20 dividend comes out of 2.00 of earnings per share. The **payout ratio** is 60 percent: 60 cents of every dollar earned goes out, 40 cents stays to fund growth. Near 100 percent, there is nothing left to absorb a bad year.",
+      "art": {
+        "kind": "glyph",
+        "name": "pie",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "fill_blank",
+      "body": "A share pays 1.20 a year and trades at 40 dollars. The 3 percent dividend [[1]] is simply the payment divided by the price.",
+      "wordBank": [
+        "yield",
+        "payout",
+        "margin"
+      ],
+      "answer": "yield",
+      "explanation": "Two moving parts. The board sets the dividend, usually once or twice a year. The price moves every day. So the yield can change even when the payment never does."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A buyback cuts the pie into fewer slices.",
+      "body": "A second tool maker earns the same 200 million but pays no dividend. It spends the cash retiring its own shares instead. Split 200 million across 100 million shares and each earns 2.00. Across 80 million shares, each earns **2.50**.",
+      "art": {
+        "kind": "glyph",
+        "name": "exchange",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "The same profit, fewer shares",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [
+            2,
+            2.11,
+            2.22,
+            2.35,
+            2.5
+          ],
+          "labels": [
+            "Year 1",
+            "Year 2",
+            "Year 3",
+            "Year 4",
+            "Year 5"
+          ],
+          "highlightIndex": 4,
+          "yLabel": "Earnings per share ($)"
+        }
+      },
+      "caption": "Earnings never moved: 200 million every year. Only the share count fell, from 100 million down to 80 million. The same profit, split fewer ways."
+    },
+    {
+      "id": "c7",
+      "type": "binary_choice",
+      "prompt": "That buyback lifted earnings per share by a quarter. Does a buyback always make each remaining share more valuable?",
+      "options": [
+        {
+          "id": "always",
+          "label": "Yes, fewer shares always means more value",
+          "correct": false
+        },
+        {
+          "id": "depends",
+          "label": "Only if the shares were bought below worth",
+          "correct": true
+        }
+      ],
+      "explanation": "The company paid real cash for those shares. Buy back a share worth 60 dollars for 40 and the owners who stayed are better off. Pay 80 for that same share and the company traded valuable cash for something worth less."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "A big yield can be a warning.",
+      "body": "Yield is a fraction: dividend over price. If earnings sag and the price falls from 40 to 15, that unchanged 1.20 now reads as an **8 percent** yield. The number did not improve. The denominator collapsed, and the market may be pricing in a cut.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Dividends and buybacks are the same act in two forms: cash leaving the company and reaching the people who own it.",
+      "bullets": [
+        "Yield is the annual dividend divided by the share price.",
+        "The payout ratio shows how much of earnings the dividend consumes.",
+        "A buyback leaves the same earnings split across fewer shares.",
+        "A yield that spikes usually means the price fell, not that the dividend grew."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "handshake",
+        "bg": "neon"
+      },
+      "insight": "Cash returned to owners is the moment a business stops being a story and starts being a payment.",
+      "attribution": {
+        "source": "Day 6",
+        "detail": "Reading a Business"
+      },
+      "frame": "gradient"
+    }
+  ]
+}

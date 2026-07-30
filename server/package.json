@@ -1,0 +1,29 @@
+{
+  "name": "stockiq-sync",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "StockIQ sync service — Postgres-backed last-write-wins record sync.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "migrate": "tsx src/migrate.ts",
+    "typecheck": "tsc --noEmit",
+    "test:sync": "node test/sync.test.mjs",
+    "test:pairing": "node test/pairing.test.mjs",
+    "test:apple": "tsx test/apple.test.mjs",
+    "test:apple-accounts": "node test/apple-accounts.test.mjs"
+  },
+  "dependencies": {
+    "jose": "^6.2.5",
+    "pg": "^8.13.1",
+    "tsx": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.2"
+  }
+}

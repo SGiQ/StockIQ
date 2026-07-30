@@ -1,0 +1,20 @@
+name = "stockiq-ask"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+# The Anthropic key is NOT here. It is set as a secret:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+# Secrets are write-only from the CLI and never appear in this file, in the
+# repo, or in the deployed bundle's source.
+
+# Per-caller daily cap. The Worker refuses to serve without this binding,
+# because an uncapped endpoint that spends money on every call is a bill
+# waiting to happen. Create it first:
+#   npx wrangler kv namespace create RATE_LIMIT
+# then paste the returned id below.
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+DAILY_LIMIT = "100"

@@ -1,0 +1,183 @@
+{
+  "id": "anatomy-of-a-candle",
+  "courseId": "reading-a-chart",
+  "title": "Anatomy of a Candle",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["lesson:market-foundations/reading-a-quote"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "One shape holds a whole day of trading.",
+      "body": "Every trade in a session, thousands of them, collapses into a single mark on the chart. That mark keeps four numbers and throws the rest away. Learn which four and you can read a day at a glance."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The body is open to close.",
+      "body": "A candle's thick body spans two numbers: where the period **opened** and where it **closed** — the same open and close you see in {{lesson:market-foundations/reading-a-quote|a quote}}. Close above open, the body is an up body. Close below, a down body.",
+      "art": { "kind": "glyph", "name": "candle", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Anatomy of one candle",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 100, "h": 104, "l": 99, "c": 103 },
+            { "o": 103, "h": 108, "l": 102, "c": 107 },
+            { "o": 107, "h": 109, "l": 101, "c": 102 },
+            { "o": 102, "h": 106, "l": 100, "c": 105 }
+          ],
+          "annotations": [{ "at": 2, "label": "Open 107, close 102", "emphasis": true }]
+        }
+      },
+      "caption": "The thick body runs from the open to the close. The thin wicks reach up to the high and down to the low. Candle three opened at 107 and closed at 102."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A candle opens at 40, closes at 38, and its high is 45. Did buyers finish the session in control?",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 37, "h": 41, "l": 36, "c": 40 },
+            { "o": 40, "h": 45, "l": 37, "c": 38 },
+            { "o": 38, "h": 39, "l": 35, "c": 36 }
+          ],
+          "annotations": [{ "at": 1, "label": "Opened 40, closed 38", "emphasis": true }]
+        }
+      },
+      "options": [
+        { "id": "no", "label": "No, it closed below its open", "correct": true },
+        { "id": "yes", "label": "Yes, it traded as high as 45", "correct": false }
+      ],
+      "explanation": "Price touched 45 and handed every point of it back. The close at 38 sits under the 40 open, so the body is a **down** body and the 45 survives only as a wick."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Wicks are the ground price gave back.",
+      "body": "Above and below the body run two thin lines. The upper one reaches the **high**, the lower one the **low**. Price went there and did not stay. A wick is territory that was taken and then lost."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "A move that could not hold",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 60, "h": 63, "l": 59, "c": 62 },
+            { "o": 62, "h": 66, "l": 61, "c": 65 },
+            { "o": 65, "h": 74, "l": 64, "c": 66 },
+            { "o": 66, "h": 68, "l": 62, "c": 63 }
+          ],
+          "annotations": [{ "at": 2, "label": "High 74, close 66", "emphasis": true }],
+          "levels": [{ "value": 66, "label": "Close" }]
+        }
+      },
+      "caption": "Candle three ran to 74 and closed at 66. Buyers reached eight points above the close and could not hold any of it. The long upper wick is the part they gave back."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "The body of a candle spans the open and the close. The wicks stretch out to the [[1]] and the low of the period.",
+      "wordBank": ["high", "average", "volume"],
+      "answer": "high",
+      "explanation": "Body first, wicks second. The body tells you who won the period. The wicks tell you how far the losing side got before it was pushed back."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "A small body means nobody finished ahead.",
+      "body": "When the open and the close sit close together, the body is thin. Price may have swung wide inside the period — the wicks show that — but it ended near where it started. Neither side kept its ground."
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "A candle is never just a candle. It always covers a fixed slice of time, and the slice is a setting you choose.",
+      "stickers": [
+        {
+          "label": "Five minutes",
+          "art": { "kind": "glyph", "name": "clock", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "One day",
+          "art": { "kind": "glyph", "name": "calendar", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "One week",
+          "art": { "kind": "glyph", "name": "calendar", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "diagram",
+      "title": "Five days, one week",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 50, "h": 52, "l": 49, "c": 51 },
+            { "o": 51, "h": 54, "l": 51, "c": 53 },
+            { "o": 53, "h": 55, "l": 48, "c": 49 },
+            { "o": 49, "h": 50, "l": 47, "c": 48 },
+            { "o": 48, "h": 51, "l": 47, "c": 50 },
+            { "o": 50, "h": 55, "l": 47, "c": 50 }
+          ],
+          "annotations": [
+            { "at": 0, "label": "Monday" },
+            { "at": 5, "label": "The whole week", "emphasis": true }
+          ],
+          "levels": [{ "value": 50, "label": "Open and close" }]
+        }
+      },
+      "caption": "Five daily candles, then the single weekly candle they add up to. The week opens at 50 and closes at 50: one flat body hiding a 55 high, a 47 low, and every swing between."
+    },
+    {
+      "id": "c11",
+      "type": "binary_choice",
+      "prompt": "A weekly candle shows almost no body. Does that mean the stock barely moved during the week?",
+      "options": [
+        { "id": "quiet", "label": "Yes, it was a quiet week", "correct": false },
+        { "id": "ended-flat", "label": "No, only that it ended where it began", "correct": true }
+      ],
+      "explanation": "The body compares one open to one close and nothing in between. Inside that same week price ran from 47 up to 55. Switch to daily candles and the whole trip reappears."
+    },
+    {
+      "id": "c12",
+      "type": "main_idea",
+      "title": "What a candle holds",
+      "summary": "A candle packs four numbers into one shape: open, high, low, and close, over a slice of time you choose.",
+      "bullets": [
+        "The body runs from the open to the close; the wicks reach the high and the low.",
+        "A long upper wick means buyers pushed price up and could not hold it.",
+        "A small body means the period ended near where it started.",
+        "Change the timeframe and the same stock tells a different story."
+      ]
+    },
+    {
+      "id": "c13",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "candle", "bg": "neon" },
+      "insight": "A candle does not tell you where price is going. It tells you where price went, what it failed to hold, and who was standing at the close.",
+      "attribution": { "source": "Day 2", "detail": "Reading a Chart" }
+    }
+  ]
+}

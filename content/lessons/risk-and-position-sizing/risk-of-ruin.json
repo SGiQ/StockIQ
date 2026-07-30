@@ -1,0 +1,144 @@
+{
+  "id": "risk-of-ruin",
+  "courseId": "risk-and-position-sizing",
+  "title": "Risk of Ruin",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "An edge you do not survive pays nothing.",
+      "body": "Two accounts run the same strategy on the same signals. One is still trading in year three. The other reached zero in month four and never saw the strategy work. The difference was not skill. It was how much of the account rode on each trade."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Zero is a one-way door.",
+      "body": "Returns multiply, they do not add. Lose 50%, then gain 50%, and you are down 25%. Lose 100% and no future gain does anything at all, because every later return is multiplied by nothing.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Same average, opposite outcome",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "compounding",
+          "principal": 10000,
+          "rate": 0.07,
+          "years": 20,
+          "compareRate": -0.0513
+        }
+      },
+      "caption": "Solid line: a steady 7% a year. Dashed line: a strategy that gains 50%, then loses 40%, again and again. Its average looks like +5%; it compounds at -5%. $38,697 against $3,487."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A strategy gains 50% in odd years and loses 40% in even years. After 20 years, is the account ahead or behind?",
+      "options": [
+        { "id": "ahead", "label": "Ahead — the average return is positive", "correct": false },
+        { "id": "behind", "label": "Behind — by about 65%", "correct": true }
+      ],
+      "explanation": "Averages add; money multiplies. Each pair of years is 1.5 × 0.6 = **0.90**, so the account shrinks 10% every two years. Ten pairs turn $10,000 into $3,487."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Losing streaks are not bad luck.",
+      "body": "Flip a fair coin 300 times and a run of six tails is close to certain — it shows up in more than nine sequences out of ten. A 50% win rate does the same thing to a trade history. The streak is scheduled, not surprising.",
+      "art": { "kind": "glyph", "name": "coin", "bg": "sky" }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "The odds of a losing run",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [25, 12.5, 6.25, 3.125, 1.5625],
+          "labels": ["2", "3", "4", "5", "6"],
+          "highlightIndex": 4,
+          "yLabel": "% chance of a run that long"
+        }
+      },
+      "caption": "The axis counts losses in a row; bar height is the chance of that run at a 50% win rate. Each extra loss halves it. Six straight is 0.5^6 — 1.6%, one window in 64."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Six losses in a row at a 50% win rate is 0.5 multiplied by itself six times — about one six-trade window in [[1]].",
+      "wordBank": ["64", "36", "100"],
+      "answer": "64",
+      "explanation": "One in 64 sounds remote until you count windows. Trade a few hundred times and you pass through hundreds of them, which is why the run stops being a surprise."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Bet size decides survival, not win rate.",
+      "body": "The streak is fixed by the odds. What you control is what each loss costs. Risk 25% of the account per trade and six losses leave **17.8%** of it. Risk 2% and the same six losses leave **88.6%**.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "butter" }
+    },
+    {
+      "id": "c9",
+      "type": "diagram",
+      "title": "Six losses, two bet sizes",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [17.8, 88.6],
+          "labels": ["Risking 25%", "Risking 2%"],
+          "highlightIndex": 0,
+          "yLabel": "% of account left"
+        }
+      },
+      "caption": "Same streak, same strategy, different bet size. The tall bar needs 12.9% to get back to even. The short bar needs 462%, and has far less capital left to earn it with."
+    },
+    {
+      "id": "c10",
+      "type": "sticker_reveal",
+      "body": "A plan survives a losing streak by construction, not by luck. Three things have to be true before the streak arrives, because you cannot negotiate with it afterwards.",
+      "stickers": [
+        {
+          "label": "Loss per trade is capped",
+          "art": { "kind": "glyph", "name": "lock", "bg": "mint" },
+          "anchor": { "x": 0.32, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "The streak is priced in",
+          "art": { "kind": "glyph", "name": "scale", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "No one trade can end you",
+          "art": { "kind": "glyph", "name": "anchor", "bg": "lilac" },
+          "anchor": { "x": 0.36, "y": 0.82 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "An edge only pays if the account is still there to collect it.",
+      "bullets": [
+        "Returns multiply, so a total loss is permanent — nothing recovers from zero.",
+        "At a 50% win rate, six straight losses is 1 in 64, and near-certain across a few hundred trades.",
+        "The streak is set by the odds; the damage is set by your bet size."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "shield", "bg": "neon" },
+      "insight": "An edge cannot save an account that has already reached zero. Survival is decided by the size of your bets, not the accuracy of your calls.",
+      "attribution": { "source": "Day 3", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}

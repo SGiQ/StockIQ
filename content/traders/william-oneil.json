@@ -1,0 +1,74 @@
+{
+  "id": "william-oneil",
+  "name": "William J. O'Neil",
+  "era": "1933–2023",
+  "portrait": { "kind": "glyph", "name": "newspaper", "bg": "butter" },
+  "oneLiner": "Founded Investor's Business Daily and built the CANSLIM checklist.",
+  "bio": "William J. O'Neil started as a stockbroker at Hayden, Stone and Company in Los Angeles in 1958 and founded the institutional research firm **William O'Neil + Co.** in 1963. He bought a seat on the New York Stock Exchange the following year, at the age of thirty.\n\nHis work rested on a database rather than on intuition. The firm assembled historical price, volume and earnings records for past market leaders and looked for the characteristics those stocks had shared before they moved. The result was **CANSLIM**, a seven-part checklist he set out in **How to Make Money in Stocks**, published by McGraw-Hill in 1988 and revised several times since.\n\nIn 1984 he launched the newspaper **Investor's Daily**, renamed **Investor's Business Daily** in 1991, to put that data in front of individual investors rather than institutions. He also ran mutual funds, with mixed results, and launched the chart service Daily Graphs in 1972, later rebranded MarketSmith. He died on 28 May 2023, aged 90.",
+  "philosophy": [
+    "**Buy strength rather than cheapness.** O'Neil's historical study pointed away from bargain hunting. The stocks that went on to lead tended to be making new price highs on heavy volume, not sitting near their lows, and he argued that what looks expensive on that measure is often what is actually working.",
+    "**CANSLIM is a checklist, not a formula.** The seven letters stand for current quarterly earnings, annual earnings growth, something genuinely new at the company, the supply of shares outstanding, whether the stock leads or lags its industry group, institutional sponsorship, and the direction of the general market. A candidate is meant to satisfy the set, not score well on one item.",
+    "**Cut the loss at a fixed point.** O'Neil taught selling a position that falls roughly seven to eight per cent below the price paid. His reasoning was arithmetic rather than psychological: the rule is cheap when it turns out to be unnecessary, and it prevents the single loss large enough to end an account.",
+    "**The general market decides most outcomes.** The M in CANSLIM exists because his research found that most stocks broadly follow the major indexes. He tracked what he called distribution days, sessions where an index falls on heavier volume than the day before, as evidence that large institutions were selling into strength.",
+    "**Chart patterns as a picture of supply.** O'Neil catalogued base patterns, the best known being the cup with handle, which he introduced in the 1988 edition of his book. He treated a breakout from a well-formed base on heavy volume as evidence that demand had absorbed the shares available for sale, rather than as a prediction in itself.",
+    "**The thresholds came from a sample.** Every number in CANSLIM, from the earnings growth percentages to the loss limit, was derived from studying the traits of stocks that had already performed well over particular periods. They describe what that sample did. That is a different claim from a guarantee about the next set of stocks, and O'Neil published the research method alongside the rules so the distinction stayed visible."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Trading account, 1962 to 1963",
+      "value": "About $5,000 to more than $200,000",
+      "note": "Reported as three consecutive positions rolled one into the next: a short in E.J. Korvette, a long in Chrysler, and a long in Syntex. He used the proceeds to buy his exchange seat.",
+      "source": "Bloomberg News obituary, William J. O'Neil, Investor's Business Daily Founder, Dies at 90, 30 May 2023"
+    },
+    {
+      "metric": "New York Stock Exchange seat",
+      "value": "Purchased 1964, at age 30",
+      "source": "Bloomberg News obituary, William J. O'Neil, Investor's Business Daily Founder, Dies at 90, 30 May 2023"
+    },
+    {
+      "metric": "The O'Neil Fund, 1967",
+      "value": "Up 116 per cent",
+      "note": "Reported as the best-performing mutual fund of that year. The fund was launched in 1966 and sold in 1975, by which time its assets had fallen to about $6 million from a peak near $49 million.",
+      "source": "Bloomberg News obituary, William J. O'Neil, Investor's Business Daily Founder, Dies at 90, 30 May 2023"
+    },
+    {
+      "metric": "New USA mutual fund",
+      "value": "Launched 1992 with about $170 million; up 67 per cent through 1996",
+      "note": "The fund's assets were sold to MFS Investment Management in 1997.",
+      "source": "Bloomberg News obituary, William J. O'Neil, Investor's Business Daily Founder, Dies at 90, 30 May 2023"
+    },
+    {
+      "metric": "Investor's Business Daily",
+      "value": "Founded 1984; sold to News Corp for $275 million in 2021",
+      "note": "The sale was announced in March 2021 and completed that May.",
+      "source": "News Corp press release, News Corp Announces Acquisition of Investor's Business Daily, 25 March 2021"
+    }
+  ],
+  "signatureStrategies": ["canslim", "momentum-investing"],
+  "famousTrades": [
+    {
+      "title": "Three positions and a seat on the exchange",
+      "year": "1962–1963",
+      "story": "O'Neil's early record rests on a short run of trades made while he was still a broker in Los Angeles. He shorted the discount retailer **E.J. Korvette**, bought **Chrysler** as it recovered from the 1962 selloff, and then bought **Syntex**, a maker of a compound used in oral contraceptives, after the company reported a very large jump in quarterly earnings. He rolled the proceeds of each into the next.\n\nBy the autumn of 1963 the account had gone from roughly five thousand dollars to more than two hundred thousand, which paid for his seat on the New York Stock Exchange. The Syntex trade became a recurring example in his later writing about buying a stock on a large earnings surprise rather than on a story about the company.",
+      "source": "Bloomberg News obituary, 30 May 2023; and Jack D. Schwager, Market Wizards (1989), in the interview titled William O'Neil: The Art of Stock Selection"
+    },
+    {
+      "title": "Buying a full page to publish a market call",
+      "year": "1982",
+      "story": "Twice O'Neil paid for full-page advertisements in **The Wall Street Journal** to publish his view that a bull market was starting. The first ran in March 1978, ahead of a rally of roughly six months. The second ran on 5 February 1982, arguing that inflation had been broken and that it was time to invest for the recovery ahead; the bear market bottomed that August and a long advance followed.\n\nThe interesting part is the format rather than the forecast. Because his method put the direction of the general market first, a market call was not a sideline to his stock picking but the top item on the same checklist, and he was willing to date it in public where it could be checked afterwards.",
+      "source": "Bloomberg News obituary, William J. O'Neil, Investor's Business Daily Founder, Dies at 90, 30 May 2023, which describes both advertisements"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "The whole secret to winning big in the stock market is not to be right all the time, but to lose the least amount possible when you're wrong.",
+      "context": "From How to Make Money in Stocks."
+    },
+    {
+      "text": "What seems too high and risky to the majority generally goes higher and what seems low and cheap generally goes lower.",
+      "context": "From How to Make Money in Stocks, on why he bought near new highs instead of near lows."
+    }
+  ],
+  "recommendedReading": ["market-wizards"],
+  "relatedTraders": ["mark-minervini", "jesse-livermore"]
+}

@@ -1,0 +1,124 @@
+{
+  "id": "the-intelligent-investor",
+  "title": "The Intelligent Investor",
+  "author": "Benjamin Graham",
+  "year": 1949,
+  "cover": { "kind": "glyph", "name": "shield", "bg": "ink" },
+  "summary": "Benjamin Graham's 1949 book is the ancestor of modern value investing, but its lasting contribution is behavioral. It argues that an investor's real job is to decide what a business is worth, pay less than that, and stay unmoved by the crowd's daily verdict. Graham separates investment from speculation, offers the image of a moody business partner who quotes you a price every morning, and sorts readers into a low-effort defensive path and a research-heavy enterprising one. This guide restates those ideas in our own words. It is a map of the argument, not a replacement for reading him.",
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A book about temperament, not stock tips.",
+      "body": "Benjamin Graham published this in 1949, after living through the 1929 crash. His claim: most investors lose money because of how they act, not because they cannot do the math. Fix the temperament first."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Investing and speculating are different jobs.",
+      "body": "Graham drew a hard line. An investment is a commitment where you have studied the business, expect your capital back, and expect a reasonable return. Anything else is speculation. Speculating is not forbidden, but he wanted you to know which one you were doing.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "fill_blank",
+      "body": "Graham's test: if you cannot explain why the business is worth more than you paid, you are not investing, you are [[1]].",
+      "wordBank": ["speculating", "hedging", "diversifying"],
+      "answer": "speculating",
+      "explanation": "The line is not drawn by the asset. It is drawn by whether you did the work to know what you own."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Leave room to be wrong.",
+      "body": "Every estimate of what a business is worth is a guess with error bars. Graham's answer was to pay meaningfully less than your own estimate. The gap absorbs bad luck, bad forecasts, and plain mistakes. He called it the **margin of safety**."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "The gap you pay for",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [100, 62, 38],
+          "labels": ["Your estimate", "Price paid", "The gap"],
+          "highlightIndex": 2,
+          "yLabel": "$ per share"
+        }
+      },
+      "caption": "Buy at 62 when you think it is worth 100 and your estimate can be wrong by a third before you lose money. The gap is the whole idea."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Imagine a business partner with mood swings.",
+      "body": "Graham asks you to picture a partner who shows up every day and names a price to buy your half or sell you his. Some days he is euphoric. Some days he is terrified. He never minds being ignored.",
+      "art": { "kind": "glyph", "name": "handshake", "bg": "butter" }
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "One business, many quotes",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 118, 92, 140, 76, 104, 130],
+          "xLabel": "One year of daily offers",
+          "yLabel": "Quoted price",
+          "markers": [
+            { "at": 3, "label": "Euphoria" },
+            { "at": 4, "label": "Panic", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "The business barely changed over this stretch. The quotes did. Graham's point is that a price is an offer, not a verdict on value."
+    },
+    {
+      "id": "c8",
+      "type": "binary_choice",
+      "prompt": "Your partner offers to buy your stake today at half what you think it is worth. What is he giving you?",
+      "options": [
+        { "id": "info", "label": "New information about the business", "correct": false },
+        { "id": "offer", "label": "A price you can accept or ignore", "correct": true }
+      ],
+      "explanation": "A quote tells you what one person will pay right now. Whether it is useful depends entirely on your own estimate of the business."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Two honest paths, no middle one.",
+      "body": "Graham splits investors in two. The defensive one wants simplicity and safety, and accepts an ordinary result. The enterprising one is willing to research constantly for a better one. His warning: half-effort earns the enterprising risks and the defensive returns.",
+      "art": { "kind": "glyph", "name": "briefcase", "bg": "mint" }
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "title": "What Graham is really teaching",
+      "summary": "The book is less a valuation manual than a set of habits for staying rational when prices are not.",
+      "bullets": [
+        "Graham separates investing from speculating by how much you know.",
+        "The margin of safety makes being wrong survivable.",
+        "Market prices are offers to consider, not verdicts to obey.",
+        "Defensive and enterprising are two coherent paths, not a spectrum."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "shield", "bg": "ink" },
+      "insight": "A price is an offer from someone else. Only your own estimate of the business tells you whether to take it.",
+      "attribution": { "source": "The Intelligent Investor", "detail": "Benjamin Graham, 1949" }
+    }
+  ],
+  "buyLinks": [
+    {
+      "label": "Find it at Bookshop.org",
+      "url": "https://bookshop.org/search?keywords=The%20Intelligent%20Investor%20Benjamin%20Graham"
+    }
+  ],
+  "relatedTraders": ["warren-buffett"],
+  "relatedStrategies": ["value-investing"],
+  "attribution": "Original summary of The Intelligent Investor by Benjamin Graham (1949), written for StockIQ. No text from the book is reproduced. StockIQ is not affiliated with the author, his estate, or his publisher."
+}

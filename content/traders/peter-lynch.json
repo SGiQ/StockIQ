@@ -1,0 +1,67 @@
+{
+  "id": "peter-lynch",
+  "name": "Peter Lynch",
+  "era": "1944–present",
+  "portrait": { "kind": "glyph", "name": "magnifier", "bg": "butter" },
+  "oneLiner": "Ran Fidelity's Magellan fund by out-researching everyone, one stock at a time.",
+  "bio": "Peter Lynch was born in 1944 and has worked at Fidelity since 1969, first as an analyst, then as director of research. In May 1977 he took over Magellan, at that point a small fund, and ran it until May 1990.\n\nHis edge was throughput rather than a single insight. He looked at far more companies than a concentrated manager would, called and visited them constantly, and held a very large number of positions at once. A method that wide only works if each holding can be summarised quickly, so he built the summarising into the process: every company was sorted into one of six types — slow growers, stalwarts, fast growers, cyclicals, turnarounds and asset plays — and each type came with its own reason to sell.\n\nHe is popularly associated with the phrase **invest in what you know**, and he has spent years correcting how it gets read. His actual claim is narrower: something you notice as a customer or as a professional tells you which company is worth researching. The research still has to happen afterwards.\n\nAfter leaving the fund in 1990 he stayed at Fidelity as vice chairman and wrote about the method for non-professional readers.",
+  "philosophy": [
+    "Everyday observation produces candidates, not conclusions. A busy store or a product you keep rebuying is a reason to open the filings, not a reason to buy the stock.",
+    "Classify before you value. A cyclical, a turnaround and a fast grower are three different bets with three different exit conditions, so mixing them up is how people hold the wrong one too long.",
+    "Compare the growth you are buying to the price you are paying. Lynch popularised setting a company's earnings growth rate against its **price-to-earnings ratio**, so that a fast grower only counts as cheap if the growth is not already in the price.",
+    "Be able to state the story in about two minutes. If you cannot explain plainly why you own something, you will not notice when the reason stops being true.",
+    "Watch what a company does with success. Lynch's coinage for a business that buys unrelated companies with its spare cash is **diworseification**, and he treats it as a warning rather than as growth.",
+    "Do not let a market forecast override company work. Lynch has argued repeatedly that investors lose more by preparing for declines than the declines themselves take from them.",
+    "Turn over more rocks than the next person. The advantage he describes is not a better model but a larger number of companies actually examined."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Tenure managing the Fidelity Magellan Fund",
+      "value": "May 1977 to May 1990",
+      "source": "Museum of American Finance biography of Peter Lynch."
+    },
+    {
+      "metric": "Value of $1,000 invested in Magellan across his tenure",
+      "value": "about $28,000",
+      "note": "That works out to roughly 29% a year over the thirteen years. It is a fund-level figure and not what every shareholder earned, since money flowed in and out of the fund throughout the period.",
+      "source": "Museum of American Finance biography of Peter Lynch."
+    },
+    {
+      "metric": "Magellan assets under management during his tenure",
+      "value": "$18 million to $14 billion",
+      "note": "Accounts differ slightly on the starting figure, which is given as $18 million by some sources and $20 million by others.",
+      "source": "American Academy of Arts and Sciences biography of Peter S. Lynch."
+    }
+  ],
+  "signatureStrategies": ["growth-at-a-reasonable-price"],
+  "famousTrades": [
+    {
+      "title": "Hanes and L'eggs",
+      "year": "1970s",
+      "story": "Lynch tells this one as the model for how a lead is supposed to work. His wife came back from the supermarket with a pair of L'eggs pantyhose. That was the lead, and by itself it was worth nothing.\n\nThe research is what made it a position. Hanes was selling hosiery through supermarkets and drugstores, which shoppers visited roughly weekly, while its competitors sold only through department and specialty stores, which the same shoppers visited far less often. The advantage was the distribution channel rather than the product. The run ended when Consolidated Foods acquired Hanes at the start of 1979.",
+      "source": "Peter Lynch with John Rothchild, One Up on Wall Street (1989), where he uses L'eggs as his standard illustration of a consumer lead."
+    },
+    {
+      "title": "Chrysler",
+      "year": "1982",
+      "story": "Lynch came across Chrysler while researching Ford. The market was pricing the company for bankruptcy, but the balance sheet held a large cash position and its federal loan guarantees were in place, which meant the immediate risk of failure was smaller than the price implied.\n\nHe then went and asked. Meeting management, including Lee Iacocca, moved his attention to a vehicle still in development that became the minivan. He built Chrysler into roughly five percent of Magellan, an unusually large single weight for a diversified fund, and it became one of the fund's biggest contributors. Reported figures for the eventual gain vary between sources.",
+      "source": "Peter Lynch with John Rothchild, One Up on Wall Street (1989), where Chrysler is his worked example of a turnaround."
+    }
+  ],
+  "quotes": [
+    {
+      "text": "I've never said, 'If you go to a mall, see a Starbucks and say it's good coffee, you should call Fidelity brokerage and buy the stock.'",
+      "context": "The Wall Street Journal, December 7, 2015, correcting the way his best-known idea is usually repeated."
+    },
+    {
+      "text": "People buy a stock and they know nothing about it. That's gambling, and it's not good.",
+      "context": "The same Wall Street Journal interview, December 7, 2015."
+    },
+    {
+      "text": "Know what you own, and know why you own it.",
+      "context": "Lynch's shortest statement of the test he applies to a holding; it recurs across his books and talks."
+    }
+  ],
+  "recommendedReading": ["one-up-on-wall-street"],
+  "relatedTraders": ["warren-buffett"]
+}

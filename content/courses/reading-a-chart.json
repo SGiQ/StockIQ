@@ -1,0 +1,31 @@
+{
+  "id": "reading-a-chart",
+  "title": "Reading a Chart: Price, Trend and Evidence",
+  "author": "StockIQ",
+  "category": "technicals",
+  "cover": { "kind": "glyph", "name": "candle", "bg": "sky" },
+  "blurb": "A chart is a record of what buyers and sellers actually did. Learn to read it without pretending it predicts the future.",
+  "order": 3,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHAT A CHART SHOWS",
+      "lessonIds": ["price-and-time", "anatomy-of-a-candle", "trend-and-structure"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "LEVELS AND AVERAGES",
+      "lessonIds": ["support-and-resistance", "moving-averages", "volume-confirms"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "INDICATORS AND THEIR LIMITS",
+      "lessonIds": ["momentum-indicators", "patterns-and-their-limits"]
+    }
+  ],
+  "totalXp": 160
+}

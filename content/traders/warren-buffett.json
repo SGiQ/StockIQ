@@ -1,0 +1,82 @@
+{
+  "id": "warren-buffett",
+  "name": "Warren Buffett",
+  "era": "1930–present",
+  "portrait": { "kind": "glyph", "name": "coins-stack", "bg": "forest" },
+  "oneLiner": "Ran Berkshire Hathaway for sixty years by buying businesses, not tickers.",
+  "bio": "Warren Buffett was born in Omaha in 1930 and studied under Benjamin Graham at Columbia. The habit he took from Graham was mechanical rather than inspirational: treat a share as a **fractional stake in a business**, estimate what the whole business is worth, and compare that estimate to the price.\n\nHe ran an investment partnership from the mid-1950s, then took control of Berkshire Hathaway, a failing New England textile maker, in 1965. The textile mills never recovered. What mattered was where their cash went. Berkshire bought National Indemnity in 1967, and insurance premiums held before claims are paid — **float** — became a large, cheap pool of capital to buy other companies with.\n\nThat is the machine in one sentence: insurance and operating subsidiaries generate cash, and the cash is redeployed into more businesses and shares rather than paid out as dividends. Berkshire has held some positions for decades, which means the compounding happens inside the holdings instead of being interrupted by trading.\n\nBuffett was Berkshire's chief executive until December 31, 2025. Greg Abel succeeded him on January 1, 2026, and Buffett continues as chairman of the board.",
+  "philosophy": [
+    "Value a company, not a chart. The starting question is what the whole business would be worth to a private owner, and only then whether the market is asking less than that.",
+    "Work inside a circle of competence. In the 1996 letter Buffett put it as: the size of the circle is not very important, but knowing its boundaries is vital.",
+    "Prefer durability to cheapness. A business with a defensible advantage can be held while it compounds; a merely cheap one has to be sold to make the return, which means being right twice.",
+    "Treat price swings as supply, not signal. Falling prices are only an advantage if you have cash and the willingness to buy while the news is bad.",
+    "Keep a **margin of safety**. Pay enough below your estimate of value that a wrong estimate still does not cost you much. The idea is Graham's; Buffett applied it to whole companies.",
+    "Judge management by capital allocation. The test is what a manager does with each dollar of retained earnings, not how the manager presents.",
+    "Publish the mistakes. Buffett's letters name his own errors, including the 1993 Dexter Shoe purchase, which he described as the worst deal he had made."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Compounded annual gain in Berkshire per-share market value, 1965–2024",
+      "value": "19.9%",
+      "note": "The S&P 500 with dividends included compounded at 10.4% over the same 60 years.",
+      "source": "Berkshire Hathaway 2024 Annual Report, the table titled Berkshire's Performance vs. the S&P 500."
+    },
+    {
+      "metric": "Overall gain, 1964–2024",
+      "value": "5,502,284%",
+      "note": "Against 39,054% for the S&P 500 with dividends included. Berkshire pays no dividend, so this is share-price change over sixty years, not an annual result anyone should expect to repeat.",
+      "source": "Berkshire Hathaway 2024 Annual Report, the table titled Berkshire's Performance vs. the S&P 500."
+    },
+    {
+      "metric": "Tenure as chief executive of Berkshire Hathaway",
+      "value": "1965 to December 31, 2025",
+      "note": "Gregory E. Abel succeeded him as chief executive on January 1, 2026; Buffett continues as chairman of the board.",
+      "source": "Berkshire Hathaway Inc. proxy statement on SEC Form DEF 14A for the 2026 annual meeting, section on board leadership structure."
+    }
+  ],
+  "signatureStrategies": ["value-investing", "growth-at-a-reasonable-price"],
+  "famousTrades": [
+    {
+      "title": "See's Candies",
+      "year": "1972",
+      "story": "Blue Chip Stamps, which Buffett and Charlie Munger controlled and later merged into Berkshire, paid $25 million for See's in 1972. At the time sales were $30 million, pre-tax earnings were under $5 million, and the capital required to run the business was $8 million.\n\nThe interesting number is that last one. Customers paid cash, so there were no receivables, and the production cycle was short, so inventory stayed small. Growth therefore consumed almost no new capital. Buffett reported in 2007 that See's had earned $1.35 billion pre-tax since the purchase while absorbing only $32 million of additional investment. Everything else was sent up to buy other businesses.\n\nBuffett has described See's as the purchase that moved him away from buying statistically cheap but mediocre companies.",
+      "source": "Warren Buffett, Berkshire Hathaway 2007 letter to shareholders."
+    },
+    {
+      "title": "Coca-Cola",
+      "year": "1994",
+      "story": "Berkshire finished a seven-year accumulation of 400 million Coca-Cola shares in August 1994. Total cost was $1.3 billion.\n\nBuffett's own way of scoring the position is the dividend rather than the quote. Coke paid Berkshire $75 million in 1994 and $704 million in 2022, against that same unchanged cost. He used the example to make a narrower point than it is usually quoted for: over a long enough horizon a handful of holdings that keep growing carry the whole result, while the failures shrink toward irrelevance.",
+      "source": "Warren Buffett, Berkshire Hathaway 2022 letter to shareholders, in the section headed The Secret Sauce."
+    },
+    {
+      "title": "Dexter Shoe — the mistake he keeps citing",
+      "year": "1993",
+      "story": "Buffett bought the shoemaker Dexter in 1993 for $433 million. The competitive advantage he thought he had identified was gone within a few years.\n\nThe larger error was how he paid. Instead of cash he handed over 25,203 Berkshire Class A shares. Those shares went on compounding while the shoe business went to nothing, so by his 2007 accounting the real cost to Berkshire shareholders was about $3.5 billion rather than $433 million. He called it the worst deal he had made, and the general lesson he drew is about the currency used in an acquisition, not about shoes.",
+      "source": "Warren Buffett, Berkshire Hathaway 2007 letter to shareholders."
+    }
+  ],
+  "quotes": [
+    {
+      "text": "It's far better to buy a wonderful company at a fair price than a fair company at a wonderful price.",
+      "context": "Berkshire Hathaway 1989 letter to shareholders, in a section reviewing the mistakes of his first twenty-five years."
+    },
+    {
+      "text": "Time is the friend of the wonderful business, the enemy of the mediocre.",
+      "context": "Berkshire Hathaway 1989 letter to shareholders, immediately following the point above."
+    },
+    {
+      "text": "Our goal is more modest: we simply attempt to be fearful when others are greedy and to be greedy only when others are fearful.",
+      "context": "Berkshire Hathaway 1986 letter to shareholders. The sentence before it declines to forecast markets at all."
+    },
+    {
+      "text": "Price is what you pay; value is what you get.",
+      "context": "Quoted in the Berkshire Hathaway 2008 letter, where Buffett credits the line to his teacher Benjamin Graham rather than to himself."
+    },
+    {
+      "text": "The size of that circle is not very important; knowing its boundaries, however, is vital.",
+      "context": "Berkshire Hathaway 1996 letter to shareholders, on how much of the market an investor needs to understand."
+    }
+  ],
+  "recommendedReading": ["the-intelligent-investor"],
+  "relatedTraders": ["peter-lynch"]
+}

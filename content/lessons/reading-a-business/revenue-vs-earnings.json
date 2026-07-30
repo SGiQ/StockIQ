@@ -1,0 +1,171 @@
+{
+  "id": "revenue-vs-earnings",
+  "courseId": "reading-a-business",
+  "title": "Revenue Is Not Profit",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Record revenue can hide a losing business.",
+      "body": "Revenue is every dollar that came in the door. Profit is what is left after you pay for all of it. A headline about **record revenue** tells you how much money arrived. It says nothing about how much stayed."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The top line is only the start.",
+      "body": "A coffee chain sells **100 million dollars** of coffee in a year. That is revenue — the top line of the income statement. Every cost the business paid to earn it sits below that number, waiting.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Where the money goes",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [
+            100,
+            38,
+            8,
+            3
+          ],
+          "labels": [
+            "Revenue",
+            "Gross profit",
+            "Operating income",
+            "Net income"
+          ],
+          "highlightIndex": 3,
+          "yLabel": "$ millions"
+        }
+      },
+      "caption": "Same company, four rungs down. 100 million came in. After beans, staff, rent, interest and tax, **3 million** stayed. That last bar is the business."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "First rung: gross profit.",
+      "body": "Take the 100 million and subtract what the coffee itself cost — beans, milk, cups — 62 million. That leaves **38 million** of gross profit. This is what the product earns before you run a company around it."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "The chain spends 30 million on staff, rent and marketing. Which line does that come out of?",
+      "options": [
+        {
+          "id": "gross",
+          "label": "Gross profit, leaving operating income",
+          "correct": true
+        },
+        {
+          "id": "revenue",
+          "label": "Revenue, before any other cost",
+          "correct": false
+        }
+      ],
+      "explanation": "Operating expenses come out of gross profit, not revenue. 38 million minus 30 million leaves **8 million** of operating income — what the business earns from simply operating."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Three cuts stand between the top line and the bottom line. Each one asks a different question about the business.",
+      "stickers": [
+        {
+          "label": "Cost of goods sold",
+          "art": {
+            "kind": "glyph",
+            "name": "seed",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.16
+          },
+          "rotation": -6
+        },
+        {
+          "label": "Operating expenses",
+          "art": {
+            "kind": "glyph",
+            "name": "building",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.48
+          },
+          "rotation": 5
+        },
+        {
+          "label": "Interest and tax",
+          "art": {
+            "kind": "glyph",
+            "name": "bank",
+            "bg": "blush"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.8
+          },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Growing revenue, vanishing profit.",
+      "body": "Next year the chain opens 40 shops. Revenue climbs to **130 million** — a record. But gross profit only reaches 49 million, new staff and rent cost 47 million, and interest takes 5 million. The year ends at minus 3 million.",
+      "art": {
+        "kind": "glyph",
+        "name": "chart-down",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Revenue is the top line. What survives every cost, interest and tax is the [[1]] line.",
+      "wordBank": [
+        "bottom",
+        "middle",
+        "gross",
+        "operating"
+      ],
+      "answer": "bottom",
+      "explanation": "The bottom line is not a figure of speech. Net income really does sit on the last line of the income statement, under everything the company had to pay."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Revenue measures how much money arrived. Earnings measure how much of it the business managed to keep.",
+      "bullets": [
+        "Revenue minus cost of goods leaves gross profit.",
+        "Gross profit minus operating expenses leaves operating income.",
+        "Operating income minus interest and tax leaves net income.",
+        "Revenue can rise every year while earnings go negative."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "ink"
+      },
+      "insight": "Revenue proves people want what you sell. Earnings prove the business can afford to sell it.",
+      "attribution": {
+        "source": "Day 1",
+        "detail": "Reading a Business"
+      }
+    }
+  ]
+}

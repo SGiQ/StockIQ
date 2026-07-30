@@ -1,0 +1,42 @@
+{
+  "id": "growth-at-a-reasonable-price",
+  "name": "Growth at a Reasonable Price",
+  "family": "growth",
+  "oneLiner": "Looking for growing businesses while refusing to pay any price for the growth.",
+  "thesis": "Growth at a Reasonable Price, usually shortened to **GARP**, sits between two older camps. Pure value investors screen for cheapness and often end up holding businesses that are shrinking. Pure growth investors buy expansion and sometimes pay a price that already assumes a decade of it. GARP investors describe wanting the growth but refusing to accept whatever multiple the market attaches to it.\n\nThe idea most associated with the approach is the **PEG ratio** — a price-to-earnings multiple divided by an earnings growth rate — popularised by Peter Lynch as a crude way of asking whether the multiple and the growth are in the same neighbourhood. Lynch also sorted companies into rough categories: slow growers, stalwarts, fast growers, cyclicals, turnarounds, and asset plays, on the argument that the same number means different things in different categories.\n\nThe arithmetic is fragile. PEG depends on a forecast growth rate, and forecast growth rates are frequently wrong; a company that grows at half the projected pace was never as reasonably priced as the number suggested. High-growth businesses also tend to re-rate downward violently when growth decelerates, so a moderate multiple offers less protection than it appears to. None of this implies the approach works or is appropriate for any reader.",
+  "timeframe": "long-term",
+  "riskLevel": 3,
+  "entryRules": [
+    "GARP investors typically look first for a demonstrated record of earnings growth in the business itself, rather than a projection supplied by someone selling the stock.",
+    "Lynch described comparing the price-to-earnings multiple against the growth rate — the **PEG** idea — and treating a multiple far above the growth rate as a reason to walk away rather than a reason to bid.",
+    "Practitioners commonly ask where the growth comes from: more customers, higher prices, new markets, or an acquisition. The distinction matters because acquired growth and organic growth have historically behaved very differently.",
+    "Lynch wrote about categorising a company first — slow grower, stalwart, fast grower, cyclical, turnaround, asset play — because he considered the same valuation number to mean different things in each.",
+    "Debt levels and cash generation are usually examined alongside growth, on the reasoning that growth funded by borrowing carries obligations that growth funded by operations does not."
+  ],
+  "exitRules": [
+    "The most frequently described exit is deceleration: growth slowing to a rate that no longer justifies the multiple being paid, whether or not the price has moved yet.",
+    "GARP investors also describe selling when the multiple expands far past the growth rate, on the view that the original reason for owning it — a sensible price for the growth — has stopped being true.",
+    "Lynch wrote about a company outgrowing its category, so that the story he originally bought is no longer the story he owns, and treating that as a reason to re-examine rather than to hold automatically.",
+    "A thesis broken by the business — a lost distribution deal, a competitor arriving, margins compressing — is treated in this literature as an exit independent of price."
+  ],
+  "riskManagement": [
+    "The whole approach rests on an estimated growth rate, and estimated growth rates are routinely too high. A PEG that looked reasonable at a 25 percent forecast looks very different at 10 percent actual.",
+    "Growth companies re-rate sharply when they disappoint. Drawdowns of half or more in a single reporting season are well documented in this category, and a moderate entry multiple has not historically prevented them.",
+    "A moderate PEG can be produced by a temporarily depressed multiple on a business in decline, which puts GARP investors at risk of the same **value trap** that catches value investors.",
+    "Practitioners describe diversifying across several such positions precisely because individual growth forecasts fail often, and describe avoiding leverage for the same reason.",
+    "The **riskLevel** here is a rough comparative signal against the other strategies in this app, not a measurement of anyone's actual risk and not a statement about suitability."
+  ],
+  "practicedBy": ["peter-lynch", "warren-buffett"],
+  "furtherReading": ["one-up-on-wall-street"],
+  "prerequisiteLessons": [
+    "reading-a-business/the-price-earnings-ratio",
+    "reading-a-business/revenue-vs-earnings"
+  ],
+  "illustrativeChart": {
+    "type": "bars",
+    "values": [0.7, 1.1, 2.4, 4.1],
+    "labels": ["Company A", "Company B", "Company C", "Company D"],
+    "highlightIndex": 0,
+    "yLabel": "Illustrative PEG (P/E divided by growth rate)"
+  }
+}

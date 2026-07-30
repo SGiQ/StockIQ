@@ -1,0 +1,31 @@
+{
+  "id": "trading-psychology",
+  "title": "Trading Psychology: The Opponent in the Mirror",
+  "author": "StockIQ",
+  "category": "psychology",
+  "cover": { "kind": "glyph", "name": "brain", "bg": "lilac" },
+  "blurb": "Most plans fail in execution, not design. Learn the biases that break good process and the habits that hold it together.",
+  "order": 5,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHY GOOD PLANS BREAK",
+      "lessonIds": ["loss-aversion", "fear-of-missing-out", "revenge-trading"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "SEEING CLEARLY",
+      "lessonIds": ["process-vs-outcome", "confirmation-bias"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "BUILDING THE HABIT",
+      "lessonIds": ["the-trading-journal", "patience-and-inaction"]
+    }
+  ],
+  "totalXp": 140
+}

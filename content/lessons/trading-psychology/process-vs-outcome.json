@@ -1,0 +1,134 @@
+{
+  "id": "process-vs-outcome",
+  "courseId": "trading-psychology",
+  "title": "Process Versus Outcome",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["book:trading-in-the-zone"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The scoreboard lies to you.",
+      "body": "Two people make the same reckless bet on the same day. One walks away richer, the other is wiped out. The market paid them differently for identical thinking. If you learn from the payout, you learn the wrong thing."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Every result has two parents.",
+      "body": "In anything with randomness, what happens to you is your decision plus luck. You choose one of them. The market supplies the other, and it does not care which trade it attaches itself to.",
+      "art": { "kind": "glyph", "name": "coin", "bg": "butter" }
+    },
+    {
+      "id": "c3",
+      "type": "sticker_reveal",
+      "body": "One decision, one result, four possible pairings. Every trade you will ever make lands in one of these four boxes.",
+      "stickers": [
+        {
+          "label": "Good call, good result",
+          "art": { "kind": "glyph", "name": "check", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.14 },
+          "rotation": -6
+        },
+        {
+          "label": "Good call, bad result",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "sky" },
+          "anchor": { "x": 0.72, "y": 0.4 },
+          "rotation": 5
+        },
+        {
+          "label": "Bad call, good result",
+          "art": { "kind": "glyph", "name": "warning", "bg": "neon" },
+          "anchor": { "x": 0.28, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Bad call, bad result",
+          "art": { "kind": "glyph", "name": "cross", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.86 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Two of the four are easy.",
+      "body": "Good decision, good result: you earned it, and the lesson you take is correct. Bad decision, bad result: the market billed you accurately. In both, the feedback matches the thinking. These are the trades that teach honestly."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A sound plan can still lose.",
+      "body": "You sized the position small, defined your exit, and the trade went against you anyway. Nothing failed except the coin. Tearing up a good process because of one bad result is how people end up with no process at all."
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "You bet a third of your account on one earnings report with no exit plan. It doubles. What just happened?",
+      "art": { "kind": "glyph", "name": "warning", "bg": "neon" },
+      "options": [
+        { "id": "skill", "label": "You found an edge", "correct": false },
+        { "id": "luck", "label": "A bad decision got paid", "correct": true }
+      ],
+      "explanation": "The result was good. The decision was not. Nothing about the payout made the risk any smaller — it only hid it. **Profit is not proof.**"
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "Six in ten still fails forty times",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [60, 40],
+          "labels": ["Worked", "Failed"],
+          "highlightIndex": 1,
+          "yLabel": "out of 100 tries"
+        }
+      },
+      "caption": "Suppose a decision works six times in ten. Repeated a hundred times it still fails forty times. Four losses in a row inside that run say nothing about whether the decision was sound."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Profit and loss is noisy feedback.",
+      "body": "If your only teacher is the account balance, you get rewarded for recklessness whenever it happens to work and punished for discipline whenever it happens not to. Learn from a noisy signal and you learn noise.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "ink" }
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "The most expensive of the four boxes is the one where a bad decision gets paid — because it also gets [[1]].",
+      "wordBank": ["repeated", "punished", "forgotten"],
+      "answer": "repeated",
+      "explanation": "A win tells you the thinking behind it was sound. So you size up and do it again. The next time the coin lands the other way, it costs far more."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "You only control the decision.",
+      "body": "The result arrives later and belongs partly to chance. The decision is yours entirely, and it is fixed before you click. {{book:trading-in-the-zone|Trading in the Zone}} makes that split its starting point: judge the choice, not the payout.",
+      "refs": ["book:trading-in-the-zone"]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "Decide well, then let it happen",
+      "summary": "Randomness breaks the link between how well you decided and how well you did.",
+      "bullets": [
+        "Every result is a decision and a dose of luck, mixed.",
+        "A good decision can lose, and a bad one can win.",
+        "The rewarded bad decision is the dangerous box — it gets repeated.",
+        "Judged only by profit, you learn at random."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "lilac" },
+      "insight": "Judge the decision, not the result. The market decides what you get paid. You decide what you deserved.",
+      "attribution": { "source": "Unit 2", "detail": "Seeing Clearly" }
+    }
+  ]
+}

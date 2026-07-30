@@ -1,0 +1,140 @@
+{
+  "id": "moving-averages",
+  "courseId": "reading-a-chart",
+  "title": "Moving Averages",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The daily wiggle hides the direction.",
+      "body": "A chart gives you a new number every day, and most of them mean nothing. Traders wanted one line that answers a duller question: where has price been sitting lately? That line is a moving average."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Add the last N closes. Divide.",
+      "body": "A 5-day moving average is the mean of the last five closing prices. Tomorrow you drop the oldest close, add the newest, and divide again. The window slides forward one day at a time. That is the whole calculation.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "fill_blank",
+      "body": "A 50-day moving average is the [[1]] of the last 50 closing prices, recalculated every single day.",
+      "wordBank": ["average", "highest", "midpoint"],
+      "answer": "average",
+      "explanation": "Nothing is weighted, guessed, or forecast. It is arithmetic on prices that have already printed — which is why the line can never know more than the chart already shows."
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Price and its 5-day average",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [44, 46, 45, 48, 50, 53, 52, 55, 58, 57, 54, 51, 49, 46, 44, 45, 43, 41, 42, 40],
+          "compareSeries": [41.4, 42.6, 43.4, 45, 46.6, 48.4, 49.6, 51.6, 53.6, 55, 55.2, 55, 53.8, 51.4, 48.8, 47, 45.4, 43.8, 43, 42.2],
+          "compareLabel": "5-day average",
+          "xLabel": "Trading day",
+          "yLabel": "Price ($)",
+          "markers": [
+            { "at": 8, "label": "Price tops, day 9" },
+            { "at": 10, "label": "Average tops, day 11", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Price is the jagged line; the smooth one is its own 5-day average. Price tops at 58 on day 9. The average keeps climbing until day 11 — two steps behind."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Short hugs price. Long ignores it.",
+      "body": "The window length is the only dial. A 10-day average sits close to price and turns quickly, so it flips direction often. A 200-day average barely moves. You trade responsiveness for smoothness, and you cannot have both."
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Two averages on the same stock: 10-day and 200-day. Which one changes more between yesterday and today?",
+      "options": [
+        { "id": "ten", "label": "The 10-day", "correct": true },
+        { "id": "twohundred", "label": "The 200-day", "correct": false }
+      ],
+      "explanation": "Today's close is one tenth of a 10-day average and one two-hundredth of a 200-day one. The shorter the window, the more weight each new print carries."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Every average is late by design.",
+      "body": "The line is built only from closes that have already happened. It cannot lean forward. When price turns, the average keeps drifting the old way until enough new closes enter the window to outweigh the old ones. Lag is not a flaw. It is the definition.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "butter" }
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "A moving average answers exactly one question — where has price been trading lately? Three things it does not do.",
+      "stickers": [
+        {
+          "label": "Predict the next close",
+          "art": { "kind": "glyph", "name": "compass", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Know why price moved",
+          "art": { "kind": "glyph", "name": "brain", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Tell you what to do",
+          "art": { "kind": "glyph", "name": "flag", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Crossovers are two lines meeting.",
+      "body": "A crossover happens when a short average moves through a long one, or when price moves through its average. {{strategy:trend-following|Trend followers}} treat it as a signal. It is really a description: the recent window has finally out-run the older one."
+    },
+    {
+      "id": "c10",
+      "type": "diagram",
+      "title": "Crossovers in a range",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [52, 48, 51, 47, 52, 49, 53, 48, 51, 47, 52, 49],
+          "compareSeries": [50.5, 50, 50, 49.5, 49.5, 49.75, 50.25, 50.5, 50.25, 49.75, 49.5, 49.75],
+          "compareLabel": "4-day average",
+          "xLabel": "Trading day",
+          "yLabel": "Price ($)"
+        }
+      },
+      "caption": "Same stock, no trend. Over twelve days price crosses its own 4-day average eleven times. Every crossing is a real crossing. None of them led anywhere."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "Moving averages",
+      "summary": "A moving average is a summary of prices that already happened, not a signal about prices that have not.",
+      "bullets": [
+        "It is the mean of the last N closes, recomputed each period.",
+        "Short windows react fast and flip often; long windows are smooth and late.",
+        "Crossovers describe what price just did. In a range they fire constantly."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "clock", "bg": "neon" },
+      "insight": "A moving average is a rear-view mirror with the numbers smoothed. It tells you where you have been, never where the road turns next.",
+      "attribution": { "source": "Unit 2", "detail": "Reading a Chart" }
+    }
+  ]
+}

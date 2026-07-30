@@ -1,0 +1,121 @@
+{
+  "id": "margins-that-matter",
+  "courseId": "reading-a-business",
+  "title": "Margins: How Much It Keeps",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Size lies. Margin tells the truth.",
+      "body": "One company sells $500 million a year. Another sells $5 million. Which is the better business? You cannot tell from the size of the number. You need to know how much of it the company keeps."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Start with what the product costs.",
+      "body": "A company sells $100 of product. Making it cost $60. The $40 left over is gross profit — a **40% gross margin**. A high gross margin means customers pay well above cost. That is pricing power.",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "butter" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Then subtract running the place.",
+      "body": "Out of that $40 come $25 of salaries, rent, and marketing. What is left is $15 of operating profit — a **15% operating margin**. That number is about cost discipline, not pricing."
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "One dollar, three margins",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [40, 15, 9],
+          "labels": ["Gross", "Operating", "Net"],
+          "highlightIndex": 2,
+          "yLabel": "% of revenue"
+        }
+      },
+      "caption": "Same revenue, three checkpoints. Each margin strips out another layer of cost. After interest and tax, 9 cents of the original dollar reach the owners."
+    },
+    {
+      "id": "c5",
+      "type": "sticker_reveal",
+      "body": "Three margins, three different questions. Each one tells you something the other two cannot.",
+      "stickers": [
+        {
+          "label": "Gross: pricing power",
+          "art": { "kind": "glyph", "name": "target", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "Operating: cost discipline",
+          "art": { "kind": "glyph", "name": "scale", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "Net: what owners keep",
+          "art": { "kind": "glyph", "name": "coins-stack", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "A grocery chain nets 2% of revenue. A software firm nets 20%. Which is the better business?",
+      "options": [
+        { "id": "cannot-tell", "label": "You cannot tell from margin alone", "correct": true },
+        { "id": "software", "label": "The software firm, clearly", "correct": false }
+      ],
+      "explanation": "A grocer sells the same shelf space over and over on thin margins. Software sells another copy for almost nothing. Both models work. The margins are not comparable because the businesses are not."
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "The direction matters more than the level",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [38, 39, 41, 43, 46],
+          "xLabels": ["Yr 1", "Yr 2", "Yr 3", "Yr 4", "Yr 5"],
+          "yLabel": "Gross margin %",
+          "markers": [{ "at": 4, "label": "Pricing power", "emphasis": true }]
+        }
+      },
+      "caption": "Five years of rising gross margin. This company is charging more, or making it cheaper. Falling margins point the other way: competition, or rising costs."
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Judge a margin against the company's own history and against its direct [[1]] — never across industries.",
+      "wordBank": ["competitors", "customers", "suppliers"],
+      "answer": "competitors",
+      "explanation": "A 9% net margin is weak for software and excellent for a grocer. The comparison only works between businesses facing the same costs."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Margin turns profit into a percentage, so businesses of any size can be measured on the same scale.",
+      "bullets": [
+        "Gross margin shows pricing power; operating margin shows cost discipline.",
+        "Net margin is what finally reaches the owners.",
+        "Rising margins suggest scale or pricing power; falling margins suggest pressure.",
+        "Compare a margin to history and to rivals, not across industries."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "percent", "bg": "ink" },
+      "insight": "Revenue tells you how much a business collects. Margin tells you how much it gets to keep. Only one of those ever reaches the owners.",
+      "attribution": { "source": "Margins", "detail": "Reading a Business" }
+    }
+  ]
+}

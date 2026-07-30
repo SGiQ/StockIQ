@@ -1,0 +1,81 @@
+{
+  "id": "paul-tudor-jones",
+  "name": "Paul Tudor Jones II",
+  "era": "1976-present",
+  "portrait": {
+    "kind": "glyph",
+    "name": "shield",
+    "bg": "forest"
+  },
+  "oneLiner": "Macro trader who shorted Black Monday and puts defense before offense.",
+  "bio": "Paul Tudor Jones II was born in Memphis, Tennessee in 1954 and graduated from the University of Virginia in 1976. He began on the floor of the New York Cotton Exchange after clerking for the cotton trader Eli Tullis, and founded Tudor Investment Corporation in 1980.\n\nHe is best known for being short into the crash of 19 October 1987, a position he and his head of research Peter Borish reached partly through a chart overlay that placed the 1980s market on top of the 1920s.\n\nWhat makes that trade unusual is the evidence. A PBS crew filmed him through 1987 for an hour-long documentary called Trader, so his reasoning was recorded before anyone knew the outcome. Most famous trades are reconstructed years later by the person who made them.\n\nAway from markets he co-founded the Robin Hood Foundation in 1988. He is still working, and **nothing here describes what he holds now**.",
+  "philosophy": [
+    "**Defense before offense.** Jones has framed trading as a risk-control problem before it is a forecasting problem, and has said his first thought on any position is what it stands to lose.",
+    "Get out of a loser rather than argue with it. One of his stated rules is never to average down a losing position, and to cut trading size when he is trading badly.",
+    "Asymmetry beats accuracy. He has described hunting for trades where the potential gain is several times the amount risked, which lets a low hit rate still come out ahead.",
+    "Price moves first. He has said he treats price action as the leading signal and the fundamental story as the thing that catches up, which is what places him in the trend-following family rather than the value one.",
+    "Have a mechanical line for getting out. In a 2014 interview he described the 200-day moving average of closing prices as his default reference for staying in a market or leaving it.",
+    "None of this is a template to copy. His record was built inside a firm with a research team and institutional risk systems, and it includes an early loss large enough to have ended most private accounts."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Tudor Futures Fund return, 1987",
+      "value": "125.9% net of fees",
+      "note": "The calendar year that contained Black Monday, 19 October 1987.",
+      "source": "Jack D. Schwager, Market Wizards (New York Institute of Finance, 1989), introduction to the chapter 'Paul Tudor Jones: The Art of Aggressive Trading'."
+    },
+    {
+      "metric": "Start on the exchange floor",
+      "value": "New York Cotton Exchange, from 1976",
+      "note": "He clerked for the cotton trader Eli Tullis before trading his own account.",
+      "source": "Jack D. Schwager, Market Wizards (New York Institute of Finance, 1989), Paul Tudor Jones interview."
+    },
+    {
+      "metric": "Early-career loss",
+      "value": "Lost the large majority of the equity he was managing on a single cotton trade in 1979",
+      "note": "In his own account the loss came from carrying far too many contracts, not from the direction of the view. Published figures for the exact percentage vary.",
+      "source": "Jack D. Schwager, Market Wizards (New York Institute of Finance, 1989), Paul Tudor Jones interview."
+    },
+    {
+      "metric": "Contemporaneous filmed record",
+      "value": "Trader, a one-hour documentary broadcast by PBS in 1987",
+      "note": "Directed by Michael Glyn and filmed in the months before the October crash.",
+      "source": "Trader (PBS, 1987), directed by Michael Glyn."
+    }
+  ],
+  "signatureStrategies": ["trend-following", "momentum-investing"],
+  "famousTrades": [
+    {
+      "title": "Short into Black Monday",
+      "year": "1987",
+      "story": "Through 1987 Jones and his head of research Peter Borish worked from an overlay that laid the 1980s market on top of the 1920s. The two paths tracked each other closely, and the analogy implied a break in the autumn.\n\nAn analogy is not a forecast, and the position was still managed by price rather than by the chart. He was short stock index futures into 19 October 1987, the day the Dow Jones Industrial Average fell 22.6%.\n\n**The filming is what makes this trade good evidence.** The reasoning was on tape before the result was known, which is rare, and it shows a process rather than a prophecy.",
+      "source": "Trader (PBS, 1987), directed by Michael Glyn; Jack D. Schwager, Market Wizards (New York Institute of Finance, 1989)."
+    },
+    {
+      "title": "The 1979 cotton trade he lost",
+      "year": "1979",
+      "story": "Early in his career Jones took a large position in cotton futures and lost most of the equity in the accounts he was running. In his own telling the cause was size: he was carrying far more contracts than those accounts could absorb.\n\nHe has described this as the trade that turned him into a risk manager. The view was not the problem. The number of contracts behind it was.\n\nIt is the more instructive of his two famous trades. The 1987 short shows what a correct call can pay. This one shows what an oversized position costs when the call is wrong.",
+      "source": "Jack D. Schwager, Market Wizards (New York Institute of Finance, 1989), 'Paul Tudor Jones: The Art of Aggressive Trading'."
+    }
+  ],
+  "quotes": [
+    {
+      "text": "The most important rule of trading is to play great defense, not great offense.",
+      "context": "From his interview in Jack Schwager's Market Wizards (1989)."
+    },
+    {
+      "text": "I am always thinking about losing money as opposed to making money.",
+      "context": "Also from the Market Wizards interview (1989), explaining how he sizes and reviews a position."
+    },
+    {
+      "text": "Don't ever average losers.",
+      "context": "One of the trading rules he lists in Market Wizards (1989). A sign in his office reading 'Losers average losers' appears in the 1987 documentary Trader."
+    },
+    {
+      "text": "My metric for everything I look at is the 200-day moving average of closing prices.",
+      "context": "From his conversation with Tony Robbins published in MONEY: Master the Game (Simon and Schuster, 2014)."
+    }
+  ],
+  "recommendedReading": ["market-wizards", "trading-in-the-zone"],
+  "relatedTraders": ["stanley-druckenmiller", "jesse-livermore", "ray-dalio"]
+}

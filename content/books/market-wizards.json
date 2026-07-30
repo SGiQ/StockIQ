@@ -1,0 +1,132 @@
+{
+  "id": "market-wizards",
+  "title": "Market Wizards",
+  "author": "Jack D. Schwager",
+  "year": 1989,
+  "cover": { "kind": "glyph", "name": "people", "bg": "ink" },
+  "summary": "Jack Schwager's 1989 book is a collection of long interviews with traders who had produced unusual results, working in futures, currencies, and stocks. Read as a how-to it is useless, because the interviewees contradict each other on nearly every question of method: charts against economics, months against minutes, written rules against instinct. Read as a comparison it becomes unusually clear. Whatever they trade, they decide how much they can lose before they act, they can say why their approach should work at all, and they keep to it when it is uncomfortable. That overlap, not any one person's system, is what the book leaves you with. This guide describes those common threads in our own words and reproduces none of the interviews.",
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A book of interviews, not a method.",
+      "body": "Jack Schwager sat down with traders who had produced unusual results and asked them how they worked. He did not smooth their answers into a system. The value is in the disagreement between them, and in the few things none of them disagree about."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The methods have almost nothing in common.",
+      "body": "One trades charts, another trades economics. One holds for months, another is flat by the close. Some rely on instinct, some on rules written in advance. If you are reading it for a formula, the book refuses to give one.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "What they share is loss control.",
+      "body": "Ask any of them about a great trade and you get a story. Ask about survival and you get the same answer in different words: decide what you can lose before you enter, and get out when you turn out to be wrong.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "forest" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Why they all guard the downside",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [11, 33, 100, 300],
+          "labels": ["Down 10%", "Down 25%", "Down 50%", "Down 75%"],
+          "highlightIndex": 3,
+          "yLabel": "% gain needed to break even"
+        }
+      },
+      "caption": "Losses are not symmetric. Down 50% needs a 100% gain to get back to flat. Down 75% needs 300%. Small losses stay fixable."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Two traders in the book use opposite methods. Which question do both answer before entering?",
+      "options": [
+        { "id": "target", "label": "How high can this go?", "correct": false },
+        { "id": "risk", "label": "How much can I lose here?", "correct": true }
+      ],
+      "explanation": "Upside is a guess. The amount you stand to lose is something you can settle in advance, and the interviews keep returning to it."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Each of them can name their edge.",
+      "body": "Pushed on why their approach should make money at all, none of them shrugs. They can describe the specific advantage they think they have, and the conditions where it stops working. Vague confidence is the one thing the book never shows.",
+      "art": { "kind": "glyph", "name": "target", "bg": "sky" }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "If you cannot say why your approach should make money, you do not have an [[1]], you have a habit.",
+      "wordBank": ["edge", "account", "indicator"],
+      "answer": "edge",
+      "explanation": "The interviews are full of different edges. What they share is that each trader can state theirs plainly, in a sentence."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Rules only count under pressure.",
+      "body": "Most of these interviews include a painful early loss, often from ignoring a rule the trader had already set. The recurring lesson is not that they found a perfect method. It is that they kept following an imperfect one on bad days.",
+      "art": { "kind": "glyph", "name": "anchor", "bg": "butter" }
+    },
+    {
+      "id": "c9",
+      "type": "diagram",
+      "title": "Many small losses, a few large wins",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 97, 94, 91, 128, 124, 120, 117, 168, 160, 155, 212],
+          "xLabel": "Trades in order",
+          "yLabel": "Account value",
+          "markers": [
+            { "at": 3, "label": "Four small losses" },
+            { "at": 4, "label": "One large win", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "This shape turns up again and again. The wins are not more frequent than the losses. They are bigger, because the losses were cut small."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Copying a wizard rarely transfers.",
+      "body": "Their methods fit their own temperament, capital, and time. What travels is the structure underneath: risk decided before the trade, an approach with a stated reason, and the discipline to keep to it.",
+      "art": { "kind": "glyph", "name": "compass", "bg": "neon" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What the interviews agree on",
+      "summary": "Strip away the methods and three habits are left: control the loss, name the edge, keep the rules under pressure.",
+      "bullets": [
+        "The methods contradict each other, so no method is the point.",
+        "Downside gets decided before the trade, not after it.",
+        "An edge that cannot be described is not an edge.",
+        "Discipline is what separates a record from an idea."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "people", "bg": "ink" },
+      "insight": "There is no single right way to trade. What these traders share is knowing their own way well enough to keep to it when it hurts.",
+      "attribution": { "source": "Market Wizards", "detail": "Jack D. Schwager, 1989" }
+    }
+  ],
+  "buyLinks": [
+    {
+      "label": "Find it at Bookshop.org",
+      "url": "https://bookshop.org/search?keywords=Market%20Wizards%20Jack%20D.%20Schwager"
+    }
+  ],
+  "relatedTraders": ["paul-tudor-jones", "william-oneil"],
+  "relatedStrategies": ["trend-following", "canslim"],
+  "attribution": "Original summary of Market Wizards by Jack D. Schwager (1989), written for StockIQ. No interview text is reproduced. StockIQ is not affiliated with the author, the interviewees, or the publisher."
+}

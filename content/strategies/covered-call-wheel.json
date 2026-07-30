@@ -1,0 +1,45 @@
+{
+  "id": "covered-call-wheel",
+  "name": "The Wheel",
+  "family": "income",
+  "oneLiner": "Sell a cash-secured put, take assignment, then sell calls against the shares.",
+  "thesis": "The wheel is a repeating three-step loop. First, sell a cash-secured put on a stock, setting aside the full cash needed to buy the shares at the strike, and collect a premium. If the stock stays above the strike the put expires worthless and the premium is kept. If the stock falls below the strike the put is assigned and the shares are bought at the strike price — regardless of where the stock is actually trading. Second, having been assigned the shares, sell covered calls against them and collect further premium. Third, if the stock rises through the call strike the shares are called away and the loop restarts with a new put.\n\nThe payoff shape has to be stated exactly, because loose descriptions of this strategy are where people are misled. Every premium collected is small, known in advance, and capped. Every loss is open-ended and unknown. Holding shares while short a call means the upside stops at the call strike: above it, the shares are called away and the gain is fixed at the strike minus the purchase price plus premium, no matter how far the stock runs. Below the purchase price, the loss is the full decline in the shares, reduced only by the premium collected. **The premium does not hedge the position — it offsets the first small part of a fall and nothing beyond it.** A stock bought at 50 that falls to 20 has lost 30 per share; two dollars of collected premium leaves 28. Describing this as an income strategy is accurate about the cash flow and silent about the risk that generates it.\n\nOptions carry risks that shares alone do not. A short put can be assigned early and must be honoured; a short call obliges delivery of shares at the strike. Options expire, so the position has a deadline that stock ownership does not, and an option's entire value can go to zero. Assignment can occur at any time before expiration for American-style contracts, including around ex-dividend dates. Options are not suitable for everyone and brokers require specific approval to trade them.",
+  "timeframe": "position",
+  "riskLevel": 4,
+  "entryRules": [
+    "Descriptions of this approach almost always begin with the same constraint: sell the put only on a stock the seller would be content to own outright, at a size where the full cash to buy the shares at the strike is genuinely set aside. Assignment is not an edge case to be avoided — it is a step in the loop, and it is the step the whole plan has to survive.",
+    "The put strike is usually described as being chosen below the current price, with practitioners weighing a familiar trade-off: strikes closer to the money pay more premium and are assigned more often, strikes further out pay less and are assigned less. Neither choice reduces the total risk of owning the stock; it moves where that risk sits.",
+    "Expirations of roughly one to two months are commonly described, on the reasoning that an option's time value decays fastest near expiration but that very short contracts leave little premium relative to the transaction costs and the attention required.",
+    "Once assigned, the covered call is typically written at or above the assignment price, because a call struck below the cost basis locks in a loss on the shares if it is exercised — the premium is collected, but the shares are sold for less than they were bought for.",
+    "Practitioners frequently describe avoiding earnings announcements and other scheduled events inside the option's life, since the elevated premium available around them is compensation for exactly the gap risk that the strategy cannot absorb."
+  ],
+  "exitRules": [
+    "The intended outcome is passive: options are held to expiration and either expire worthless, keeping the premium, or are assigned or exercised, moving the loop to its next step. Most descriptions treat doing nothing as the default and any intervention as the exception.",
+    "Buying a short option back early — often described once most of its value has decayed — closes the obligation and frees the position, at the cost of paying a spread and giving up the remaining premium.",
+    "Rolling, meaning closing one contract and opening a later or differently struck one, is widely described as a way to defer assignment. It should be understood as opening a new position rather than repairing the old one: it extends the time at risk, and rolling a losing put down and out often means accepting a credit far smaller than the loss already carried on the position.",
+    "The exit that gets least attention in casual descriptions is abandoning the loop entirely — selling the shares at a loss and stopping. If the reason for owning the stock has gone, continuing to write calls against a falling position collects small premiums while the shares carry the decline."
+  ],
+  "riskManagement": [
+    "The asymmetry is the whole story. Upside is capped at the call strike plus premiums collected; downside runs the full distance from the purchase price to zero, offset only by the premium. This is not a modest imbalance — a single position can lose more than many cycles of collected premium have earned.",
+    "Cash-secured means cash-secured. Selling puts on margin against buying power rather than reserved cash converts a defined obligation into a leveraged one, and a decline that would have been an uncomfortable assignment becomes a margin call that forces the position closed at the worst price.",
+    "Assignment risk is real and not fully under the seller's control. American-style options can be assigned early, notably before an ex-dividend date on a short call, and assignment can arrive when the cash or shares are least convenient to deliver.",
+    "Concentration is a common failure: running the loop on one or two familiar names means the entire cash reserve, the assigned shares, and every open obligation are exposed to the same single-company risk at the same time.",
+    "The strategy's returns look smooth for long stretches, because most cycles end in a small, known gain. That smoothness is a feature of the payoff shape rather than evidence of safety, and it can make position sizes drift upward in exactly the period before a large decline.",
+    "riskLevel here is a rough comparative marker against the other strategies in this library. It is not a ceiling on loss, and it says nothing about whether options are appropriate for any particular reader — that depends on circumstances this app cannot see."
+  ],
+  "practicedBy": [],
+  "furtherReading": ["trading-in-the-zone"],
+  "prerequisiteLessons": [
+    "market-foundations/order-types",
+    "reading-a-business/dividends-and-buybacks",
+    "risk-and-position-sizing/position-sizing"
+  ],
+  "illustrativeChart": {
+    "type": "payoff",
+    "legs": [
+      { "kind": "stock", "side": "long", "strike": 50, "quantity": 1 },
+      { "kind": "call", "side": "short", "strike": 55, "premium": 2, "quantity": 1 }
+    ],
+    "spotRange": [25, 80]
+  }
+}

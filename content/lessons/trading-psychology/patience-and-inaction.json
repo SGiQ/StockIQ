@@ -1,0 +1,213 @@
+{
+  "id": "patience-and-inaction",
+  "courseId": "trading-psychology",
+  "title": "The Cost of Doing Something",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": [
+    "trader:warren-buffett",
+    "lesson:trading-psychology/fear-of-missing-out"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Activity feels like work. The market does not pay for effort.",
+      "body": "In most jobs, doing more gets you further. Here the relationship breaks. Every trade takes something out before it can give anything back, and the account cannot tell the difference between a busy month and a productive one.",
+      "art": {
+        "kind": "glyph",
+        "name": "clock",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Every trade arrives with a bill.",
+      "body": "Some of it is visible on the statement and some is not. The visible part is small enough to ignore once. The problem is that it is charged every single time, and it is charged whether or not the trade works.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "sticker_reveal",
+      "body": "Four costs ride along with every trade. Tap to reveal them. Only two show up on a statement.",
+      "stickers": [
+        {
+          "label": "The spread",
+          "art": {
+            "kind": "glyph",
+            "name": "exchange",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.28,
+            "y": 0.16
+          },
+          "rotation": -6
+        },
+        {
+          "label": "Commission",
+          "art": {
+            "kind": "glyph",
+            "name": "dollar",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.72,
+            "y": 0.38
+          },
+          "rotation": 5
+        },
+        {
+          "label": "Tax on gains",
+          "art": {
+            "kind": "glyph",
+            "name": "bank",
+            "bg": "blush"
+          },
+          "anchor": {
+            "x": 0.3,
+            "y": 0.62
+          },
+          "rotation": -4
+        },
+        {
+          "label": "Your attention",
+          "art": {
+            "kind": "glyph",
+            "name": "brain",
+            "bg": "lilac"
+          },
+          "anchor": {
+            "x": 0.7,
+            "y": 0.86
+          },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Two points a year",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "compounding",
+          "principal": 10000,
+          "rate": 0.06,
+          "years": 20,
+          "compareRate": 0.04
+        }
+      },
+      "caption": "The same 10,000 compounding at 6% and at 4%. Two points of annual friction is barely noticeable in year one and costs about 10,000 by year twenty.",
+      "refs": [
+        "lesson:risk-and-position-sizing/why-losses-hurt-more"
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A strategy has clear conditions for entering. Most weeks, those conditions are absent. What does that mean about the strategy?",
+      "options": [
+        {
+          "id": "waiting",
+          "label": "Waiting is part of executing it",
+          "correct": true
+        },
+        {
+          "id": "broken",
+          "label": "It needs looser conditions",
+          "correct": false
+        }
+      ],
+      "explanation": "Conditions that are rarely met are what make a setup selective in the first place. Loosening them to trade more often does not find more opportunities — it just relabels ordinary weeks as opportunities."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "A selective strategy is mostly waiting.",
+      "body": "If the conditions appear twenty times a year, then roughly three hundred and forty days are supposed to look like nothing happening. Those days are not a failure to execute the plan. They are the plan.",
+      "art": {
+        "kind": "glyph",
+        "name": "anchor",
+        "bg": "forest"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Boredom places real orders.",
+      "body": "Sitting still is uncomfortable, and a screen full of moving numbers is an invitation. A position taken to end that discomfort was never based on a thesis — so there is nothing to say when it should be closed.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A position opened without a thesis has no [[1]], because there is no condition that could tell you the idea is finished.",
+      "wordBank": [
+        "exit",
+        "spread",
+        "broker"
+      ],
+      "answer": "exit",
+      "explanation": "An exit is defined by the thesis being proved right or wrong. Remove the thesis and nothing is left to define it, so the position ends up closed by mood instead."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "One root, three symptoms.",
+      "body": "Chasing a move, trading to win money back, and trading because nothing is happening look like separate mistakes. They are the same one: acting to change how you feel rather than because the conditions were met.",
+      "art": {
+        "kind": "glyph",
+        "name": "seed",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Inactivity can be a policy, not a lapse.",
+      "body": "In Berkshire Hathaway's shareholder letters, {{trader:warren-buffett|Warren Buffett}} has repeatedly described long stretches of doing nothing as deliberate — holding cash until something meets the standard rather than lowering the standard to stay busy.",
+      "art": {
+        "kind": "glyph",
+        "name": "shield",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "Doing nothing, on purpose",
+      "summary": "Trades cost money and attention every time, so activity is a cost before it is ever an edge.",
+      "bullets": [
+        "Spread, commission, tax and attention are charged whether or not the trade works.",
+        "A selective strategy is mostly waiting, and the waiting is the strategy.",
+        "Boredom opens positions that have no thesis, so they have no exit.",
+        "FOMO, revenge and boredom all trade to change a feeling."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": {
+        "kind": "palette",
+        "preset": "forest"
+      },
+      "insight": "You are not paid for the hours you put in, only for the decisions you get right. Most hours, the correct decision is to do nothing.",
+      "attribution": {
+        "source": "Trading Psychology",
+        "detail": "Building the habit"
+      },
+      "frame": "gradient"
+    }
+  ]
+}

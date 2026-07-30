@@ -1,0 +1,43 @@
+{
+  "id": "momentum-investing",
+  "name": "Momentum",
+  "family": "momentum",
+  "oneLiner": "Recent relative strength has tended to persist — until it reverses violently.",
+  "thesis": "Momentum is an observation about how prices have behaved, not a claim about how they must behave. Across many markets and long sample periods, researchers have found that assets which outperformed over the previous three to twelve months went on to outperform over the following few months more often than chance would suggest — and that the weakest performers kept lagging. The usual explanations are behavioural: investors under-react to news at first and then over-extrapolate the trend once it is obvious, so a move that should have happened in a day gets stretched over months.\n\nWhat matters far more than the effect is its shape. Momentum does not fail gently. It works in long, unremarkable stretches and then breaks in short, brutal ones — the pattern researchers call a **momentum crash**, typically when a falling market turns and the most beaten-down names rip upward while the recent winners are sold hard. Studies of these episodes find that a strategy's worst months can erase years of accumulated gains within weeks. Anyone reading about momentum should treat that asymmetry as the central fact about it, not a footnote.",
+  "timeframe": "position",
+  "riskLevel": 4,
+  "entryRules": [
+    "Traders who describe their process in momentum terms typically start by ranking a universe on **relative strength** — how a stock has performed against an index or against its peers over some lookback window, often three to twelve months — and confine their attention to the strongest slice of that ranking.",
+    "Many describe waiting for price to clear a prior high or the top of a multi-week consolidation, on the reasoning that a new high is the cleanest evidence that supply has been absorbed. Others describe requiring the stock to sit above a longer moving average as a coarse filter on trend direction.",
+    "Volume is a common secondary filter: practitioners often describe wanting expansion in volume on the advance and contraction on pullbacks, and treating a breakout on thin volume as weaker evidence than the same breakout on heavy volume.",
+    "A recurring caution in the literature is that the most recent few weeks are frequently excluded from the lookback window, because very short-term price moves have historically shown the opposite tendency — they revert rather than persist."
+  ],
+  "exitRules": [
+    "Because momentum has no notion of fair value, practitioners generally describe exiting on price behaviour rather than on a valuation target. A common formulation is leaving when the stock loses the moving average or trend line that defined the move in the first place.",
+    "Systematic versions typically rebalance on a fixed schedule — monthly or quarterly — and simply drop whatever has fallen out of the top of the ranking, regardless of how the position feels.",
+    "Discretionary traders often describe scaling out into strength rather than exiting at once, on the view that the sharpest part of a move frequently comes near its end and is also the hardest part to sit through.",
+    "A failed breakout — a move above a prior high that immediately falls back below it — is widely described as an exit signal in its own right, because the evidence the entry rested on has been contradicted."
+  ],
+  "riskManagement": [
+    "The defining risk is the momentum crash. Concentrating in whatever has already risen most is, by construction, a bet that the current regime continues; when the regime turns, every position tends to turn together, so diversification across names offers far less protection than the number of positions suggests.",
+    "Position sizing is where most published descriptions put the emphasis — deciding in advance what fraction of capital a single idea may lose, and sizing the position so that a stop at a predefined level costs no more than that. The stop level determines the size, not the other way round.",
+    "Gaps make stops unreliable. A stock can open well below the exit price on news, and the realised loss is then whatever the market offers, not the number that was planned. Any risk figure computed from a stop is a best case.",
+    "Crowding is a documented hazard: momentum rankings across many participants tend to converge on the same names, so the exit can be narrow precisely when everyone wants it. Turnover is also high, which means costs, spreads, and short-term tax treatment matter far more than in slower approaches.",
+    "riskLevel here is a rough comparative marker against the other strategies in this library — it is not a measure of expected loss, and it does not mean the approach is suitable for any particular reader."
+  ],
+  "practicedBy": ["mark-minervini", "stanley-druckenmiller", "jesse-livermore"],
+  "furtherReading": ["market-wizards", "reminiscences-of-a-stock-operator"],
+  "prerequisiteLessons": [
+    "reading-a-chart/trend-and-structure",
+    "reading-a-chart/momentum-indicators"
+  ],
+  "illustrativeChart": {
+    "type": "line",
+    "series": [100, 107, 113, 121, 128, 137, 145, 154, 161, 157, 129, 116, 124],
+    "yLabel": "Relative strength",
+    "markers": [
+      { "at": 8, "label": "Trend still intact" },
+      { "at": 10, "label": "Momentum crash", "emphasis": true }
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "id": "indices-and-benchmarks",
+  "courseId": "market-foundations",
+  "title": "Indices: What 'The Market' Means",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The market was up today. Which market?",
+      "body": "Nobody means every stock. They mean one index — usually the S&P 500. An index is a single number that stands in for hundreds of companies at once. When the anchor says the market rose, an index rose. That is all the sentence ever means."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "An index is a basket plus a rule.",
+      "body": "Two decisions build an index. Which companies go in the basket, and how much each one counts. That second decision is the **weighting rule**, and it is where the confusion lives: two indices holding similar companies can move differently on the same day.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Market-cap weighting is top-heavy",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [7, 6, 4, 0.4, 0.05],
+          "labels": ["#1", "#2", "#3", "#50", "#400"],
+          "highlightIndex": 0,
+          "yLabel": "% of index"
+        }
+      },
+      "caption": "Illustrative weights by company rank. When weight follows size, the top few names can turn the whole index green on a day when most members fall."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "The Dow counts dollars, not size.",
+      "body": "The Dow weights its 30 companies by share price. A stock at 400 dollars moves it more than one at 40, even if the second company is far larger. That rule dates to 1896, when adding up prices by hand was the practical option.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "butter" }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Two Dow members each rise 10 percent on the same day. One trades at 400 dollars, the other at 40. Which moves the Dow further?",
+      "options": [
+        { "id": "price", "label": "The 400 dollar stock", "correct": true },
+        { "id": "size", "label": "Whichever company is larger", "correct": false }
+      ],
+      "explanation": "The Dow adds share prices, so a 10 percent move is 40 dollars against 4. **Company size never enters the calculation.** That is the quirk price weighting leaves behind."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Three names do most of the work in headlines. Each measures something different, so what the market did depends on which one is being quoted.",
+      "stickers": [
+        {
+          "label": "S&P 500: 500 large firms",
+          "art": { "kind": "glyph", "name": "building", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "Dow: 30 blue chips",
+          "art": { "kind": "glyph", "name": "bank", "bg": "butter" },
+          "anchor": { "x": 0.68, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "Nasdaq: tech heavy",
+          "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" },
+          "anchor": { "x": 0.36, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "The S&P 500 weights each company by its [[1]], so the biggest members move the index most.",
+      "wordBank": ["market value", "share price", "revenue"],
+      "answer": "market value",
+      "explanation": "Market value is share price times shares outstanding. The Dow uses share price alone, which is exactly why the two indices can disagree about the same trading day."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "A benchmark is the honest yardstick.",
+      "body": "Up 9 percent last year sounds good until you learn the index returned 14. A benchmark turns a raw number into a verdict. It is also a hard bar: over long periods, most actively managed funds fail to beat the index they are measured against.",
+      "art": { "kind": "glyph", "name": "target", "bg": "sky" }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "The market is not a thing. It is an index — a basket of companies plus a rule for how much each one counts.",
+      "bullets": [
+        "The S&P 500 weights by market value, so the largest companies dominate its moves.",
+        "The Dow weights by share price, an inherited quirk from 1896.",
+        "The Nasdaq Composite leans heavily toward technology companies.",
+        "A benchmark is how you judge whether your own return was actually good."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "compass", "bg": "neon" },
+      "insight": "Beating the market means nothing until you name the market. The index you compare against decides whether your year was good or merely ordinary.",
+      "attribution": { "source": "Day 8", "detail": "Market Foundations" }
+    }
+  ]
+}

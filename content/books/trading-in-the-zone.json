@@ -1,0 +1,126 @@
+{
+  "id": "trading-in-the-zone",
+  "title": "Trading in the Zone",
+  "author": "Mark Douglas",
+  "year": 2000,
+  "cover": { "kind": "glyph", "name": "brain", "bg": "lilac" },
+  "summary": "Mark Douglas's 2000 book is about the distance between knowing a method and being able to follow it. His central move is to separate the **single trade** from the **series**: even a genuine edge says almost nothing about what the next trade will do, so judging yourself on individual outcomes trains exactly the wrong instincts. Around that he builds a practical account of the four fears that quietly rewrite a plan mid-trade, and argues that consistency is something produced by repeating a process rather than earned by being right.",
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The problem is rarely the method.",
+      "body": "Mark Douglas published this in 2000 after years spent with traders who knew what to do and did not do it. His claim is that most trading failure is a belief problem rather than an analysis problem, and that beliefs have to be worked on directly."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "An edge is a tendency, not a promise.",
+      "body": "An edge means that across a large number of occurrences, one outcome shows up slightly more often. It says almost nothing about the next trade. Douglas asks you to hold both facts at once: the series is predictable in aggregate, the single event is not.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "A positive edge, twelve trades",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [2, -1, -1, -1, -1, -1, 3, -1, 2, -1, 4, -1],
+          "labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+          "highlightIndex": 3,
+          "yLabel": "Result, in units of risk"
+        }
+      },
+      "caption": "Twelve trades with a real positive edge. Four winners cover eight losers, and five losses in a row sit in the middle. The edge holds; the sequence still looks broken."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You take a trade with a genuine edge and it loses. What does that one loss tell you about the edge?",
+      "options": [
+        { "id": "broken", "label": "The edge has stopped working", "correct": false },
+        { "id": "nothing", "label": "Almost nothing on its own", "correct": true }
+      ],
+      "explanation": "A single outcome is close to random even when the odds favour you. Douglas's point is that treating each trade as evidence about your method is how people talk themselves out of a process that was working."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Consistency comes from the process.",
+      "body": "If you only feel steady when you are right, every loss becomes a threat and rules start changing mid-stream. Douglas argues the reverse: that you define the process, accept the range of outcomes it produces, and let being right stop mattering trade by trade."
+    },
+    {
+      "id": "c6",
+      "type": "fill_blank",
+      "body": "Douglas lists four trading fears: being wrong, losing money, missing a move, and leaving money [[1]].",
+      "wordBank": ["on the table", "in the account", "with the broker"],
+      "answer": "on the table",
+      "explanation": "Each fear distorts a different part of the job. Fear of being wrong delays exits, fear of missing out pulls you in early, and fear of leaving money on the table keeps you in past your own plan."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "The four fears do not feel like fear at the time. They feel like good reasons.",
+      "stickers": [
+        {
+          "label": "Being wrong",
+          "art": { "kind": "glyph", "name": "cross", "bg": "blush" },
+          "anchor": { "x": 0.28, "y": 0.14 },
+          "rotation": -6
+        },
+        {
+          "label": "Losing money",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "butter" },
+          "anchor": { "x": 0.72, "y": 0.38 },
+          "rotation": 5
+        },
+        {
+          "label": "Missing the move",
+          "art": { "kind": "glyph", "name": "bell", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Leaving money behind",
+          "art": { "kind": "glyph", "name": "coins-stack", "bg": "mint" },
+          "anchor": { "x": 0.7, "y": 0.86 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Accepting risk is not tolerating it.",
+      "body": "Douglas draws a line between saying you accept a loss and actually accepting it. If a loss still starts an argument in your head, it has not been accepted, and the flinch tends to show up in the next entry or the next exit."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "title": "What the book is doing",
+      "summary": "A psychology book about the gap between knowing a method and being able to run it.",
+      "bullets": [
+        "An edge only shows up across many trades, never reliably in the next one.",
+        "Consistency comes from repeating a process, not from being right.",
+        "Four fears — being wrong, losing, missing out, leaving money behind — bend the plan quietly."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "target", "bg": "ink" },
+      "insight": "You cannot control what any one trade does. You can control whether you run the same process the next hundred times.",
+      "attribution": { "source": "Book guide", "detail": "Trading in the Zone" }
+    }
+  ],
+  "buyLinks": [
+    {
+      "label": "Search Bookshop.org",
+      "url": "https://bookshop.org/search?keywords=Trading%20in%20the%20Zone%20Mark%20Douglas"
+    }
+  ],
+  "relatedStrategies": ["mean-reversion", "momentum-investing"],
+  "attribution": "Original StockIQ summary of the ideas in Trading in the Zone by Mark Douglas (2000). Written in our own words; no text from the book is reproduced."
+}

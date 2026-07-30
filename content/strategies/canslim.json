@@ -1,0 +1,46 @@
+{
+  "id": "canslim",
+  "name": "CANSLIM",
+  "family": "growth",
+  "oneLiner": "O'Neil's seven-letter checklist combining earnings growth with chart behaviour.",
+  "thesis": "CANSLIM is a checklist assembled by William J. O'Neil from a study of past stock market winners, and the name is an acronym for the seven things he claimed those winners had in common.\n\n**C — Current quarterly earnings.** A sharp increase in earnings per share against the same quarter a year earlier.\n**A — Annual earnings growth.** A multi-year record of rising annual earnings, not a single good quarter.\n**N — New.** Something new in the story: a product, a management team, an industry condition, or the share reaching a new price high.\n**S — Supply and demand.** The number of shares outstanding and the volume trading in them; O'Neil argued a smaller float moves more on the same buying.\n**L — Leader or laggard.** Owning the strongest company in a strong group rather than the cheap one beside it.\n**I — Institutional sponsorship.** Evidence that professional funds are accumulating the shares, though not so many that everyone already owns it.\n**M — Market direction.** O'Neil's claim that the general market's direction overrides the other six letters, because most shares follow it.\n\nWhat makes CANSLIM unusual is that it fuses a fundamental screen with a technical one — the earnings letters and the chart letters are meant to agree before anything happens. It was derived by looking backward at winners, which is a form of selection that can flatter any rule, and it produces frequent small losses by design. Nothing here says it works or that it suits any reader.",
+  "timeframe": "position",
+  "riskLevel": 4,
+  "entryRules": [
+    "O'Neil described requiring the **C** and **A** letters together: a large jump in the most recent quarter's earnings per share against the year-ago quarter, sitting on top of several years of rising annual earnings.",
+    "The **N** letter is described as something genuinely new — a product, a management change, an industry shift, or the share trading at a new price high after a period of consolidation.",
+    "Followers of the method typically wait for a chart base to complete and for the share to move above the base on volume well above its own average, which is how they read the **S** letter of supply and demand.",
+    "The **L** letter is applied by comparing a company against its own industry group and favouring the strongest performer rather than the cheapest one in the group.",
+    "For **I**, practitioners look at whether institutional funds appear to be accumulating, and O'Neil warned that a stock already owned by everyone has no marginal buyer left.",
+    "The **M** letter is treated as a gate on all the others: O'Neil argued that when the general market averages are in a downtrend, most individual setups fail regardless of how well they score."
+  ],
+  "exitRules": [
+    "O'Neil wrote about a fixed loss discipline — commonly cited as cutting a position roughly seven to eight percent below the purchase price — applied without renegotiating, on the argument that the arithmetic of recovering from large losses is punishing.",
+    "On the upside, he described taking a substantial part of a gain after a move of roughly twenty to twenty-five percent in many cases, while allowing exceptional shares to run longer under separate rules.",
+    "Followers describe exiting when the market letter turns: distribution days accumulating in the general averages is treated as a reason to reduce exposure across the board rather than defend individual positions.",
+    "A breakout that fails and falls back into its base is generally treated as a failed setup, and the position is closed rather than held in hope of a second attempt.",
+    "Deterioration in the earnings letters — a quarter that breaks the growth record — is described as invalidating the reason the position existed."
+  ],
+  "riskManagement": [
+    "The method produces many small losses on purpose. O'Neil's own writing stresses that most breakouts fail, and that the approach depends entirely on the losses being kept small — which requires acting on a stop that has already been passed.",
+    "CANSLIM was derived by studying stocks that had already gone up, which is survivorship bias built into the foundation. Characteristics common to past winners are not the same thing as characteristics that predict future ones.",
+    "The buying happens near new price highs, so entries are by construction at points where the share has already moved a long way. In a market that turns shortly afterward, this produces a cluster of simultaneous losses.",
+    "In sideways or choppy markets the pattern generates repeated failed breakouts, and practitioners describe long stretches of small losses with no offsetting winner. The **M** letter exists specifically because of this.",
+    "Fast growth names are volatile and can gap through a stop overnight on an earnings release, meaning the intended loss is not always the loss actually taken.",
+    "The **riskLevel** here is a rough comparative signal against the other strategies in this app, not a measurement and not a statement that this approach is suitable for anyone."
+  ],
+  "practicedBy": ["william-oneil", "mark-minervini"],
+  "furtherReading": ["market-wizards"],
+  "prerequisiteLessons": [
+    "reading-a-business/revenue-vs-earnings",
+    "reading-a-chart/trend-and-structure",
+    "reading-a-chart/volume-confirms"
+  ],
+  "illustrativeChart": {
+    "type": "bars",
+    "values": [9, 14, 31, 68],
+    "labels": ["Q1", "Q2", "Q3", "Q4"],
+    "highlightIndex": 3,
+    "yLabel": "Illustrative EPS growth vs year-ago quarter (%)"
+  }
+}

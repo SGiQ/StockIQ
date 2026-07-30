@@ -1,0 +1,11 @@
+{
+  "id": "broken-fixture",
+  "title": "Broken Fixture",
+  "author": "Test",
+  "category": "fundamentals",
+  "cover": { "kind": "palette", "preset": "mint" },
+  "blurb": "Deliberately broken content used to prove the validator works.",
+  "order": 99,
+  "units": [{ "id": "unit-1", "index": 1, "name": "ONLY UNIT", "lessonIds": ["bad-lesson", "ghost-lesson"] }],
+  "totalXp": 999
+}

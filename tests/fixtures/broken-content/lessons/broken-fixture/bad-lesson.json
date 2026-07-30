@@ -1,0 +1,23 @@
+{
+  "id": "bad-lesson",
+  "courseId": "broken-fixture",
+  "title": "Bad Lesson",
+  "estimatedMinutes": 2,
+  "xp": 10,
+  "refs": ["trader:does-not-exist"],
+  "cards": [
+    { "id": "c1", "type": "concept", "headline": "Hi", "body": "A <b>tag</b> and a [markdown](link)." },
+    { "id": "c1", "type": "concept", "headline": "Dup id", "body": "Duplicate card id." },
+    { "id": "c3", "type": "binary_choice", "prompt": "Two correct?",
+      "options": [{"id":"a","label":"Yes","correct":true},{"id":"b","label":"No","correct":true}],
+      "explanation": "Both marked correct." },
+    { "id": "c4", "type": "fill_blank", "body": "A stock is a [[1]] of ownership.",
+      "wordBank": ["yield","payout","coupon"], "answer": "dividend" },
+    { "id": "c5", "type": "fill_blank", "body": "No slot here at all.",
+      "wordBank": ["a","b","c"], "answer": "a" },
+    { "id": "c6", "type": "diagram", "art": { "kind": "image", "source": "x.png", "alt": "x" }, "caption": "Bitmap inside a card." },
+    { "id": "c7", "type": "main_idea", "summary": "One", "bullets": ["a","b"] },
+    { "id": "c8", "type": "main_idea", "summary": "Two recaps", "bullets": ["a","b"] },
+    { "id": "c9", "type": "concept", "headline": "Long", "body": "This card deliberately runs far past the fifty five word prose budget so that the fifth validation pass has something to complain about, because a card this long would never feel like Imprint on a phone screen where the whole point is that you can read the thing in a single glance and move on quickly without ever once scrolling down." }
+  ]
+}

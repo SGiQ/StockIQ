@@ -1,0 +1,389 @@
+{
+  "id": "patterns-and-their-limits",
+  "courseId": "reading-a-chart",
+  "title": "Patterns and Their Limits",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": [
+    "lesson:market-foundations/what-moves-a-price"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Your eyes will find a shape in anything.",
+      "body": "Show a person random numbers plotted as a line and they will name a shape within seconds. That skill kept our ancestors alive. On a price chart it means you will see structure whether or not any structure is there."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A pattern is a named shape.",
+      "body": "Chart patterns are shapes traders gave names to: a **head and shoulders**, a triangle, a flag. Each comes with a story about what happens next. The shape is real. The story is the part worth questioning.",
+      "art": {
+        "kind": "glyph",
+        "name": "candle",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The most famous shape",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            {
+              "o": 93,
+              "h": 96,
+              "l": 92,
+              "c": 95
+            },
+            {
+              "o": 95,
+              "h": 100,
+              "l": 94,
+              "c": 99
+            },
+            {
+              "o": 99,
+              "h": 105,
+              "l": 98,
+              "c": 104
+            },
+            {
+              "o": 104,
+              "h": 109,
+              "l": 103,
+              "c": 108
+            },
+            {
+              "o": 108,
+              "h": 109,
+              "l": 102,
+              "c": 103
+            },
+            {
+              "o": 103,
+              "h": 104,
+              "l": 99,
+              "c": 100
+            },
+            {
+              "o": 100,
+              "h": 107,
+              "l": 99,
+              "c": 106
+            },
+            {
+              "o": 106,
+              "h": 113,
+              "l": 105,
+              "c": 112
+            },
+            {
+              "o": 112,
+              "h": 120,
+              "l": 111,
+              "c": 118
+            },
+            {
+              "o": 118,
+              "h": 119,
+              "l": 109,
+              "c": 110
+            },
+            {
+              "o": 110,
+              "h": 111,
+              "l": 100,
+              "c": 101
+            },
+            {
+              "o": 101,
+              "h": 108,
+              "l": 100,
+              "c": 107
+            },
+            {
+              "o": 107,
+              "h": 111,
+              "l": 106,
+              "c": 110
+            },
+            {
+              "o": 110,
+              "h": 111,
+              "l": 103,
+              "c": 104
+            },
+            {
+              "o": 104,
+              "h": 105,
+              "l": 97,
+              "c": 99
+            }
+          ],
+          "levels": [
+            {
+              "value": 100,
+              "label": "Neckline"
+            }
+          ],
+          "annotations": [
+            {
+              "at": 3,
+              "label": "Left shoulder"
+            },
+            {
+              "at": 8,
+              "label": "Head",
+              "emphasis": true
+            },
+            {
+              "at": 12,
+              "label": "Right shoulder"
+            },
+            {
+              "at": 14,
+              "label": "Break"
+            }
+          ]
+        }
+      },
+      "caption": "Three peaks, the middle one highest, sitting on a rough line near 100. Traders call this a head and shoulders. Nothing here is a forecast — it is a description of fifteen days that already happened."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You spot a textbook head and shoulders in a chart of last year's prices. What does that tell you about tomorrow?",
+      "options": [
+        {
+          "id": "repeats",
+          "label": "The shape reliably repeats",
+          "correct": false
+        },
+        {
+          "id": "nothing",
+          "label": "Nothing, on its own",
+          "correct": true
+        }
+      ],
+      "explanation": "The shape was labelled **after** the prices printed. Naming it costs nothing and proves nothing. A pattern only means something if you know how often it failed, and one chart cannot tell you that."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Random data grows shapes too.",
+      "body": "Plot a few hundred coin flips as a running total and you will get trends, pullbacks, and clean triangles. No company, no news, no buyers — just noise. If a shape can appear with no cause behind it, seeing one proves nothing.",
+      "art": {
+        "kind": "glyph",
+        "name": "brain",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "One chart, two stories",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            {
+              "o": 80,
+              "h": 85,
+              "l": 79,
+              "c": 84
+            },
+            {
+              "o": 84,
+              "h": 91,
+              "l": 83,
+              "c": 90
+            },
+            {
+              "o": 90,
+              "h": 98,
+              "l": 89,
+              "c": 97
+            },
+            {
+              "o": 97,
+              "h": 105,
+              "l": 96,
+              "c": 103
+            },
+            {
+              "o": 103,
+              "h": 104,
+              "l": 99,
+              "c": 100
+            },
+            {
+              "o": 100,
+              "h": 103,
+              "l": 99,
+              "c": 102
+            },
+            {
+              "o": 102,
+              "h": 103,
+              "l": 97,
+              "c": 98
+            },
+            {
+              "o": 98,
+              "h": 102,
+              "l": 97,
+              "c": 101
+            },
+            {
+              "o": 101,
+              "h": 102,
+              "l": 96,
+              "c": 97
+            },
+            {
+              "o": 97,
+              "h": 101,
+              "l": 96,
+              "c": 100
+            },
+            {
+              "o": 100,
+              "h": 100,
+              "l": 95,
+              "c": 96
+            },
+            {
+              "o": 96,
+              "h": 100,
+              "l": 95,
+              "c": 99
+            }
+          ],
+          "annotations": [
+            {
+              "at": 3,
+              "label": "Peak: 105"
+            },
+            {
+              "at": 7,
+              "label": "Reader A: bull flag"
+            },
+            {
+              "at": 10,
+              "label": "Reader B: lower highs"
+            }
+          ]
+        }
+      },
+      "caption": "One set of prices, two labels. Start the count at the rally and it is a flag that continues up. Start it at the peak and it is a run of lower highs that rolls over."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Slide the starting point a few days and a flag becomes lower highs. The label depends on where you begin the [[1]].",
+      "wordBank": [
+        "count",
+        "trend",
+        "session"
+      ],
+      "answer": "count",
+      "explanation": "A pattern is not a property of the price. It is a property of the window you drew around the price."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Textbook examples are picked after the ending.",
+      "body": "Every pattern in a book was chosen because it worked. The author scrolled through years of charts and kept the ones that did the expected thing. The failures were never photographed. You are looking at a highlight reel, not a sample."
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "Before you accept any pattern claim, three questions. None of them are about the shape itself.",
+      "stickers": [
+        {
+          "label": "How often did it fail?",
+          "art": {
+            "kind": "glyph",
+            "name": "warning",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.18
+          },
+          "rotation": -5
+        },
+        {
+          "label": "Who counted, over what?",
+          "art": {
+            "kind": "glyph",
+            "name": "magnifier",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.5
+          },
+          "rotation": 6
+        },
+        {
+          "label": "What would disprove it?",
+          "art": {
+            "kind": "glyph",
+            "name": "scale",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.82
+          },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Ask for the denominator.",
+      "body": "A pattern claim is a batting average with the denominator missing. Ten charts where it worked tell you nothing until you know how many times the same shape appeared and did the opposite. That number is the whole claim.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "forest"
+      }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What patterns are good for",
+      "summary": "Patterns are a vocabulary for describing what a chart already did, not a machine for predicting what it will do.",
+      "bullets": [
+        "Head and shoulders, triangles, and flags are named shapes — named after the fact.",
+        "Random data produces the same shapes, so seeing one is not evidence.",
+        "The same prices carry different labels depending on where you start the count.",
+        "Textbook examples are selected on their outcomes. The failures are never shown."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "eye",
+        "bg": "ink"
+      },
+      "insight": "A chart is a record, not a forecast. Every pattern on it was named after the ending was already known.",
+      "attribution": {
+        "source": "Day 8",
+        "detail": "Reading a Chart"
+      },
+      "frame": "gradient"
+    }
+  ]
+}

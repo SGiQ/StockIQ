@@ -1,0 +1,133 @@
+{
+  "id": "one-up-on-wall-street",
+  "title": "One Up on Wall Street",
+  "author": "Peter Lynch",
+  "year": 1989,
+  "cover": { "kind": "glyph", "name": "magnifier", "bg": "mint" },
+  "summary": "Peter Lynch ran Fidelity's Magellan fund for thirteen years and wrote this in 1989 to argue that an ordinary person is not automatically at a disadvantage. His case is that you meet products, stores, and services long before an analyst publishes on them, and that head start is real. The catch takes up most of the book: what has to happen after you notice. Lynch sorts companies into six types, insists you be able to explain a business in plain language, and describes checking the story again as it changes. He also popularized the ten-bagger, the rare holding that returns ten times what you paid. This guide restates those ideas in our own words rather than reproducing his.",
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Your ordinary life is a research feed.",
+      "body": "Peter Lynch ran a large fund and still argued that regular people spot changes early. You use the products. You see which store is busy and which is empty. That is real information, and it often arrives before the analysts do.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "mint" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Noticing is the start, not the answer.",
+      "body": "A product you love is a lead, not a conclusion. The company behind it might be tiny relative to its parent, drowning in debt, or already priced for perfection. Lynch's edge came from what he did after noticing."
+    },
+    {
+      "id": "c3",
+      "type": "binary_choice",
+      "prompt": "The restaurant near you has a line out the door every night. What have you actually learned?",
+      "options": [
+        { "id": "buy", "label": "That the stock is worth buying", "correct": false },
+        { "id": "look", "label": "One thing worth checking further", "correct": true }
+      ],
+      "explanation": "You have found a question: is this chain growing, and is that growth already in the price? The observation sends you to the numbers, it does not replace them."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Lynch sorted companies into six buckets.",
+      "body": "Slow growers. Stalwarts, the big steady ones. Fast growers. Cyclicals, which rise and fall with the economy. Turnarounds, which are broken and might get fixed. And asset plays, worth more in pieces than the market says. Each bucket raises a different question.",
+      "art": { "kind": "glyph", "name": "pie", "bg": "butter" }
+    },
+    {
+      "id": "c5",
+      "type": "fill_blank",
+      "body": "A steel maker whose profits swing with the economy is a [[1]], so the question becomes where you are in its cycle.",
+      "wordBank": ["cyclical", "stalwart", "turnaround", "asset play"],
+      "answer": "cyclical",
+      "explanation": "Buying a cyclical when its earnings look best is often buying near the top. The label changes which numbers matter."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "You should be able to explain it simply.",
+      "body": "Lynch's discipline was to describe, in plain language, what the company sells, why it is growing, and what would break the story. If the explanation needs jargon, you probably do not have one.",
+      "art": { "kind": "glyph", "name": "lightbulb", "bg": "sky" }
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "A ten-bagger, and the years it takes",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 132, 118, 205, 260, 196, 430, 610, 1010],
+          "xLabel": "Years held",
+          "yLabel": "Value of $100",
+          "markers": [
+            { "at": 2, "label": "A flat year" },
+            { "at": 5, "label": "Down 25%" },
+            { "at": 8, "label": "Ten times your money", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Lynch used the word ten-bagger for a holding that returns ten times what you paid. Getting there means sitting through the ugly stretches."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "You do not need to be right often.",
+      "body": "A stock can only fall to zero, but there is no ceiling on the other side. Lynch argued that a handful of very large winners can carry a portfolio full of mediocre picks. The size of the winners mattered more than the hit rate.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "neon" }
+    },
+    {
+      "id": "c9",
+      "type": "diagram",
+      "title": "Five ideas, one that mattered",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [-100, -55, -20, 45, 900],
+          "labels": ["Idea 1", "Idea 2", "Idea 3", "Idea 4", "Idea 5"],
+          "highlightIndex": 4,
+          "yLabel": "% return"
+        }
+      },
+      "caption": "Four of these went nowhere or worse. The fifth paid for all of them. That asymmetry is the whole argument for patience with a winner."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Stories change, so check them again.",
+      "body": "Lynch revisited each holding on a schedule and asked whether the reason he owned it still held. Growth slowing, debt rising, competitors arriving: any of these turns a good story into an old one.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What Lynch is really teaching",
+      "summary": "Your edge is noticing things early, but it only pays if you follow the observation with ordinary homework.",
+      "bullets": [
+        "Everyday life surfaces leads before Wall Street writes them up.",
+        "Lynch sorts a company into a category before judging its numbers.",
+        "If you cannot explain the business simply, you do not know it.",
+        "A few very large winners can outweigh many small losses."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "mint" },
+      "insight": "Spotting a good product is the easy half. The work is finding out whether the business behind it is any good.",
+      "attribution": { "source": "One Up on Wall Street", "detail": "Peter Lynch, 1989" }
+    }
+  ],
+  "buyLinks": [
+    {
+      "label": "Find it at Bookshop.org",
+      "url": "https://bookshop.org/search?keywords=One%20Up%20on%20Wall%20Street%20Peter%20Lynch"
+    }
+  ],
+  "relatedTraders": ["peter-lynch"],
+  "relatedStrategies": ["growth-at-a-reasonable-price"],
+  "attribution": "Original summary of One Up on Wall Street by Peter Lynch (1989), written for StockIQ. No text from the book is reproduced. StockIQ is not affiliated with the author or his publisher."
+}

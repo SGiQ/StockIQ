@@ -1,0 +1,109 @@
+{
+  "id": "thinking-in-r",
+  "courseId": "risk-and-position-sizing",
+  "title": "Thinking in R",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Two traders lost $500. Only one was in trouble.",
+      "body": "One risked $500 out of a $50,000 account. The other risked $500 out of $2,000. The dollar figure was identical. What happened next was not. Dollars hide the only thing that matters — how much was on the line."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "R is one unit of risk.",
+      "body": "Before you enter, you decide the most you will lose if you are wrong. That amount is **1R**. Risk $300 and 1R is $300. Lose it and you are down 1R. The dollar size changes between accounts. The unit does not.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "blush" }
+    },
+    {
+      "id": "c3",
+      "type": "fill_blank",
+      "body": "You risked $300 on a trade. It works, and you close it for a $900 gain. In R, that is a [[1]] winner.",
+      "wordBank": ["3R", "9R", "0.3R"],
+      "answer": "3R",
+      "explanation": "Nine hundred divided by three hundred is three. Every result is measured against the risk you accepted, so a $900 win on $300 risked and a $9,000 win on $3,000 risked are the same trade."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "R makes different trades comparable.",
+      "body": "A $2,000 gain sounds better than a $400 gain. In R they can be the same trade, or the small one can be the better one. Converting results to R strips position size out of the comparison and leaves only the decision."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "Ten trades, measured in R",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [-1, 2, -1, -1, 3, -1, 1, -1, 2, -1],
+          "labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+          "highlightIndex": 4,
+          "yLabel": "R multiple"
+        }
+      },
+      "caption": "Each bar is one trade, and each risked exactly 1R. Six came back at -1R. Four won, at +1R, +2R, +2R and +3R. Same unit, so the heights compare directly."
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Six of those ten trades lost money. Only four won. Did the account finish lower?",
+      "options": [
+        { "id": "yes", "label": "Yes — more losers than winners", "correct": false },
+        { "id": "no", "label": "No — it finished higher", "correct": true }
+      ],
+      "explanation": "The six losses cost 6R. The four wins returned 1 + 2 + 2 + 3 = **8R**. Net **+2R** across ten trades. Being wrong more often than right says nothing about the result."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Win rate is one number of three.",
+      "body": "How often you win tells you nothing on its own. A system can win nine trades in ten and still lose money, if that tenth loss is larger than the nine wins combined. Three numbers decide the outcome, not one."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Expectancy is the payoff that counts.",
+      "body": "Expectancy is what one average trade returns, in R. Take your win rate times your average win in R. Subtract your loss rate times your average loss in R. What is left is **expectancy per trade**.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "lilac" }
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Wrong most of the time, still profitable.",
+      "body": "Run those ten trades through it. Win rate 0.4, average win 2R. Loss rate 0.6, average loss 1R. So 0.4 x 2 = 0.8, and 0.6 x 1 = 0.6. Expectancy is **+0.2R per trade** — while losing six times out of ten."
+    },
+    {
+      "id": "c10",
+      "type": "binary_choice",
+      "prompt": "System A wins 70% of trades, averaging +0.5R on wins and -2R on losses. System B wins 40%, averaging +2R and -1R. Which has positive expectancy?",
+      "options": [
+        { "id": "a", "label": "System A — it wins far more often", "correct": false },
+        { "id": "b", "label": "System B", "correct": true }
+      ],
+      "explanation": "A: 0.7 x 0.5 = 0.35, minus 0.3 x 2 = 0.6, giving **-0.25R** per trade. B: 0.4 x 2 = 0.8, minus 0.6 x 1 = 0.6, giving **+0.2R**. The higher win rate is the one that loses money."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "R turns every trade into the same unit, and expectancy turns a run of trades into one number.",
+      "bullets": [
+        "1R is the amount you decided to lose before you entered.",
+        "Results stated in R compare across any account size or position size.",
+        "Expectancy is win rate times average win, minus loss rate times average loss.",
+        "A 40% win rate with +2R wins and -1R losses returns +0.2R per trade."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "target", "bg": "neon" },
+      "insight": "Being right is not the same as making money. Measure every trade in units of risk, and the two stop being confused.",
+      "attribution": { "source": "Day 6", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}

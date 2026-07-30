@@ -1,0 +1,143 @@
+{
+  "id": "stop-losses",
+  "courseId": "risk-and-position-sizing",
+  "title": "The Exit You Decide First",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["lesson:market-foundations/order-types"],
+  "unlocks": [
+    "strategy:trend-following"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "You will be worst at this exactly when it matters.",
+      "body": "The position is down. Your pulse is up. Every argument for holding on sounds reasonable now, and the one argument for leaving sounded reasonable an hour ago. A stop is a decision made before that moment arrives."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "refs": ["lesson:market-foundations/order-types"],
+      "headline": "A stop is a trigger, not a trade.",
+      "body": "You name a price. Until the market trades there, nothing is working and nobody sees it. Reach the price and the instruction wakes up as a real order — one of the {{lesson:market-foundations/order-types|order types}} you already know. Which one it becomes changes what you get.",
+      "art": { "kind": "glyph", "name": "bell", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "The point is when you decide, not where.",
+      "body": "Setting a level in advance does not make you right about the price. It moves the choice to a moment when you can still weigh it against a chart instead of against how the loss feels.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Two people both exit at 48. One wrote that level down before buying. The other picked it while watching. What differs?",
+      "options": [
+        { "id": "nothing", "label": "Nothing — same exit, same result", "correct": false },
+        { "id": "conditions", "label": "The conditions they decided under", "correct": true }
+      ],
+      "explanation": "The trade prints the same either way. But a level chosen in advance gets compared against the chart. A level chosen mid-decline gets compared against the loss on your screen, which is a **different question entirely**."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A stop-market order will trade. Somewhere.",
+      "body": "Once your level trades, a stop-market becomes a market order. It takes the best price available at that instant. In a quiet market that sits close to your level. In a fast one it can land well below it."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "A stop-limit protects the price, not the exit.",
+      "body": "A stop-limit wakes up as a limit order with a floor. It will not sell below that floor. If the market is already trading under it, you get **no fill at all** — and you still own the position."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A stop-market trades, but not always at your price. A stop-limit holds your price, but can leave you [[1]] the position.",
+      "wordBank": ["holding", "closing", "hedging"],
+      "answer": "holding",
+      "explanation": "Each order gives up one of the two things you want: a certain price, or a certain exit. You pick which failure you would rather have — before the fast move, not during it."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Round numbers are crowded.",
+      "body": "A stop just under 50 sits where a lot of other stops sit, because 50 is where people round. When price reaches that shelf, the selling those orders release can push it through faster than the news alone would."
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "A level is a location, not just a number. Put it inside a stock's ordinary daily range and routine movement — not a change in the business — is what takes you out.",
+      "stickers": [
+        {
+          "label": "Parked at a round number",
+          "art": { "kind": "glyph", "name": "target", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Inside the daily noise",
+          "art": { "kind": "glyph", "name": "candle", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Skipped by a gap",
+          "art": { "kind": "glyph", "name": "warning", "bg": "blush" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "diagram",
+      "title": "A gap steps over the level",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 52.0, "h": 52.8, "l": 51.4, "c": 52.2 },
+            { "o": 52.2, "h": 53.1, "l": 51.8, "c": 52.6 },
+            { "o": 52.6, "h": 52.9, "l": 51.2, "c": 51.5 },
+            { "o": 51.5, "h": 51.9, "l": 50.4, "c": 50.8 },
+            { "o": 50.8, "h": 51.2, "l": 49.6, "c": 49.9 },
+            { "o": 49.9, "h": 50.3, "l": 48.9, "c": 49.2 },
+            { "o": 44.0, "h": 44.6, "l": 42.8, "c": 43.1 },
+            { "o": 43.1, "h": 43.9, "l": 42.5, "c": 43.4 }
+          ],
+          "levels": [{ "value": 48.0, "label": "Stop at 48.00" }],
+          "annotations": [{ "at": 6, "label": "Opens at 44.00", "emphasis": true }]
+        }
+      },
+      "caption": "Six sessions ease lower and close at 49.20. The next opens at 44.00. Price never trades at 48, so a stop there fires on the open, about 8% below it."
+    },
+    {
+      "id": "c11",
+      "type": "concept",
+      "headline": "A stop bounds intention, not outcome.",
+      "body": "Between the close and the open, no price exists to trade against. A stop cannot fire in a market that is shut. It states the loss you were willing to accept. It does not promise the market will honour it."
+    },
+    {
+      "id": "c12",
+      "type": "main_idea",
+      "summary": "A stop is an exit decided in advance. Its mechanics and its location both matter.",
+      "bullets": [
+        "Stop-market fills for certain, at an uncertain price.",
+        "Stop-limit protects your price and may never fill.",
+        "Round numbers are crowded; tight levels catch ordinary noise.",
+        "A gap can open past your level, so nothing is guaranteed."
+      ]
+    },
+    {
+      "id": "c13",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "shield", "bg": "neon" },
+      "insight": "Decide your exit while you can still do arithmetic. The version of you that is losing money is not the one to ask.",
+      "attribution": { "source": "Unit 2", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}

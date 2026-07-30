@@ -1,0 +1,183 @@
+{
+  "id": "trend-and-structure",
+  "courseId": "reading-a-chart",
+  "title": "Trend and Structure",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["strategy:trend-following"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Same price. Two completely different charts.",
+      "body": "Two stocks both trade at $50 today. One stepped up there from $30. The other slid there from $80. The price is identical. The structure is not, and structure is the part you can actually read."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "An uptrend is higher highs and higher lows.",
+      "body": "Price never moves in a straight line. It pushes up, pulls back, pushes up again. When each push tops **above** the last top, and each pullback bottoms **above** the last bottom, that sequence is an uptrend.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "mint" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "An uptrend, point by point",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 112, 106, 124, 116, 138, 129, 152],
+          "xLabel": "Time",
+          "yLabel": "Price ($)",
+          "markers": [
+            { "at": 1, "label": "High 112" },
+            { "at": 2, "label": "Low 106" },
+            { "at": 3, "label": "High 124" },
+            { "at": 4, "label": "Low 116" },
+            { "at": 5, "label": "High 138" },
+            { "at": 6, "label": "Low 129" },
+            { "at": 7, "label": "High 152", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Highs step up: 112, 124, 138, 152. Lows step up too: 106, 116, 129. Both sequences rising at once — that is the entire definition."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock's last three pullback lows were 40, 44, then 43. Highs kept rising throughout. Is the uptrend intact?",
+      "options": [
+        { "id": "yes", "label": "Yes — the highs are still rising", "correct": false },
+        { "id": "no", "label": "No — 43 undercut the 44 low", "correct": true }
+      ],
+      "explanation": "An uptrend needs **both** sequences. The moment a low prints under the previous low, the higher-low chain has stopped, whatever the highs did."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A downtrend is the same rule, inverted.",
+      "body": "Lower highs and lower lows. Each rally stops **below** the last rally. Each drop bottoms **below** the last bottom. A downtrend does not mean the company is failing. It means sellers keep meeting buyers at lower prices."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "A range: neither one",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 50.2, "h": 51.8, "l": 49.6, "c": 49.9 },
+            { "o": 49.9, "h": 50.4, "l": 48.3, "c": 48.6 },
+            { "o": 48.6, "h": 50.1, "l": 48.2, "c": 49.8 },
+            { "o": 49.8, "h": 51.9, "l": 49.5, "c": 51.5 },
+            { "o": 51.5, "h": 52.0, "l": 50.6, "c": 50.8 },
+            { "o": 50.8, "h": 51.1, "l": 48.4, "c": 48.7 },
+            { "o": 48.7, "h": 49.9, "l": 48.1, "c": 49.6 },
+            { "o": 49.6, "h": 51.7, "l": 49.3, "c": 51.4 },
+            { "o": 51.4, "h": 51.9, "l": 50.2, "c": 50.3 },
+            { "o": 50.3, "h": 50.9, "l": 48.5, "c": 48.9 }
+          ],
+          "levels": [
+            { "value": 52.0, "label": "Ceiling 52" },
+            { "value": 48.0, "label": "Floor 48" }
+          ],
+          "annotations": [
+            { "at": 4, "label": "Turned back at 52" },
+            { "at": 6, "label": "Held at 48.1", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Ten sessions. No high above 52, no low under 48. The tops do not climb and the bottoms do not fall — so there is no sequence to name."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "Every chart sits in one of three states at any moment. Naming the state is the first thing you do, before anything else.",
+      "stickers": [
+        {
+          "label": "Uptrend",
+          "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Downtrend",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Range",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Trend describes the past, not the future.",
+      "body": "A trend is a label for what price has already done. It carries no promise about tomorrow. Charts spend long stretches in neither trend, and a range is exactly where {{strategy:trend-following|trend following}} logic performs worst.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "ink" }
+    },
+    {
+      "id": "c9",
+      "type": "diagram",
+      "title": "Where the sequence breaks",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 118, 110, 132, 124, 148, 139, 145, 133],
+          "xLabel": "Time",
+          "yLabel": "Price ($)",
+          "markers": [
+            { "at": 2, "label": "Low 110" },
+            { "at": 4, "label": "Low 124" },
+            { "at": 5, "label": "High 148" },
+            { "at": 6, "label": "Low 139" },
+            { "at": 7, "label": "Lower high 145" },
+            { "at": 8, "label": "Lower low 133", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Lows climb 110, 124, 139 — then print 133. That 133 is the first low to sit under the one before it. The chain ends there."
+    },
+    {
+      "id": "c10",
+      "type": "fill_blank",
+      "body": "An uptrend is usually called broken at the first lower [[1]] — a pullback that finishes under the previous pullback.",
+      "wordBank": ["low", "high", "close", "volume"],
+      "answer": "low",
+      "explanation": "A lower high on its own is only a warning. The lower **low** is the event most definitions use, because it is the first thing the earlier structure said would not happen."
+    },
+    {
+      "id": "c11",
+      "type": "concept",
+      "headline": "Broken is a rule you set in advance.",
+      "body": "The chart never announces a break. You pick the definition — a lower low, a close under an average, a fixed percentage — and you pick it before you are watching. Choose it afterwards and you will choose whatever just happened."
+    },
+    {
+      "id": "c12",
+      "type": "main_idea",
+      "title": "Trend and structure",
+      "summary": "Trend is a description of the sequence of highs and lows. It is not a forecast.",
+      "bullets": [
+        "Uptrend: higher highs and higher lows. Downtrend: the mirror.",
+        "A range is neither, and charts sit in one often.",
+        "The break is the first lower low after a run of higher lows.",
+        "You define broken in advance. The chart will not do it for you."
+      ]
+    },
+    {
+      "id": "c13",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "compass", "bg": "neon" },
+      "insight": "A trend is a sentence about what already happened. The market is under no obligation to finish it the way you would.",
+      "attribution": { "source": "Day 3", "detail": "Reading a Chart" }
+    }
+  ]
+}

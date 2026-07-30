@@ -1,0 +1,25 @@
+{
+  "id": "reading-a-business",
+  "title": "Reading a Business: What the Numbers Say",
+  "author": "StockIQ",
+  "category": "analysis",
+  "cover": { "kind": "glyph", "name": "magnifier", "bg": "butter" },
+  "blurb": "Behind every ticker is a business. Learn to read what it earns, what it keeps, and whether it can defend it.",
+  "order": 2,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHAT THE NUMBERS SAY",
+      "lessonIds": ["revenue-vs-earnings", "margins-that-matter", "cash-flow-is-king"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "WHAT MAKES ONE GOOD",
+      "lessonIds": ["the-price-earnings-ratio", "economic-moats", "dividends-and-buybacks"]
+    }
+  ],
+  "totalXp": 120
+}

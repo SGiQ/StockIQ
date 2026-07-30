@@ -1,0 +1,124 @@
+{
+  "id": "reminiscences-of-a-stock-operator",
+  "title": "Reminiscences of a Stock Operator",
+  "author": "Edwin Lefèvre",
+  "year": 1923,
+  "cover": { "kind": "glyph", "name": "newspaper", "bg": "butter" },
+  "summary": "Published in 1923, this is a **novel**, not a memoir. Its narrator, Larry Livingston, is modelled on the speculator Jesse Livermore, and the story follows him from teenage bets in bucket shops to enormous positions and back down again, several times over. What has kept it in print is not the trading mechanics, most of which are long obsolete, but the psychology around them: the pull to act when there is nothing to do, the way a crowd's certainty runs hottest just before it is wrong, and how much of a market education arrives in the form of a bill.",
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A novel that reads like a confession.",
+      "body": "Edwin Lefèvre published this in 1923 as fiction. The narrator, Larry Livingston, is drawn from the speculator Jesse Livermore, but the book is a **novel**, not a memoir. Readers mistake it for one constantly. It lands best read as a story about how a market mind forms."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The market charges tuition.",
+      "body": "Livingston's education arrives in losses. He wins on hunches, gives it back, and only years later works out which habit cost him the money. The book's rhythm repeats: an expensive mistake, then a rule learned too late to save that particular stake.",
+      "art": { "kind": "glyph", "name": "coins-stack", "bg": "blush" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "One trend, many exits",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 96, 104, 101, 112, 108, 121, 117, 133, 129, 145, 158],
+          "yLabel": "Price",
+          "markers": [
+            { "at": 2, "label": "Buys" },
+            { "at": 3, "label": "Sells, rattled" },
+            { "at": 6, "label": "Buys back higher", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "The trend does most of the work. A trader who reacts to every wobble ends up buying the same move back at a worse price."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You hold a position that is working and the trend is intact. In the book's framing, what is doing nothing?",
+      "options": [
+        { "id": "idle", "label": "Wasted time between trades", "correct": false },
+        { "id": "position", "label": "A decision, and a position", "correct": true }
+      ],
+      "explanation": "Livingston's hardest lesson is that sitting still is itself an action. He describes the large gains in his career as coming from waiting, not from the constant activity that felt like work."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The tape is people.",
+      "body": "Livingston reads the ticker not as arithmetic but as a record of what a crowd is doing under pressure. Prices move because somebody **had** to buy or had to sell. The book treats that pressure, rather than the number itself, as the thing worth studying."
+    },
+    {
+      "id": "c6",
+      "type": "fill_blank",
+      "body": "Livingston concluded that his big money came from [[1]], not from the constant trading that felt productive.",
+      "wordBank": ["waiting", "predicting", "averaging down", "chasing tips"],
+      "answer": "waiting",
+      "explanation": "The claim is not that inactivity is a virtue. It is that a position only earns while the conditions behind it still hold, and those stretches are rarer than a restless trader wants them to be."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "The book keeps running into the same cast, in every decade and every market.",
+      "stickers": [
+        {
+          "label": "The hot tip",
+          "art": { "kind": "glyph", "name": "newspaper", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.17 },
+          "rotation": -6
+        },
+        {
+          "label": "The crowd, arriving late",
+          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "The itch to do something",
+          "art": { "kind": "glyph", "name": "bell", "bg": "blush" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The names change. The behaviour does not.",
+      "body": "A century on, the manias, the tips passed at dinner, the certainty just before a reversal all look familiar. Lefèvre's argument is that markets change their instruments constantly and their participants almost never. That is why a 1923 novel still reads as current."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "title": "What the book is doing",
+      "summary": "A novel about how a speculator's habits get built, mostly out of expensive mistakes.",
+      "bullets": [
+        "It is fiction. Larry Livingston is a character drawn from Jesse Livermore.",
+        "Sitting still counts as a position, and it is the hardest one to hold.",
+        "The tape records crowd behaviour, and crowds repeat themselves across eras."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "clock", "bg": "ink" },
+      "insight": "The costliest lessons in the book are not about picking. They are about patience, and about how much it costs to learn patience with real money.",
+      "attribution": { "source": "Book guide", "detail": "Reminiscences of a Stock Operator" }
+    }
+  ],
+  "buyLinks": [
+    {
+      "label": "Search Bookshop.org",
+      "url": "https://bookshop.org/search?keywords=Reminiscences%20of%20a%20Stock%20Operator%20Edwin%20Lef%C3%A8vre"
+    }
+  ],
+  "relatedTraders": ["jesse-livermore"],
+  "relatedStrategies": ["trend-following"],
+  "attribution": "Original StockIQ summary of the ideas in Reminiscences of a Stock Operator by Edwin Lefèvre (1923). Written in our own words; no text from the book is reproduced."
+}

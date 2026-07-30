@@ -1,0 +1,145 @@
+{
+  "id": "price-and-time",
+  "courseId": "reading-a-chart",
+  "title": "Price and Time",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["lesson:market-foundations/reading-a-quote", "lesson:market-foundations/what-moves-a-price"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Most people read charts backwards.",
+      "body": "They look at the line and see where it is going. The line only shows where it has been. Every point on it is a trade that already happened, at a price someone already paid. Get that straight and the rest is mechanics."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Two axes. That is the whole frame.",
+      "body": "Price runs up the vertical axis. Time runs across the horizontal one. Every chart you will ever open is built on those two and nothing else. Change either axis and the picture changes — the trades behind it do not.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The two axes",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [50, 52, 51, 54, 53],
+          "xLabels": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+          "xLabel": "Time",
+          "yLabel": "Price ($)"
+        }
+      },
+      "caption": "Read it like a map: left to right is time, bottom to top is price. Each point marks where the last trade of that day happened. The line just connects them."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "The chart shows $54 on Thursday. What does that number actually mean?",
+      "options": [
+        { "id": "asked", "label": "Someone was asking $54 for shares", "correct": false },
+        { "id": "traded", "label": "Shares changed hands at $54", "correct": true }
+      ],
+      "explanation": "A price only exists once a buyer and a seller agree. Offers nobody takes leave no mark. Every point on a chart is a **completed trade**, not an opinion about value."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A line chart keeps one number a day.",
+      "body": "Draw a line and you are usually plotting the closing price — the last trade before the bell. It is clean, and it hides a lot. A day that opened at $50, fell to $44, then closed at $51 looks like a quiet up day."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "A candlestick keeps four numbers from the same day instead of one. That is the whole difference between the two chart types.",
+      "stickers": [
+        {
+          "label": "Open — first trade",
+          "art": { "kind": "glyph", "name": "flag", "bg": "butter" },
+          "anchor": { "x": 0.28, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "High — the day's top",
+          "art": { "kind": "glyph", "name": "arrow-up", "bg": "mint" },
+          "anchor": { "x": 0.72, "y": 0.36 },
+          "rotation": 5
+        },
+        {
+          "label": "Low — the day's floor",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" },
+          "anchor": { "x": 0.3, "y": 0.6 },
+          "rotation": -4
+        },
+        {
+          "label": "Close — last trade",
+          "art": { "kind": "glyph", "name": "bell", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.82 },
+          "rotation": 6
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Change the timeframe, change the story.",
+      "body": "The same stock can be an uptrend on a one-year chart and a downtrend on a one-month chart. Both charts are honest. They answer different questions, because they cover different spans of time."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "One year, two stories",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [40, 45, 51, 56, 60, 55, 50, 47, 45, 53, 62, 72],
+          "xLabels": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"],
+          "xLabel": "Months",
+          "yLabel": "Price ($)",
+          "markers": [
+            { "at": 4, "label": "$60" },
+            { "at": 8, "label": "$45", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Twelve months, $40 to $72 — up 80%. Inside it, months 5 to 9 fell from $60 to $45, down 25%. Open only that window and the same stock looks broken."
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "A chart's vertical axis carries price. Its horizontal axis carries [[1]] — and how much of it you show changes what the chart appears to say.",
+      "wordBank": ["time", "volume", "volatility"],
+      "answer": "time",
+      "explanation": "Price and time are the only two things a chart plots directly. Everything else — volume, averages, indicators — is calculated from them and drawn on top."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "The chart is evidence, not a prediction.",
+      "body": "Nothing on a chart is about the future. It is a record of what buyers and sellers already did, drawn to scale. It can tell you what happened and when. What happens next is not in the picture.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "ink" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "A chart plots price against time. Everything it shows has already happened.",
+      "bullets": [
+        "Price is the vertical axis, time is the horizontal one.",
+        "Every point is a completed trade, not an offer.",
+        "A line keeps the close; a candle keeps open, high, low and close.",
+        "The timeframe you pick decides which story you see."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "candle", "bg": "neon" },
+      "insight": "A chart cannot tell you where a price is going. It can only tell you, precisely, where it has already been.",
+      "attribution": { "source": "Day 1", "detail": "Reading a Chart" }
+    }
+  ]
+}

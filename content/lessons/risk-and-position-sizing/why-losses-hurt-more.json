@@ -1,0 +1,124 @@
+{
+  "id": "why-losses-hurt-more",
+  "courseId": "risk-and-position-sizing",
+  "title": "Why Losses Hurt More",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A 50% loss is not half a problem.",
+      "body": "Cut your money in half and you do not need half of it back. You need all of it back. The gain that repairs a loss is always larger than the loss, and almost nobody guesses how much larger."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A loss shrinks the base you earn on.",
+      "body": "Start with $100. A 10% loss leaves $90. Getting back to $100 takes $10 — but you are now earning it on $90, not on $100. That is an **11.1%** gain, not a 10% one.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "butter" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The gain it takes to get back to even",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [11.1, 25, 42.9, 100, 400],
+          "labels": ["-10%", "-20%", "-30%", "-50%", "-80%"],
+          "highlightIndex": 4,
+          "yLabel": "% gain to break even"
+        }
+      },
+      "caption": "Each bar is the gain needed to return to where you started after that loss. The rise is not proportional. It bends upward gently, then violently."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock falls 50%, then rises 50% the following year. Where does that leave you?",
+      "options": [
+        { "id": "even", "label": "Back where you started", "correct": false },
+        { "id": "down", "label": "Still down 25%", "correct": true }
+      ],
+      "explanation": "$100 falls to $50. A 50% gain on $50 is $25, so you finish at **$75**. The gain was measured on a smaller base than the loss was."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The damage accelerates.",
+      "body": "Down 10%, you need 11.1% — barely more than you lost. Down 50%, you need 100%. Down 80%, you need 400%. Double the loss and you far more than double the repair."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Three losses, three repairs. Read each pair as the gain you would have to find just to stand where you already stood.",
+      "stickers": [
+        {
+          "label": "-20% needs +25%",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "sky" },
+          "anchor": { "x": 0.32, "y": 0.18 },
+          "rotation": -5
+        },
+        {
+          "label": "-50% needs +100%",
+          "art": { "kind": "glyph", "name": "scale", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.5 },
+          "rotation": 6
+        },
+        {
+          "label": "-80% needs +400%",
+          "art": { "kind": "glyph", "name": "ladder", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Equal moves are not equal.",
+      "body": "A gain and a loss of the same size do not cancel each other out. The loss does more work against you. So the arithmetic quietly favours whoever takes fewer deep losses over whoever catches the biggest winners."
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Lose 30% of your money and you need a gain of [[1]] to get back to even — not 30%.",
+      "wordBank": ["42.9%", "30%", "36.5%"],
+      "answer": "42.9%",
+      "explanation": "0.30 divided by 0.70 is 0.429. Every number on this card deck comes from that one formula: the loss divided by what is left."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Small losses stay cheap.",
+      "body": "Below about 20%, the repair sits close to the loss: 5% needs 5.3%, 10% needs 11.1%, 20% needs 25%. The gap only turns brutal once the hole gets deep. That is where the arithmetic changes character."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "This is why position sizing exists.",
+      "body": "Everything else in this course — how much you risk on one idea, where the exit sits, how many ideas you hold — is machinery for keeping a single loss inside the range you can arithmetically come back from.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "Recovery is bigger than the loss",
+      "summary": "Getting back to even always takes a larger gain than the loss that put you there, and the gap widens fast.",
+      "bullets": [
+        "The gain needed equals the loss divided by what is left.",
+        "Down 10% needs 11.1%. Down 50% needs 100%. Down 80% needs 400%.",
+        "Gains and losses of equal size never cancel out."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
+      "insight": "A loss and a gain of the same size are not opposites. The loss always asks for more back than it took.",
+      "attribution": { "source": "Day 1", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}

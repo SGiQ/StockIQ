@@ -1,0 +1,110 @@
+{
+  "id": "what-is-a-stock",
+  "courseId": "market-foundations",
+  "title": "What a Stock Actually Is",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "You can own a piece of a company.",
+      "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Ownership is measured in shares.",
+      "body": "A company divides itself into shares. If it has issued 1,000 shares and you hold 10, you own **one percent** of the business — today, tomorrow, and every day until you sell.",
+      "art": { "kind": "glyph", "name": "pie", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Who owns a company",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [45, 34, 21],
+          "labels": ["Founders", "Funds", "Public"],
+          "highlightIndex": 2,
+          "yLabel": "% of shares"
+        }
+      },
+      "caption": "Every share that exists belongs to someone. Added together, all shareholders own exactly 100% of the company — no more, no less."
+    },
+    {
+      "id": "c4",
+      "type": "sticker_reveal",
+      "body": "A share is not just a number on a screen. It carries three real rights that come with being an owner.",
+      "stickers": [
+        {
+          "label": "A claim on profits",
+          "art": { "kind": "glyph", "name": "coin", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "A vote",
+          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "A share of growth",
+          "art": { "kind": "glyph", "name": "tree", "bg": "mint" },
+          "anchor": { "x": 0.36, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A company's share price doubles overnight. What happens to the percentage of the company you own?",
+      "options": [
+        { "id": "up", "label": "It doubles too", "correct": false },
+        { "id": "same", "label": "It stays the same", "correct": true }
+      ],
+      "explanation": "Price changes what your slice is **worth**, not how big it is. Your ownership percentage only moves if the company issues new shares or buys some back."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Owners are not lenders.",
+      "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Shareholders get paid last — after employees, suppliers, and [[1]] have all been paid.",
+      "wordBank": ["lenders", "customers", "regulators"],
+      "answer": "lenders",
+      "explanation": "That last-in-line position is exactly why shares carry more risk than bonds — and why they can be worth so much more when a business does well."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "So why buy a slice at all?",
+      "body": "Two reasons, and only two. The business grows, so each slice becomes worth more. Or the business hands cash back to owners as a dividend. Everything else in investing is detail stacked on top."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A share is legal ownership of a real business, not a ticket on a moving number.",
+      "bullets": [
+        "Shares divide a company into equal, tradable slices.",
+        "Your ownership percentage does not change when the price does.",
+        "Owners are paid after lenders — more risk, and more upside."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "building", "bg": "neon" },
+      "insight": "You are not buying a price. You are buying a fraction of a business, and the price is only today's opinion of what that fraction is worth.",
+      "attribution": { "source": "Day 1", "detail": "Market Foundations" }
+    }
+  ]
+}

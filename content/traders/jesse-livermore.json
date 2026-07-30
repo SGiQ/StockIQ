@@ -1,0 +1,78 @@
+{
+  "id": "jesse-livermore",
+  "name": "Jesse Livermore",
+  "era": "1877-1940",
+  "portrait": {
+    "kind": "glyph",
+    "name": "chart-down",
+    "bg": "ink"
+  },
+  "oneLiner": "The Great Bear of Wall Street, and a lasting lesson in leverage.",
+  "bio": "Jesse Lauriston Livermore was born in Shrewsbury, Massachusetts in 1877 and started work at fourteen as a board boy chalking up quotes at a Boston brokerage. He learned to trade in bucket shops, which took customer bets on price moves without ever routing an order to a real exchange.\n\nHe is remembered for two bear markets: the Panic of 1907 and the crash of 1929. He also went broke more than once. He filed for bankruptcy in 1915 and again in 1934, and he died in New York in 1940. His death was a suicide.\n\n**Read his story with care.** Most of what circulates about Livermore comes from Reminiscences of a Stock Operator, published in 1923 by the journalist Edwin Lefevre. That book is narrated by a fictional trader called Larry Livingston and grew out of interviews with Livermore, but it is a novel, not a biography. Its dialogue, dates and dollar figures were shaped to tell a story.\n\nThe documented record is thinner than the legend. His 1907 and 1929 positions are attested in the contemporary press and in later biography, but almost every profit figure attached to his name is an estimate assembled after the fact.",
+  "philosophy": [
+    "**Trade the main movement, not the wiggle.** Livermore's recurring claim was that the money sat in the market's large trend rather than in reading each tick of the tape.",
+    "Wait for the market to confirm you. He described adding to a position only after price moved his way, and treating a position that moved against him as evidence the idea was wrong.",
+    "Cut the loss quickly, let the winner run. This is the oldest sentence in trend following, and Livermore's career is one of the reasons it is old.",
+    "Position size is the risk, not the idea. His own record makes the point: the same leverage that produced his largest gains produced his bankruptcies. He did not apply his stated rules consistently.",
+    "His method was discretionary tape reading. It cannot be back-tested, it rested on his own judgement of order flow in a market with no disclosure rules, and it is not a procedure a modern reader can pick up and run."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Reported profit in the Panic of 1907",
+      "value": "Roughly $1 million to $3 million in a single day, depending on the account",
+      "note": "These are estimates. No statement of account survives, and published figures differ by a factor of about three.",
+      "source": "Forbes Global, 'The Original Day Trader', 27 December 1999, which gives the $3 million figure; lower numbers appear in later retellings of the same day."
+    },
+    {
+      "metric": "Reported profit around the 1929 crash",
+      "value": "Commonly given as about $100 million",
+      "note": "An after-the-fact estimate rather than a filing or a broker's record. The precision is false.",
+      "source": "Richard Smitten, Jesse Livermore: World's Greatest Stock Trader (John Wiley and Sons, 2001)."
+    },
+    {
+      "metric": "Bankruptcy filings",
+      "value": "1915 and 1934",
+      "note": "The 1934 filing listed about $84,000 in assets against roughly $2.5 million in debts.",
+      "source": "Forbes Global, 'The Original Day Trader', 27 December 1999."
+    },
+    {
+      "metric": "His own account of his method",
+      "value": "How to Trade in Stocks, published March 1940",
+      "note": "A short book written near the end of his career. It sold poorly at the time.",
+      "source": "Jesse L. Livermore, How to Trade in Stocks (Duell, Sloan and Pearce, 1940)."
+    }
+  ],
+  "signatureStrategies": ["trend-following", "momentum-investing"],
+  "famousTrades": [
+    {
+      "title": "Short into the Panic of 1907",
+      "year": "1907",
+      "story": "By October 1907 the New York money market had seized up and call money rates spiked. Livermore, then thirty, was already short, and the panic day of 24 October turned that position into the profit that made his name.\n\nThe mechanism was not foresight about a specific date. He had watched credit tighten and rallies fail to hold, and he sold into weakness rather than trying to call a top in advance.\n\nThe profit figure varies between accounts, and none of them rests on a surviving record.",
+      "source": "Forbes Global, 'The Original Day Trader', 27 December 1999."
+    },
+    {
+      "title": "Short into the 1929 crash",
+      "year": "1929",
+      "story": "Livermore built short positions through 1929 and spread his orders across a large number of brokers, so that no single firm could see the total size of what he was doing.\n\nWhen the market broke in October he was on the right side of it, and he was publicly blamed for the fall by people looking for a cause. That charge does not hold up: a trader who is already short profits from a decline, he does not manufacture one on that scale.\n\nThe often quoted figure of roughly $100 million is a later estimate, not a documented result.",
+      "source": "Richard Smitten, Jesse Livermore: World's Greatest Stock Trader (John Wiley and Sons, 2001), on the trade; Forbes Global, 'The Original Day Trader', 27 December 1999, on the public blame."
+    },
+    {
+      "title": "Union Pacific before the San Francisco earthquake",
+      "year": "1906",
+      "story": "The familiar version has Livermore short Union Pacific on a hunch shortly before the earthquake hit San Francisco, with the position paying off when the news broke.\n\n**This one sits in the myth column.** It is known mainly through Reminiscences of a Stock Operator, a novel narrated by a fictional character, and it has been retold ever since as proof of trading intuition.\n\nIt is listed here as an example of how the Livermore legend was assembled, not as a documented trade.",
+      "source": "Edwin Lefevre, Reminiscences of a Stock Operator (George H. Doran Company, 1923), a fictionalised account rather than a factual record."
+    }
+  ],
+  "quotes": [
+    {
+      "text": "There is nothing new in Wall Street. There can't be because speculation is as old as the hills.",
+      "context": "Chapter one of Edwin Lefevre's Reminiscences of a Stock Operator (1923), spoken by the fictional narrator Larry Livingston. The book came from interviews with Livermore, but this is not a verified Livermore quotation."
+    },
+    {
+      "text": "It never was my thinking that made the big money for me. It was always my sitting.",
+      "context": "Also from Reminiscences of a Stock Operator (1923). Usually printed as Livermore's own words; strictly it belongs to the novel's narrator."
+    }
+  ],
+  "recommendedReading": ["reminiscences-of-a-stock-operator", "trading-in-the-zone"],
+  "relatedTraders": ["paul-tudor-jones", "william-oneil", "mark-minervini"]
+}

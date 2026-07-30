@@ -1,0 +1,128 @@
+{
+  "id": "loss-aversion",
+  "courseId": "trading-psychology",
+  "title": "Loss Aversion",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["book:trading-in-the-zone"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Nobody sells the loser.",
+      "body": "You open your account. The winner is up 8%, so you take the profit. The loser is down 8%, so you leave it — you will sell when it comes back. Same 8%. Two completely different decisions."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Losses weigh more than gains.",
+      "body": "Daniel Kahneman and Amos Tversky published prospect theory in 1979. Their finding: losing $100 lands with roughly twice the emotional force of gaining $100. The money is symmetric. The feeling is not.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The asymmetry",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [10, 20],
+          "labels": ["$100 gain", "$100 loss"],
+          "highlightIndex": 1,
+          "yLabel": "Felt intensity"
+        }
+      },
+      "caption": "Two outcomes of identical size, drawn at the intensity people report feeling them. The bars are illustrative, not measured data. The only thing to read here is the shape: the loss side is about twice as tall."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You hold two positions. One is up 15%, one is down 15%. Which one do most people sell first?",
+      "options": [
+        { "id": "winner", "label": "The one that is up", "correct": true },
+        { "id": "loser", "label": "The one that is down", "correct": false }
+      ],
+      "explanation": "Selling the winner banks a good feeling. Selling the loser forces you to admit the bad one. Researchers named the pattern the **disposition effect**, and it runs exactly opposite to the old rule about cutting losses short and letting winners run."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The pain sits in the realising.",
+      "body": "A position that is down has already cost you. Holding it keeps the loss a maybe. The moment you sell, it becomes a fact with your name on it. So people hold — not because of the odds, but to postpone the admission."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Loss aversion shows up in three ordinary habits. None of them feel like a bias at the time. Each one feels like patience.",
+      "stickers": [
+        {
+          "label": "Holding to get back to even",
+          "art": { "kind": "glyph", "name": "anchor", "bg": "blush" },
+          "anchor": { "x": 0.32, "y": 0.17 },
+          "rotation": -5
+        },
+        {
+          "label": "Selling winners early",
+          "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" },
+          "anchor": { "x": 0.68, "y": 0.47 },
+          "rotation": 6
+        },
+        {
+          "label": "Not looking at the account",
+          "art": { "kind": "glyph", "name": "eye", "bg": "sky" },
+          "anchor": { "x": 0.36, "y": 0.79 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "An unrealised loss is exactly as [[1]] as a realised one. Refusing to sell does not undo it — it only postpones the acknowledgement.",
+      "wordBank": ["real", "safe", "temporary"],
+      "answer": "real",
+      "explanation": "Your broker already marks the position at today's price. The word **paper** makes it sound provisional. The money moved when the price moved, not when you clicked sell."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Break-even is not a price.",
+      "body": "What you paid is a fact about your past, not about the business. The market has no memory of it. Waiting for a position to return to your entry is waiting on a number that means something only to you.",
+      "art": { "kind": "glyph", "name": "target", "bg": "butter" }
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "The bias does not stay free.",
+      "body": "A deferred loss does not hold still. It keeps moving while you look away. And a winner sold early stops being yours the moment you close it. Loss aversion does not only feel bad. It edits your results."
+    },
+    {
+      "id": "c10",
+      "type": "binary_choice",
+      "prompt": "Two thoughts about the same losing position. In which one is loss aversion doing the talking?",
+      "options": [
+        { "id": "thesis", "label": "The reason I bought it no longer holds", "correct": false },
+        { "id": "entry", "label": "I'll sell once it gets back to what I paid", "correct": true }
+      ],
+      "explanation": "One sentence is about the company. The other is about your entry price, which nobody else in the market can even see. Loss aversion always argues from the number you paid."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "Losing feels about twice as bad as winning feels good, and that gap quietly runs your exits.",
+      "bullets": [
+        "Kahneman and Tversky described the asymmetry in 1979 as prospect theory.",
+        "The pain lives in realising a loss, so people hold losers and sell winners.",
+        "An unrealised loss is already real — not selling defers the admission, not the damage."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "neon" },
+      "insight": "The loss happened when the price moved, not when you sold. Holding on does not undo it. It only delays the moment you admit it.",
+      "attribution": { "source": "Day 1", "detail": "Trading Psychology" }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "id": "bid-ask-and-spread",
+  "courseId": "market-foundations",
+  "title": "Bid, Ask, and the Hidden Cost of a Trade",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "There is never one price. There are always two.",
+      "body": "Look up a stock and you see a single number. That number is history — the last trade that happened. Right now the market is quoting two prices: the most any buyer will pay, and the least any seller will take. You trade against one of them, never the middle."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "One quote, two numbers.",
+      "body": "Say a company is quoted 10.00 bid, 10.04 ask. The **bid** is the highest price a buyer is willing to pay. The **ask** is the lowest price a seller will accept. The four cents between them is the **spread**.",
+      "art": {
+        "kind": "glyph",
+        "name": "exchange",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "You pay it coming and going.",
+      "body": "Buy 100 shares and you pay the ask: 1,004 dollars. Change your mind a second later and sell at the bid: 1,000 dollars. Nothing moved. You are down four dollars, or **0.4 percent**, before the market has done anything at all.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock is quoted 10.00 bid, 10.04 ask. You buy, then sell one second later with no change in the quote. Where do you stand?",
+      "options": [
+        {
+          "id": "flat",
+          "label": "Break even — the price never moved",
+          "correct": false
+        },
+        {
+          "id": "down",
+          "label": "Down 0.4 percent, paid to the spread",
+          "correct": true
+        }
+      ],
+      "explanation": "You bought at the ask and sold at the bid. The quote never moved, but you crossed the spread twice. That four cents is a **real cost** — it simply never appears as a line item on your statement."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Liquidity sets the width.",
+      "body": "Spreads are narrow where trading is heavy. A stock trading millions of shares a day may be quoted a penny wide. A stock that trades a few thousand shares a day can sit fifty cents wide, or more. Fewer buyers and sellers, bigger gap."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "A thin market, quoted wide",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            {
+              "o": 49.8,
+              "h": 50.6,
+              "l": 49.4,
+              "c": 50.2
+            },
+            {
+              "o": 50.2,
+              "h": 50.9,
+              "l": 49.9,
+              "c": 49.9
+            },
+            {
+              "o": 49.9,
+              "h": 50.4,
+              "l": 49.1,
+              "c": 49.3
+            },
+            {
+              "o": 49.3,
+              "h": 50.2,
+              "l": 49.2,
+              "c": 50.1
+            },
+            {
+              "o": 50.1,
+              "h": 50.5,
+              "l": 49.6,
+              "c": 49.7
+            },
+            {
+              "o": 49.7,
+              "h": 50.8,
+              "l": 49.5,
+              "c": 50.5
+            }
+          ],
+          "levels": [
+            {
+              "value": 49.6,
+              "label": "Bid 49.60"
+            },
+            {
+              "value": 50.4,
+              "label": "Ask 50.40"
+            }
+          ]
+        }
+      },
+      "caption": "This stock trades a few thousand shares a day. The best bid sits at 49.60, the best ask at 50.40 — eighty cents apart. A round trip costs you 1.6 percent."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "The more shares that change hands each day, the narrower the spread tends to be. That depth of buying and selling interest is called [[1]].",
+      "wordBank": [
+        "liquidity",
+        "volatility",
+        "leverage"
+      ],
+      "answer": "liquidity",
+      "explanation": "Liquidity is how easily you can trade size without moving the price. Deep liquidity means many competing buyers and sellers, and that competition squeezes the spread down to pennies."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "The cost of trading often",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [
+            0.4,
+            4.8,
+            20.8
+          ],
+          "labels": [
+            "1 a year",
+            "12 a year",
+            "52 a year"
+          ],
+          "highlightIndex": 2,
+          "yLabel": "% of capital paid in spread"
+        }
+      },
+      "caption": "A 0.4 percent spread sounds like nothing. Pay it once a year and it is. Pay it every week and you give up close to a fifth of your capital in spread alone."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Every stock has two live prices. The gap between them is a cost you pay on every round trip, and nobody itemises it.",
+      "bullets": [
+        "You buy at the ask and sell at the bid — never in between.",
+        "Heavily traded stocks quote pennies apart; thinly traded ones can quote dollars apart.",
+        "The spread is charged per trade, so frequency multiplies it."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "neon"
+      },
+      "insight": "The market never quotes you one price. It quotes two, and the distance between them is the toll you pay for changing your mind.",
+      "attribution": {
+        "source": "Bid, Ask, Spread",
+        "detail": "Market Foundations"
+      }
+    }
+  ]
+}

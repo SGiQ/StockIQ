@@ -1,0 +1,136 @@
+{
+  "id": "revenge-trading",
+  "courseId": "trading-psychology",
+  "title": "Trading to Get Even",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The worst trade is usually the next one.",
+      "body": "Most accounts are not ruined by the losing trade. They are ruined by what the trader does in the ten minutes after it. The loss is already a fact. The urge to erase it is the risk."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "You want it back from the same stock.",
+      "body": "Losing feels like being owed. And the pull is specific: not just to make money back, but to make it back **in the position that took it**, as though the market were settling a debt.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "blush" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "The market does not know your entry.",
+      "body": "Your entry price is a fact about your account, not about the stock. The position does not know what you paid. Nobody on the other side owes you a refund. Only you are keeping that score."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You lose $400 on a stock. Does that loss make the stock more likely to rise from here?",
+      "options": [
+        { "id": "owed", "label": "Yes — it owes you the move", "correct": false },
+        { "id": "unrelated", "label": "No — the two are unrelated", "correct": true }
+      ],
+      "explanation": "Your loss is information about your account, not about the company. The next move is set by buyers and sellers who have **never seen your statement**."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Then the size goes up.",
+      "body": "Getting even at the old size takes time you no longer feel you have. So the next position is bigger. That is the whole mechanism: urgency raises size, and size raises the cost of being wrong again."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "Bigger stake, smaller account",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [10000, 9800, 9400, 8600, 7000],
+          "compareSeries": [0, 1000, 2000, 4000, 8000],
+          "compareLabel": "Position size",
+          "xLabels": ["Start", "Trade 1", "Trade 2", "Trade 3", "Trade 4"],
+          "yLabel": "$",
+          "markers": [{ "at": 4, "label": "Down 30%", "emphasis": true }]
+        }
+      },
+      "caption": "One line is the account, the other is the stake. Every trade loses 20% of its stake, and every stake doubles. Four attempts at one recovery cost 30% of the account."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "The loop has three steps and each one feeds the next. Nothing in it requires a bad idea — only a growing size.",
+      "stickers": [
+        {
+          "label": "Loss creates urgency",
+          "art": { "kind": "glyph", "name": "clock", "bg": "blush" },
+          "anchor": { "x": 0.31, "y": 0.17 },
+          "rotation": -6
+        },
+        {
+          "label": "Urgency raises size",
+          "art": { "kind": "glyph", "name": "ladder", "bg": "butter" },
+          "anchor": { "x": 0.69, "y": 0.49 },
+          "rotation": 5
+        },
+        {
+          "label": "Size deepens the loss",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "ink" },
+          "anchor": { "x": 0.35, "y": 0.81 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "refs": ["lesson:risk-and-position-sizing/risk-of-ruin"],
+      "headline": "This is where the arithmetic turns.",
+      "body": "Down 20%, you need 25% back. Down 50%, you need 100%. Doubling size after a loss is exactly what carries you from the first number to the second, and {{lesson:risk-and-position-sizing/risk-of-ruin|risk of ruin}} is the far end of it.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "sky" }
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "Getting even is dangerous less because the idea is bad, and more because the [[1]] grows every time you are wrong.",
+      "wordBank": ["position size", "spread", "holding period"],
+      "answer": "position size",
+      "explanation": "A wrong idea costs one loss. The same wrong idea at four times the size costs four, and the account has less left to fund the attempt after that."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "refs": ["trader:jesse-livermore"],
+      "headline": "Rules are easier to write than to keep.",
+      "body": "{{trader:jesse-livermore|Jesse Livermore}} traded at enormous scale and filed for bankruptcy twice, in 1915 and again in 1934. He wrote down his own rules for cutting losses. His record shows he did not always follow them."
+    },
+    {
+      "id": "c11",
+      "type": "concept",
+      "headline": "Decide it before you are angry.",
+      "body": "A rule written in advance removes the decision from the moment. One common form is a daily loss limit: past a set loss, you stop trading for the day. The rule gets written while you are calm.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
+    },
+    {
+      "id": "c12",
+      "type": "main_idea",
+      "title": "Getting even is not a plan",
+      "summary": "The loss is already spent. What decides the damage is the size of the trade you place next.",
+      "bullets": [
+        "The market has no memory of your entry, and the position does not know what you paid.",
+        "Urgency raises size, and the larger size makes the next loss bigger.",
+        "Doubling after a loss turns a survivable drawdown into a permanent one.",
+        "A loss limit set in advance takes the decision out of the moment."
+      ]
+    },
+    {
+      "id": "c13",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "brain", "bg": "ink" },
+      "insight": "The market is not holding your money. There is nothing to win back — only a new trade, priced today, that does not care what you lost.",
+      "attribution": { "source": "Day 3", "detail": "Trading Psychology" }
+    }
+  ]
+}

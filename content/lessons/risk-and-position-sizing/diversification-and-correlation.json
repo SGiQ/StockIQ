@@ -1,0 +1,244 @@
+{
+  "id": "diversification-and-correlation",
+  "courseId": "risk-and-position-sizing",
+  "title": "Diversification and Correlation",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": [
+    "trader:ray-dalio"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Ten holdings can still be one bet.",
+      "body": "You buy ten stocks and feel covered. Then they all fall on the same Tuesday, because eight of them sell into the same industry. Count is not protection. What protects you is whether your holdings can move apart."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Correlation, not count, does the work.",
+      "body": "**Correlation** measures how two holdings move relative to each other. Near +1 they rise and fall together. Near 0 they drift independently. Ten holdings in one industry are roughly one position wearing ten names.",
+      "art": {
+        "kind": "glyph",
+        "name": "exchange",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Two pairs, one market",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [
+            100,
+            112,
+            104,
+            120,
+            90,
+            106
+          ],
+          "compareSeries": [
+            100,
+            106,
+            102,
+            110,
+            95,
+            103
+          ],
+          "compareLabel": "Chipmaker + utility",
+          "xLabels": [
+            "Jan",
+            "Mar",
+            "May",
+            "Jul",
+            "Sep",
+            "Nov"
+          ],
+          "yLabel": "Portfolio value",
+          "markers": [
+            {
+              "at": 4,
+              "label": "Sector shock",
+              "emphasis": true
+            }
+          ]
+        }
+      },
+      "caption": "One line holds two chipmakers. The other splits a chipmaker and a utility. Same shock in September; peak to trough, one swings 30 points, the other 15."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Portfolio A holds ten regional banks. Portfolio B holds three stocks: a bank, a utility, and a retailer. Which spreads risk more?",
+      "options": [
+        {
+          "id": "a",
+          "label": "Portfolio A — ten names",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Portfolio B — three names",
+          "correct": true
+        }
+      ],
+      "explanation": "Ten regional banks share one rate cycle, one loan book, one regulator. They tend to fall together. Three holdings with different drivers give you three chances to be wrong **separately**."
+    },
+    {
+      "id": "c5",
+      "type": "sticker_reveal",
+      "body": "Correlation runs on a scale from -1 to +1. Three points on that scale change what a second holding actually does for you.",
+      "stickers": [
+        {
+          "label": "+1: one bet, two tickers",
+          "art": {
+            "kind": "glyph",
+            "name": "coins-stack",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.18
+          },
+          "rotation": -6
+        },
+        {
+          "label": "0: genuinely separate bets",
+          "art": {
+            "kind": "glyph",
+            "name": "scale",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.5
+          },
+          "rotation": 5
+        },
+        {
+          "label": "-1: one offsets the other",
+          "art": {
+            "kind": "glyph",
+            "name": "shield",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.82
+          },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "refs": [
+        "trader:ray-dalio"
+      ],
+      "headline": "Independence is the scarce ingredient.",
+      "body": "Adding a holding only helps if its drivers differ from what you already own. The point that uncorrelated return streams improve return per unit of risk runs through {{trader:ray-dalio|Ray Dalio}}'s writing on portfolio construction."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Crises pull everything into one trade.",
+      "body": "In calm markets your holdings wander apart. In a panic, people sell what they can, not what they want to. Correlations climb toward +1 and the spread you paid for thins out exactly when you need it.",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [
+            100,
+            105,
+            99,
+            108,
+            102,
+            111,
+            88,
+            74
+          ],
+          "compareSeries": [
+            100,
+            97,
+            104,
+            98,
+            107,
+            100,
+            85,
+            72
+          ],
+          "compareLabel": "Holding B",
+          "yLabel": "Value",
+          "markers": [
+            {
+              "at": 6,
+              "label": "Panic",
+              "emphasis": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "When markets panic, correlations between holdings tend to [[1]], which means diversification thins out at the moment you were counting on it.",
+      "wordBank": [
+        "rise",
+        "fall",
+        "hold steady"
+      ],
+      "answer": "rise",
+      "explanation": "Holdings that looked independent for years can move as one for a few weeks. Judge a spread by how it behaves under stress, not by how it behaved last quarter."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "It cuts both tails, not one.",
+      "body": "Spreading a portfolio narrows the range of outcomes in **both** directions. In the chart earlier, the mixed pair fell 15 points instead of 30 — and it also peaked at 110 instead of 120. That is a trade, not a free lunch."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Some risk cannot be spread away.",
+      "body": "Diversifying removes the risk specific to one company or one industry. It does not remove the risk of the whole market repricing. That part stays, no matter how many names you hold, and sizing is what governs it.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What actually spreads risk",
+      "summary": "Diversification works through independence, not through the number of tickers on your screen.",
+      "bullets": [
+        "Ten holdings with one driver behave like one holding.",
+        "Correlations tend to rise in a crisis, so the spread thins when it matters most.",
+        "Narrowing the downside narrows the upside by the same mechanism.",
+        "Market-wide risk stays no matter how many names you hold."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "neon"
+      },
+      "insight": "Diversification is not a headcount. If your holdings all answer to the same driver, you own one position with several names on the receipt.",
+      "attribution": {
+        "source": "Day 7",
+        "detail": "Risk and Position Sizing"
+      },
+      "frame": "gradient"
+    }
+  ]
+}

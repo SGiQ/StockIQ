@@ -1,6 +1,12 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "strict": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "//": "server/ and workers/ deploy standalone with their own tsconfigs and their own runtimes (Node, Cloudflare Workers). Typechecking them under the Expo config produces false errors and would miss real ones.",
+  "exclude": ["node_modules", "scripts", "server", "workers"]
 }

@@ -1,0 +1,117 @@
+{
+  "id": "confirmation-bias",
+  "courseId": "trading-psychology",
+  "title": "Looking for Agreement",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The moment you buy, your reading changes.",
+      "body": "Before you own it, you read everything. After you own it, the article that agrees is insight and the one that disagrees is noise. Nothing about the company changed. Your eyes did."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Confirmation bias, in three moves.",
+      "body": "You search for sources that agree. You skim the ones that do not. And when bad news is undeniable, you decide it was **already priced in**. Each move feels like judgement. Together they are a filter.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The filter you cannot feel",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" },
+      "caption": "One magnifier, pointed only where you already expect to find agreement. The search feels thorough. The ground it never covers is the ground that would change your mind."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "You own a stock. A careful analyst publishes a negative note on it. Which reaction is the bias at work?",
+      "options": [
+        { "id": "test", "label": "Read it and test it against your thesis", "correct": false },
+        { "id": "dismiss", "label": "Note that they have been wrong before", "correct": true }
+      ],
+      "explanation": "Both feel like analysis from the inside. The tell is whether you would have applied that same scrutiny to a note that agreed with you."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Saying it out loud raises the price.",
+      "body": "Tell nobody and changing your mind costs nothing. Post the thesis, name it in a group chat, and reversing now costs face as well as money. That reputational cost has nothing to do with whether the position is still sound."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Once a view is public, three new costs attach to changing it. None of them are about the business.",
+      "stickers": [
+        {
+          "label": "Looking wrong in public",
+          "art": { "kind": "glyph", "name": "people", "bg": "blush" },
+          "anchor": { "x": 0.32, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Defending the older you",
+          "art": { "kind": "glyph", "name": "shield", "bg": "lilac" },
+          "anchor": { "x": 0.68, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Owing an explanation",
+          "art": { "kind": "glyph", "name": "newspaper", "bg": "mint" },
+          "anchor": { "x": 0.36, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Name what would prove you wrong.",
+      "body": "Before you buy, write the disconfirming condition down. Margins under a level. Two quarters of falling users. A founder leaving. Specific enough that a stranger could check it without asking you what you meant.",
+      "art": { "kind": "glyph", "name": "target", "bg": "butter" }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A thesis with no condition that could disprove it is not a thesis. It is a [[1]].",
+      "wordBank": ["preference", "forecast", "strategy"],
+      "answer": "preference",
+      "explanation": "A preference only needs you to keep liking it. A thesis names, in advance, the evidence that would end it."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Conviction and stubbornness feel identical.",
+      "body": "From the inside there is no difference. Both are certainty. Both wave off the objection. The only thing separating them is whether you named the exit before you needed it. {{book:trading-in-the-zone|Trading in the Zone}} keeps returning to that gap.",
+      "refs": ["book:trading-in-the-zone"]
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Read the strongest case against you.",
+      "body": "Not the weakest one you can beat. Find the most credible argument that you are wrong and state it in a form its author would accept. If you cannot, you have not understood the other side yet.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "Owning a position quietly edits what you notice. Saying it in public makes the edit expensive to undo.",
+      "bullets": [
+        "You seek agreement, skim disagreement, and reframe bad news as already priced in.",
+        "Public commitment adds a reputational cost that says nothing about the position.",
+        "Write the disconfirming condition before you buy, while you still can.",
+        "Conviction and stubbornness differ only by whether the exit was named first."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "brain", "bg": "neon" },
+      "insight": "Conviction and stubbornness look the same from the inside. The only difference is whether you wrote down what would change your mind before you needed to.",
+      "attribution": { "source": "Day 5", "detail": "Trading Psychology" }
+    }
+  ]
+}

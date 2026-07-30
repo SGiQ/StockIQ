@@ -1,0 +1,127 @@
+{
+  "id": "what-moves-a-price",
+  "courseId": "market-foundations",
+  "title": "What Actually Moves a Price",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A price is just the last trade someone agreed to.",
+      "body": "Nobody sets a stock's price. A buyer and a seller met at $84.20, agreed, and that number became the price. The next trade may happen at $84.19 or at $85. The tape is a running record of agreements, not a verdict on the company."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Supply and demand for the shares.",
+      "body": "A price moves when more money wants in than wants out, or the reverse. What gets bid on is the **shares** — a limited number of them. A fine company with no buyers today still falls today.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Record profit, missed forecast",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [1.1, 1.45, 1.3],
+          "labels": ["Last year", "Expected", "Delivered"],
+          "highlightIndex": 2,
+          "yLabel": "Earnings per share ($)"
+        }
+      },
+      "caption": "Northwind earned $1.30 a share — its best year ever, 18% above last year. Analysts had forecast $1.45. The stock fell 9% the next morning."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "The price already contains what everyone expects.",
+      "body": "If the whole market expects $1.45, buyers have already paid up for $1.45. Delivering exactly $1.45 changes nothing. Only the gap between what was expected and what arrived is new information — and only new information moves a price."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Harbor Foods reports the highest profit in its 40-year history. Analysts had expected slightly more. What is the most likely reaction in the stock that morning?",
+      "options": [
+        { "id": "up", "label": "It rises — record profit is good news", "correct": false },
+        { "id": "down", "label": "It falls — the result missed forecasts", "correct": true }
+      ],
+      "explanation": "Good news is not the same as **better than expected** news. The record profit was already paid for; the shortfall against forecasts was the only new fact. Reactions are never guaranteed, but the surprise is what gets traded."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "The week around an earnings report",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [81.0, 82.4, 83.1, 84.0, 85.2, 77.6, 78.4, 78.1],
+          "xLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Mon", "Tue", "Wed"],
+          "yLabel": "Share price ($)",
+          "markers": [{ "at": 5, "label": "Earnings reaction", "emphasis": true }]
+        }
+      },
+      "caption": "The price drifted up all week as buyers positioned for a strong quarter. The quarter was strong. It just was not strong enough, and the gap closed in one session."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "Four things move expectations more than anything else. Watch what each one does to the forecast, not to the headline.",
+      "stickers": [
+        {
+          "label": "Earnings versus forecast",
+          "art": { "kind": "glyph", "name": "target", "bg": "butter" },
+          "anchor": { "x": 0.32, "y": 0.12 },
+          "rotation": -6
+        },
+        {
+          "label": "Guidance for next quarter",
+          "art": { "kind": "glyph", "name": "compass", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.38 },
+          "rotation": 5
+        },
+        {
+          "label": "Interest rates",
+          "art": { "kind": "glyph", "name": "percent", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Sentiment and positioning",
+          "art": { "kind": "glyph", "name": "brain", "bg": "blush" },
+          "anchor": { "x": 0.66, "y": 0.86 },
+          "rotation": 6
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A stock does not move on good news or bad news. It moves on the gap between what happened and what the market already [[1]].",
+      "wordBank": ["expected", "reported", "announced", "measured"],
+      "answer": "expected",
+      "explanation": "Analysts publish estimates, and those estimates are already sitting inside today's price. The surprise, in either direction, is the only part that has to be repriced."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A price is the last agreement between a buyer and a seller, and it moves when expectations change — not when news is merely good.",
+      "bullets": [
+        "Supply and demand for the shares set the price, not the company's merit.",
+        "Whatever the market already expects is built into today's price.",
+        "Record results can still send a stock down if forecasts were higher.",
+        "Earnings, guidance, rates, and sentiment all work by moving expectations."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "neon" },
+      "insight": "The market does not pay for good news. It pays for news that is better than the news it already believed.",
+      "attribution": { "source": "Day 2", "detail": "Market Foundations" }
+    }
+  ]
+}

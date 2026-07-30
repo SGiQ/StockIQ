@@ -1,0 +1,132 @@
+{
+  "id": "volume-confirms",
+  "courseId": "reading-a-chart",
+  "title": "What Volume Adds",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": [
+    "strategy:canslim"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Two identical moves, two different stories.",
+      "body": "A stock closes up 6% on Tuesday. Another closes up 6% on Wednesday. The price chart draws the same line twice. But one move involved five million shares and the other involved eight hundred thousand. Same picture. Different amount of evidence."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Volume counts shares, not dollars.",
+      "body": "Volume is the number of shares that changed hands in a session. Every share someone bought, someone else sold. Price records where the last trade happened. Volume records how many trades it took to get there.",
+      "art": { "kind": "glyph", "name": "people", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Price over eight sessions",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [50.0, 50.3, 50.1, 50.6, 50.4, 50.8, 54.0, 54.2],
+          "xLabels": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
+          "yLabel": "Price ($)",
+          "markers": [{ "at": 6, "label": "+6.3%", "emphasis": true }]
+        }
+      },
+      "caption": "Six quiet sessions, then a jump from $50.80 to $54.00 — up 6.3% in a day. The line shows where price went. It says nothing about how many people took part."
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "The same eight sessions, in shares",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [1.2, 1.1, 0.9, 1.3, 1.0, 1.2, 5.4, 3.1],
+          "labels": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
+          "highlightIndex": 6,
+          "yLabel": "Shares traded (m)"
+        }
+      },
+      "caption": "Day 7's move came on 5.4 million shares against roughly 1.1 million on each of the six sessions before it — close to five times the usual crowd."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A stock jumps 5% on one-third of its normal volume. What does that tell you about the move?",
+      "options": [
+        { "id": "broad", "label": "Many buyers agreed on the new price", "correct": false },
+        { "id": "few", "label": "Few participants set that price", "correct": true }
+      ],
+      "explanation": "Light volume means the new price was set by a **small number of trades**. That is not a verdict on direction — the move may well hold. It simply rests on less evidence than the same move on heavy volume."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "refs": ["lesson:market-foundations/what-moves-a-price"],
+      "headline": "Volume is evidence, not a signal.",
+      "body": "Volume never tells you which way price goes next. It tells you how much weight to put on the move you just saw. Heavy volume means many participants agreed on the new price. Light volume means few did."
+    },
+    {
+      "id": "c7",
+      "type": "sticker_reveal",
+      "body": "Volume also moves for reasons that have nothing to do with conviction. Earnings dates, headlines, and holiday sessions all bend the count. Check the calendar before you read anything into a number.",
+      "stickers": [
+        {
+          "label": "Earnings day",
+          "art": { "kind": "glyph", "name": "calendar", "bg": "butter" },
+          "anchor": { "x": 0.28, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "News hits the wire",
+          "art": { "kind": "glyph", "name": "newspaper", "bg": "sky" },
+          "anchor": { "x": 0.72, "y": 0.46 },
+          "rotation": 5
+        },
+        {
+          "label": "Holiday half-session",
+          "art": { "kind": "glyph", "name": "clock", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.78 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Heavy compared to what?",
+      "body": "Five million shares is a stampede for one company and a slow morning for another. Volume only means something measured against that same stock's recent average. There is no universal number that counts as heavy."
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "Volume is only readable in comparison. Judge today's number against the same stock's own recent [[1]], never against another company's.",
+      "wordBank": ["average", "high", "sector"],
+      "answer": "average",
+      "explanation": "A number is heavy or light only relative to a baseline. Most charting tools draw that baseline for you as a moving average across the volume bars."
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "title": "What volume adds",
+      "summary": "Volume measures participation. It does not point a direction — it tells you how much evidence sits behind the move you just read.",
+      "bullets": [
+        "Volume is the count of shares traded, not dollars.",
+        "The same price move means more when more people took part.",
+        "Earnings, news, and holidays move volume for calendar reasons.",
+        "Heavy and light exist only relative to that stock's own average."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "neon" },
+      "insight": "Price tells you where the last trade happened. Volume tells you how many people were there. One is the number; the other is the crowd behind it.",
+      "attribution": { "source": "Day 6", "detail": "Reading a Chart" }
+    }
+  ]
+}

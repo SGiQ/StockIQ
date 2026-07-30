@@ -1,0 +1,104 @@
+{
+  "id": "cash-flow-is-king",
+  "courseId": "reading-a-business",
+  "title": "Earnings Are an Opinion, Cash Is a Fact",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A profitable company can still run out of cash.",
+      "body": "Profit is an accounting result. Cash is a bank balance. They are not the same number, and the difference is where a lot of bad surprises live. A company can report record earnings and still miss payroll."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Revenue is booked when it is earned.",
+      "body": "Under accrual accounting, a sale counts the day you **ship** the product, not the day the money lands. Deliver $10m of equipment in December on 90-day terms and December's income statement shows $10m. Your bank account shows nothing until March.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Some costs never touch the bank.",
+      "body": "Depreciation spreads the cost of a machine over its useful life. This year the company charges $30m of depreciation against earnings, but **no cash moves**. The cash went out years ago, when the machine was bought.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "From earnings to free cash flow",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [50, 40, 15],
+          "labels": ["Net income", "Operating cash", "Free cash flow"],
+          "highlightIndex": 2,
+          "yLabel": "$ millions"
+        }
+      },
+      "caption": "$50m of net income, plus $30m of depreciation, minus $40m tied up in unpaid invoices, gives $40m of operating cash. Capital spending takes $25m more."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "That $30m depreciation charge cuts reported earnings by $30m. Does it also cut this year's cash by $30m?",
+      "options": [
+        { "id": "yes", "label": "Yes, $30m leaves the bank", "correct": false },
+        { "id": "no", "label": "No, the cash left when it was bought", "correct": true }
+      ],
+      "explanation": "Depreciation is a **non-cash** charge. That is why the cash flow statement adds it straight back to net income before anything else."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Free cash flow is what is left.",
+      "body": "Operating cash flow is $40m — the cash the business itself generated. But keeping the machines running costs $25m of capital spending. Free cash flow is the **$15m** that survives, and only that $15m can repay debt, buy back shares, or fund a dividend.",
+      "art": { "kind": "glyph", "name": "coins-stack", "bg": "mint" }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Operating cash flow was $40m. Subtract the $25m of [[1]] and $15m of free cash flow is left.",
+      "wordBank": ["capital spending", "depreciation", "interest", "dividends"],
+      "answer": "capital spending",
+      "explanation": "Capital spending is real cash going out the door. Free cash flow is operating cash flow minus capital expenditure — the money genuinely available to owners and lenders."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "When the gap keeps widening",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [1, 3, 5, 8, 10],
+          "xLabels": ["Yr 1", "Yr 2", "Yr 3", "Yr 4", "Yr 5"],
+          "yLabel": "Earnings minus cash ($m)",
+          "markers": [{ "at": 4, "label": "This year: $10m", "emphasis": true }]
+        }
+      },
+      "caption": "One year of earnings running ahead of cash is normal. Five years of a widening gap is a question worth asking: where is the money going?"
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Earnings are a judgment about timing. Cash flow is a record of money that actually moved.",
+      "bullets": [
+        "Accrual accounting books revenue before the cash arrives.",
+        "Depreciation cuts earnings without cutting cash.",
+        "Free cash flow is operating cash flow minus capital spending.",
+        "A gap that persists for years is worth investigating."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "neon" },
+      "insight": "Earnings tell you what a company says it made. Cash flow tells you what it actually collected. When they disagree, follow the cash.",
+      "attribution": { "source": "Day 3", "detail": "Reading a Business" }
+    }
+  ]
+}

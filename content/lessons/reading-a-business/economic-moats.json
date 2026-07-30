@@ -1,0 +1,204 @@
+{
+  "id": "economic-moats",
+  "courseId": "reading-a-business",
+  "title": "Moats: Why Profits Survive",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": [
+    "strategy:value-investing"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Profit is a magnet for competitors.",
+      "body": "A business earns fat margins. Rivals notice, copy the product, and cut prices to win the customers. Margins fall back toward average. That is the default ending for most profitable ideas — unless something is defending them."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A moat is a structural defence.",
+      "body": "Picture a castle. The walls are the profitable business; the moat is the ditch that makes attacking expensive. In a company the ditch is not effort or talent. It is a feature a rival cannot copy just by spending more.",
+      "art": {
+        "kind": "glyph",
+        "name": "shield",
+        "bg": "forest"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "sticker_reveal",
+      "body": "Moats come in four shapes. Each is a different reason a customer stays put or a rival stalls at the edge.",
+      "stickers": [
+        {
+          "label": "Brands, patents, licences",
+          "art": {
+            "kind": "glyph",
+            "name": "shield",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.31,
+            "y": 0.14
+          },
+          "rotation": -6
+        },
+        {
+          "label": "Switching costs",
+          "art": {
+            "kind": "glyph",
+            "name": "lock",
+            "bg": "lilac"
+          },
+          "anchor": {
+            "x": 0.7,
+            "y": 0.38
+          },
+          "rotation": 5
+        },
+        {
+          "label": "Network effects",
+          "art": {
+            "kind": "glyph",
+            "name": "people",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.61
+          },
+          "rotation": -3
+        },
+        {
+          "label": "Cost advantage",
+          "art": {
+            "kind": "glyph",
+            "name": "coins-stack",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.84
+          },
+          "rotation": 7
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Two of them work on the customer.",
+      "body": "Switching costs: moving your payroll system to a rival means retraining every manager, so you stay even when a cheaper option appears. Network effects: a payment network is worth joining because everyone else already joined, and each new member makes leaving worse."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Which is more likely to keep a rival out for a decade?",
+      "options": [
+        {
+          "id": "team",
+          "label": "A hard-working management team",
+          "correct": false
+        },
+        {
+          "id": "licence",
+          "label": "An exclusive regulatory licence",
+          "correct": true
+        }
+      ],
+      "explanation": "Talent can be hired away; a licence cannot. **Cost advantage** works the same way — a rival can copy your process, but not the scale or the location that makes each unit cheaper to produce."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "Margins with no defence",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [
+            28,
+            27,
+            26,
+            24,
+            21,
+            17,
+            14,
+            12,
+            11,
+            10
+          ],
+          "xLabels": [
+            "Y1",
+            "Y2",
+            "Y3",
+            "Y4",
+            "Y5",
+            "Y6",
+            "Y7",
+            "Y8",
+            "Y9",
+            "Y10"
+          ],
+          "yLabel": "Operating margin %",
+          "markers": [
+            {
+              "at": 3,
+              "label": "Rivals enter",
+              "emphasis": true
+            }
+          ]
+        }
+      },
+      "caption": "Nothing holds the rivals back, so they copy the product and undercut on price. A moat is what would have kept this line flat instead."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A moat shows up in the numbers as margins and returns that stay high for years instead of [[1]].",
+      "wordBank": [
+        "eroding",
+        "rising",
+        "compounding"
+      ],
+      "answer": "eroding",
+      "explanation": "One strong year proves nothing. Durability is the test: profits that survive a decade of other people trying to take them."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Moats get filled in.",
+      "body": "A patent expires. A regulator opens the market. New technology makes an old switching cost irrelevant. So the question is never only whether a moat exists. It is how fast it is being worn down, and by what.",
+      "art": {
+        "kind": "glyph",
+        "name": "clock",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A moat is the structural reason a profitable business stays profitable while everyone else tries to take the profit.",
+      "bullets": [
+        "Competition drags high profits back toward average.",
+        "Moats come from intangibles, switching costs, networks, or cost.",
+        "Durable margins and returns are the evidence, not the story.",
+        "Technology and regulation can fill a moat in."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "anchor",
+        "bg": "ink"
+      },
+      "insight": "Anyone can earn high profits for a year. The question worth asking is what stops someone else from taking them next year.",
+      "attribution": {
+        "source": "Day 5",
+        "detail": "Reading a Business"
+      }
+    }
+  ]
+}

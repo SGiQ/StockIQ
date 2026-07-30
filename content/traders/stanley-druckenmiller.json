@@ -1,0 +1,73 @@
+{
+  "id": "stanley-druckenmiller",
+  "name": "Stanley Druckenmiller",
+  "era": "1977–present",
+  "portrait": { "kind": "glyph", "name": "compass", "bg": "ink" },
+  "oneLiner": "Macro trader who ran Duquesne Capital for 30 years, then closed it in 2010",
+  "bio": "Stanley Druckenmiller, born in 1953, joined Pittsburgh National Bank as a management trainee in 1977 and founded his own firm, Duquesne Capital Management, in 1981. From 1988 to 2000 he also ran money for George Soros as lead portfolio manager of the Quantum Fund, holding both jobs at the same time.\n\nHe works top-down. The starting point is a view about growth, interest rates, currencies and central bank policy; the expression of that view can be a stock, an index, a bond or a currency, whichever instrument pays best if the view turns out to be right. Jack Schwager interviewed him for **The New Market Wizards** (1992) — the sequel to the original 1989 Market Wizards, not that first volume — in a chapter on top-down investing.\n\nIn August 2010 he wrote to clients that he was returning their capital and closing Duquesne to outside money, citing the strain of not meeting his own expectations over the preceding years. He has invested since through the Duquesne Family Office, whose US-listed equity positions appear in quarterly 13F filings with the SEC.\n\nDuquesne was a private partnership, so the performance figures attached to it were reported by the firm and by the press covering its closure rather than published as an audited public series.",
+  "philosophy": [
+    "**Sizing is the edge, not the hit rate.** Druckenmiller has said repeatedly that being right matters far less than how much is on the position when it works. His stated practice is many small exposures while a view is forming, and one very large one on the rare occasions the macro analysis and the price action agree.",
+    "**Liquidity moves indexes more than earnings do.** His process starts with what central banks are doing and where money is flowing, on the view that this explains broad market direction better than corporate profits, which are backward-looking by the time they are reported.",
+    "**Never invest in the present.** He describes trying to picture what a company or an economy looks like roughly eighteen months out and buying that, on the basis that today's earnings and today's news are already in the price. He credits the idea to an early mentor at Pittsburgh National Bank.",
+    "**Preserve capital, then swing.** He took from Soros the idea that long-run compounding comes from not losing much plus a few outsized winners: grind out a solid year first, and only then press hard when conviction is genuinely high.",
+    "**Price action is evidence.** He treats charts as a second source alongside macro work — particularly a market that refuses to move on news it should have moved on, which he reads as information about how investors are already positioned.",
+    "**Name the mistakes.** He has spoken publicly about buying technology stocks near the 2000 peak against his own stated judgement, and describes that decision as an emotional failure rather than an analytical one."
+  ],
+  "trackRecord": [
+    {
+      "metric": "Duquesne Capital, average annual return",
+      "value": "About 30% a year",
+      "note": "Reported at the fund's closure and in the press coverage around it. The start date for the average differs between accounts — some run it from the 1981 founding, Bloomberg's 2010 report dated it from 1986 — and Duquesne was a private partnership, so this was never a publicly audited series. Treat it as approximate.",
+      "source": "Bloomberg and Wall Street Journal coverage of Druckenmiller's 18 August 2010 letter to Duquesne clients"
+    },
+    {
+      "metric": "Losing years",
+      "value": "None reported over the fund's roughly thirty-year life",
+      "note": "This is the figure reported at the 2010 closure, based on the firm's own performance reporting to its investors rather than an independent audit.",
+      "source": "Wall Street Journal and Bloomberg reports of 18 August 2010 on the closure of Duquesne Capital Management"
+    },
+    {
+      "metric": "Assets at closure",
+      "value": "More than $12 billion",
+      "note": "Outside capital was returned in 2010 and the firm continued as the Duquesne Family Office.",
+      "source": "Wall Street Journal, 18 August 2010, reporting Druckenmiller's letter to clients"
+    },
+    {
+      "metric": "Quantum Fund",
+      "value": "Lead portfolio manager, 1988 to 2000",
+      "note": "He ran Duquesne concurrently. He left Soros Fund Management in 2000 following heavy losses in technology stocks.",
+      "source": "Jack Schwager's The New Market Wizards (1992), which interviews him during this period, together with contemporaneous reporting of his April 2000 departure from Soros Fund Management"
+    }
+  ],
+  "signatureStrategies": ["trend-following", "momentum-investing"],
+  "famousTrades": [
+    {
+      "title": "Shorting sterling before Black Wednesday",
+      "year": "1992",
+      "story": "By 1992 the British pound was pegged inside Europe's Exchange Rate Mechanism at a rate Druckenmiller judged unsustainable. Britain's economy was weak and needed lower interest rates; holding the peg against a strong Deutsche Mark required high ones. Both could not last.\n\nAttribution matters here, because the trade is usually filed under Soros's name. The position was Druckenmiller's idea and he built it at the Quantum Fund, where he was lead manager. When he proposed sizing it at roughly $1.5 billion, Soros's objection was that the number was too small — the line reported from that conversation is that he should go for the jugular. The position was scaled to around $10 billion, far beyond the fund's own capital, using forward contracts rather than cash.\n\nBritain left the ERM on 16 September 1992 and sterling fell sharply. The trade is commonly reported as making the fund about $1 billion. The fuller account is that Druckenmiller supplied the analysis and the position and Soros supplied the sizing conviction and the balance sheet behind it — **neither man made this trade alone**.",
+      "source": "Sebastian Mallaby, More Money Than God (2010), which reconstructs the trade from interviews with participants; Druckenmiller has given the same account of its origin in later public interviews"
+    },
+    {
+      "title": "Buying technology stocks into the 2000 top",
+      "year": "2000",
+      "story": "In early 2000 Druckenmiller sold the Quantum Fund's technology positions, judging the valuations indefensible. The sector then kept climbing for weeks, and two younger traders at the firm were far ahead of him for the year.\n\nHe bought back near the peak — he has put the figure at roughly $6 billion of technology stock — and lost about $3 billion over the following weeks as the sector broke. He left Soros Fund Management shortly afterwards.\n\nHis own account, given in a 2015 talk, is the useful part: he already knew the rule he was breaking, and broke it anyway. He attributes the decision to emotion rather than to any failure of analysis, which is why he tells the story as a lesson about temperament rather than about technology stocks.",
+      "source": "Druckenmiller's January 2015 talk to the Lost Tree Club, of which public transcripts exist, together with contemporaneous reporting of his April 2000 departure from Soros Fund Management"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "The way to build long-term returns is through preservation of capital and home runs.",
+      "context": "Describing a philosophy he says he adopted from George Soros, in Jack Schwager's The New Market Wizards (1992)."
+    },
+    {
+      "text": "I was just an emotional basket case and couldn't help myself.",
+      "context": "On buying technology stocks near the 2000 peak, in his January 2015 talk to the Lost Tree Club."
+    },
+    {
+      "text": "Never, ever invest in the present.",
+      "context": "In the same 2015 talk, relaying advice from an early mentor at Pittsburgh National Bank about looking eighteen months ahead."
+    }
+  ],
+  "recommendedReading": ["market-wizards", "reminiscences-of-a-stock-operator"],
+  "relatedTraders": ["paul-tudor-jones", "ray-dalio"]
+}

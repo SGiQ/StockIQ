@@ -1,0 +1,136 @@
+{
+  "id": "the-trading-journal",
+  "courseId": "trading-psychology",
+  "title": "The Trading Journal",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "You will misremember this trade.",
+      "body": "Ask anyone why they bought and you get a clean story. The story was assembled after the price moved. Memory is not a recording. It is a rewrite, and it edits in your favor."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Certainty grows after the fact.",
+      "body": "Once you know how it turned out, you recall being surer than you were. You also recall reasons you never actually held — the ones that fit the result. Neither edit feels like lying.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "One trade, two records",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 103, 98, 96, 104, 111, 108],
+          "yLabel": "Price",
+          "xLabel": "Days held",
+          "markers": [
+            { "at": 0, "label": "Thesis written", "emphasis": true },
+            { "at": 5, "label": "Outcome known" },
+            { "at": 6, "label": "Memory rewrites" }
+          ]
+        }
+      },
+      "caption": "The left edge is the only place a record can be honest. Anything written after the outcome is known has already been shaped by it — including the version you sincerely believe."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Write it before you know.",
+      "body": "The entry has to exist before the outcome does. That is the whole mechanism. A note made after the position closes is not a record of your thinking. It is a record of your thinking about a result you already have.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "mint" }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Two logs of one trade: one written the morning you bought, one written the evening you sold. Which tells you what you actually believed?",
+      "options": [
+        { "id": "morning", "label": "The one written at entry", "correct": true },
+        { "id": "evening", "label": "The one written at exit", "correct": false }
+      ],
+      "explanation": "The evening version was written by someone who already knew the answer. It will be more confident, more coherent, and less true. Only the entry note was written in real uncertainty."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "A useful entry is four lines, written in the minute before you commit. Leave one out and there is nothing to review later.",
+      "stickers": [
+        {
+          "label": "The thesis",
+          "art": { "kind": "glyph", "name": "lightbulb", "bg": "butter" },
+          "anchor": { "x": 0.32, "y": 0.14 },
+          "rotation": -5
+        },
+        {
+          "label": "What would disprove it",
+          "art": { "kind": "glyph", "name": "cross", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.4 },
+          "rotation": 6
+        },
+        {
+          "label": "The planned exit",
+          "art": { "kind": "glyph", "name": "target", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.66 },
+          "rotation": -3
+        },
+        {
+          "label": "How you felt",
+          "art": { "kind": "glyph", "name": "heart", "bg": "lilac" },
+          "anchor": { "x": 0.68, "y": 0.88 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "The disproof line does the work.",
+      "body": "A thesis you cannot disprove is a mood. Naming in advance what would prove you wrong turns it into something checkable — and it shows you later whether you exited on evidence or on discomfort."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Log the mood, not just the price.",
+      "body": "Rushed. Bored. Getting even. These feel irrelevant while you type them. Months later they are often the only thing that explains why a plan you believed in was abandoned halfway through.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "sky" }
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "One entry is a note. Two hundred entries are data. A journal earns its keep only when you read it [[1]], not one trade at a time.",
+      "wordBank": ["in bulk", "out loud", "at entry"],
+      "answer": "in bulk",
+      "explanation": "Trade by trade, every decision looks like its own story. Stacked in one place, the same mistake shows up again and again with a date on it."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Patterns only appear in the pile.",
+      "body": "Read fifty entries at once and clusters surface. Losses bunched on one weekday. One setup that keeps getting taken and keeps failing. A run of red trades all logged as impatient. None of it is visible from inside a single trade."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "The Trading Journal",
+      "summary": "A journal is not paperwork. It is the only record of what you thought before you knew how it ended.",
+      "bullets": [
+        "Memory inflates past certainty and supplies reasons you never held.",
+        "An entry counts only if it was written before the outcome was known.",
+        "Thesis, disproof, planned exit, mood at entry — four lines, every time.",
+        "Reviewed in bulk, entries expose patterns no single trade can show."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "ink" },
+      "insight": "You cannot audit a memory. Write down what you believe while you still do not know whether you were right.",
+      "attribution": { "source": "Building the Habit", "detail": "Trading Psychology" }
+    }
+  ]
+}

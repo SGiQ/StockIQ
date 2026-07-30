@@ -1,0 +1,31 @@
+{
+  "id": "market-foundations",
+  "title": "Market Foundations: How Stocks Actually Work",
+  "author": "StockIQ",
+  "category": "fundamentals",
+  "cover": { "kind": "glyph", "name": "building", "bg": "mint" },
+  "blurb": "Start here. What a share really is, how trades actually happen, and how to read the numbers everyone quotes at you.",
+  "order": 1,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHAT A SHARE REALLY IS",
+      "lessonIds": ["what-is-a-stock", "why-companies-sell-shares", "what-moves-a-price"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "HOW A TRADE HAPPENS",
+      "lessonIds": ["exchanges-and-brokers", "bid-ask-and-spread", "order-types"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "READING THE NUMBERS",
+      "lessonIds": ["market-cap", "indices-and-benchmarks", "reading-a-quote"]
+    }
+  ],
+  "totalXp": 180
+}

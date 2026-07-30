@@ -1,0 +1,42 @@
+{
+  "id": "value-investing",
+  "name": "Value Investing",
+  "family": "value",
+  "oneLiner": "Estimating what a business is worth, then paying meaningfully less than that.",
+  "thesis": "Value investing treats a share as a fractional claim on a business rather than a ticker that moves. Practitioners in this tradition first estimate what the whole business is plausibly worth — from its assets, its earnings power, or the cash it can be expected to throw off — and then compare that estimate with the price the market is asking. Benjamin Graham's framing was that the market is there to quote prices, not to tell you what things are worth, and that the gap between the two is the only thing an investor is being paid to notice. The gap itself is the **margin of safety**: room for the estimate to be wrong and for the outcome still to be tolerable.\n\nThe difficulty is that a low price is not evidence of a mistake by anyone else. A business can be cheap because it is shrinking, because its industry is being displaced, or because its accounting flatters it — the well-documented **value trap**. Estimates of intrinsic value are opinions dressed as arithmetic, and two careful analysts can differ by a factor of two on the same company. Nothing here says the approach works, produces a profit, or fits any particular person; it describes how a school of investors has said they think.",
+  "timeframe": "long-term",
+  "riskLevel": 2,
+  "entryRules": [
+    "Value investors typically start from an estimate of intrinsic value built from the business itself — assets, normalised earnings, or expected free cash flow — before looking at what the share is quoted at.",
+    "Graham's students have described requiring a **margin of safety**: a price far enough below their own estimate that an ordinary error in the estimate would not be ruinous. The size of that discount is a judgement call, not a formula.",
+    "Many in this tradition have said they only consider businesses they can actually describe — Buffett's **circle of competence** idea — and pass on anything whose economics they cannot explain simply.",
+    "Balance-sheet strength is commonly examined before the valuation is trusted, on the reasoning that a heavily indebted business may not survive long enough for any gap to close.",
+    "Practitioners frequently distinguish a business that is cheap from one that is merely falling, and have written at length about how hard that distinction is to make in advance."
+  ],
+  "exitRules": [
+    "The most commonly stated exit in this school is the price approaching the investor's own estimate of value — the reason for holding was the gap, so the gap closing removes the reason.",
+    "Value investors also describe selling when the original thesis is contradicted by the business rather than by the price: margins that were supposed to recover do not, or the moat turns out not to exist.",
+    "Some, Buffett prominently, have described holding certain businesses indefinitely and revising the value estimate upward instead of selling — a position that other value investors explicitly reject.",
+    "Recognising that an estimate was simply wrong is treated in this literature as its own exit, separate from any price move, and is widely described as the hardest one to act on."
+  ],
+  "riskManagement": [
+    "The **value trap** is the signature failure mode: a share that is cheap on today's numbers because the numbers are about to get worse. No screen distinguishes it from a bargain in advance, and investors in this tradition have lost substantial capital to it.",
+    "A gap between price and estimated value can persist for years, or never close at all. There is no mechanism guaranteeing that the market ever agrees with an analyst's estimate.",
+    "Because the discipline encourages buying what is falling, positions frequently move against the buyer after purchase. Practitioners describe sizing positions so that being early is survivable, and avoiding borrowed money for that reason.",
+    "Concentration cuts both ways. Some value investors hold very few positions on the argument that good ideas are rare; that same concentration magnifies the cost of a single mistaken estimate.",
+    "The **riskLevel** shown here is a rough comparative signal against the other strategies in this app. It is not a measurement, and it says nothing about whether this approach suits any particular reader."
+  ],
+  "practicedBy": ["warren-buffett"],
+  "furtherReading": ["the-intelligent-investor"],
+  "prerequisiteLessons": [
+    "reading-a-business/the-price-earnings-ratio",
+    "reading-a-business/economic-moats"
+  ],
+  "illustrativeChart": {
+    "type": "compounding",
+    "principal": 10000,
+    "rate": 0.09,
+    "years": 25,
+    "compareRate": 0.05
+  }
+}

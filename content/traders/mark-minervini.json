@@ -1,0 +1,67 @@
+{
+  "id": "mark-minervini",
+  "name": "Mark Minervini",
+  "era": "1980s–present",
+  "portrait": { "kind": "glyph", "name": "ladder", "bg": "neon" },
+  "oneLiner": "Momentum trader who won the real-money US Investing Championship twice",
+  "bio": "Mark Minervini is an American stock trader, author and trading educator who has been active in US equity markets since the 1980s. He left school in his teens and learned the market trading his own account, a background Jack Schwager describes in the profile of him in **Stock Market Wizards** (2001).\n\nHe is best known for the US Investing Championship, a real-money contest in which entrants nominate a brokerage account at the start of the year and are scored against its statements. Minervini won the stock division in 1997 and won again in 2021.\n\nHow he earns a living matters when reading claims about his record. He sells books and trading education as well as trading, and the two kinds of number attached to his name are not equally strong. The championship results are third-party verified. The long-run return figures that circulate in his books are self-reported and were never an audited public fund record.\n\nHis published method has a name, SEPA, and a small number of moving parts: a trend filter, an earnings and sales requirement, a specific chart formation, and a loss limit fixed before entry.",
+  "philosophy": [
+    "**Trend comes first.** What Minervini calls the Trend Template screens for stocks already in a confirmed uptrend — price above the 50-, 150- and 200-day moving averages, the 200-day itself rising, and the stock well up off its 52-week low. Nothing else in the method runs on a stock that fails this filter.",
+    "**Fundamentals give the reason, price gives the timing.** SEPA, his term for Specific Entry Point Analysis, looks for accelerating earnings and sales and an identifiable catalyst, then waits for the chart before committing. The business explains why a stock could move. The chart decides when.",
+    "**Buy contraction, not hope.** His Volatility Contraction Pattern describes a base in which each successive pullback is shallower than the last and volume dries up through the sequence. He reads that as sellers being used up, and buys as price clears the final contraction.",
+    "**The exit is decided before the entry.** Position size is derived from a predefined loss point rather than from conviction. He writes about cutting losses in the single-digit percentages and tightening that further when conditions deteriorate.",
+    "**Expectancy beats hit rate.** His argument is that average win size relative to average loss size decides the outcome, so a trader can be wrong often and still compound — and can be right often and still lose.",
+    "**The market environment gates everything.** He tracks the health of the broad indexes and of leading stocks, and cuts exposure when both weaken, on the view that most individual setups fail in a hostile tape however good they look in isolation."
+  ],
+  "trackRecord": [
+    {
+      "metric": "US Investing Championship, 1997",
+      "value": "+155%, stock division",
+      "note": "Third-party verified. The contest scores entrants against statements from a brokerage account nominated at the start of the year, so this is not a self-reported figure.",
+      "source": "US Investing Championship 1997 final standings, contest run by Norm Zadeh; standings published at financial-competitions.com"
+    },
+    {
+      "metric": "US Investing Championship, 2021",
+      "value": "+334.8%, $1,000,000+ stock division",
+      "note": "Third-party verified. The published standings record this as the largest return across all 2021 divisions, including the leveraged futures and options divisions, against a previous divisional record of +119.1% set in 2020. 338 traders entered that year.",
+      "source": "2021 United States Investing Championship final standings, announced via Business Wire, 24 January 2022"
+    },
+    {
+      "metric": "Claimed five-year average annual return",
+      "value": "About 220% a year",
+      "note": "Self-reported. This figure, and the compounded multi-year total usually quoted alongside it, come from Minervini's own account of trading his private capital. It was never an audited public fund record and no regulator or contest verified it, so it should be read as a claim rather than as a measured result.",
+      "source": "self-reported by Minervini in his interview for Jack Schwager's Stock Market Wizards (2001) and repeated in his own book Trade Like a Stock Market Wizard (2013)"
+    }
+  ],
+  "signatureStrategies": ["momentum-investing", "canslim"],
+  "famousTrades": [
+    {
+      "title": "Entering the 1997 championship",
+      "year": "1997",
+      "story": "Minervini entered the 1997 US Investing Championship trading a long-only stock account, in a field where other entrants used leveraged futures and options. He finished the year up 155% in the stock division.\n\nThe result is worth separating from the story around it. Because the contest checks returns against brokerage statements, the 155% is one of the few numbers in his record that does not rest on his own reporting. The size of the account he entered with, which he gives as $250,000 of his own money, comes from his own telling rather than from the contest.",
+      "source": "US Investing Championship 1997 final standings (contest coordinator Norm Zadeh), with the account-size detail self-reported by Minervini in Trade Like a Stock Market Wizard (2013)"
+    },
+    {
+      "title": "Winning again twenty-four years later",
+      "year": "2021",
+      "story": "Minervini re-entered the championship in 2021, this time in the division for accounts above $1 million, and finished the year at +334.8%. The published standings put that ahead of every other division, and well past the +119.1% that had stood as the divisional record.\n\nA contest year is a single sample, and 2021 was an unusually strong year for trending growth stocks — the conditions his method is built for. The result shows the approach can produce a very large return when the environment suits it. It does not establish what the same approach returns across a full market cycle, and no public series exists that would show that.",
+      "source": "2021 United States Investing Championship final standings, announced via Business Wire, 24 January 2022"
+    }
+  ],
+  "quotes": [
+    {
+      "text": "Only you can be wrong; the market is never wrong.",
+      "context": "On why traders hesitate to cut a loss, in Think & Trade Like a Champion (2016)."
+    },
+    {
+      "text": "you're interviewing Market Wizards not Market Losers",
+      "context": "Recalling, on his own X account in August 2022, his reply to Jack Schwager when Schwager noted that every successful trader talks about cutting losses."
+    }
+  ],
+  "recommendedReading": [
+    "market-wizards",
+    "reminiscences-of-a-stock-operator",
+    "trading-in-the-zone"
+  ],
+  "relatedTraders": ["william-oneil", "jesse-livermore"]
+}

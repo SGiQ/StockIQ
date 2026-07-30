@@ -1,0 +1,127 @@
+{
+  "id": "fear-of-missing-out",
+  "courseId": "trading-psychology",
+  "title": "The Fear of Missing Out",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "refs": ["book:trading-in-the-zone"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The trade you take because everyone else already did.",
+      "body": "A price runs hard for a week and your feed fills with people who own it. Nothing about the business changed for you. The only new information is that other people are winning. That feeling has a name, and it has a price tag."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "FOMO is a reason to act that comes from outside.",
+      "body": "Name it precisely. FOMO is when your reason for buying is that the price already moved and other people are visibly winning. Not the business. Not the setup. The crowd. That pull has a label: **social proof**. When you are unsure, you copy whoever looks confident.",
+      "art": { "kind": "glyph", "name": "people", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Your sample is broken before you see it.",
+      "body": "Wins get posted. Losses get deleted, or never mentioned at all. So the feed you learn from is not a random sample of what happened — it is a filtered one. The success rate you feel is higher than the success rate that exists.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "lilac" }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Two people bought the same stock last month. One is up, one is down. Which one is more likely to post about it?",
+      "options": [
+        { "id": "winner", "label": "The one who is up", "correct": true },
+        { "id": "either", "label": "Both, about equally", "correct": false }
+      ],
+      "explanation": "Neither of them changed the odds. Only one of them shows up in your feed. That is how a crowded move comes to look like a **base rate** it never earned."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "Where the crowd arrives",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [30, 29, 31, 30, 33, 40, 49, 58, 64, 57, 49, 44],
+          "xLabel": "Time",
+          "yLabel": "Price",
+          "shadeFrom": 8,
+          "shadeLabel": "After the crowd",
+          "markers": [
+            { "at": 3, "label": "Quiet base" },
+            { "at": 8, "label": "FOMO buys here", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Attention arrives after price does. The loudest part of a move sits near its high, which is also the point furthest from the quiet base below — the only level that would tell you the idea failed."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Buying high buys more risk per share.",
+      "body": "Risk per share is the distance from your entry to the level that proves you wrong. Buy near the base and that distance is small. Buy after the run and the same level sits far below you. Same idea, much more money at stake.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "butter" }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A wider gap between entry and exit forces one of two things: a wider stop, or a [[1]] position.",
+      "wordBank": ["smaller", "larger", "leveraged"],
+      "answer": "smaller",
+      "explanation": "Position size follows from what you lose if the exit is hit. Push that exit further away and the only way to hold the loss steady is to own fewer shares."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "FOMO rarely announces itself. It arrives as three specific thoughts, and each one is a sign the reason to act came from outside you.",
+      "stickers": [
+        {
+          "label": "It ran without me",
+          "art": { "kind": "glyph", "name": "clock", "bg": "blush" },
+          "anchor": { "x": 0.3, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "Everyone else is in",
+          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.47 },
+          "rotation": 5
+        },
+        {
+          "label": "I'll find the exit later",
+          "art": { "kind": "glyph", "name": "warning", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.8 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "A missed move and a rushed entry are not twins.",
+      "body": "Both feel like a mistake. Only one costs money. Passing on something that keeps going costs you nothing you ever held. Entering late with no exit in mind costs real capital from a real account. Regret is loud. Losses are quiet until they are not.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "mint" }
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "title": "FOMO, named and priced",
+      "summary": "FOMO is acting because the price already moved and other people are visibly winning.",
+      "bullets": [
+        "Social proof plus a feed that hides losses breaks the sample you learn from.",
+        "Buying after a run puts your entry furthest from any sensible exit.",
+        "That gap forces a wider stop or a smaller position.",
+        "A missed chance costs nothing. A rushed entry costs money."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "brain", "bg": "neon" },
+      "insight": "Opportunities repeat. Capital does not. Missing a move costs you nothing you owned; chasing one can cost you something you did.",
+      "attribution": { "source": "Trading Psychology", "detail": "Why good plans break" }
+    }
+  ]
+}

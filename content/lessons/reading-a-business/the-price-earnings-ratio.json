@@ -1,0 +1,178 @@
+{
+  "id": "the-price-earnings-ratio",
+  "courseId": "reading-a-business",
+  "title": "The P/E Ratio and What It Hides",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": [
+    "strategy:growth-at-a-reasonable-price"
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A price tag on its own tells you nothing.",
+      "body": "One company's shares cost $12. Another's cost $400. Neither number tells you which business is expensive. Price only means something once you set it against what the company actually earns. That is the whole job of the P/E ratio."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "It is one division, nothing more.",
+      "body": "Northwind Foods trades at **$60** a share. Over the last year it earned **$3** of profit per share. Sixty divided by three is **20**. Northwind has a P/E of 20: you pay $20 for every $1 of annual profit.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Read it as years of earnings.",
+      "body": "A P/E of 20 means you are handing over 20 years of Northwind's current profit to own one share today. That is the honest reading. It also shows why the number is only a starting question: earnings rarely stay still.",
+      "art": {
+        "kind": "glyph",
+        "name": "clock",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "fill_blank",
+      "body": "A trailing P/E divides by the earnings a company has already reported. A forward P/E divides by an analyst's [[1]] of next year's earnings — a number nobody has earned yet.",
+      "wordBank": [
+        "estimate",
+        "audit",
+        "promise"
+      ],
+      "answer": "estimate",
+      "explanation": "Both get called the P/E. One is history, the other is a forecast dressed as arithmetic. Always check which one you are looking at."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Two companies in the same industry. One trades at 9 times earnings, the other at 30. Which is the better buy?",
+      "options": [
+        {
+          "id": "cheap",
+          "label": "The one at 9 times earnings",
+          "correct": false
+        },
+        {
+          "id": "unknown",
+          "label": "You cannot tell from the P/E alone",
+          "correct": true
+        }
+      ],
+      "explanation": "The gap is not a mispricing waiting to be collected. It is the market's forecast: the company at 30 is expected to **grow**, the one at 9 is expected to **shrink**. A P/E prices expectations, not quality."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "One retailer priced at half its peers",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [
+            9,
+            17,
+            18,
+            20
+          ],
+          "labels": [
+            "Harborline",
+            "Cedar Mart",
+            "Fairway",
+            "Oakridge"
+          ],
+          "highlightIndex": 0,
+          "yLabel": "P/E ratio"
+        }
+      },
+      "caption": "Four retailers, one industry, same year. Harborline is priced at half the multiple of every peer. That gap is not a bargain nobody noticed — it is a forecast that its earnings are falling."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "The value trap, in one line.",
+      "body": "Harborline trades at $27 on $3 of earnings per share — a P/E of 9. Now suppose earnings fall to $1.50, as the market expects. That same $27 price is 18 times earnings. Cheap became expensive and the price never moved.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "The ratio only works when the E can be trusted. In these three cases the number on your screen is arithmetic, not information.",
+      "stickers": [
+        {
+          "label": "Losses: no P/E at all",
+          "art": {
+            "kind": "glyph",
+            "name": "cross",
+            "bg": "blush"
+          },
+          "anchor": {
+            "x": 0.3,
+            "y": 0.16
+          },
+          "rotation": -6
+        },
+        {
+          "label": "A one-off asset sale",
+          "art": {
+            "kind": "glyph",
+            "name": "coins-stack",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.7,
+            "y": 0.48
+          },
+          "rotation": 5
+        },
+        {
+          "label": "A peak year for a cyclical",
+          "art": {
+            "kind": "glyph",
+            "name": "chart-down",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.8
+          },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "The P/E tells you what the market expects from a business, not whether that business is cheap.",
+      "bullets": [
+        "P/E is price divided by earnings per share.",
+        "Trailing P/E is fact. Forward P/E is an estimate.",
+        "A low P/E often prices in shrinking earnings.",
+        "Compare a P/E to the company's own history or its rivals."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "glyph",
+        "name": "eye",
+        "bg": "ink"
+      },
+      "insight": "A P/E is not a price tag. It is the market's forecast written as a number — and forecasts can be wrong in both directions.",
+      "attribution": {
+        "source": "Day 4",
+        "detail": "Reading a Business"
+      }
+    }
+  ]
+}

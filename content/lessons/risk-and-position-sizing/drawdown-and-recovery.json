@@ -1,0 +1,141 @@
+{
+  "id": "drawdown-and-recovery",
+  "courseId": "risk-and-position-sizing",
+  "title": "Drawdown and Recovery",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The number that describes what you actually lived through.",
+      "body": "Average return is a summary written afterwards. Drawdown is the part you had to sit through. A portfolio can average 10% a year and still spend a decade below a number it already reached. That decade is where people quit."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Drawdown is the fall from a peak.",
+      "body": "Measure from the highest value the portfolio has ever reached down to its lowest point after that. Peak 100, trough 60, drawdown **40%**. Not from where you bought. From the best it ever was.",
+      "art": { "kind": "glyph", "name": "chart-down", "bg": "blush" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "One drawdown, start to finish",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [78, 88, 100, 84, 70, 60, 63, 71, 79, 87, 94, 100],
+          "shadeFrom": 2,
+          "shadeLabel": "9 years underwater",
+          "markers": [
+            { "at": 2, "label": "Peak" },
+            { "at": 5, "label": "Trough", "emphasis": true },
+            { "at": 11, "label": "Recovered" }
+          ],
+          "xLabel": "Years",
+          "yLabel": "Portfolio value"
+        }
+      },
+      "caption": "The line peaks in year 2, bottoms 40% lower in year 5, and does not see that peak again until year 11. Three years down. Six years back."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Two funds both fell 30% from their peak. One was back to even in nine months, the other in seven years. Which drawdown was harder to hold?",
+      "options": [
+        { "id": "equal", "label": "Equally hard — the depth was the same", "correct": false },
+        { "id": "seven-years", "label": "The seven-year one", "correct": true }
+      ],
+      "explanation": "Depth and duration are two different numbers. Depth tells you how much you lost. Duration tells you how long you had to keep believing. **Duration** is what wears people out, and it never shows up in an annual return figure."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The second number is time.",
+      "body": "Every drawdown has a depth and a length. Depth is a headline. Length is a daily experience: months or years of opening an account worth less than it once was, with nothing to show for waiting.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "butter" }
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Describe a drawdown properly and you need three facts, not one. Miss any of them and you have not described it.",
+      "stickers": [
+        {
+          "label": "Peak to trough",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" },
+          "anchor": { "x": 0.3, "y": 0.16 },
+          "rotation": -6
+        },
+        {
+          "label": "Trough back to peak",
+          "art": { "kind": "glyph", "name": "ladder", "bg": "mint" },
+          "anchor": { "x": 0.7, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "Total time underwater",
+          "art": { "kind": "glyph", "name": "clock", "bg": "sky" },
+          "anchor": { "x": 0.36, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "An average hides the worst stretch.",
+      "body": "A strategy that returned 12% a year says nothing about the year it fell 45%. The average is arithmetic done after the fact. The worst stretch is the thing that had to be survived in real time to earn it."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "Same finish, different road",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 130, 150, 95, 75, 100, 122, 138, 150],
+          "compareSeries": [100, 105, 111, 116, 122, 128, 134, 142, 150],
+          "compareLabel": "Steady",
+          "xLabels": ["0", "1", "2", "3", "4", "5", "6", "7", "8"],
+          "xLabel": "Years",
+          "yLabel": "Value"
+        }
+      },
+      "caption": "Both portfolios turn 100 into 150 over eight years. The dashed one never falls. The solid one halves from its peak by year 4 and needs four more years to reclaim it."
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "The worst drawdown is the **binding** constraint on any plan, because the bottom of it is the point where people [[1]].",
+      "wordBank": ["quit", "rebalance", "celebrate"],
+      "answer": "quit",
+      "explanation": "A plan only compounds while it is still running. The deepest, longest stretch is where it gets switched off, so it sets the real limit on how much risk a person can actually carry."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Flat is harder than fast.",
+      "body": "A fall of 30% that rebounds in six months is loud but short. A portfolio that drifts sideways below its old high for five years is quiet, and quiet is what breaks discipline. Nothing happens. Nothing keeps happening."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "summary": "Drawdown measures the fall from peak to trough, and the time spent getting back.",
+      "bullets": [
+        "Depth is measured from the highest value ever reached, not from your entry price.",
+        "Time to recover is the number people underestimate most.",
+        "An average return says nothing about the worst stretch it contains."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "anchor", "bg": "neon" },
+      "insight": "A strategy is only as good as the worst stretch you can sit through. The depth ends portfolios; the waiting ends investors.",
+      "attribution": { "source": "Day 2", "detail": "Risk and Position Sizing" }
+    }
+  ]
+}
