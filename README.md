@@ -16,9 +16,13 @@ with a short code, and an account can be secured with Sign in with Apple or a
 passwordless email code, so it survives a lost phone.
 
 **The sync service is live** at `stockiq-sync-production.up.railway.app`, with
-the protocol, pairing and client-cycle suites passing against it. The ASK proxy
-and email delivery are not set up — both need credentials only the account
-owner can create. See [docs/deployment.md](docs/deployment.md).
+the protocol, pairing and client-cycle suites passing against it, and
+**passwordless email sign-in is delivering** through Resend from
+`no-reply@sgiq.ai` — confirmed by a real code arriving in a real inbox.
+
+Still not deployed: the ASK proxy, which needs a Cloudflare login and an
+Anthropic key. Until then ASK falls back to bring-your-own-key. See
+[docs/deployment.md](docs/deployment.md).
 
 > Educational content only. StockIQ does not provide financial advice.
 
@@ -210,12 +214,11 @@ already just numbers.
   data, acceptable *only* because the data is lesson progress. Real per-user
   auth is required before anything sensitive is stored or before this is
   public.
-- **No email has ever actually been delivered.** The sign-in flow is tested end
-  to end against real Postgres, but through the console transport that prints
-  codes to the log. The Resend integration is verified against the live API for
-  request shape and for the invalid-key path; the unverified-domain path is not,
-  because reaching it needs a valid key. Run `npm run check:email` once you have
-  one — it sends a real message and names the specific failure.
+- **Email sign-in delivers, but no code has been redeemed in the app.** A real
+  six-digit code was requested through the production endpoint and arrived in a
+  real inbox, so Resend, the verified domain, challenge creation and delivery
+  are all proven. What has only been exercised against a local Postgres is the
+  other half — typing that code in, the account claim, and the cursor reset.
 
 - **Sign in with Apple has never run against Apple.** The token verification is
   covered thoroughly — signature, issuer, audience, expiry and nonce, each with
