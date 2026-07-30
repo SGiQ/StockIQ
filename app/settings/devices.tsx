@@ -191,8 +191,10 @@ export default function DevicesSettings() {
           </>
         ) : (
           <Text variant="body" color={palette.inkSoft}>
-            Sign in with Apple needs an iPhone and a native build, so it is not
-            available here. Email works everywhere and does the same job.
+            Use email below to secure this account so it can be recovered if you
+            lose your devices. Sign in with Apple is not available in Expo Go —
+            it needs a development build — and it is an alternative to email
+            rather than an addition, so nothing is missing here.
           </Text>
         )}
 

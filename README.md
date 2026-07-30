@@ -29,8 +29,15 @@ npm install
 npm start          # validates content, regenerates the index, starts Expo
 ```
 
-Then scan the QR code with **Expo Go** on your iPhone. `npm run web` also
-works (see *Known gaps* below).
+Then scan the QR code with **Expo Go** on your iPhone. Everything runs there
+except Sign in with Apple, which needs a development build — the module is
+imported lazily so Expo Go never loads it, and email sign-in covers the same
+job on every platform.
+
+**After editing `.env`, run `npm run start:clear`.** `EXPO_PUBLIC_*` values are
+inlined at transform time and Metro caches per file; since `src/config.ts`
+itself does not change, a warm cache silently keeps the old value with no
+error. See [docs/deployment.md](docs/deployment.md).
 
 ## Scripts
 

@@ -58,7 +58,8 @@
     "preios": "npm run gen:content",
     "preandroid": "npm run gen:content",
     "gen:authoring-prompt": "tsx scripts/generate-authoring-prompt.ts",
-    "test:sync-cycle": "tsx tests/sync-cycle.test.ts"
+    "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
+    "start:clear": "expo start --clear"
   },
   "private": true
 }

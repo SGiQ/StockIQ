@@ -1,13 +1,25 @@
 import { Platform } from 'react-native';
-import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
 
 /**
  * Sign in with Apple — the device half.
  *
- * Exists to give the account something a person can re-prove ownership of.
- * Without it, device secrets live only in keychains, so losing every linked
- * device made the data permanently unreachable.
+ * Gives the account something a person can re-prove ownership of. Email
+ * sign-in does the same job on every platform; this is the iOS-native option
+ * and is strictly additive.
+ *
+ * ── Why the module is imported lazily ─────────────────────────────────────
+ * `expo-apple-authentication` is a native module that Expo Go does not
+ * bundle, and it is the ONLY dependency in this app that Expo Go cannot load.
+ * Importing it at the top of this file would therefore break the app on
+ * launch in Expo Go — taking down the lessons, sync, pairing and email
+ * sign-in, none of which need it, over one button.
+ *
+ * Loading it inside the functions means Expo Go never touches it: the import
+ * fails, `isAppleSignInAvailable()` returns false, the UI offers email
+ * instead, and everything else runs. In a development build the same code
+ * finds the module and the button appears — no code change, no separate
+ * configuration.
  *
  * ── The nonce dance, and why it is not optional ───────────────────────────
  * We generate a random value, send Apple its SHA-256 HASH, and send our
@@ -27,14 +39,33 @@ export interface AppleCredential {
   nonce: string;
 }
 
-/** Native only, and iOS 13+. Android and web have no Apple sign-in at all. */
-export async function isAppleSignInAvailable(): Promise<boolean> {
-  if (Platform.OS !== 'ios') return false;
+/** The module's shape, so the lazy import stays typed. */
+type AppleModule = typeof import('expo-apple-authentication');
+
+/**
+ * Resolves the native module, or null where it does not exist.
+ *
+ * Null is the ordinary case in Expo Go and on Android/web — not an error, and
+ * never surfaced as one.
+ */
+async function loadApple(): Promise<AppleModule | null> {
+  if (Platform.OS !== 'ios') return null;
   try {
-    return await AppleAuthentication.isAvailableAsync();
+    return await import('expo-apple-authentication');
   } catch {
-    // Expo Go does not include the native module, so the call throws rather
-    // than returning false. Treated as unavailable so the UI can explain it.
+    return null;
+  }
+}
+
+/** Native only, iOS 13+, and absent in Expo Go. */
+export async function isAppleSignInAvailable(): Promise<boolean> {
+  const apple = await loadApple();
+  if (!apple) return false;
+  try {
+    return await apple.isAvailableAsync();
+  } catch {
+    // The module can be present but the capability unavailable — an older iOS,
+    // or a build without the entitlement. Same answer either way.
     return false;
   }
 }
@@ -42,6 +73,13 @@ export async function isAppleSignInAvailable(): Promise<boolean> {
 export class AppleSignInCancelled extends Error {}
 
 export async function signInWithApple(): Promise<AppleCredential> {
+  const apple = await loadApple();
+  if (!apple) {
+    // Reachable only if the button were shown without checking availability
+    // first. Says what to do rather than surfacing a module-resolution error.
+    throw new Error('Sign in with Apple needs a development build. Use email instead.');
+  }
+
   const rawNonce = Array.from(Crypto.getRandomBytes(24), (b) =>
     b.toString(16).padStart(2, '0'),
   ).join('');
@@ -53,9 +91,9 @@ export async function signInWithApple(): Promise<AppleCredential> {
     { encoding: Crypto.CryptoEncoding.HEX },
   );
 
-  let credential: AppleAuthentication.AppleAuthenticationCredential;
+  let credential: Awaited<ReturnType<AppleModule['signInAsync']>>;
   try {
-    credential = await AppleAuthentication.signInAsync({
+    credential = await apple.signInAsync({
       requestedScopes: [
         // Nothing is requested. Apple offers name and email, the server
         // discards them, and asking for data that is immediately thrown away

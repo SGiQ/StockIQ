@@ -303,19 +303,56 @@ few. It is a cost guard, not a security control.
 
 ## Testing on your iPhone
 
-### Expo Go — works now, costs nothing
+### Expo Go — works now, costs nothing, no Apple account
 
-`expo-apple-authentication` is the **only** dependency Expo Go cannot load.
-Everything else — the player, SQLite, the keychain, sync against the live
-Railway service, pairing, and email sign-in — runs in Expo Go today.
+`expo-apple-authentication` is the **only** dependency Expo Go cannot load, and
+it is imported lazily so Expo Go never touches it. Everything else — the
+player, SQLite, the keychain, sync against the live Railway service, pairing,
+and email sign-in — runs in Expo Go today.
 
 ```bash
 npm start          # then scan the QR code with Expo Go
 ```
 
-`.env` already points at the deployed sync service, so a second device can be
-paired and the merge watched happening for real. Do this before paying for
-anything: it exercises everything except one button.
+Sign in with Apple simply does not appear; email covers the same job on every
+platform. Nothing is stubbed and nothing is missing.
+
+> **After changing `.env`, always start with `--clear`:**
+> ```bash
+> npx expo start --clear
+> ```
+> `EXPO_PUBLIC_*` values are inlined at transform time and Metro caches the
+> result per file. Since `src/config.ts` does not change when `.env` does, a
+> warm cache silently keeps the OLD value — no error, no warning, the app just
+> talks to the wrong place or to nothing at all. This was verified the hard
+> way: the sync URL was absent from three consecutive bundles until the cache
+> was cleared. The same applies to `expo export --clear`.
+
+Confirm it took by checking the export contains the URL:
+
+```bash
+npx expo export --platform ios --clear --output-dir /tmp/check
+grep -aq "up.railway.app" /tmp/check/_expo/static/js/ios/*.hbc && echo inlined
+```
+
+### Running without an Apple Developer account
+
+This is a supported configuration, not a degraded one:
+
+| Feature | Expo Go, no Apple account |
+|---|---|
+| All 37 lessons, saved cards, streaks | ✅ |
+| Local storage (SQLite, keychain) | ✅ |
+| Sync to the live Railway service | ✅ |
+| Device pairing by code | ✅ |
+| Email sign-in and account recovery | ✅ *(needs Resend)* |
+| ASK tutor | ✅ bring-your-own-key |
+| Sign in with Apple | ❌ hidden |
+
+The only thing email sign-in needs is Resend on Railway. **You do not need to
+own a domain to test it** — Resend will deliver to the address on your own
+Resend account without domain verification, which is enough to sign yourself
+in. A verified domain is only required to send to anyone else.
 
 ### Development build — needed only for Sign in with Apple
 
@@ -323,6 +360,9 @@ anything: it exercises everything except one button.
 provisioning profile, which needs the **Apple Developer Program at $99/year**.
 There is no way around that for on-device installs; it is Apple's gate, not
 Expo's. A free Expo account covers the build itself.
+
+Nothing in the code changes when you do this — `isAppleSignInAvailable()`
+starts returning true and the button appears.
 
 ```bash
 npx eas-cli login                          # free Expo account
