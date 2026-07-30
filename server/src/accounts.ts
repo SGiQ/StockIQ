@@ -194,7 +194,9 @@ export async function claimLinkCode(
   return { accountId: target, previousAccountId: previous };
 }
 
-export interface AppleSignInResult {
+export type IdentityProvider = 'apple' | 'email';
+
+export interface SignInResult {
   accountId: string;
   /**
    * Whether the client should contribute its local records to the account it
@@ -206,7 +208,15 @@ export interface AppleSignInResult {
 }
 
 /**
- * Signs a device in with a verified Apple `sub`.
+ * Signs a device in with a VERIFIED identity.
+ *
+ * Provider-agnostic on purpose. Whether the caller proved themselves with an
+ * Apple token or an emailed code, what happens to the data afterwards is
+ * identical — and the third case below is subtle enough that having one copy
+ * of it, rather than one per provider, is what stops the two drifting apart.
+ *
+ * This function assumes verification already happened. It must never be
+ * called with a subject the caller merely claimed.
  *
  * Signing in is the same "join an account" operation as pairing, just
  * authenticated differently, so it deliberately reuses the same merge
@@ -227,18 +237,19 @@ export interface AppleSignInResult {
  *    person's progress into the second person's account. This is the one case
  *    where merging is actively wrong.
  */
-export async function signInWithApple(
+export async function signInWithIdentity(
   client: PoolClient,
   deviceId: string,
   label: string | null,
-  sub: string,
-): Promise<AppleSignInResult> {
+  provider: IdentityProvider,
+  subject: string,
+): Promise<SignInResult> {
   const now = Date.now();
   const currentAccount = await resolveAccount(client, deviceId, label);
 
   const known = await client.query<{ account_id: string }>(
-    'SELECT account_id FROM apple_identities WHERE sub = $1',
-    [sub],
+    'SELECT account_id FROM identities WHERE provider = $1 AND subject = $2',
+    [provider, subject],
   );
 
   // Case 1 — returning user.
@@ -254,16 +265,19 @@ export async function signInWithApple(
     return { accountId: target, merge: true };
   }
 
-  const claimed = await client.query<{ sub: string }>(
-    'SELECT sub FROM apple_identities WHERE account_id = $1',
+  // Any identity already on this account counts as "claimed", regardless of
+  // provider: an account secured with Apple must not be silently taken over
+  // by someone signing in with an unrelated email on the same phone.
+  const claimed = await client.query<{ subject: string }>(
+    'SELECT subject FROM identities WHERE account_id = $1',
     [currentAccount],
   );
 
   // Case 2 — first sign-in on an account nobody has claimed.
   if (claimed.rows.length === 0) {
     await client.query(
-      'INSERT INTO apple_identities (sub, account_id, created_at) VALUES ($1, $2, $3)',
-      [sub, currentAccount, now],
+      'INSERT INTO identities (provider, subject, account_id, created_at) VALUES ($1, $2, $3, $4)',
+      [provider, subject, currentAccount, now],
     );
     return { accountId: currentAccount, merge: true };
   }
@@ -272,8 +286,8 @@ export async function signInWithApple(
   const accountId = `acct_${randomBytes(12).toString('hex')}`;
   await client.query('INSERT INTO accounts (id, created_at) VALUES ($1, $2)', [accountId, now]);
   await client.query(
-    'INSERT INTO apple_identities (sub, account_id, created_at) VALUES ($1, $2, $3)',
-    [sub, accountId, now],
+    'INSERT INTO identities (provider, subject, account_id, created_at) VALUES ($1, $2, $3, $4)',
+    [provider, subject, accountId, now],
   );
   await client.query('UPDATE devices SET account_id = $2, last_seen_at = $3 WHERE id = $1', [
     deviceId,

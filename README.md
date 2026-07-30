@@ -12,7 +12,8 @@ the lessons that teach them. A card-scoped Claude tutor and a report action
 sit in the player, and storage runs on SQLite behind an unchanged repository
 interface. Phase 6 adds a Postgres-backed multi-device sync service and a
 Cloudflare Worker that keeps the Anthropic key off the device. Devices pair
-with a short code or Sign in with Apple, so an account survives a lost phone.
+with a short code, and an account can be secured with Sign in with Apple or a
+passwordless email code, so it survives a lost phone.
 All of it is written and tested locally; none of it is deployed. See
 [docs/deployment.md](docs/deployment.md).
 
@@ -194,6 +195,11 @@ already just numbers.
   data, acceptable *only* because the data is lesson progress. Real per-user
   auth is required before anything sensitive is stored or before this is
   public.
+- **No email has ever actually been delivered.** The sign-in flow is tested
+  end to end against real Postgres, but through the console transport that
+  prints codes to the log. Wiring a real provider needs a Resend account and a
+  sending domain. Note that a deployment missing `RESEND_API_KEY` looks healthy
+  while every code goes only to the logs.
 - **Sign in with Apple has never run against Apple.** The token verification is
   covered thoroughly — signature, issuer, audience, expiry and nonce, each with
   its rejection case, driven by a locally generated key and a stubbed JWKS. But

@@ -77,6 +77,47 @@ personal data, and it is acceptable **only** because the data is lesson
 progress and saved cards. Anything sensitive, or a public launch, needs real
 per-user authentication first — a device secret is not a substitute for it.
 
+### Email sign-in (passwordless)
+
+Works on every platform, which Sign in with Apple does not — so this is the
+recovery path that actually covers everyone.
+
+**No password exists anywhere.** The server emails a six-digit code and stores
+only its SHA-256 hash, so a database leak hands over nothing usable.
+
+**Why a code rather than only a clickable link:** people routinely open email
+on a different device from the one they are signing in on. A pure magic link
+dead-ends there, because tapping it authenticates the laptop rather than the
+phone. The code travels; the link in the email is a same-device convenience.
+
+Set up delivery:
+
+```bash
+# Railway, Vercel and Cloudflare all do not send mail, so this is a new
+# provider. Resend's free tier is generous; Postmark works the same way.
+RESEND_API_KEY=...
+EMAIL_FROM="StockIQ <login@yourdomain>"
+```
+
+**Without `RESEND_API_KEY` the server prints codes to its log instead of
+sending them.** That is deliberate — it is what makes the whole flow testable
+locally with no provider account — but it means a deployment that forgets the
+key will appear to work while every code goes only to the logs. Check the logs
+after the first real sign-in.
+
+What defends a six-digit code, all four required:
+
+| Control | Value |
+|---|---|
+| Expiry | 10 minutes |
+| Single use | consumed on success, and burned when the cap is hit |
+| Guesses per code | 5, then even the correct code is refused |
+| Requests per address | 5 per 15 minutes, so an inbox cannot be flooded |
+
+Requesting a code answers identically whether or not the address has an
+account. Otherwise this endpoint would be a way to test whether any given
+person uses StockIQ.
+
 ### Sign in with Apple
 
 This is what makes accounts recoverable. Without it, device secrets live only

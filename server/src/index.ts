@@ -34,9 +34,11 @@ import {
   normaliseCode,
   resolveAccount,
   revokeDevice,
-  signInWithApple,
+  signInWithIdentity,
 } from './accounts.ts';
 import { verifyAppleToken } from './apple.ts';
+import { createEmailChallenge, normaliseEmail, verifyEmailCode } from './emailAuth.ts';
+import { mailer, signInMessage } from './mailer.ts';
 import { pushAndPull } from './sync.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
@@ -91,6 +93,8 @@ const server = createServer((req, res) => {
         '/v1/link/start': 'POST',
         '/v1/link/claim': 'POST',
         '/v1/auth/apple': 'POST',
+        '/v1/auth/email/request': 'POST',
+        '/v1/auth/email/verify': 'POST',
         '/v1/devices': 'GET',
       };
       const path = (req.url ?? '').split('?')[0] ?? '';
@@ -108,6 +112,10 @@ const server = createServer((req, res) => {
         await client.query('BEGIN');
         const accountId = await resolveAccount(client, deviceId, label);
         let payload: unknown;
+        // A failed email code must still COMMIT — the attempt counter lives in
+        // that transaction, and rolling it back would uncap guessing. So the
+        // status is carried out rather than raised as an error.
+        let status = 200;
 
         if (isRevoke) {
           const target = decodeURIComponent(path.slice('/v1/devices/'.length));
@@ -124,9 +132,45 @@ const server = createServer((req, res) => {
             nonce?: unknown;
           };
           const identity = await verifyAppleToken(body.identityToken, body.nonce);
-          const result = await signInWithApple(client, deviceId, label, identity.sub);
+          const result = await signInWithIdentity(client, deviceId, label, 'apple', identity.sub);
           // Same as pairing: the cursor belongs to the account just left.
           payload = { ...result, resetCursor: true };
+        } else if (path === '/v1/auth/email/request') {
+          const body = (await readBody(req)) as { email?: unknown };
+          const email = normaliseEmail(body.email);
+
+          // Always the same answer.
+          //
+          // Reporting "no account for that address" would turn this endpoint
+          // into a way to test whether any given person uses StockIQ, and
+          // reporting rate limits would let an attacker map which addresses
+          // are being targeted. A malformed address still 400s, because that
+          // is about the input rather than about who exists.
+          try {
+            const challenge = await createEmailChallenge(client, email);
+            const minutes = Math.round((challenge.expiresAt - Date.now()) / 60000);
+            await mailer.send(signInMessage(email, challenge.code, minutes));
+          } catch (error) {
+            console.warn('[email] challenge not sent:', (error as Error).message);
+          }
+          payload = { ok: true };
+        } else if (path === '/v1/auth/email/verify') {
+          const body = (await readBody(req)) as { email?: unknown; code?: unknown };
+          const email = normaliseEmail(body.email);
+          const verified = await verifyEmailCode(client, email, body.code);
+          if (!verified.ok) {
+            status = 400;
+            payload = { error: 'that code is not valid' };
+          } else {
+            const result = await signInWithIdentity(
+              client,
+              deviceId,
+              label,
+              'email',
+              verified.email,
+            );
+            payload = { ...result, resetCursor: true };
+          }
         } else if (path === '/v1/link/claim') {
           const body = (await readBody(req)) as { code?: unknown };
           const result = await claimLinkCode(client, deviceId, label, normaliseCode(body.code));
@@ -141,7 +185,7 @@ const server = createServer((req, res) => {
         }
 
         await client.query('COMMIT');
-        return send(res, 200, payload);
+        return send(res, status, payload);
       } catch (error) {
         await client.query('ROLLBACK');
         throw error;

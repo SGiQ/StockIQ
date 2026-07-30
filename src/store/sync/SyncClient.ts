@@ -31,6 +31,8 @@ export interface SyncTransport {
   startLink(): Promise<LinkCode>;
   claimLink(code: string): Promise<void>;
   signInWithApple(identityToken: string, nonce: string): Promise<AppleSignIn>;
+  requestEmailCode(email: string): Promise<void>;
+  signInWithEmail(email: string, code: string): Promise<AppleSignIn>;
   listDevices(): Promise<DeviceList>;
   revokeDevice(deviceId: string): Promise<void>;
 }
@@ -133,6 +135,14 @@ export class SyncClient implements SyncTransport {
 
   signInWithApple(identityToken: string, nonce: string): Promise<AppleSignIn> {
     return this.request<AppleSignIn>('/v1/auth/apple', 'POST', { identityToken, nonce });
+  }
+
+  async requestEmailCode(email: string): Promise<void> {
+    await this.request('/v1/auth/email/request', 'POST', { email });
+  }
+
+  signInWithEmail(email: string, code: string): Promise<AppleSignIn> {
+    return this.request<AppleSignIn>('/v1/auth/email/verify', 'POST', { email, code });
   }
 
   listDevices(): Promise<DeviceList> {

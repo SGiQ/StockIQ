@@ -32,6 +32,9 @@ export default function DevicesSettings() {
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailCode, setEmailCode] = useState('');
+  const [codeSent, setCodeSent] = useState(false);
 
   useEffect(() => {
     void isAppleSignInAvailable().then(setAppleAvailable);
@@ -129,6 +132,43 @@ export default function DevicesSettings() {
     }
   };
 
+  const sendEmailCode = async () => {
+    const value = email.trim();
+    if (!value) return;
+    setBusy(true);
+    setStatus(null);
+    try {
+      await api.requestEmailCode(value);
+      setCodeSent(true);
+      // Worded so it is true whether or not that address has an account. The
+      // server answers identically either way, and saying "we found your
+      // account" here would leak exactly what it withholds.
+      setStatus(`If ${value} can receive mail, a code is on its way.`);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not send a code.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const verifyEmailCode = async () => {
+    const value = emailCode.trim();
+    if (!value) return;
+    setBusy(true);
+    setStatus(null);
+    try {
+      await api.signInWithEmail(email.trim(), value);
+      setEmailCode('');
+      setCodeSent(false);
+      setStatus('Signed in. This account can now be recovered by email.');
+      await refresh();
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not sign in.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const minutesLeft = Math.max(0, Math.round((expiresAt - Date.now()) / 60000));
 
   return (
@@ -145,14 +185,62 @@ export default function DevicesSettings() {
               anonymous identifier Apple issues for this app.
             </Text>
             <PillButton label="Sign in with Apple" onPress={appleSignIn} disabled={busy} />
+            <Text variant="caption" color={palette.slate}>
+              Or use email below — it works on any device.
+            </Text>
           </>
         ) : (
           <Text variant="body" color={palette.inkSoft}>
-            Sign in with Apple is unavailable here. It needs an iPhone and a
-            native build — it does not work in Expo Go. Without it there is no
-            way to recover this account if every linked device is lost.
+            Sign in with Apple needs an iPhone and a native build, so it is not
+            available here. Email works everywhere and does the same job.
           </Text>
         )}
+
+        <View style={styles.divider} />
+
+        <Text variant="label" color={palette.slate} uppercase>
+          Email sign-in
+        </Text>
+        <Text variant="body" color={palette.inkSoft}>
+          We send a six-digit code. There is no password to remember, and you
+          can type the code on a different device from the one that received it.
+        </Text>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="email-address"
+          textContentType="emailAddress"
+          placeholder="you@example.com"
+          placeholderTextColor={palette.slateLight}
+          style={styles.input}
+        />
+        <PillButton
+          label={codeSent ? 'Send another code' : 'Email me a code'}
+          onPress={sendEmailCode}
+          disabled={busy || !email.trim()}
+        />
+
+        {codeSent ? (
+          <>
+            <TextInput
+              value={emailCode}
+              onChangeText={setEmailCode}
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              placeholder="6-digit code"
+              placeholderTextColor={palette.slateLight}
+              style={styles.input}
+              maxLength={6}
+            />
+            <PillButton
+              label="Sign in"
+              onPress={verifyEmailCode}
+              disabled={busy || emailCode.trim().length !== 6}
+            />
+          </>
+        ) : null}
 
         <View style={styles.divider} />
 

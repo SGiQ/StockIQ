@@ -129,6 +129,18 @@ export class SyncingRepository implements Repository {
     await this.adoptAccount(result.merge);
   }
 
+  /** Sends a one-time code. Deliberately says nothing about whether the
+   * address is already known — the server answers identically either way. */
+  requestEmailCode(email: string): Promise<void> {
+    return this.client.requestEmailCode(email);
+  }
+
+  /** Same landing behaviour as Apple and pairing; only the proof differs. */
+  async signInWithEmail(email: string, code: string): Promise<void> {
+    const result = await this.client.signInWithEmail(email, code);
+    await this.adoptAccount(result.merge);
+  }
+
   /**
    * Resets the cursor and optionally re-contributes local records.
    *

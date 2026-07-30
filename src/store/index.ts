@@ -47,6 +47,8 @@ export interface PairingApi {
   startLink(): Promise<{ code: string; expiresAt: number }>;
   joinAccount(code: string): Promise<void>;
   signInWithApple(identityToken: string, nonce: string): Promise<void>;
+  requestEmailCode(email: string): Promise<void>;
+  signInWithEmail(email: string, code: string): Promise<void>;
   listDevices(): Promise<{ devices: LinkedDevice[]; thisDeviceId: string }>;
   revokeDevice(deviceId: string): Promise<void>;
 }

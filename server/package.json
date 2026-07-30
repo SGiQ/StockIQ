@@ -14,7 +14,8 @@
     "test:sync": "node test/sync.test.mjs",
     "test:pairing": "node test/pairing.test.mjs",
     "test:apple": "tsx test/apple.test.mjs",
-    "test:apple-accounts": "node test/apple-accounts.test.mjs"
+    "test:apple-accounts": "node test/apple-accounts.test.mjs",
+    "test:email": "node test/email.test.mjs"
   },
   "dependencies": {
     "jose": "^6.2.5",
