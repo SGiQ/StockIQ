@@ -91,6 +91,25 @@ const server = createServer((req, res) => {
         return send(res, 200, { ok: true });
       }
 
+      // A human clicked the domain.
+      //
+      // Without this they get `{"error":"not found"}`, which reads exactly
+      // like a broken deployment — the service is fine, `/` simply is not a
+      // route. Saying so costs one branch and saves a debugging session.
+      //
+      // Deliberately says nothing about configuration, versions, or which
+      // providers are wired up: this is unauthenticated and public, and none
+      // of that is anyone's business but the operator's.
+      if (req.method === 'GET' && (req.url === '/' || req.url === '')) {
+        return send(res, 200, {
+          service: 'stockiq-sync',
+          status: 'ok',
+          message:
+            'This is an API, not a website. There is nothing to see here — try /health.',
+          endpoints: ['GET /health', 'POST /v1/sync', 'POST /v1/link/start'],
+        });
+      }
+
       // Every route below is device-authenticated and runs in one
       // transaction, so account resolution and the work it authorises can
       // never be split across two connections.
