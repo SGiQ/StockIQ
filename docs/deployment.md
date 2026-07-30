@@ -90,20 +90,69 @@ on a different device from the one they are signing in on. A pure magic link
 dead-ends there, because tapping it authenticates the laptop rather than the
 phone. The code travels; the link in the email is a same-device convenience.
 
-Set up delivery:
+#### Setting up Resend
 
-```bash
-# Railway, Vercel and Cloudflare all do not send mail, so this is a new
-# provider. Resend's free tier is generous; Postmark works the same way.
-RESEND_API_KEY=...
-EMAIL_FROM="StockIQ <login@yourdomain>"
-```
+These steps are yours — I do not create accounts or handle live API keys.
 
-**Without `RESEND_API_KEY` the server prints codes to its log instead of
-sending them.** That is deliberate — it is what makes the whole flow testable
-locally with no provider account — but it means a deployment that forgets the
-key will appear to work while every code goes only to the logs. Check the logs
-after the first real sign-in.
+1. **Create a Resend account** at [resend.com](https://resend.com).
+
+2. **Add and verify a sending domain** (Domains → Add Domain). Resend shows an
+   SPF `TXT` record and a DKIM `TXT` record to add at your DNS host, and
+   verification only completes once they propagate. You cannot send from a
+   domain you have not verified.
+
+   If you do not have a domain yet, Resend's own onboarding sender lets you
+   test delivery to *your own* account address before you own one — enough to
+   prove the wiring, not enough to sign anyone else in.
+
+3. **Create an API key** (API Keys → Create). Copy it once; Resend does not
+   show it again. Sending-only permission is sufficient.
+
+4. **Set both variables on Railway** (Variables tab — paste the key there, not
+   into a file in the repo):
+
+   ```
+   RESEND_API_KEY=re_...
+   EMAIL_FROM=StockIQ <login@yourdomain>
+   ```
+
+   `EMAIL_FROM` must be **at the domain you verified**. That mismatch is the
+   single most common first-run failure.
+
+5. **Prove it before trusting it:**
+
+   ```bash
+   cd server
+   RESEND_API_KEY=re_... EMAIL_FROM="StockIQ <login@yourdomain>" \
+     npm run check:email -- you@example.com
+   ```
+
+   It sends one real email and names the specific problem if it fails.
+
+#### Configuration states
+
+| Configuration | Behaviour |
+|---|---|
+| `RESEND_API_KEY` + `EMAIL_FROM` | Sends via Resend |
+| `EMAIL_TRANSPORT=console` | Prints codes to the log. Local development and tests only |
+| Neither | Startup logs an error; email sign-in returns **503**. Sync, pairing and Apple keep working |
+
+That last row is deliberate. An earlier version silently fell back to printing
+when the key was missing, which in production is the worst possible outcome:
+health checks pass, sign-in looks fine, and every code goes somewhere the
+person signing in cannot see. Printing now has to be asked for by name.
+
+#### When it fails
+
+The API's own error reference is wrong about this, so the codes below are what
+the API actually returns, observed directly:
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `Resend rejected the API key` (HTTP 401) | Wrong or revoked key | Re-copy `RESEND_API_KEY` |
+| `...domain is not verified` (HTTP 403) | `EMAIL_FROM` is at an unverified domain | Finish DNS verification, or change `EMAIL_FROM` |
+| Startup: `RESEND_API_KEY is set but EMAIL_FROM is not` | Half-configured | Set `EMAIL_FROM` |
+| Accepted but never arrives | Delivery, not the API | Resend dashboard → Emails shows bounces and spam rejections |
 
 What defends a six-digit code, all four required:
 

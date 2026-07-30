@@ -106,16 +106,24 @@ export class SyncClient implements SyncTransport {
       clearTimeout(timer);
     }
 
-    if (response.status === 400) {
-      // The server rejected the request. Retrying identical data cannot help,
-      // so this must be distinguishable from a transient failure — and the
-      // message is shown to the user for pairing ("that code is not valid").
-      const payload = (await response.json().catch(() => ({}))) as { error?: string };
-      throw new SyncError(payload.error ?? 'request rejected', 'rejected');
-    }
-
     if (!response.ok) {
-      throw new SyncError(`request failed with ${response.status}`, 'server');
+      // The server's own message is preferred wherever it sends one, because
+      // these strings are shown to a person: "that code is not valid" or
+      // "Sign-in email is unavailable right now" are actionable, whereas
+      // "request failed with 503" tells them nothing they can do anything
+      // about.
+      const payload = (await response.json().catch(() => ({}))) as { error?: string };
+
+      // 400 is the server refusing this specific input — retrying the same
+      // thing cannot help, so it stays distinguishable from a transient fault.
+      if (response.status === 400) {
+        throw new SyncError(payload.error ?? 'request rejected', 'rejected');
+      }
+
+      throw new SyncError(
+        payload.error ?? `request failed with ${response.status}`,
+        'server',
+      );
     }
 
     return (await response.json()) as T;

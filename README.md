@@ -195,11 +195,13 @@ already just numbers.
   data, acceptable *only* because the data is lesson progress. Real per-user
   auth is required before anything sensitive is stored or before this is
   public.
-- **No email has ever actually been delivered.** The sign-in flow is tested
-  end to end against real Postgres, but through the console transport that
-  prints codes to the log. Wiring a real provider needs a Resend account and a
-  sending domain. Note that a deployment missing `RESEND_API_KEY` looks healthy
-  while every code goes only to the logs.
+- **No email has ever actually been delivered.** The sign-in flow is tested end
+  to end against real Postgres, but through the console transport that prints
+  codes to the log. The Resend integration is verified against the live API for
+  request shape and for the invalid-key path; the unverified-domain path is not,
+  because reaching it needs a valid key. Run `npm run check:email` once you have
+  one — it sends a real message and names the specific failure.
+
 - **Sign in with Apple has never run against Apple.** The token verification is
   covered thoroughly — signature, issuer, audience, expiry and nonce, each with
   its rejection case, driven by a locally generated key and a stubbed JWKS. But

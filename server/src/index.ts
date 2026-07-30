@@ -38,7 +38,13 @@ import {
 } from './accounts.ts';
 import { verifyAppleToken } from './apple.ts';
 import { createEmailChallenge, normaliseEmail, verifyEmailCode } from './emailAuth.ts';
-import { mailer, signInMessage } from './mailer.ts';
+import {
+  MailDeliveryError,
+  MailNotConfiguredError,
+  explainMailFailure,
+  mailer,
+  signInMessage,
+} from './mailer.ts';
 import { pushAndPull } from './sync.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
@@ -139,21 +145,33 @@ const server = createServer((req, res) => {
           const body = (await readBody(req)) as { email?: unknown };
           const email = normaliseEmail(body.email);
 
-          // Always the same answer.
+          // Two different silences here, and the difference matters.
           //
-          // Reporting "no account for that address" would turn this endpoint
-          // into a way to test whether any given person uses StockIQ, and
-          // reporting rate limits would let an attacker map which addresses
-          // are being targeted. A malformed address still 400s, because that
-          // is about the input rather than about who exists.
+          // Anything ABOUT THE ADDRESS — no account, rate limited — answers
+          // `ok: true`, because reporting it would turn this endpoint into a
+          // way to test whether any given person uses StockIQ.
+          //
+          // Anything about the SERVER — email unconfigured, bad API key,
+          // unverified domain — is reported as a 503. Those faults are
+          // identical for every address, so saying so leaks nothing, and
+          // answering `ok: true` when no mail can be sent leaves the person
+          // waiting forever for a code that was never going to arrive.
           try {
             const challenge = await createEmailChallenge(client, email);
             const minutes = Math.round((challenge.expiresAt - Date.now()) / 60000);
             await mailer.send(signInMessage(email, challenge.code, minutes));
+            payload = { ok: true };
           } catch (error) {
-            console.warn('[email] challenge not sent:', (error as Error).message);
+            if (error instanceof MailNotConfiguredError || error instanceof MailDeliveryError) {
+              console.error('[email] delivery failed:', explainMailFailure(error));
+              status = 503;
+              payload = { error: 'Sign-in email is unavailable right now.' };
+            } else {
+              // Address-specific (rate limit, validation) — stay silent.
+              console.warn('[email] challenge not issued:', (error as Error).message);
+              payload = { ok: true };
+            }
           }
-          payload = { ok: true };
         } else if (path === '/v1/auth/email/verify') {
           const body = (await readBody(req)) as { email?: unknown; code?: unknown };
           const email = normaliseEmail(body.email);
@@ -206,6 +224,15 @@ const server = createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`stockiq-sync listening on :${PORT}`);
+  // Stated at startup so a misconfiguration is visible in the deploy log
+  // rather than discovered by someone who never received a code.
+  console.log(`  email transport: ${mailer.name}`);
+  if (mailer.name === 'unconfigured') {
+    console.error(
+      '  ✖  Email sign-in will return 503. Set RESEND_API_KEY and EMAIL_FROM,\n' +
+        '     or EMAIL_TRANSPORT=console for local development.',
+    );
+  }
 });
 
 for (const signal of ['SIGTERM', 'SIGINT'] as const) {
