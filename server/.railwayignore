@@ -1,0 +1,6 @@
+# Uploaded on every `railway up`, so keep it to source. Dependencies are
+# installed by the builder from package.json; shipping node_modules would be
+# slow and could carry host-specific native builds into a Linux container.
+node_modules/
+test/
+*.log

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "//": [
+      "Migrations run before the server starts, and the '&&' matters: if a",
+      "migration fails the process never serves. Starting anyway would mean",
+      "answering requests against a schema the code does not expect, which is",
+      "how you corrupt data rather than merely have an outage.",
+      "",
+      "Safe to run on every boot because migrations are idempotent and guarded",
+      "by the schema_migrations ledger. With several instances they could race,",
+      "but each runs in a transaction and records itself, so the loser is a",
+      "no-op. Revisit if this ever scales past one instance."
+    ],
+    "startCommand": "npm run migrate && npm start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 30,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
+  }
+}

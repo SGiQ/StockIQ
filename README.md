@@ -14,8 +14,11 @@ interface. Phase 6 adds a Postgres-backed multi-device sync service and a
 Cloudflare Worker that keeps the Anthropic key off the device. Devices pair
 with a short code, and an account can be secured with Sign in with Apple or a
 passwordless email code, so it survives a lost phone.
-All of it is written and tested locally; none of it is deployed. See
-[docs/deployment.md](docs/deployment.md).
+
+**The sync service is live** at `stockiq-sync-production.up.railway.app`, with
+the protocol, pairing and client-cycle suites passing against it. The ASK proxy
+and email delivery are not set up — both need credentials only the account
+owner can create. See [docs/deployment.md](docs/deployment.md).
 
 > Educational content only. StockIQ does not provide financial advice.
 
@@ -184,9 +187,14 @@ already just numbers.
   when they drift, and that warning caught five stale entries during the
   rewrite.
 
-- **Nothing from Phase 6 has been deployed.** The sync service and the Worker
-  were written and tested locally; deploying needs accounts, credentials, and a
-  billing relationship, which are the user's to create.
+- **The sync service is deployed;** the ASK proxy and Resend are not. Both need
+  credentials only the account owner can create. The live service is at
+  `stockiq-sync-production.up.railway.app` and the protocol, pairing and
+  client-cycle suites all pass against it.
+- **Orphaned accounts accumulate.** A device that pairs into another account
+  leaves its old one behind by design, and once its last device goes the
+  account is unreachable but never deleted. Confirmed on the live deployment.
+  Needs a retention job — the same one the deletion path below needs.
 - **A device secret is a capability token, not authentication.** `X-Device-Id`
   is a 256-bit random value from the keychain, and whoever holds it can read
   and write that account. Each device keeps its own — none is ever shared,

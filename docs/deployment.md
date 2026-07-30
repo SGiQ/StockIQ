@@ -1,9 +1,17 @@
 # Deploying StockIQ
 
-Nothing in this document has been run. Every step below needs an account,
-a credential, or a billing relationship, and those are yours to create — I
-can write the code and the config, but I do not create accounts, enter API
-keys, or deploy on your behalf.
+**The sync service is deployed and live:**
+
+| | |
+|---|---|
+| URL | https://stockiq-sync-production.up.railway.app |
+| Railway project | StockIQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`) |
+| Services | `stockiq-sync` + `Postgres` |
+| Schema | migrations 0001–0004 applied |
+| Verified against it | protocol, pairing, and client-cycle suites — all passing |
+
+The ASK proxy and Resend are **not** set up; both need credentials only you
+can create. Everything below still applies to them.
 
 **The app works with none of this done.** With no `EXPO_PUBLIC_SYNC_URL` the
 app is local-only, exactly as it was through Phase 5. With no
@@ -23,35 +31,67 @@ Undeployed is a supported state, not a broken one.
 
 ---
 
-## 1. Sync service on Railway
+## 1. Sync service on Railway — done
+
+Recorded so it can be rebuilt or moved. Run from `server/`, which is what
+makes `railway up` upload only the service rather than the whole Expo repo:
 
 ```bash
 railway login
-railway init                     # or: railway link, for an existing project
-railway add --database postgres  # provisions Postgres and sets DATABASE_URL
+railway init --name StockIQ
+railway add --database postgres
+railway add --service stockiq-sync
+
+# A reference, not a copied value: Railway resolves it at deploy time, so the
+# password never sits in a shell, a file, or this document.
+railway variables --service stockiq-sync \
+  --set 'DATABASE_URL=${{Postgres.DATABASE_URL}}' \
+  --set 'APPLE_BUNDLE_ID=com.stockiq.app'
+
+railway up --service stockiq-sync --ci
+railway domain --service stockiq-sync --port 8080
 ```
 
-Point the service at the `server/` directory (Railway → Settings → Root
-Directory → `server`). Railway runs `npm start`, which is
-`tsx src/index.ts`; `PORT` is injected for you.
+`server/railway.json` pins the rest. Its `startCommand` is
+`npm run migrate && npm start`: the `&&` means a failed migration stops the
+service from serving at all, rather than answering requests against a schema
+the code does not expect. Migrations are idempotent and recorded in
+`schema_migrations`, so running them on every boot is safe.
 
-Apply the schema once:
+`server/.railwayignore` keeps `node_modules/` out of the upload — host-built
+native modules do not belong in a Linux container.
+
+Then in `.env` (git-ignored; see `.env.example`):
+
+```
+EXPO_PUBLIC_SYNC_URL=https://stockiq-sync-production.up.railway.app
+```
+
+### Re-running the suites against the deployment
 
 ```bash
-railway run npm run migrate --workspace server   # or run it inside the service shell
+BASE=https://stockiq-sync-production.up.railway.app
+cd server
+SYNC_URL=$BASE npm run test:sync
+SYNC_URL=$BASE npm run test:pairing
+cd .. && SYNC_URL=$BASE npm run test:sync-cycle
 ```
 
-Then check it:
+They create test accounts and records. That is fine on an empty database and
+becomes untidy once real data exists — see *Housekeeping* below.
 
-```bash
-curl https://<your-service>.up.railway.app/health   # {"ok":true}
-```
+### Housekeeping this deployment still needs
 
-Put that base URL in the app's environment:
+**Orphaned accounts accumulate by design.** When a device pairs into another
+account, the server deliberately leaves its old account in place (that account
+may still have other devices). Once its last device leaves, the account is
+unreachable — no device secret maps to it — but nothing deletes it.
 
-```
-EXPO_PUBLIC_SYNC_URL=https://<your-service>.up.railway.app
-```
+Confirmed on this deployment: after running the suites, four unreachable
+accounts and two records remained. They are harmless and tiny, but the count
+only grows. A retention job should remove accounts with no devices after some
+grace period, and that is the same job needed for the deletion path noted at
+the end of this document.
 
 ### Multi-device, and the security trade you are accepting
 
