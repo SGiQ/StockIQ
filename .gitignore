@@ -43,3 +43,4 @@ yarn-error.*
 # Deployment URLs and any local secrets
 .env
 .env.local
+.vercel

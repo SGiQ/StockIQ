@@ -5,34 +5,22 @@
   "framework": null,
   "build": {
     "env": {
-      "//": [
-        "Inlined into the bundle at build time and readable by anyone with the",
-        "page — which is fine, these are public endpoint URLs. A key must NEVER",
-        "go here; that is the whole reason the ASK proxy exists.",
-        "",
-        "EXPO_PUBLIC_ASK_PROXY_URL stays empty until the Cloudflare Worker is",
-        "deployed. Empty means ASK falls back to bring-your-own-key rather than",
-        "calling a URL that does not answer."
-      ],
       "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
       "EXPO_PUBLIC_ASK_PROXY_URL": ""
     }
   },
   "rewrites": [
     {
-      "//": "expo-router builds a single-page app: one index.html, routing done in the client. Without this, /explore or a shared card link 404s on a hard refresh because no such file exists. Vercel serves real files first, so /_expo/* assets are unaffected.",
       "source": "/((?!_expo/|assets/|favicon\\.ico).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
     {
-      "//": "Hashed filenames, so they can be cached indefinitely.",
       "source": "/_expo/static/(.*)",
       "headers": [{ "key": "cache-control", "value": "public, max-age=31536000, immutable" }]
     },
     {
-      "//": "index.html must never be cached, or a deploy leaves people on the old bundle pointing at hashed assets that no longer exist.",
       "source": "/index.html",
       "headers": [{ "key": "cache-control", "value": "no-cache" }]
     }

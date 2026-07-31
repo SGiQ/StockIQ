@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, {
   runOnJS,
@@ -25,6 +25,7 @@ import { ActionPill, CardCounter, ExitButton, ProgressBar } from './PlayerChrome
 import { AskSheet } from './AskSheet';
 import { ReportSheet } from './ReportSheet';
 import { TapZones, TapZoneTutorial } from './TapZones';
+import { useUnscrollableStage } from './useUnscrollableStage';
 
 export interface LessonPlayerProps {
   cards: Card[];
@@ -90,6 +91,10 @@ export function LessonPlayer({
    */
   const windowWidth = useWindowDimensions().width;
   const [width, setWidth] = useState(windowWidth);
+  // Unique per player instance, so the web hook cannot bind to a stale stage
+  // if one player is unmounting while the next mounts.
+  const stageId = `card-stage-${useId()}`;
+  useUnscrollableStage(stageId);
 
   const [index, setIndex] = useState(0);
   const [states, setStates] = useState<CardStateMap>({});
@@ -311,7 +316,13 @@ export function LessonPlayer({
       </View>
 
       <GestureDetector gesture={pan}>
-        <View style={styles.stage}>
+        {/*
+          `pinnedScroll` is undefined on native. On web it holds this box at
+          scroll offset zero: it clips with `overflow: hidden` but still
+          scrolls programmatically when a tap zone takes focus, which slides
+          the transform-positioned deck out of register for good.
+        */}
+        <View style={styles.stage} nativeID={stageId}>
           {/* Beneath the deck, so inert card content routes taps here. */}
           <TapZones onBack={goBack} onForward={goForward} />
 
