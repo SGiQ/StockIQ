@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The trade you take because everyone else already did.",
-      "body": "A price runs hard for a week and your feed fills with people who own it. Nothing about the business changed for you. The only new information is that other people are winning. That feeling has a name, and it has a price tag."
+      "body": "A price runs hard for a week and your feed fills with people who own it. Nothing about the business changed for you. The only new information is that other people are winning. That feeling has a name, and it has a price tag.",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "blush" }
     },
     {
       "id": "c2",

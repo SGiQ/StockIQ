@@ -9,7 +9,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "A quote screen is a dozen answers, not one number.",
-      "body": "The last price gets all the attention. Everything around it — the ranges, the volume, the ratios — is context that tells you how the price got there and how much it means. Learn the fields once and every brokerage screen reads the same."
+      "body": "The last price gets all the attention. Everything around it — the ranges, the volume, the ratios — is context that tells you how the price got there and how much it means. Learn the fields once and every brokerage screen reads the same.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "blush"
+      }
     },
     {
       "id": "c2",

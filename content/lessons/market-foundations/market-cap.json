@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "A $500 stock is not expensive.",
-      "body": "Price per share tells you what one slice costs. It tells you nothing about the size of the pie. To know how big a company is, you need a second number: how many slices exist."
+      "body": "Price per share tells you what one slice costs. It tells you nothing about the size of the pie. To know how big a company is, you need a second number: how many slices exist.",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "sky" }
     },
     {
       "id": "c2",

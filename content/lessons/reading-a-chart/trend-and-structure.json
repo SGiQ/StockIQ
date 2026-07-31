@@ -10,7 +10,19 @@
       "id": "c1",
       "type": "concept",
       "headline": "Same price. Two completely different charts.",
-      "body": "Two stocks both trade at $50 today. One stepped up there from $30. The other slid there from $80. The price is identical. The structure is not, and structure is the part you can actually read."
+      "body": "Two stocks both trade at $50 today. One stepped up there from $30. The other slid there from $80. The price is identical. The structure is not, and structure is the part you can actually read.",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [30, 34, 33, 39, 42, 46, 45, 50],
+          "compareSeries": [80, 74, 76, 68, 63, 57, 55, 50],
+          "compareLabel": "Slid from $80",
+          "xLabel": "Time",
+          "yLabel": "Price ($)",
+          "markers": [{ "at": 7, "label": "Both at $50", "emphasis": true }]
+        }
+      }
     },
     {
       "id": "c2",
@@ -57,7 +69,20 @@
       "id": "c5",
       "type": "concept",
       "headline": "A downtrend is the same rule, inverted.",
-      "body": "Lower highs and lower lows. Each rally stops **below** the last rally. Each drop bottoms **below** the last bottom. A downtrend does not mean the company is failing. It means sellers keep meeting buyers at lower prices."
+      "body": "Lower highs and lower lows. Each rally stops **below** the last rally. Each drop bottoms **below** the last bottom. A downtrend does not mean the company is failing. It means sellers keep meeting buyers at lower prices.",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [152, 140, 146, 128, 134, 116, 122, 104],
+          "xLabel": "Time",
+          "yLabel": "Price ($)",
+          "markers": [
+            { "at": 4, "label": "Lower high 134" },
+            { "at": 7, "label": "Lower low 104", "emphasis": true }
+          ]
+        }
+      }
     },
     {
       "id": "c6",
@@ -158,7 +183,8 @@
       "id": "c11",
       "type": "concept",
       "headline": "Broken is a rule you set in advance.",
-      "body": "The chart never announces a break. You pick the definition — a lower low, a close under an average, a fixed percentage — and you pick it before you are watching. Choose it afterwards and you will choose whatever just happened."
+      "body": "The chart never announces a break. You pick the definition — a lower low, a close under an average, a fixed percentage — and you pick it before you are watching. Choose it afterwards and you will choose whatever just happened.",
+      "art": { "kind": "glyph", "name": "lock", "bg": "lilac" }
     },
     {
       "id": "c12",

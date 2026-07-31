@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Two traders lost $500. Only one was in trouble.",
-      "body": "One risked $500 out of a $50,000 account. The other risked $500 out of $2,000. The dollar figure was identical. What happened next was not. Dollars hide the only thing that matters — how much was on the line."
+      "body": "One risked $500 out of a $50,000 account. The other risked $500 out of $2,000. The dollar figure was identical. What happened next was not. Dollars hide the only thing that matters — how much was on the line.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "sky" }
     },
     {
       "id": "c2",
@@ -30,7 +31,8 @@
       "id": "c4",
       "type": "concept",
       "headline": "R makes different trades comparable.",
-      "body": "A $2,000 gain sounds better than a $400 gain. In R they can be the same trade, or the small one can be the better one. Converting results to R strips position size out of the comparison and leaves only the decision."
+      "body": "A $2,000 gain sounds better than a $400 gain. In R they can be the same trade, or the small one can be the better one. Converting results to R strips position size out of the comparison and leaves only the decision.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "butter" }
     },
     {
       "id": "c5",
@@ -62,7 +64,8 @@
       "id": "c7",
       "type": "concept",
       "headline": "Win rate is one number of three.",
-      "body": "How often you win tells you nothing on its own. A system can win nine trades in ten and still lose money, if that tenth loss is larger than the nine wins combined. Three numbers decide the outcome, not one."
+      "body": "How often you win tells you nothing on its own. A system can win nine trades in ten and still lose money, if that tenth loss is larger than the nine wins combined. Three numbers decide the outcome, not one.",
+      "art": { "kind": "glyph", "name": "pie", "bg": "sky" }
     },
     {
       "id": "c8",

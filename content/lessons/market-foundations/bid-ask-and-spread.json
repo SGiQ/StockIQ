@@ -9,7 +9,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "There is never one price. There are always two.",
-      "body": "Look up a stock and you see a single number. That number is history — the last trade that happened. Right now the market is quoting two prices: the most any buyer will pay, and the least any seller will take. You trade against one of them, never the middle."
+      "body": "Look up a stock and you see a single number. That number is history — the last trade that happened. Right now the market is quoting two prices: the most any buyer will pay, and the least any seller will take. You trade against one of them, never the middle.",
+      "art": {
+        "kind": "glyph",
+        "name": "eye",
+        "bg": "butter"
+      }
     },
     {
       "id": "c2",
@@ -55,7 +60,12 @@
       "id": "c5",
       "type": "concept",
       "headline": "Liquidity sets the width.",
-      "body": "Spreads are narrow where trading is heavy. A stock trading millions of shares a day may be quoted a penny wide. A stock that trades a few thousand shares a day can sit fifty cents wide, or more. Fewer buyers and sellers, bigger gap."
+      "body": "Spreads are narrow where trading is heavy. A stock trading millions of shares a day may be quoted a penny wide. A stock that trades a few thousand shares a day can sit fifty cents wide, or more. Fewer buyers and sellers, bigger gap.",
+      "art": {
+        "kind": "glyph",
+        "name": "people",
+        "bg": "mint"
+      }
     },
     {
       "id": "c6",

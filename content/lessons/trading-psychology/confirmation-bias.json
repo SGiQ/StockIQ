@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The moment you buy, your reading changes.",
-      "body": "Before you own it, you read everything. After you own it, the article that agrees is insight and the one that disagrees is noise. Nothing about the company changed. Your eyes did."
+      "body": "Before you own it, you read everything. After you own it, the article that agrees is insight and the one that disagrees is noise. Nothing about the company changed. Your eyes did.",
+      "art": { "kind": "glyph", "name": "heart", "bg": "blush" }
     },
     {
       "id": "c2",
@@ -39,7 +40,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "Saying it out loud raises the price.",
-      "body": "Tell nobody and changing your mind costs nothing. Post the thesis, name it in a group chat, and reversing now costs face as well as money. That reputational cost has nothing to do with whether the position is still sound."
+      "body": "Tell nobody and changing your mind costs nothing. Post the thesis, name it in a group chat, and reversing now costs face as well as money. That reputational cost has nothing to do with whether the position is still sound.",
+      "art": { "kind": "glyph", "name": "flag", "bg": "mint" }
     },
     {
       "id": "c6",

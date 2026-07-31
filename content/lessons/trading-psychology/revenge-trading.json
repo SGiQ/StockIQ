@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The worst trade is usually the next one.",
-      "body": "Most accounts are not ruined by the losing trade. They are ruined by what the trader does in the ten minutes after it. The loss is already a fact. The urge to erase it is the risk."
+      "body": "Most accounts are not ruined by the losing trade. They are ruined by what the trader does in the ten minutes after it. The loss is already a fact. The urge to erase it is the risk.",
+      "art": { "kind": "glyph", "name": "bell", "bg": "lilac" }
     },
     {
       "id": "c2",
@@ -22,7 +23,8 @@
       "id": "c3",
       "type": "concept",
       "headline": "The market does not know your entry.",
-      "body": "Your entry price is a fact about your account, not about the stock. The position does not know what you paid. Nobody on the other side owes you a refund. Only you are keeping that score."
+      "body": "Your entry price is a fact about your account, not about the stock. The position does not know what you paid. Nobody on the other side owes you a refund. Only you are keeping that score.",
+      "art": { "kind": "glyph", "name": "people", "bg": "mint" }
     },
     {
       "id": "c4",
@@ -38,7 +40,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "Then the size goes up.",
-      "body": "Getting even at the old size takes time you no longer feel you have. So the next position is bigger. That is the whole mechanism: urgency raises size, and size raises the cost of being wrong again."
+      "body": "Getting even at the old size takes time you no longer feel you have. So the next position is bigger. That is the whole mechanism: urgency raises size, and size raises the cost of being wrong again.",
+      "art": { "kind": "glyph", "name": "arrow-up", "bg": "butter" }
     },
     {
       "id": "c6",

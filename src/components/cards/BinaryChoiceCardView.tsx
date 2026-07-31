@@ -141,11 +141,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: space.lg,
   },
+  /**
+   * Same shrink guard as ConceptCardView, for the same reason: the card is
+   * centred and clipped, so content taller than the box loses slices off the
+   * TOP as well as the bottom and a prompt can lose its first line.
+   *
+   * This card is the worse case, because its tallest state is not the one you
+   * see while authoring — after answering it also renders an explanation. The
+   * prompt block gives way first; the options and Check Answer must never
+   * move, since they are the interaction.
+   */
   prompt: {
     gap: space.lg,
+    flexShrink: 1,
   },
   options: {
     gap: space.sm,
+    flexShrink: 0,
   },
   check: {
     marginTop: space.sm,

@@ -12,7 +12,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "Profit is a magnet for competitors.",
-      "body": "A business earns fat margins. Rivals notice, copy the product, and cut prices to win the customers. Margins fall back toward average. That is the default ending for most profitable ideas — unless something is defending them."
+      "body": "A business earns fat margins. Rivals notice, copy the product, and cut prices to win the customers. Margins fall back toward average. That is the default ending for most profitable ideas — unless something is defending them.",
+      "art": {
+        "kind": "glyph",
+        "name": "target",
+        "bg": "butter"
+      }
     },
     {
       "id": "c2",
@@ -88,7 +93,12 @@
       "id": "c4",
       "type": "concept",
       "headline": "Two of them work on the customer.",
-      "body": "Switching costs: moving your payroll system to a rival means retraining every manager, so you stay even when a cheaper option appears. Network effects: a payment network is worth joining because everyone else already joined, and each new member makes leaving worse."
+      "body": "Switching costs: moving your payroll system to a rival means retraining every manager, so you stay even when a cheaper option appears. Network effects: a payment network is worth joining because everyone else already joined, and each new member makes leaving worse.",
+      "art": {
+        "kind": "glyph",
+        "name": "handshake",
+        "bg": "blush"
+      }
     },
     {
       "id": "c5",

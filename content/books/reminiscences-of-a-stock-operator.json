@@ -52,7 +52,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "The tape is people.",
-      "body": "Livingston reads the ticker not as arithmetic but as a record of what a crowd is doing under pressure. Prices move because somebody **had** to buy or had to sell. The book treats that pressure, rather than the number itself, as the thing worth studying."
+      "body": "Livingston reads the ticker not as arithmetic but as a record of what a crowd is doing under pressure. Prices move because somebody **had** to buy or had to sell. The book treats that pressure, rather than the number itself, as the thing worth studying.",
+      "art": { "kind": "glyph", "name": "people", "bg": "sky" }
     },
     {
       "id": "c6",
@@ -91,7 +92,8 @@
       "id": "c8",
       "type": "concept",
       "headline": "The names change. The behaviour does not.",
-      "body": "A century on, the manias, the tips passed at dinner, the certainty just before a reversal all look familiar. Lefèvre's argument is that markets change their instruments constantly and their participants almost never. That is why a 1923 novel still reads as current."
+      "body": "A century on, the manias, the tips passed at dinner, the certainty just before a reversal all look familiar. Lefèvre's argument is that markets change their instruments constantly and their participants almost never. That is why a 1923 novel still reads as current.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "butter" }
     },
     {
       "id": "c9",

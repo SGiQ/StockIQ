@@ -90,7 +90,8 @@
       "id": "c7",
       "type": "concept",
       "headline": "The disproof line does the work.",
-      "body": "A thesis you cannot disprove is a mood. Naming in advance what would prove you wrong turns it into something checkable — and it shows you later whether you exited on evidence or on discomfort."
+      "body": "A thesis you cannot disprove is a mood. Naming in advance what would prove you wrong turns it into something checkable — and it shows you later whether you exited on evidence or on discomfort.",
+      "art": { "kind": "glyph", "name": "key", "bg": "butter" }
     },
     {
       "id": "c8",
@@ -111,7 +112,8 @@
       "id": "c10",
       "type": "concept",
       "headline": "Patterns only appear in the pile.",
-      "body": "Read fifty entries at once and clusters surface. Losses bunched on one weekday. One setup that keeps getting taken and keeps failing. A run of red trades all logged as impatient. None of it is visible from inside a single trade."
+      "body": "Read fifty entries at once and clusters surface. Losses bunched on one weekday. One setup that keeps getting taken and keeps failing. A run of red trades all logged as impatient. None of it is visible from inside a single trade.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "mint" }
     },
     {
       "id": "c11",

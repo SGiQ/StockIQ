@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "A book of interviews, not a method.",
-      "body": "Jack Schwager sat down with traders who had produced unusual results and asked them how they worked. He did not smooth their answers into a system. The value is in the disagreement between them, and in the few things none of them disagree about."
+      "body": "Jack Schwager sat down with traders who had produced unusual results and asked them how they worked. He did not smooth their answers into a system. The value is in the disagreement between them, and in the few things none of them disagree about.",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "butter" }
     },
     {
       "id": "c2",

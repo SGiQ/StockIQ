@@ -13,7 +13,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Your indicator knows nothing the price did not tell it.",
-      "body": "Add RSI to a chart and a new line appears under the price. It looks like extra information. It is not. It is the same prices, rearranged into arithmetic. Every indicator you will ever add is downstream of the one series you already had."
+      "body": "Add RSI to a chart and a new line appears under the price. It looks like extra information. It is not. It is the same prices, rearranged into arithmetic. Every indicator you will ever add is downstream of the one series you already had.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "sky" }
     },
     {
       "id": "c2",
@@ -57,7 +58,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "In that trend, every 70 print was early.",
-      "body": "Look again at that stretch. A trader following a sell-at-70 rule exited on week 4 while RSI held above the line for seven more readings. {{strategy:momentum-investing|Momentum}} systems exist because that persistence is common, not rare."
+      "body": "Look again at that stretch. A trader following a sell-at-70 rule exited on week 4 while RSI held above the line for seven more readings. {{strategy:momentum-investing|Momentum}} systems exist because that persistence is common, not rare.",
+      "art": { "kind": "glyph", "name": "bell", "bg": "blush" }
     },
     {
       "id": "c6",

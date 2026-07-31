@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Nobody sells the loser.",
-      "body": "You open your account. The winner is up 8%, so you take the profit. The loser is down 8%, so you leave it — you will sell when it comes back. Same 8%. Two completely different decisions."
+      "body": "You open your account. The winner is up 8%, so you take the profit. The loser is down 8%, so you leave it — you will sell when it comes back. Same 8%. Two completely different decisions.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "blush" }
     },
     {
       "id": "c2",
@@ -49,7 +50,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "The pain sits in the realising.",
-      "body": "A position that is down has already cost you. Holding it keeps the loss a maybe. The moment you sell, it becomes a fact with your name on it. So people hold — not because of the odds, but to postpone the admission."
+      "body": "A position that is down has already cost you. Holding it keeps the loss a maybe. The moment you sell, it becomes a fact with your name on it. So people hold — not because of the odds, but to postpone the admission.",
+      "art": { "kind": "glyph", "name": "lock", "bg": "sky" }
     },
     {
       "id": "c6",
@@ -95,7 +97,8 @@
       "id": "c9",
       "type": "concept",
       "headline": "The bias does not stay free.",
-      "body": "A deferred loss does not hold still. It keeps moving while you look away. And a winner sold early stops being yours the moment you close it. Loss aversion does not only feel bad. It edits your results."
+      "body": "A deferred loss does not hold still. It keeps moving while you look away. And a winner sold early stops being yours the moment you close it. Loss aversion does not only feel bad. It edits your results.",
+      "art": { "kind": "glyph", "name": "chart-down", "bg": "forest" }
     },
     {
       "id": "c10",

@@ -47,7 +47,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The money arrives before the risk does.",
-      "body": "Sell an option and cash lands in your account today. The obligation you took on to earn it does not come due for weeks. That gap between payment and consequence is why this trade is easy to describe well and easy to misjudge."
+      "body": "Sell an option and cash lands in your account today. The obligation you took on to earn it does not come due for weeks. That gap between payment and consequence is why this trade is easy to describe well and easy to misjudge.",
+      "art": { "kind": "glyph", "name": "coin", "bg": "butter" }
     },
     {
       "id": "c2",
@@ -60,7 +61,8 @@
       "id": "c3",
       "type": "concept",
       "headline": "A short call is a promise to sell.",
-      "body": "Now you own the shares at 50. Sell a call struck at 55 for 2 and you have agreed to hand them over at 55, however high the stock goes. Your gain stops there. The premium is what you were paid to accept that ceiling."
+      "body": "Now you own the shares at 50. Sell a call struck at 55 for 2 and you have agreed to hand them over at 55, however high the stock goes. Your gain stops there. The premium is what you were paid to accept that ceiling.",
+      "art": { "kind": "glyph", "name": "lock", "bg": "lilac" }
     },
     {
       "id": "c4",
@@ -91,7 +93,8 @@
       "id": "c6",
       "type": "concept",
       "headline": "You sold the upside and kept the downside.",
-      "body": "That is the trade in one line. Above 55 every further dollar belongs to someone else. Below 50 every dollar of decline is still yours, less the 2 you collected. Marketing describes the premium and rarely draws the rest of the line."
+      "body": "That is the trade in one line. Above 55 every further dollar belongs to someone else. Below 50 every dollar of decline is still yours, less the 2 you collected. Marketing describes the premium and rarely draws the rest of the line.",
+      "art": { "kind": "glyph", "name": "chart-down", "bg": "ink" }
     },
     {
       "id": "c7",
@@ -148,7 +151,8 @@
       "id": "c10",
       "type": "concept",
       "headline": "This shape has a name, and a history.",
-      "body": "Selling options for premium is called **selling volatility**. Many small gains, then a rare large one against you. Funds built on that shape have collapsed in single weeks. The wheel is a smaller version of the same payoff, and the same {{lesson:risk-and-position-sizing/risk-of-ruin|risk of ruin}} arithmetic applies."
+      "body": "Selling options for premium is called **selling volatility**. Many small gains, then a rare large one against you. Funds built on that shape have collapsed in single weeks. The wheel is a smaller version of the same payoff, and the same {{lesson:risk-and-position-sizing/risk-of-ruin|risk of ruin}} arithmetic applies.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
     },
     {
       "id": "c11",

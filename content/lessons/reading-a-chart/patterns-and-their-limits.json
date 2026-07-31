@@ -299,7 +299,12 @@
       "id": "c8",
       "type": "concept",
       "headline": "Textbook examples are picked after the ending.",
-      "body": "Every pattern in a book was chosen because it worked. The author scrolled through years of charts and kept the ones that did the expected thing. The failures were never photographed. You are looking at a highlight reel, not a sample."
+      "body": "Every pattern in a book was chosen because it worked. The author scrolled through years of charts and kept the ones that did the expected thing. The failures were never photographed. You are looking at a highlight reel, not a sample.",
+      "art": {
+        "kind": "glyph",
+        "name": "star",
+        "bg": "blush"
+      }
     },
     {
       "id": "c9",

@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "An edge you do not survive pays nothing.",
-      "body": "Two accounts run the same strategy on the same signals. One is still trading in year three. The other reached zero in month four and never saw the strategy work. The difference was not skill. It was how much of the account rode on each trade."
+      "body": "Two accounts run the same strategy on the same signals. One is still trading in year three. The other reached zero in month four and never saw the strategy work. The difference was not skill. It was how much of the account rode on each trade.",
+      "art": { "kind": "glyph", "name": "tree", "bg": "mint" }
     },
     {
       "id": "c2",

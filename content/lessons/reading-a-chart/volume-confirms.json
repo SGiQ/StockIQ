@@ -12,7 +12,16 @@
       "id": "c1",
       "type": "concept",
       "headline": "Two identical moves, two different stories.",
-      "body": "A stock closes up 6% on Tuesday. Another closes up 6% on Wednesday. The price chart draws the same line twice. But one move involved five million shares and the other involved eight hundred thousand. Same picture. Different amount of evidence."
+      "body": "A stock closes up 6% on Tuesday. Another closes up 6% on Wednesday. The price chart draws the same line twice. But one move involved five million shares and the other involved eight hundred thousand. Same picture. Different amount of evidence.",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [5.0, 0.8],
+          "labels": ["Tue +6%", "Wed +6%"],
+          "yLabel": "Shares traded (m)"
+        }
+      }
     },
     {
       "id": "c2",
@@ -99,7 +108,8 @@
       "id": "c8",
       "type": "concept",
       "headline": "Heavy compared to what?",
-      "body": "Five million shares is a stampede for one company and a slow morning for another. Volume only means something measured against that same stock's recent average. There is no universal number that counts as heavy."
+      "body": "Five million shares is a stampede for one company and a slow morning for another. Volume only means something measured against that same stock's recent average. There is no universal number that counts as heavy.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "blush" }
     },
     {
       "id": "c9",

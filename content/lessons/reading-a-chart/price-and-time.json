@@ -49,7 +49,17 @@
       "id": "c5",
       "type": "concept",
       "headline": "A line chart keeps one number a day.",
-      "body": "Draw a line and you are usually plotting the closing price — the last trade before the bell. It is clean, and it hides a lot. A day that opened at $50, fell to $44, then closed at $51 looks like a quiet up day."
+      "body": "Draw a line and you are usually plotting the closing price — the last trade before the bell. It is clean, and it hides a lot. A day that opened at $50, fell to $44, then closed at $51 looks like a quiet up day.",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [47, 48, 50, 51, 52],
+          "xLabel": "Trading day",
+          "yLabel": "Close ($)",
+          "markers": [{ "at": 3, "label": "Low was $44", "emphasis": true }]
+        }
+      }
     },
     {
       "id": "c6",
@@ -86,7 +96,8 @@
       "id": "c7",
       "type": "concept",
       "headline": "Change the timeframe, change the story.",
-      "body": "The same stock can be an uptrend on a one-year chart and a downtrend on a one-month chart. Both charts are honest. They answer different questions, because they cover different spans of time."
+      "body": "The same stock can be an uptrend on a one-year chart and a downtrend on a one-month chart. Both charts are honest. They answer different questions, because they cover different spans of time.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "butter" }
     },
     {
       "id": "c8",

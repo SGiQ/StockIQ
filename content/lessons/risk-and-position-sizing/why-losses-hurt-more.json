@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "A 50% loss is not half a problem.",
-      "body": "Cut your money in half and you do not need half of it back. You need all of it back. The gain that repairs a loss is always larger than the loss, and almost nobody guesses how much larger."
+      "body": "Cut your money in half and you do not need half of it back. You need all of it back. The gain that repairs a loss is always larger than the loss, and almost nobody guesses how much larger.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "blush" }
     },
     {
       "id": "c2",
@@ -48,7 +49,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "The damage accelerates.",
-      "body": "Down 10%, you need 11.1% — barely more than you lost. Down 50%, you need 100%. Down 80%, you need 400%. Double the loss and you far more than double the repair."
+      "body": "Down 10%, you need 11.1% — barely more than you lost. Down 50%, you need 100%. Down 80%, you need 400%. Double the loss and you far more than double the repair.",
+      "art": { "kind": "glyph", "name": "chart-up", "bg": "lilac" }
     },
     {
       "id": "c6",
@@ -93,7 +95,8 @@
       "id": "c9",
       "type": "concept",
       "headline": "Small losses stay cheap.",
-      "body": "Below about 20%, the repair sits close to the loss: 5% needs 5.3%, 10% needs 11.1%, 20% needs 25%. The gap only turns brutal once the hole gets deep. That is where the arithmetic changes character."
+      "body": "Below about 20%, the repair sits close to the loss: 5% needs 5.3%, 10% needs 11.1%, 20% needs 25%. The gap only turns brutal once the hole gets deep. That is where the arithmetic changes character.",
+      "art": { "kind": "glyph", "name": "coin", "bg": "sky" }
     },
     {
       "id": "c10",

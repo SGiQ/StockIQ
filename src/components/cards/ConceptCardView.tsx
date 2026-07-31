@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import type { ConceptCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
-import { palette, space } from '@/theme/tokens';
+import { palette, radius, space } from '@/theme/tokens';
 
 /**
  * The workhorse card: a short headline, a short body, optional art.
@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
     marginVertical: space.xs,
     flexShrink: 1,
     maxHeight: '42%',
+    /**
+     * Load-bearing. `ArtView` sizes itself from an aspectRatio, so when this
+     * box shrinks the art inside keeps its full height and bleeds out the
+     * bottom — the body text then renders on top of the panel. Clipping is
+     * invisible here because the glyph is centred, so the only thing lost is
+     * empty panel.
+     */
+    overflow: 'hidden',
+    borderRadius: radius.lg,
   },
   body: {
     marginTop: -space.xs,

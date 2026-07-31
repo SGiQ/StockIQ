@@ -9,7 +9,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "Record revenue can hide a losing business.",
-      "body": "Revenue is every dollar that came in the door. Profit is what is left after you pay for all of it. A headline about **record revenue** tells you how much money arrived. It says nothing about how much stayed."
+      "body": "Revenue is every dollar that came in the door. Profit is what is left after you pay for all of it. A headline about **record revenue** tells you how much money arrived. It says nothing about how much stayed.",
+      "art": {
+        "kind": "glyph",
+        "name": "newspaper",
+        "bg": "sky"
+      }
     },
     {
       "id": "c2",
@@ -52,7 +57,12 @@
       "id": "c4",
       "type": "concept",
       "headline": "First rung: gross profit.",
-      "body": "Take the 100 million and subtract what the coffee itself cost — beans, milk, cups — 62 million. That leaves **38 million** of gross profit. This is what the product earns before you run a company around it."
+      "body": "Take the 100 million and subtract what the coffee itself cost — beans, milk, cups — 62 million. That leaves **38 million** of gross profit. This is what the product earns before you run a company around it.",
+      "art": {
+        "kind": "glyph",
+        "name": "ladder",
+        "bg": "lilac"
+      }
     },
     {
       "id": "c5",

@@ -12,7 +12,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "Ten holdings can still be one bet.",
-      "body": "You buy ten stocks and feel covered. Then they all fall on the same Tuesday, because eight of them sell into the same industry. Count is not protection. What protects you is whether your holdings can move apart."
+      "body": "You buy ten stocks and feel covered. Then they all fall on the same Tuesday, because eight of them sell into the same industry. Count is not protection. What protects you is whether your holdings can move apart.",
+      "art": {
+        "kind": "glyph",
+        "name": "briefcase",
+        "bg": "sky"
+      }
     },
     {
       "id": "c2",
@@ -141,7 +146,12 @@
         "trader:ray-dalio"
       ],
       "headline": "Independence is the scarce ingredient.",
-      "body": "Adding a holding only helps if its drivers differ from what you already own. The point that uncorrelated return streams improve return per unit of risk runs through {{trader:ray-dalio|Ray Dalio}}'s writing on portfolio construction."
+      "body": "Adding a holding only helps if its drivers differ from what you already own. The point that uncorrelated return streams improve return per unit of risk runs through {{trader:ray-dalio|Ray Dalio}}'s writing on portfolio construction.",
+      "art": {
+        "kind": "glyph",
+        "name": "compass",
+        "bg": "forest"
+      }
     },
     {
       "id": "c7",

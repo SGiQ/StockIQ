@@ -17,7 +17,8 @@
       "id": "c2",
       "type": "concept",
       "headline": "Noticing is the start, not the answer.",
-      "body": "A product you love is a lead, not a conclusion. The company behind it might be tiny relative to its parent, drowning in debt, or already priced for perfection. Lynch's edge came from what he did after noticing."
+      "body": "A product you love is a lead, not a conclusion. The company behind it might be tiny relative to its parent, drowning in debt, or already priced for perfection. Lynch's edge came from what he did after noticing.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" }
     },
     {
       "id": "c3",

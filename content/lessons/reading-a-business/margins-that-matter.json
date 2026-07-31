@@ -22,7 +22,8 @@
       "id": "c3",
       "type": "concept",
       "headline": "Then subtract running the place.",
-      "body": "Out of that $40 come $25 of salaries, rent, and marketing. What is left is $15 of operating profit — a **15% operating margin**. That number is about cost discipline, not pricing."
+      "body": "Out of that $40 come $25 of salaries, rent, and marketing. What is left is $15 of operating profit — a **15% operating margin**. That number is about cost discipline, not pricing.",
+      "art": { "kind": "glyph", "name": "building", "bg": "lilac" }
     },
     {
       "id": "c4",

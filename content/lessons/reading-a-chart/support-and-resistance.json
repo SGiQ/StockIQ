@@ -53,7 +53,8 @@
       "type": "concept",
       "refs": ["lesson:market-foundations/what-moves-a-price"],
       "headline": "Nothing is holding the price up.",
-      "body": "There is no floor under 100. There is memory. Buyers who bought near 100 last time remember it. Sellers who wish they had sold at 120 remember that. Enough of them act the same way again, and the level appears to hold."
+      "body": "There is no floor under 100. There is memory. Buyers who bought near 100 last time remember it. Sellers who wish they had sold at 120 remember that. Enough of them act the same way again, and the level appears to hold.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "lilac" }
     },
     {
       "id": "c5",
@@ -134,7 +135,8 @@
       "id": "c10",
       "type": "concept",
       "headline": "It works because people watch it.",
-      "body": "A level matters to the degree that enough participants are looking at the same number. Round numbers and obvious old highs get watched most. That makes the effect partly self-fulfilling, and it means a level nobody watches does very little."
+      "body": "A level matters to the degree that enough participants are looking at the same number. Round numbers and obvious old highs get watched most. That makes the effect partly self-fulfilling, and it means a level nobody watches does very little.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "forest" }
     },
     {
       "id": "c11",

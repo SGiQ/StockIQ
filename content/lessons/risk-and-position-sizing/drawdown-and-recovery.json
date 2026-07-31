@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The number that describes what you actually lived through.",
-      "body": "Average return is a summary written afterwards. Drawdown is the part you had to sit through. A portfolio can average 10% a year and still spend a decade below a number it already reached. That decade is where people quit."
+      "body": "Average return is a summary written afterwards. Drawdown is the part you had to sit through. A portfolio can average 10% a year and still spend a decade below a number it already reached. That decade is where people quit.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "lilac" }
     },
     {
       "id": "c2",
@@ -86,7 +87,8 @@
       "id": "c7",
       "type": "concept",
       "headline": "An average hides the worst stretch.",
-      "body": "A strategy that returned 12% a year says nothing about the year it fell 45%. The average is arithmetic done after the fact. The worst stretch is the thing that had to be survived in real time to earn it."
+      "body": "A strategy that returned 12% a year says nothing about the year it fell 45%. The average is arithmetic done after the fact. The worst stretch is the thing that had to be survived in real time to earn it.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" }
     },
     {
       "id": "c8",
@@ -118,7 +120,8 @@
       "id": "c10",
       "type": "concept",
       "headline": "Flat is harder than fast.",
-      "body": "A fall of 30% that rebounds in six months is loud but short. A portfolio that drifts sideways below its old high for five years is quiet, and quiet is what breaks discipline. Nothing happens. Nothing keeps happening."
+      "body": "A fall of 30% that rebounds in six months is loud but short. A portfolio that drifts sideways below its old high for five years is quiet, and quiet is what breaks discipline. Nothing happens. Nothing keeps happening.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "ink" }
     },
     {
       "id": "c11",

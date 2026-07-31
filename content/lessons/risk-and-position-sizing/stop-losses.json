@@ -13,7 +13,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "You will be worst at this exactly when it matters.",
-      "body": "The position is down. Your pulse is up. Every argument for holding on sounds reasonable now, and the one argument for leaving sounded reasonable an hour ago. A stop is a decision made before that moment arrives."
+      "body": "The position is down. Your pulse is up. Every argument for holding on sounds reasonable now, and the one argument for leaving sounded reasonable an hour ago. A stop is a decision made before that moment arrives.",
+      "art": { "kind": "glyph", "name": "heart", "bg": "blush" }
     },
     {
       "id": "c2",
@@ -44,13 +45,15 @@
       "id": "c5",
       "type": "concept",
       "headline": "A stop-market order will trade. Somewhere.",
-      "body": "Once your level trades, a stop-market becomes a market order. It takes the best price available at that instant. In a quiet market that sits close to your level. In a fast one it can land well below it."
+      "body": "Once your level trades, a stop-market becomes a market order. It takes the best price available at that instant. In a quiet market that sits close to your level. In a fast one it can land well below it.",
+      "art": { "kind": "glyph", "name": "handshake", "bg": "butter" }
     },
     {
       "id": "c6",
       "type": "concept",
       "headline": "A stop-limit protects the price, not the exit.",
-      "body": "A stop-limit wakes up as a limit order with a floor. It will not sell below that floor. If the market is already trading under it, you get **no fill at all** — and you still own the position."
+      "body": "A stop-limit wakes up as a limit order with a floor. It will not sell below that floor. If the market is already trading under it, you get **no fill at all** — and you still own the position.",
+      "art": { "kind": "glyph", "name": "lock", "bg": "mint" }
     },
     {
       "id": "c7",
@@ -64,7 +67,8 @@
       "id": "c8",
       "type": "concept",
       "headline": "Round numbers are crowded.",
-      "body": "A stop just under 50 sits where a lot of other stops sit, because 50 is where people round. When price reaches that shelf, the selling those orders release can push it through faster than the news alone would."
+      "body": "A stop just under 50 sits where a lot of other stops sit, because 50 is where people round. When price reaches that shelf, the selling those orders release can push it through faster than the news alone would.",
+      "art": { "kind": "glyph", "name": "people", "bg": "lilac" }
     },
     {
       "id": "c9",

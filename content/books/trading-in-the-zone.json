@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The problem is rarely the method.",
-      "body": "Mark Douglas published this in 2000 after years spent with traders who knew what to do and did not do it. His claim is that most trading failure is a belief problem rather than an analysis problem, and that beliefs have to be worked on directly."
+      "body": "Mark Douglas published this in 2000 after years spent with traders who knew what to do and did not do it. His claim is that most trading failure is a belief problem rather than an analysis problem, and that beliefs have to be worked on directly.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "lilac" }
     },
     {
       "id": "c2",
@@ -49,7 +50,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "Consistency comes from the process.",
-      "body": "If you only feel steady when you are right, every loss becomes a threat and rules start changing mid-stream. Douglas argues the reverse: that you define the process, accept the range of outcomes it produces, and let being right stop mattering trade by trade."
+      "body": "If you only feel steady when you are right, every loss becomes a threat and rules start changing mid-stream. Douglas argues the reverse: that you define the process, accept the range of outcomes it produces, and let being right stop mattering trade by trade.",
+      "art": { "kind": "glyph", "name": "anchor", "bg": "mint" }
     },
     {
       "id": "c6",

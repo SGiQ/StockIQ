@@ -48,7 +48,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Most methods pick a side. This one refuses.",
-      "body": "Value screens study the business and ignore the chart. Chart methods do the reverse. {{trader:william-oneil|O'Neil}} built CANSLIM to require both at once: the earnings had to be accelerating and the price had to be acting strong before anything happened."
+      "body": "Value screens study the business and ignore the chart. Chart methods do the reverse. {{trader:william-oneil|O'Neil}} built CANSLIM to require both at once: the earnings had to be accelerating and the price had to be acting strong before anything happened.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
     },
     {
       "id": "c2",
@@ -102,7 +103,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "Why buy something already near its high?",
-      "body": "A base is a stretch where sellers get worked through. When price clears the top of it on heavy {{lesson:reading-a-chart/volume-confirms|volume}}, O'Neil read that as the available supply being absorbed. The uncomfortable part is the price tag: by then the stock already looks expensive."
+      "body": "A base is a stretch where sellers get worked through. When price clears the top of it on heavy {{lesson:reading-a-chart/volume-confirms|volume}}, O'Neil read that as the available supply being absorbed. The uncomfortable part is the price tag: by then the stock already looks expensive.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "butter" }
     },
     {
       "id": "c6",

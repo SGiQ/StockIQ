@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "You can own a piece of a company.",
-      "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim."
+      "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim.",
+      "art": { "kind": "glyph", "name": "key", "bg": "mint" }
     },
     {
       "id": "c2",
@@ -73,7 +74,8 @@
       "id": "c6",
       "type": "concept",
       "headline": "Owners are not lenders.",
-      "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside."
+      "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside.",
+      "art": { "kind": "glyph", "name": "ladder", "bg": "sky" }
     },
     {
       "id": "c7",

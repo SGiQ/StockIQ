@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Growth costs money the founders do not have.",
-      "body": "A chain with 40 stores wants 400. Building them takes cash the owners cannot spare. So the company sells pieces of itself to strangers, and those strangers become owners. That trade is why the stock market exists."
+      "body": "A chain with 40 stores wants 400. Building them takes cash the owners cannot spare. So the company sells pieces of itself to strangers, and those strangers become owners. That trade is why the stock market exists.",
+      "art": { "kind": "glyph", "name": "building", "bg": "mint" }
     },
     {
       "id": "c2",

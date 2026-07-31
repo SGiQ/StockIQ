@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The market was up today. Which market?",
-      "body": "Nobody means every stock. They mean one index — usually the S&P 500. An index is a single number that stands in for hundreds of companies at once. When the anchor says the market rose, an index rose. That is all the sentence ever means."
+      "body": "Nobody means every stock. They mean one index — usually the S&P 500. An index is a single number that stands in for hundreds of companies at once. When the anchor says the market rose, an index rose. That is all the sentence ever means.",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "mint" }
     },
     {
       "id": "c2",

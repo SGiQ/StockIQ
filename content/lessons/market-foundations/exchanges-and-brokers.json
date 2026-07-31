@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "You cannot walk onto an exchange.",
-      "body": "The New York Stock Exchange will not take your order. Neither will Nasdaq. Only member firms trade there, so you hire one — a broker — to carry your order in. Tapping buy starts a short relay you never see."
+      "body": "The New York Stock Exchange will not take your order. Neither will Nasdaq. Only member firms trade there, so you hire one — a broker — to carry your order in. Tapping buy starts a short relay you never see.",
+      "art": { "kind": "glyph", "name": "lock", "bg": "blush" }
     },
     {
       "id": "c2",

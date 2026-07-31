@@ -9,7 +9,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "A profitable company can still run out of cash.",
-      "body": "Profit is an accounting result. Cash is a bank balance. They are not the same number, and the difference is where a lot of bad surprises live. A company can report record earnings and still miss payroll."
+      "body": "Profit is an accounting result. Cash is a bank balance. They are not the same number, and the difference is where a lot of bad surprises live. A company can report record earnings and still miss payroll.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "butter" }
     },
     {
       "id": "c2",

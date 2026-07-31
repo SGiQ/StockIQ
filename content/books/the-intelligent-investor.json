@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "A book about temperament, not stock tips.",
-      "body": "Benjamin Graham published this in 1949, after living through the 1929 crash. His claim: most investors lose money because of how they act, not because they cannot do the math. Fix the temperament first."
+      "body": "Benjamin Graham published this in 1949, after living through the 1929 crash. His claim: most investors lose money because of how they act, not because they cannot do the math. Fix the temperament first.",
+      "art": { "kind": "glyph", "name": "heart", "bg": "lilac" }
     },
     {
       "id": "c2",

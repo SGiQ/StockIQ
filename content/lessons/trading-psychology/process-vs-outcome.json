@@ -10,7 +10,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "The scoreboard lies to you.",
-      "body": "Two people make the same reckless bet on the same day. One walks away richer, the other is wiped out. The market paid them differently for identical thinking. If you learn from the payout, you learn the wrong thing."
+      "body": "Two people make the same reckless bet on the same day. One walks away richer, the other is wiped out. The market paid them differently for identical thinking. If you learn from the payout, you learn the wrong thing.",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "blush" }
     },
     {
       "id": "c2",
@@ -60,7 +61,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "A sound plan can still lose.",
-      "body": "You sized the position small, defined your exit, and the trade went against you anyway. Nothing failed except the coin. Tearing up a good process because of one bad result is how people end up with no process at all."
+      "body": "You sized the position small, defined your exit, and the trade went against you anyway. Nothing failed except the coin. Tearing up a good process because of one bad result is how people end up with no process at all.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
     },
     {
       "id": "c6",
@@ -109,7 +111,8 @@
       "type": "concept",
       "headline": "You only control the decision.",
       "body": "The result arrives later and belongs partly to chance. The decision is yours entirely, and it is fixed before you click. {{book:trading-in-the-zone|Trading in the Zone}} makes that split its starting point: judge the choice, not the payout.",
-      "refs": ["book:trading-in-the-zone"]
+      "refs": ["book:trading-in-the-zone"],
+      "art": { "kind": "glyph", "name": "compass", "bg": "sky" }
     },
     {
       "id": "c11",

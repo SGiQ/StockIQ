@@ -9,7 +9,12 @@
       "id": "c1",
       "type": "concept",
       "headline": "Tapping buy is one decision. How you buy is another.",
-      "body": "Your broker gives you one box and several order types. Each one answers a single question: do you care more about getting filled, or about the price you pay? You cannot have both. Every order type is a different answer to that tradeoff."
+      "body": "Your broker gives you one box and several order types. Each one answers a single question: do you care more about getting filled, or about the price you pay? You cannot have both. Every order type is a different answer to that tradeoff.",
+      "art": {
+        "kind": "glyph",
+        "name": "compass",
+        "bg": "lilac"
+      }
     },
     {
       "id": "c2",

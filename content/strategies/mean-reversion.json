@@ -57,7 +57,8 @@
       "id": "c1",
       "type": "concept",
       "headline": "Some of a sharp move is news. The rest is not.",
-      "body": "Forced sellers, margin calls and thin liquidity push price further than the information justifies. Mean reversion is a bet on the part that was never news — that the overshoot gets paid back. Everything else here is about telling the two apart."
+      "body": "Forced sellers, margin calls and thin liquidity push price further than the information justifies. Mean reversion is a bet on the part that was never news — that the overshoot gets paid back. Everything else here is about telling the two apart.",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "sky" }
     },
     {
       "id": "c2",
@@ -165,7 +166,8 @@
       "type": "concept",
       "headline": "Two practitioners, two warnings.",
       "body": "{{trader:paul-tudor-jones|Paul Tudor Jones}} told Jack Schwager in **Market Wizards** (1989) that he never averages down a loser — the move this logic invites. {{trader:ray-dalio|Ray Dalio}} dates Bridgewater's written rules to 1982, when a confident call went the other way and nearly ended his firm.",
-      "refs": ["trader:paul-tudor-jones", "trader:ray-dalio"]
+      "refs": ["trader:paul-tudor-jones", "trader:ray-dalio"],
+      "art": { "kind": "glyph", "name": "people", "bg": "butter" }
     },
     {
       "id": "c11",

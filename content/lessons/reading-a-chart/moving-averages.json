@@ -51,7 +51,8 @@
       "id": "c5",
       "type": "concept",
       "headline": "Short hugs price. Long ignores it.",
-      "body": "The window length is the only dial. A 10-day average sits close to price and turns quickly, so it flips direction often. A 200-day average barely moves. You trade responsiveness for smoothness, and you cannot have both."
+      "body": "The window length is the only dial. A 10-day average sits close to price and turns quickly, so it flips direction often. A 200-day average barely moves. You trade responsiveness for smoothness, and you cannot have both.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "mint" }
     },
     {
       "id": "c6",
