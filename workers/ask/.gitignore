@@ -1,0 +1,4 @@
+.dev.vars
+# Local miniflare runtime state from `wrangler dev` — simulated KV, caches.
+# Machine-specific and regenerated on demand.
+.wrangler/

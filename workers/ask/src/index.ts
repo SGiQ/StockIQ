@@ -41,7 +41,7 @@ Rules:
 
 const CORS = {
   'access-control-allow-origin': '*',
-  'access-control-allow-headers': 'content-type, x-owner-id',
+  'access-control-allow-headers': 'content-type, x-device-id',
   'access-control-allow-methods': 'POST, OPTIONS',
 };
 
@@ -60,11 +60,11 @@ const json = (status: number, body: unknown): Response =>
  * unlimited — failing closed is the only safe default when the failure mode
  * is financial.
  */
-async function withinLimit(env: Env, ownerId: string): Promise<boolean> {
+async function withinLimit(env: Env, deviceId: string): Promise<boolean> {
   if (!env.RATE_LIMIT) return false;
   const limit = Number(env.DAILY_LIMIT ?? DEFAULT_DAILY_LIMIT);
   const day = new Date().toISOString().slice(0, 10);
-  const key = `ask:${day}:${ownerId}`;
+  const key = `ask:${day}:${deviceId}`;
 
   const used = Number((await env.RATE_LIMIT.get(key)) ?? 0);
   if (used >= limit) return false;
@@ -89,9 +89,9 @@ export default {
 
     if (!env.ANTHROPIC_API_KEY) return json(500, { error: 'proxy is not configured' });
 
-    const ownerId = (request.headers.get('x-owner-id') ?? '').trim();
-    if (ownerId.length < 16 || ownerId.length > 128 || !/^[A-Za-z0-9._:-]+$/.test(ownerId)) {
-      return json(400, { error: 'X-Owner-Id header is required' });
+    const deviceId = (request.headers.get('x-device-id') ?? '').trim();
+    if (deviceId.length < 16 || deviceId.length > 128 || !/^[A-Za-z0-9._:-]+$/.test(deviceId)) {
+      return json(400, { error: 'X-Device-Id header is required' });
     }
 
     let body: { question?: unknown; card?: unknown; lessonTitle?: unknown; courseTitle?: unknown };
@@ -106,7 +106,7 @@ export default {
     if (!question || question.length > 2000) return json(400, { error: 'question is required' });
     if (!card || card.length > 8000) return json(400, { error: 'card context is required' });
 
-    if (!(await withinLimit(env, ownerId))) {
+    if (!(await withinLimit(env, deviceId))) {
       return json(429, { error: 'daily question limit reached' });
     }
 

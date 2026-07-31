@@ -44,7 +44,7 @@ export class ProxyAskService implements AskService {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'x-owner-id': await getDeviceId(),
+          'x-device-id': await getDeviceId(),
         },
         body: JSON.stringify({
           question,
