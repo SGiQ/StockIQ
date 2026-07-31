@@ -38,5 +38,137 @@
     "labels": ["Company A", "Company B", "Company C", "Company D"],
     "highlightIndex": 0,
     "yLabel": "Illustrative PEG (P/E divided by growth rate)"
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Cheap and growing are not opposites.",
+      "body": "A price-to-earnings multiple on its own ranks nothing. Thirty times earnings on a business compounding 40% a year is arguably a lower price for the same future than ten times earnings on one growing 2%. The multiple only means something with a growth rate beside it.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "butter" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "You are buying a stream, not a snapshot.",
+      "body": "A multiple is the price of one year of current earnings. What you own is every year after it. Growth decides how many of those years the price actually covers, which is why the same {{lesson:reading-a-business/the-price-earnings-ratio|P/E}} means two different things on two businesses.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Two multiples, two growth rates",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [30, 40, 10, 2],
+          "labels": ["A: P/E", "A: growth %", "B: P/E", "B: growth %"],
+          "highlightIndex": 0,
+          "yLabel": "Multiple, and annual growth %"
+        }
+      },
+      "caption": "Company A trades at 30 times earnings and grows 40% a year: a PEG of 0.75. Company B trades at 10 times and grows 2%: a PEG of 5.0. The higher multiple is not automatically the higher price."
+    },
+    {
+      "id": "c4",
+      "type": "fill_blank",
+      "body": "The PEG ratio divides the price-to-earnings multiple by the forecast [[1]]. Thirty times earnings against 40% growth gives 0.75. Under 1 is the rough line the literature describes.",
+      "wordBank": ["growth rate", "dividend yield", "book value"],
+      "answer": "growth rate",
+      "explanation": "It is a sanity check, not an instrument. The number is only as good as the growth rate you fed it, and that input is a forecast."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The denominator is a guess.",
+      "body": "PEG looks precise because it is arithmetic. It is not. The multiple is a fact you can read today; the growth rate is a forecast, and forecasts miss in a predictable direction. Projected growth tends to arrive smaller and later than projected.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "A stock trades at 30 times earnings. You bought it on a 25% growth forecast, giving a PEG of 1.2. Growth arrives at 10%. What is the PEG on actual growth?",
+      "options": [
+        { "id": "unchanged", "label": "Still about 1.2", "correct": false },
+        { "id": "three", "label": "3.0, three times what you thought", "correct": true }
+      ],
+      "explanation": "Nothing about the price changed. The half of the ratio you could not observe did. A position entered at a PEG of 1.2 was never at 1.2; it only looked that way."
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "When both halves move at once",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [60, 62, 41, 33],
+          "xLabels": ["Q1", "Q2", "Q3", "Q4"],
+          "yLabel": "Share price ($)",
+          "markers": [{ "at": 2, "label": "Growth guidance cut", "emphasis": true }]
+        }
+      },
+      "caption": "Earnings per share still rose, from $2.00 to $2.20. But the market repriced the growth from 30 times earnings to 15, and 15 times $2.20 is $33. Earnings up, price down 45%."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "Three ways a reasonable-looking PEG turns out not to have been one. Each is a failure of the denominator rather than the price you paid.",
+      "stickers": [
+        {
+          "label": "Forecast was too high",
+          "art": { "kind": "glyph", "name": "warning", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Growth decelerates",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.48 },
+          "rotation": 5
+        },
+        {
+          "label": "Cheap because it is shrinking",
+          "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" },
+          "anchor": { "x": 0.36, "y": 0.8 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "What it costs to run.",
+      "body": "You are not reading a number, you are underwriting a future. That means re-checking the growth rate every reporting season and deciding, when it misses, whether the quarter broke or the thesis did. The drawdown usually arrives before that is clear.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "mint" }
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "refs": ["trader:peter-lynch", "trader:warren-buffett", "book:one-up-on-wall-street"],
+      "headline": "Where the idea comes from.",
+      "body": "{{trader:peter-lynch|Peter Lynch}} popularised setting a multiple against a growth rate in {{book:one-up-on-wall-street|One Up on Wall Street}} (1989). {{trader:warren-buffett|Warren Buffett}} made the same point differently in his 1992 letter to Berkshire shareholders: growth is an input to value, not a rival school.",
+      "art": { "kind": "glyph", "name": "people", "bg": "lilac" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What the deck taught",
+      "summary": "GARP is a claim that price and growth have to be judged together, and a bet that you can estimate the growth.",
+      "bullets": [
+        "A multiple is meaningless without the growth rate that sits under it.",
+        "PEG is a rough sanity check built on a forecast, not a measurement.",
+        "When growth slows, the multiple and the earnings fall together.",
+        "The hard part is the future growth rate, not today's price."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
+      "insight": "A multiple is only half a price. The other half is the growth rate you cannot yet see, and that is the half you can be wrong about.",
+      "attribution": { "source": "Growth at a Reasonable Price", "detail": "StockIQ strategy guide" }
+    }
+  ]
 }

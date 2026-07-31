@@ -35,8 +35,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: space.lg,
   },
+  /**
+   * Shrinks before the text does.
+   *
+   * The card is centred and clipped, so content taller than the box loses
+   * equal slices off the TOP and bottom — a long card silently ate the first
+   * line of its own headline, which reads as a rendering fault rather than an
+   * overflow. Text cannot shrink and is the content, so the art gives way
+   * first: capped at a share of the card and allowed to compress further when
+   * a headline wraps to three lines.
+   *
+   * Scrolling would be the other fix and is wrong here: the card is
+   * deliberately inert (`pointerEvents="none"`) so taps reach the navigation
+   * zones underneath, and a ScrollView would have to capture those touches.
+   */
   art: {
     marginVertical: space.xs,
+    flexShrink: 1,
+    maxHeight: '42%',
   },
   body: {
     marginTop: -space.xs,

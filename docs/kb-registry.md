@@ -34,6 +34,34 @@ front rather than discovered while authoring.
 | `mean-reversion` | Mean Reversion | `mean-reversion` |
 | `covered-call-wheel` | The Wheel | `income` |
 
+### Strategy guides — `guideCards`
+
+A strategy carries two different kinds of content, and confusing them is the
+easy mistake:
+
+- `entryRules` / `exitRules` / `riskManagement` are **reference**. They state
+  the shape of the strategy for someone who already understands it.
+- `guideCards` is where it is **taught**. Same `Card[]` union a lesson uses, so
+  it plays in the lesson player at `/kb/strategy/<id>/guide`.
+
+A guide should cover the claimed edge and *why* it is supposed to exist, what
+it costs in drawdown and psychological difficulty, and the conditions under
+which it stops working. It should not restate the rules.
+
+`guideCards` is optional, so a strategy page can ship before its deck, and the
+unlock gate does not depend on it.
+
+Cards are addressed with the reserved course id `strategy` and the strategy id
+(see `findCard`), so saving and sharing use the same storage path as lesson
+cards. Guides award no XP and do not touch the streak — by the time a guide is
+reachable its gate is already satisfied.
+
+**These decks carry the highest advice risk in the app.** A strategy guide is
+exactly where "educational" slides into "you should do this". Teach the
+mechanism and its costs; never recommend the strategy, imply a return, or name
+a security. The wheel guide is the sharpest case, because option income is
+widely marketed with the risk omitted.
+
 ## Books — `content/books/<id>.json`
 
 | id | Title | Author | Year |

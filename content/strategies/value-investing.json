@@ -38,5 +38,137 @@
     "rate": 0.09,
     "years": 25,
     "compareRate": 0.05
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A price is a fact. A value is an opinion.",
+      "body": "One you read off a screen. The other you build from the business: its assets, its earnings, the cash it throws off. Value investing is the claim that the two drift apart, and the gap between them is the whole subject."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The gap is error tolerance, not a bargain.",
+      "body": "Your estimate of what a business is worth is a guess with error bars. Two careful analysts can differ by half. Paying well below your own number is what lets the estimate be wrong and the outcome still be survivable. {{book:the-intelligent-investor|Graham}} called it the **margin of safety**.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "A gap that stayed open",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [62, 55, 49, 58, 52, 60, 57, 66],
+          "compareSeries": [100, 101, 103, 104, 106, 107, 109, 110],
+          "compareLabel": "Estimated value",
+          "xLabels": ["Y1", "Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8"],
+          "xLabel": "Years held",
+          "yLabel": "$ per share"
+        }
+      },
+      "caption": "Eight years, and the quoted price never reached the estimate. Nothing in a market obliges the two lines to meet. Illustration, not data."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Company filings are public. So where is the advantage supposed to come from?",
+      "options": [
+        { "id": "info", "label": "Seeing numbers others cannot see", "correct": false },
+        { "id": "tolerance", "label": "Holding a position that looks wrong for years", "correct": true }
+      ],
+      "explanation": "The filings sit on the same website for everyone. What is scarce is the willingness to own something the market is still marking down, and the balance sheet to survive doing it."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Most participants are not allowed to wait.",
+      "body": "The claimed edge is structural as much as behavioural. Money managers report quarterly and lose clients after two bad years. A position that needs five years before it can be judged is not one most of them can hold, whatever they believe about it.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "butter" }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "Practising it did not prevent this",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [59.1, 37.1, 48.9, 50.7],
+          "labels": ["1973–75", "1987", "1998–2000", "2008–09"],
+          "highlightIndex": 3,
+          "yLabel": "% fall in share price"
+        }
+      },
+      "caption": "{{trader:warren-buffett|Buffett}} listed these four falls in Berkshire's own shares in the 2017 Berkshire letter, to argue against owning stocks with borrowed money."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A share can be cheap because the market is wrong, or cheap because next year's numbers will be worse than this year's. The second one is the [[1]], and no screen separates it from the first in advance.",
+      "wordBank": ["value trap", "margin call", "moat"],
+      "answer": "value trap",
+      "explanation": "Cheapness is a symptom, not a diagnosis. The same low multiple appears on a business the market has misjudged and on one that is quietly shrinking."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "Before treating a low price as somebody else's mistake, value investors describe checking the ordinary reasons it might be correct.",
+      "stickers": [
+        {
+          "label": "Demand is shrinking",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "blush" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Debt comes due first",
+          "art": { "kind": "glyph", "name": "warning", "bg": "butter" },
+          "anchor": { "x": 0.68, "y": 0.46 },
+          "rotation": 5
+        },
+        {
+          "label": "Earnings flatter reality",
+          "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" },
+          "anchor": { "x": 0.34, "y": 0.78 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "The edge is not a settled fact.",
+      "body": "In their 2020 paper The Value Premium, Eugene Fama and Kenneth French found US value premiums much lower after 1991 than before. Their own caveat: monthly returns are noisy enough that they could not rule out the expected premium being unchanged.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "lilac" }
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "You can only estimate what you understand.",
+      "body": "{{trader:warren-buffett|Buffett}} wrote in the 1996 Berkshire letter that the size of an investor's circle of competence matters far less than knowing where its edge is. That is a limit on the method: no estimate, no gap, nothing to act on.",
+      "art": { "kind": "glyph", "name": "compass", "bg": "forest" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What the method asks of you",
+      "summary": "A bet on the gap between price and estimated worth, paid for in years of looking wrong.",
+      "bullets": [
+        "The margin of safety exists so a wrong estimate is still survivable.",
+        "The claimed edge is tolerance and time horizon, not private information.",
+        "Cheap and mispriced are different things, and no screen tells them apart.",
+        "Nothing forces a price to ever agree with an estimate."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
+      "insight": "A gap between price and value is not a promise that it closes. It is a reason to hold an opinion, and time enough to be wrong.",
+      "attribution": { "source": "Value Investing", "detail": "StockIQ strategy guide" }
+    }
+  ]
 }

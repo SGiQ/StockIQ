@@ -174,8 +174,13 @@ export function findCard(
 ): Card | undefined {
   const lesson = getLesson(courseId, lessonId);
   if (lesson) return lesson.cards.find((c) => c.id === cardId);
-  // Book guides address their cards with courseId "book" and the book id.
+  // Guides address their cards with a reserved courseId and the entity id, so
+  // saving and sharing route through the same storage path as lesson cards
+  // rather than needing a parallel one.
   if (courseId === 'book') return booksById.get(lessonId)?.guideCards.find((c) => c.id === cardId);
+  if (courseId === 'strategy') {
+    return strategiesById.get(lessonId)?.guideCards?.find((c) => c.id === cardId);
+  }
   return undefined;
 }
 

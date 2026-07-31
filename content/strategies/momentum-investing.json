@@ -39,5 +39,131 @@
       { "at": 8, "label": "Trend still intact" },
       { "at": 10, "label": "Momentum crash", "emphasis": true }
     ]
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Buying what already went up feels wrong.",
+      "body": "Every instinct says buy low. Momentum ranks the other way — recent strength is the signal. Researchers have documented the pattern across many markets and over long samples. It is also one of the least comfortable things to hold. This guide covers why it might exist, and what it costs.",
+      "art": { "kind": "glyph", "name": "chart-up", "bg": "neon" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Explanation one: news gets priced too slowly.",
+      "body": "A company reports something genuinely new. In theory the price adjusts within a day. The **under-reaction** hypothesis says it does not — attention is limited, analysts revise forecasts in small steps, and holders anchor on the old price. A move that should have happened at once gets stretched over months.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Explanation two: then everyone can see it.",
+      "body": "Once a trend is obvious, a second group buys because it is rising, not because of the news. Analysts raise targets. Funds that screen on strength add it. This is extrapolation, and it can push a price past anything the original news justified. Both explanations are **hypotheses**, not settled findings.",
+      "art": { "kind": "glyph", "name": "people", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock sits at the top of a momentum ranking. What does that ranking tell you about what the business is worth?",
+      "options": [
+        { "id": "strong", "label": "That it is the strongest business", "correct": false },
+        { "id": "nothing", "label": "Nothing — the ranking only measures price", "correct": true }
+      ],
+      "explanation": "Relative strength is computed from price alone, so it carries no estimate of what a business is worth. It can show that a stock has stopped leading, never that it has become expensive. {{trader:stanley-druckenmiller|Stanley Druckenmiller}}, interviewed by Jack Schwager for **The New Market Wizards** (1992), described using technical analysis alongside his macro work. See also {{lesson:reading-a-chart/momentum-indicators|momentum indicators}}."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "The shape of a momentum crash",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [100, 104, 108, 113, 118, 123, 129, 134, 140, 146, 108, 103],
+          "xLabel": "Months",
+          "yLabel": "Index, start = 100",
+          "markers": [
+            { "at": 9, "label": "Nine months of gains" },
+            { "at": 10, "label": "Momentum crash", "emphasis": true }
+          ]
+        }
+      },
+      "caption": "Illustrative, not a real series. Nine months take the index from 100 to 146. Two months take it back to 103, erasing 43 of the 46 points gained. That asymmetry is the shape to remember."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "The reversal is built into the position.",
+      "body": "Momentum holds whatever has risen most and avoids whatever has fallen most. After a long decline the beaten-down names are the fragile ones — heavily indebted, heavily shorted. When the market turns, those rebound hardest and fastest. Momentum is, by construction, on the other side of that.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "blush" }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Momentum has to keep selling what has slowed and buying what has not. That constant replacement means high [[1]], so spreads, commissions and short-term tax rates take a bigger share of the result than in slower approaches.",
+      "wordBank": ["turnover", "leverage", "volatility"],
+      "answer": "turnover",
+      "explanation": "Costs scale with how often you trade. A tendency that looks real in a study of gross prices can be much smaller once spreads, commissions and short-term tax treatment are taken out of it."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The bill arrives all at once.",
+      "body": "The experience is lopsided. Months pass where nothing happens and the discipline feels pointless. Then a few weeks arrive that take back years of it. Recovering from a hole that deep takes a much larger gain than the fall — see {{lesson:risk-and-position-sizing/drawdown-and-recovery|drawdown and recovery}}.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "Momentum is a tendency measured in past data, not a law of markets. Three conditions are repeatedly named as the ones that break it.",
+      "stickers": [
+        {
+          "label": "Chop with no lasting trend",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "A sharp turn in direction",
+          "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Crowding into the same names",
+          "art": { "kind": "glyph", "name": "people", "bg": "butter" },
+          "anchor": { "x": 0.35, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Names attached to it, and what they show.",
+      "body": "{{trader:mark-minervini|Mark Minervini}} won the US Investing Championship stock division in 1997 and again in 2021, verified against brokerage statements in the published standings. Two contest years, not a cycle. {{trader:jesse-livermore|Livermore}}'s momentum legend comes mostly from Edwin Lefèvre's 1923 novel.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "ink" },
+      "refs": ["trader:mark-minervini", "trader:stanley-druckenmiller", "trader:jesse-livermore"]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What momentum actually is",
+      "summary": "Momentum is a documented tendency in price behaviour with a violent tail, not a rule about value and not a promise about the future.",
+      "bullets": [
+        "The proposed causes — slow reaction, then extrapolation — are hypotheses, not proven mechanisms.",
+        "Its results arrive as long calm stretches broken by fast, severe reversals.",
+        "High turnover means costs and short-term tax take a larger share than in slower approaches.",
+        "Chop, sharp turns and crowding are the named conditions where it fails."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "chart-down", "bg": "ink" },
+      "insight": "Momentum asks you to hold what already worked, knowing the stretch when it stops can take back what the years of working built.",
+      "attribution": { "source": "Momentum", "detail": "StockIQ strategy guide" }
+    }
+  ]
 }

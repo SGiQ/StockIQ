@@ -522,6 +522,18 @@ export const StrategySchema = z.object({
   /** THE unlock gate — the strategy stays locked until all are completed. */
   prerequisiteLessons: z.array(LessonPathSchema).min(1),
   illustrativeChart: ChartSpecSchema.optional(),
+  /**
+   * A playable deck, in the same `Card[]` union a lesson uses.
+   *
+   * The rules above are reference material — the shape of the strategy, there
+   * to look up once you already understand it. This is where it is actually
+   * *taught*: why the edge is claimed to exist, what it costs, and the
+   * conditions under which it stops working.
+   *
+   * Optional because a strategy page is complete without one and the unlock
+   * gate does not depend on it, so guides can land one at a time.
+   */
+  guideCards: z.array(CardSchema).min(5).max(15).optional(),
 });
 export type Strategy = z.infer<typeof StrategySchema>;
 

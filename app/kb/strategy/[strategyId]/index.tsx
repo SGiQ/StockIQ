@@ -5,7 +5,7 @@ import { getLessonByPath, getStrategy } from '@/content/registry';
 import type { EntityRef, LessonPath } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { Glyph } from '@/components/art/Glyph';
-import { CardSurface, Chip, RichTextView, Screen, Text } from '@/components/primitives';
+import { CardSurface, Chip, PillButton, RichTextView, Screen, Text } from '@/components/primitives';
 import { BulletBlock, EntityDetail, EntityHeader } from '@/components/kb/EntityScaffold';
 import { RefChips, bookRefs, traderRefs } from '@/components/kb/RefChips';
 import { courseNodeStatuses, useAppStore } from '@/store/slices/useAppStore';
@@ -21,6 +21,7 @@ const TIMEFRAME_LABEL = {
 
 export default function StrategyDetail() {
   const { strategyId } = useLocalSearchParams<{ strategyId: string }>();
+  const router = useRouter();
   const strategy = getStrategy(strategyId);
   const progressMap = useAppStore((s) => s.progress);
 
@@ -72,6 +73,21 @@ export default function StrategyDetail() {
       </View>
 
       <RichTextView value={strategy.thesis} variant="body" color={palette.inkSoft} linksEnabled />
+
+      {/*
+        Directly under the thesis and above the rules: the rules are reference
+        material, the guide is the part that teaches. Absent when a strategy
+        has no deck — `guideCards` is optional, so a page can ship before it.
+      */}
+      {strategy.guideCards?.length ? (
+        <View style={styles.guide}>
+          <PillButton
+            label={`Play the guide · ${strategy.guideCards.length} cards`}
+            variant="dark"
+            onPress={() => router.push(`/kb/strategy/${strategy.id}/guide` as never)}
+          />
+        </View>
+      ) : null}
 
       {strategy.illustrativeChart && (
         <View style={styles.chart}>
@@ -161,6 +177,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  guide: {
+    marginTop: space.sm,
   },
   meta: {
     flexDirection: 'row',

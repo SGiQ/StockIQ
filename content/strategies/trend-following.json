@@ -59,5 +59,150 @@
       { "value": 52.0, "label": "Prior range high" },
       { "value": 48.6, "label": "Prior range low" }
     ]
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "It never tells you where the price is going.",
+      "body": "Every other approach starts with a view: this business is cheap, this economy is turning. Trend following starts by refusing to have one. It reads what price has already done and reacts. Everything strange about the results comes from that refusal.",
+      "art": { "kind": "glyph", "name": "compass", "bg": "ink" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The claimed edge is a shape, not a hit rate.",
+      "body": "Losses are cut at a level fixed before entry, so each one costs about the same. Winners are left alone, so their size is not decided in advance. Measure both in **R** — one R is the amount risked per trade. See {{lesson:risk-and-position-sizing/thinking-in-r|thinking in R}}.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Twenty trades, one that mattered",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [13, 4, 2, 1],
+          "labels": ["-1R", "+1R", "+3R", "+12R"],
+          "highlightIndex": 3,
+          "yLabel": "Number of trades"
+        }
+      },
+      "caption": "Bar height is how many trades landed in each bucket. Thirteen lost 1R, four made 1R, two made 3R, one made 12R. Net **+9R** across twenty trades, from a 35% win rate."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Delete the single 12R trade from that twenty-trade record. What is left?",
+      "options": [
+        { "id": "smaller", "label": "A smaller profit", "correct": false },
+        { "id": "loss", "label": "A loss of 3R", "correct": true }
+      ],
+      "explanation": "Plus 9R minus 12R is **-3R**. The other nineteen trades lost money between them. The whole result sat in one position, and nothing in the rules identified it in advance."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Why large moves are claimed to exist at all.",
+      "body": "The argument is that prices do not move in neat bell curves. Information, capital and forced buying arrive over weeks, not at once, so moves extend further than a normal distribution predicts. A rule that never caps a winner is built to sit through those extensions. The claim is contested."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "The same market, going nowhere",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 48.6, "h": 49.4, "l": 48.2, "c": 49.2 },
+            { "o": 49.2, "h": 50.9, "l": 49.0, "c": 50.6 },
+            { "o": 50.6, "h": 50.8, "l": 49.1, "c": 49.3 },
+            { "o": 49.3, "h": 49.8, "l": 48.4, "c": 48.7 },
+            { "o": 48.7, "h": 50.7, "l": 48.6, "c": 50.5 },
+            { "o": 50.5, "h": 50.9, "l": 48.9, "c": 49.0 },
+            { "o": 49.0, "h": 49.6, "l": 47.9, "c": 48.2 },
+            { "o": 48.2, "h": 50.8, "l": 48.1, "c": 50.4 },
+            { "o": 50.4, "h": 50.6, "l": 48.8, "c": 48.9 },
+            { "o": 48.9, "h": 49.5, "l": 48.0, "c": 48.4 },
+            { "o": 48.4, "h": 50.6, "l": 48.3, "c": 50.3 },
+            { "o": 50.3, "h": 50.5, "l": 48.5, "c": 48.8 }
+          ],
+          "annotations": [
+            { "at": 1, "label": "Signal 1" },
+            { "at": 10, "label": "Signal 4", "emphasis": true }
+          ],
+          "levels": [{ "value": 50.0, "label": "Signal level" }]
+        }
+      },
+      "caption": "Four closes above the signal level in twelve bars. Each one reverses. Price starts at 48.6 and ends at 48.8, and the account is down four small losses. This is **whipsaw**."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A market that crosses the signal level and reverses, again and again, hands a trend system a string of small losses. The name for it is [[1]].",
+      "wordBank": ["whipsaw", "slippage", "drawdown"],
+      "answer": "whipsaw",
+      "explanation": "This is not a flaw in one implementation. Any rule that reacts to a crossing is wrong every time price crosses without following through."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "The arithmetic is the easy part. These are the costs that come with it, and they are what people quit over — not the losses themselves.",
+      "stickers": [
+        {
+          "label": "Wrong on most trades",
+          "art": { "kind": "glyph", "name": "cross", "bg": "blush" },
+          "anchor": { "x": 0.28, "y": 0.18 },
+          "rotation": -7
+        },
+        {
+          "label": "Years, not months, of waiting",
+          "art": { "kind": "glyph", "name": "clock", "bg": "butter" },
+          "anchor": { "x": 0.72, "y": 0.44 },
+          "rotation": 5
+        },
+        {
+          "label": "Your best trade feels like luck",
+          "art": { "kind": "glyph", "name": "star", "bg": "sky" },
+          "anchor": { "x": 0.34, "y": 0.76 },
+          "rotation": -4
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Its practitioners describe the same asymmetry.",
+      "body": "{{trader:paul-tudor-jones|Paul Tudor Jones}} told Jack Schwager in **Market Wizards** (1989) that he looks for trades whose potential gain is several times what he risks. {{trader:stanley-druckenmiller|Stanley Druckenmiller}}, in Schwager's 1992 sequel, described long-run returns as capital preservation plus a few home runs.",
+      "art": { "kind": "glyph", "name": "people", "bg": "mint" }
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "When it stops working, and for how long.",
+      "body": "Sideways markets can last years, and a trend rule bleeds through every one of them. {{trader:jesse-livermore|Jesse Livermore}}, whose rules are still repeated, filed for bankruptcy in 1915 and again in 1934 — see Richard Smitten's 2001 biography. Knowing a rule and following it are different skills.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What this guide taught",
+      "summary": "Trend following trades a distribution, not a forecast. Its cost is being wrong most of the time and waiting through the stretches when nothing trends.",
+      "bullets": [
+        "The claimed edge is asymmetry: fixed small losses, uncapped winners.",
+        "In the twenty-trade example, removing the single largest winner turned +9R into a loss.",
+        "Range-bound markets produce whipsaw — repeated signals that reverse and cost small losses.",
+        "Named practitioners describe the same asymmetry, and one of them went bankrupt twice."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "compass", "bg": "ink" },
+      "insight": "Trend following does not predict. It reacts, loses small most of the time, and depends entirely on the rare trade nobody could identify in advance.",
+      "attribution": { "source": "Trend Following", "detail": "StockIQ strategy guide" }
+    }
+  ]
 }

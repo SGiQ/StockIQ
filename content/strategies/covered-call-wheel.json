@@ -41,5 +41,133 @@
       { "kind": "call", "side": "short", "strike": 55, "premium": 2, "quantity": 1 }
     ],
     "spotRange": [25, 80]
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The money arrives before the risk does.",
+      "body": "Sell an option and cash lands in your account today. The obligation you took on to earn it does not come due for weeks. That gap between payment and consequence is why this trade is easy to describe well and easy to misjudge."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A short put is a promise to buy.",
+      "body": "Sell a put struck at 50 and you have agreed to buy the shares at 50 if the buyer wants to sell them to you. Collect 2 for that promise. Below 50 you are buying something the market now prices lower.",
+      "art": { "kind": "glyph", "name": "handshake", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "A short call is a promise to sell.",
+      "body": "Now you own the shares at 50. Sell a call struck at 55 for 2 and you have agreed to hand them over at 55, however high the stock goes. Your gain stops there. The premium is what you were paid to accept that ceiling."
+    },
+    {
+      "id": "c4",
+      "type": "fill_blank",
+      "body": "Premium is not a gift. It is the price paid to you for accepting an [[1]] you cannot walk away from.",
+      "wordBank": ["obligation", "insurance", "dividend"],
+      "answer": "obligation",
+      "explanation": "Unlike an {{lesson:market-foundations/order-types|order}} you can cancel, an obligation you sold stays until it expires or is exercised. The size of the premium tells you what the market thinks that constraint is worth, not what it will cost you."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "Where the gain stops and the loss does not",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "payoff",
+          "legs": [
+            { "kind": "stock", "side": "long", "strike": 50, "quantity": 1 },
+            { "kind": "call", "side": "short", "strike": 55, "premium": 2, "quantity": 1 }
+          ],
+          "spotRange": [20, 85]
+        }
+      },
+      "caption": "Above 55 the line is flat: your best case is 7 per share, forever. Below 48 you lose. At 20 you are down 28. One side is capped. The other is not."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "You sold the upside and kept the downside.",
+      "body": "That is the trade in one line. Above 55 every further dollar belongs to someone else. Below 50 every dollar of decline is still yours, less the 2 you collected. Marketing describes the premium and rarely draws the rest of the line."
+    },
+    {
+      "id": "c7",
+      "type": "binary_choice",
+      "prompt": "The shares were assigned at 50 and now trade at 20. What did the 2 in premium do?",
+      "options": [
+        { "id": "hedge", "label": "Cushioned the fall, so the loss is small", "correct": false },
+        { "id": "offset", "label": "Reduced a 30-point loss to 28", "correct": true }
+      ],
+      "explanation": "Premium subtracts a fixed amount from a variable loss. It is an offset, not protection. Nothing about selling an option limits how far a stock can fall."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "Eleven wins, one loss",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -28],
+          "labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+          "highlightIndex": 11,
+          "yLabel": "$ per share, per cycle"
+        }
+      },
+      "caption": "Eleven cycles collect 2 each: 22 banked. The twelfth is assigned at 50 with the stock at 20, costing 28. Eleven wins out of twelve, and the total is negative."
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "The costs are not on the payoff diagram. Three of them show up in how the strategy is actually lived, and each one bears on {{lesson:risk-and-position-sizing/position-sizing|position sizing}}.",
+      "stickers": [
+        {
+          "label": "It needs constant attention",
+          "art": { "kind": "glyph", "name": "clock", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "Assignment hands you a faller",
+          "art": { "kind": "glyph", "name": "anchor", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "Winning often invites sizing up",
+          "art": { "kind": "glyph", "name": "ladder", "bg": "lilac" },
+          "anchor": { "x": 0.36, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "This shape has a name, and a history.",
+      "body": "Selling options for premium is called **selling volatility**. Many small gains, then a rare large one against you. Funds built on that shape have collapsed in single weeks. The wheel is a smaller version of the same payoff, and the same {{lesson:risk-and-position-sizing/risk-of-ruin|risk of ruin}} arithmetic applies."
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What the wheel actually trades",
+      "summary": "You are paid a known, capped amount to give up your upside and keep almost all of your downside.",
+      "bullets": [
+        "A short put obliges you to buy; a short call obliges you to sell.",
+        "Premium offsets a fall by a fixed amount. It does not limit one.",
+        "The pattern is many small wins and an occasional large loss.",
+        "A high win rate is a property of the payoff, not evidence of safety."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
+      "insight": "Premium is not income. It is the price someone paid you for your upside, and you still own everything below.",
+      "attribution": { "source": "The Wheel", "detail": "Strategy guide" }
+    }
+  ]
 }

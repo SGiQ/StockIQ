@@ -51,5 +51,140 @@
       { "at": 5, "label": "Stretched below" },
       { "at": 9, "label": "Bounce fails", "emphasis": true }
     ]
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Some of a sharp move is news. The rest is not.",
+      "body": "Forced sellers, margin calls and thin liquidity push price further than the information justifies. Mean reversion is a bet on the part that was never news — that the overshoot gets paid back. Everything else here is about telling the two apart."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The same chart, read backwards.",
+      "body": "{{strategy:trend-following|Trend following}} says a move that has started tends to continue. Mean reversion says a move that has gone too far tends to reverse. One price series, opposite bets. Both cannot be right everywhere, which is why each has markets where it quietly stops working.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "An overshoot and a snapback",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "line",
+          "series": [101, 100, 99, 92, 85, 80, 86, 93, 97, 100, 101],
+          "compareSeries": [100.1, 100.3, 100.2, 99.5, 97.9, 95.9, 94.3, 93.5, 93.3, 93.3, 93.3],
+          "compareLabel": "10-day average",
+          "xLabel": "Trading days",
+          "yLabel": "Price",
+          "markers": [
+            { "at": 5, "label": "17% below average", "emphasis": true },
+            { "at": 7, "label": "Back at the average" }
+          ]
+        }
+      },
+      "caption": "The second line is a {{lesson:reading-a-chart/moving-averages|10-day average}}. Price ran 17% below it in three sessions, then closed the gap in two. While it was happening, nothing on the chart said which way it would end."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A stock falls 20% in three days and you cannot find any news. Mean reversion treats most of that move as which of these?",
+      "options": [
+        { "id": "info", "label": "Information you cannot see yet", "correct": false },
+        { "id": "pressure", "label": "Selling that simply had to happen", "correct": true }
+      ],
+      "explanation": "The bet is that fear, redemptions and margin calls moved price further than the facts did. When it fails, the facts moved first and price was only catching up."
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "Nine wins and one loss",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [2, 2, 2, 2, 2, 2, 2, 2, 2, -18],
+          "labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+          "highlightIndex": 9,
+          "yLabel": "Result per trade (R)"
+        }
+      },
+      "caption": "Nine trades gain 2 and one loses 18. The win rate is 90% and the ten together net zero. {{strategy:trend-following|Trend following}}'s chart is this one upside down: many small losses, one large gain."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "It assumes the mean is still real.",
+      "body": "The method measures distance from an average and reads distance as opportunity. That holds only while the average still describes the thing. In a genuine decline there is no old level to come back to — the average is walking down behind the price.",
+      "art": { "kind": "glyph", "name": "anchor", "bg": "mint" }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A trend rule ends itself: the move stops, the trade is over. A deviation rule does the opposite. The further price falls, the louder it says the opportunity has [[1]].",
+      "wordBank": ["improved", "expired", "narrowed"],
+      "answer": "improved",
+      "explanation": "That is the asymmetry to understand before anything else. The signal grows strongest exactly where the premise is most likely to be dead."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The win rate is the trap.",
+      "body": "Nine snapbacks in a row feel like a skill you acquired. Confidence rises, size follows, patience with a loser grows. The large loss lands when the record looks strongest. Each trade is meant to last days; the damaging ones stop being short.",
+      "art": { "kind": "glyph", "name": "brain", "bg": "blush" }
+    },
+    {
+      "id": "c9",
+      "type": "sticker_reveal",
+      "body": "Three things end the edge. While each one is happening it looks exactly like an ordinary stretch.",
+      "stickers": [
+        {
+          "label": "A repricing, not an overshoot",
+          "art": { "kind": "glyph", "name": "warning", "bg": "butter" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "A market that keeps trending",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "A margin call closing it first",
+          "art": { "kind": "glyph", "name": "bank", "bg": "forest" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "Two practitioners, two warnings.",
+      "body": "{{trader:paul-tudor-jones|Paul Tudor Jones}} told Jack Schwager in **Market Wizards** (1989) that he never averages down a loser — the move this logic invites. {{trader:ray-dalio|Ray Dalio}} dates Bridgewater's written rules to 1982, when a confident call went the other way and nearly ended his firm.",
+      "refs": ["trader:paul-tudor-jones", "trader:ray-dalio"]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What the bet actually is",
+      "summary": "Mean reversion pays often and small, charges rarely and large, and assumes the average is still a real thing.",
+      "bullets": [
+        "The edge is the slice of a move that was panic rather than news.",
+        "It is trend following's opposite bet on the same price series.",
+        "A 90% win rate says nothing about the size of the tenth trade.",
+        "In a structural decline the average follows the price down."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
+      "insight": "A price far from its average is either a mistake about to be corrected or a fact you have not accepted yet. The chart tells you which only afterwards.",
+      "attribution": { "source": "Strategy guide", "detail": "Mean Reversion" }
+    }
+  ]
 }

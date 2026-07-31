@@ -217,6 +217,14 @@ for (const { file, data: book } of books) {
   }
 }
 
+// Strategy guides are the same Card union, so they get the same reference
+// integrity check — a guide is content, not decoration.
+for (const { file, data: strategy } of strategies) {
+  for (const card of strategy.guideCards ?? []) {
+    for (const ref of card.refs ?? []) checkRef(file, ref, at(card, 'refs'));
+  }
+}
+
 /* ------------------------------------------------------------------ *
  * Pass 3 — semantic invariants
  * ------------------------------------------------------------------ */
@@ -348,6 +356,12 @@ for (const { file, data: lesson } of lessons) {
 
 for (const { file, data: book } of books) {
   checkCards(file, book.guideCards, `book "${book.id}"`);
+}
+
+for (const { file, data: strategy } of strategies) {
+  if (strategy.guideCards) {
+    checkCards(file, strategy.guideCards, `strategy "${strategy.id}"`);
+  }
 }
 
 // Prerequisite cycles: a strategy gated behind a lesson that its own
@@ -518,6 +532,7 @@ function lintCards(file: string, cards: Card[]): void {
 
 for (const { file, data } of lessons) lintCards(file, data.cards);
 for (const { file, data } of books) lintCards(file, data.guideCards);
+for (const { file, data } of strategies) if (data.guideCards) lintCards(file, data.guideCards);
 
 // Knowledge-base prose gets the markup lint too, but no word budget.
 function lintRich(file: string, where: string, values: string[]): void {

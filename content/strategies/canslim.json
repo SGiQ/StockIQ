@@ -42,5 +42,148 @@
     "labels": ["Q1", "Q2", "Q3", "Q4"],
     "highlightIndex": 3,
     "yLabel": "Illustrative EPS growth vs year-ago quarter (%)"
-  }
+  },
+  "guideCards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Most methods pick a side. This one refuses.",
+      "body": "Value screens study the business and ignore the chart. Chart methods do the reverse. {{trader:william-oneil|O'Neil}} built CANSLIM to require both at once: the earnings had to be accelerating and the price had to be acting strong before anything happened."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Acceleration signals that something changed.",
+      "body": "A company earning steadily is priced for steadiness. A company whose {{lesson:reading-a-business/revenue-vs-earnings|earnings}} growth is speeding up is doing something the old price did not account for. O'Neil's claim was that the market takes months to finish repricing that, and the screen tries to find that window.",
+      "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Growing versus accelerating",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [20, 25, 35, 56],
+          "labels": ["Q1", "Q2", "Q3", "Q4"],
+          "highlightIndex": 3,
+          "yLabel": "EPS, cents per share"
+        }
+      },
+      "caption": "Four quarters of earnings per share. Each step is larger than the one before: up 25%, then 40%, then 60%. Acceleration is the rate rising, not the number."
+    },
+    {
+      "id": "c4",
+      "type": "sticker_reveal",
+      "body": "Seven letters, two ideas. Some letters ask what the business is doing — earnings, growth, something genuinely new. The rest ask what the stock and the market are doing. CANSLIM only acts when both sides agree.",
+      "stickers": [
+        {
+          "label": "C, A, N: the business changed",
+          "art": { "kind": "glyph", "name": "seed", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -6
+        },
+        {
+          "label": "S, L, I: the stock is bid",
+          "art": { "kind": "glyph", "name": "candle", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.5 },
+          "rotation": 5
+        },
+        {
+          "label": "M: the market allows it",
+          "art": { "kind": "glyph", "name": "compass", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.82 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Why buy something already near its high?",
+      "body": "A base is a stretch where sellers get worked through. When price clears the top of it on heavy {{lesson:reading-a-chart/volume-confirms|volume}}, O'Neil read that as the available supply being absorbed. The uncomfortable part is the price tag: by then the stock already looks expensive."
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "A base, then a breakout",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 49.8, "h": 50, "l": 48, "c": 48.5 },
+            { "o": 48.5, "h": 49, "l": 44, "c": 44.5 },
+            { "o": 44.5, "h": 45.5, "l": 41, "c": 41.5 },
+            { "o": 41.5, "h": 43, "l": 40.5, "c": 42.5 },
+            { "o": 42.5, "h": 44.5, "l": 42, "c": 44 },
+            { "o": 44, "h": 46.5, "l": 43.5, "c": 46 },
+            { "o": 46, "h": 48, "l": 45.5, "c": 47.5 },
+            { "o": 47.5, "h": 49.5, "l": 47, "c": 49 },
+            { "o": 49, "h": 50, "l": 47.5, "c": 48 },
+            { "o": 48, "h": 49, "l": 46.5, "c": 47 },
+            { "o": 47, "h": 48.5, "l": 46.5, "c": 48.5 },
+            { "o": 48.7, "h": 54, "l": 48.5, "c": 53.5 }
+          ],
+          "levels": [{ "value": 50, "label": "Base high" }],
+          "annotations": [{ "at": 11, "label": "Clears the base", "emphasis": true }]
+        }
+      },
+      "caption": "Price falls from 50, bases near 41, and works back. The line at 50 turned it away twice. The last bar clears it. Everything before that bar is waiting."
+    },
+    {
+      "id": "c7",
+      "type": "binary_choice",
+      "prompt": "CANSLIM buys a stock that has just made a new high. Why is that psychologically hard?",
+      "art": { "kind": "glyph", "name": "brain", "bg": "lilac" },
+      "options": [
+        { "id": "missed", "label": "It feels like you already missed it", "correct": true },
+        { "id": "illiquid", "label": "New highs are hard to trade", "correct": false }
+      ],
+      "explanation": "Most people are trained to look for a bargain. Buying what has already run means overriding that instinct on every single entry, not once."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The method is built to be wrong often.",
+      "body": "Most breakouts fail. The discipline answers by cutting quickly, so a normal stretch is a run of small losses waiting on the few positions that work. {{trader:mark-minervini|Minervini}} makes the same argument in **Trade Like a Stock Market Wizard** (2013): win size against loss size decides the result, not hit rate.",
+      "art": { "kind": "glyph", "name": "cross", "bg": "blush" }
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "O'Neil put market direction at the top of the checklist because his own research found that most stocks follow the indexes. By construction, CANSLIM is a [[1]] market method.",
+      "wordBank": ["bull", "bear", "sideways"],
+      "answer": "bull",
+      "explanation": "In choppy or falling markets the setup keeps appearing and keeps failing. The **M** letter is O'Neil's answer to that, and following it can mean months with no positions at all."
+    },
+    {
+      "id": "c10",
+      "type": "concept",
+      "headline": "The rules were reverse-engineered from winners.",
+      "body": "O'Neil's firm assembled price, volume and earnings records for stocks that had already gone up, then looked for what they shared. That finds the traits of survivors. It does not establish that the traits caused the rise, or that they identify the next one.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "lilac" },
+      "refs": ["trader:william-oneil"]
+    },
+    {
+      "id": "c11",
+      "type": "main_idea",
+      "title": "What CANSLIM asks of you",
+      "summary": "The defining idea is agreement between two kinds of evidence. The defining cost is buying high, losing often, and sitting out.",
+      "bullets": [
+        "Earnings acceleration says the business changed; the chart says buyers have noticed.",
+        "Entries happen near new highs, which is where a stock looks most expensive.",
+        "Failed breakouts are common, so the method runs on many small losses.",
+        "The rules came from studying past winners, which flatters any rule."
+      ]
+    },
+    {
+      "id": "c12",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "ink" },
+      "insight": "A checklist built from yesterday's winners describes what worked. Whether it predicts is a separate question, and the checklist cannot answer it.",
+      "attribution": { "source": "CANSLIM", "detail": "Strategy guide" }
+    }
+  ]
 }

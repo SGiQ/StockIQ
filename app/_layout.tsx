@@ -84,7 +84,15 @@ export default function RootLayout() {
           />
           <Stack.Screen name="kb/index" />
           <Stack.Screen name="kb/trader/[traderId]" />
-          <Stack.Screen name="kb/strategy/[strategyId]" />
+          <Stack.Screen name="kb/strategy/[strategyId]/index" />
+          <Stack.Screen
+            name="kb/strategy/[strategyId]/guide"
+            options={{
+              presentation: 'fullScreenModal',
+              animation: 'slide_from_bottom',
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen name="kb/book/[bookId]/index" />
           <Stack.Screen
             name="kb/book/[bookId]/guide"
