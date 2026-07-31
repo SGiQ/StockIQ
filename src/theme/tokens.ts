@@ -7,8 +7,10 @@
  * A token file plus a handful of primitives gives the same consistency with
  * no extra build pipeline and trivial Reanimated interop.
  *
- * Colours are sampled from the Imprint screenshots in
- * docs/reference/imprint-screenshots/.
+ * The palette was sampled from Imprint's app as a visual reference on the
+ * first pass. Those screenshots are not in this repo — they are another
+ * company's copyrighted UI — so the values below are the record. Treat them
+ * as the source of truth rather than re-deriving them from anything external.
  */
 
 export const palette = {

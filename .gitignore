@@ -44,3 +44,6 @@ yarn-error.*
 .env
 .env.local
 .vercel
+
+# Visual reference from other apps — copyrighted, must never be committed.
+docs/reference/

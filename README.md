@@ -75,7 +75,7 @@ scripts/                validate-content · generate-content-index
 tests/fixtures/         broken content used as a validator regression test
 docs/content-authoring.md   GENERATED — the prompt handed to an authoring model
 docs/kb-registry.md     canonical ids, strategy gates, accuracy rules
-docs/reference/         the Imprint screenshots this is modelled on
+docs/deployment.md      Railway sync service · Vercel web · Cloudflare ASK
 ```
 
 ## The four decisions worth knowing
