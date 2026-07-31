@@ -45,9 +45,9 @@
   },
   "scripts": {
     "prestart": "npm run gen:content",
-    "start": "expo start",
+    "start": "expo start --go",
     "android": "expo start --android",
-    "ios": "expo start --ios",
+    "ios": "expo start --go --ios",
     "web": "expo start --web",
     "validate:content": "tsx scripts/validate-content.ts",
     "test:validator": "tsx scripts/validate-content.ts tests/fixtures/broken-content --expect-failure",
@@ -59,7 +59,8 @@
     "preandroid": "npm run gen:content",
     "gen:authoring-prompt": "tsx scripts/generate-authoring-prompt.ts",
     "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
-    "start:clear": "expo start --clear"
+    "start:clear": "expo start --go --clear",
+    "start:dev-client": "expo start --dev-client"
   },
   "private": true
 }
