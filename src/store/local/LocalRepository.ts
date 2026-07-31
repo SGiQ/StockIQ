@@ -13,6 +13,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy } from '@/content/registry';
+import type { LocalRecord } from '../sqlite/SqliteRepository';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { isConsecutive, type DayISO } from '@/lib/dates';
 import {
@@ -29,6 +30,7 @@ import {
   type SavedCard,
   type SavedCardInput,
   type StreakState,
+  type Syncable,
   type SyncStatus,
   type UserProfile,
 } from '../repository';
@@ -40,7 +42,29 @@ const KEYS = {
   liked: 'stockiq:liked:v1',
   reports: 'stockiq:reports:v1',
   streak: 'stockiq:streak:v1',
+  /** Sync bookkeeping — see the note above `syncedStamps`. */
+  synced: 'stockiq:synced:v1',
+  meta: 'stockiq:syncmeta:v1',
 } as const;
+
+/**
+ * Collection names are IDENTICAL to SqliteRepository's on purpose. A record
+ * pushed from the web build and one pushed from the phone have to land in the
+ * same server-side collection, or the same lesson would sync as two records.
+ */
+type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak';
+
+/** Collections holding one object; the rest are id-keyed maps. */
+const SINGLETONS: Partial<Record<Collection, string>> = { profile: 'profile', streak: 'streak' };
+
+const COLLECTION_KEYS: Record<Collection, string> = {
+  profile: KEYS.profile,
+  progress: KEYS.progress,
+  saved: KEYS.saved,
+  liked: KEYS.liked,
+  reports: KEYS.reports,
+  streak: KEYS.streak,
+};
 
 /** Trailing window retained for the streak row; older days are pruned. */
 const ACTIVE_DAYS_WINDOW = 60;
@@ -348,11 +372,162 @@ export class LocalRepository implements Repository {
   }
 
   /* -------------------------------------------------------------- *
-   * Sync — intentionally inert in v1
+   * Sync surface
+   *
+   * Mirrors SqliteRepository's, so SyncingRepository wraps either one. This
+   * is what lets the browser exercise sync, pairing and email sign-in
+   * against the real service — previously web was local-only and the entire
+   * client half of sync could only be tested on a phone.
    * -------------------------------------------------------------- */
 
+  /**
+   * Records the `updatedAt` each record had when it was last acknowledged.
+   *
+   * SqliteRepository sets a `dirty` column on every write. That is not
+   * possible here without touching every write path, because AsyncStorage
+   * stores whole collections rather than rows — so dirtiness is DERIVED
+   * instead: a record is dirty when its current `updatedAt` differs from the
+   * stamp recorded at its last successful push.
+   *
+   * The comparison is `!==`, not `>`. A record edited on another device and
+   * pulled in gets a stamp written at apply time, so equality alone means
+   * "the server has this exact version". Using `>` would leave a record
+   * looking clean if its clock ever went backwards.
+   */
+  private async syncedStamps(): Promise<Record<string, number>> {
+    return this.read<Record<string, number>>(KEYS.synced, () => ({}));
+  }
+
+  private stampKey = (collection: string, id: string) => `${collection}#${id}`;
+
+  /** Every record across every collection, in the shared wire shape. */
+  private async allRecords(): Promise<LocalRecord[]> {
+    const out: LocalRecord[] = [];
+    for (const collection of Object.keys(COLLECTION_KEYS) as Collection[]) {
+      const raw = await this.read<unknown>(COLLECTION_KEYS[collection], () => null);
+      if (!raw) continue;
+
+      const records = SINGLETONS[collection]
+        ? [raw as Syncable]
+        : (Object.values(raw as Record<string, Syncable>) as Syncable[]);
+
+      for (const record of records) {
+        if (!record?.id) continue;
+        out.push({
+          collection,
+          id: record.id,
+          updatedAt: record.updatedAt,
+          deletedAt: record.deletedAt ?? null,
+          payload: record,
+        });
+      }
+    }
+    return out;
+  }
+
+  async listDirty(limit: number): Promise<LocalRecord[]> {
+    const stamps = await this.syncedStamps();
+    return (await this.allRecords())
+      .filter((r) => stamps[this.stampKey(r.collection, r.id)] !== r.updatedAt)
+      .sort((a, b) => a.updatedAt - b.updatedAt)
+      .slice(0, limit);
+  }
+
+  /**
+   * Only stamps records whose `updatedAt` still matches what was pushed.
+   *
+   * Same guard as the SQL `WHERE updated_at = ?`: an edit made while the push
+   * was in flight must stay dirty, or that version would never be sent and
+   * would be silently lost.
+   */
+  async clearDirty(
+    entries: Array<{ collection: string; id: string; updatedAt: number }>,
+  ): Promise<void> {
+    if (!entries.length) return;
+    const stamps = { ...(await this.syncedStamps()) };
+    const current = new Map(
+      (await this.allRecords()).map((r) => [this.stampKey(r.collection, r.id), r.updatedAt]),
+    );
+
+    for (const entry of entries) {
+      const key = this.stampKey(entry.collection, entry.id);
+      if (current.get(key) === entry.updatedAt) stamps[key] = entry.updatedAt;
+    }
+    await this.write(KEYS.synced, stamps);
+  }
+
+  /** Last-write-wins, matching the `WHERE updated_at < excluded` guard. */
+  async applyRemote(records: LocalRecord[]): Promise<number> {
+    if (!records.length) return 0;
+    const stamps = { ...(await this.syncedStamps()) };
+    let applied = 0;
+
+    // Grouped so each collection is read and written once rather than per
+    // record — these are whole-blob writes, so per-record would be O(n²).
+    const byCollection = new Map<Collection, LocalRecord[]>();
+    for (const record of records) {
+      const collection = record.collection as Collection;
+      if (!(collection in COLLECTION_KEYS)) continue;
+      byCollection.set(collection, [...(byCollection.get(collection) ?? []), record]);
+    }
+
+    for (const [collection, incoming] of byCollection) {
+      const key = COLLECTION_KEYS[collection];
+      const singleton = SINGLETONS[collection];
+
+      if (singleton) {
+        const current = await this.read<Syncable | null>(key, () => null);
+        const next = incoming[incoming.length - 1]!;
+        if (!current || current.updatedAt < next.updatedAt) {
+          await this.write(key, next.payload);
+          stamps[this.stampKey(collection, next.id)] = next.updatedAt;
+          applied += 1;
+        }
+        continue;
+      }
+
+      const map = { ...(await this.read<Record<string, Syncable>>(key, () => ({}))) };
+      let changed = false;
+      for (const record of incoming) {
+        const existing = map[record.id];
+        if (existing && existing.updatedAt >= record.updatedAt) continue;
+        map[record.id] = record.payload as Syncable;
+        stamps[this.stampKey(collection, record.id)] = record.updatedAt;
+        changed = true;
+        applied += 1;
+      }
+      if (changed) await this.write(key, map);
+    }
+
+    await this.write(KEYS.synced, stamps);
+    return applied;
+  }
+
+  /** Forgets every stamp, so the next push re-contributes everything. */
+  async markAllDirty(): Promise<number> {
+    const count = (await this.allRecords()).length;
+    await this.write(KEYS.synced, {});
+    return count;
+  }
+
+  async getMeta(key: string): Promise<string | null> {
+    const meta = await this.read<Record<string, string>>(KEYS.meta, () => ({}));
+    return meta[key] ?? null;
+  }
+
+  async setMeta(key: string, value: string): Promise<void> {
+    const meta = { ...(await this.read<Record<string, string>>(KEYS.meta, () => ({}))) };
+    meta[key] = value;
+    await this.write(KEYS.meta, meta);
+  }
+
   sync = {
-    status: async (): Promise<SyncStatus> => ({ lastSyncedAt: null, pending: 0 }),
+    status: async (): Promise<SyncStatus> => ({
+      lastSyncedAt: Number(await this.getMeta('lastSyncedAt')) || null,
+      pending: (await this.listDirty(Number.MAX_SAFE_INTEGER)).length,
+    }),
+    // No-ops here for the same reason as SqliteRepository: this is the LOCAL
+    // store. Talking to a server is SyncingRepository's job.
     push: async (): Promise<void> => {},
     pull: async (): Promise<void> => {},
   };

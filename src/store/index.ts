@@ -17,7 +17,7 @@ import { SYNC_URL, isSyncConfigured } from '@/config';
 import { LocalRepository } from './local/LocalRepository';
 import { SqliteRepository } from './sqlite/SqliteRepository';
 import { SyncClient, type LinkedDevice } from './sync/SyncClient';
-import { SyncingRepository } from './sync/SyncingRepository';
+import { SyncingRepository, type SyncableLocalRepository } from './sync/SyncingRepository';
 import type { Repository } from './repository';
 
 /**
@@ -56,9 +56,17 @@ export interface PairingApi {
 let pairingApi: PairingApi | null = null;
 
 function build(): Repository {
-  if (Platform.OS === 'web') return new LocalRepository();
-
-  const local = new SqliteRepository();
+  /**
+   * SQLite on device, AsyncStorage on web — `expo-sqlite` needs extra bundler
+   * setup for web that is not worth carrying for a non-shipping target.
+   *
+   * Both now implement the same sync surface, so the wrapper below applies to
+   * either. That matters more than it sounds: without it web was local-only,
+   * and the client half of sync — the cycle, pairing, sign-in — could only be
+   * exercised on a phone. It is now testable in a browser.
+   */
+  const local: SyncableLocalRepository =
+    Platform.OS === 'web' ? new LocalRepository() : new SqliteRepository();
 
   // Undeployed is a first-class state, not a broken one. With no sync URL the
   // app is exactly what it was before Phase 6: local-only, fully functional,

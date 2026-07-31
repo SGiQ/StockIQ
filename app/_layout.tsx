@@ -15,7 +15,9 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import { PhoneFrame } from '@/components/PhoneFrame';
 import { useHydrateStores } from '@/store/useHydrateStores';
+import { useSync } from '@/store/useSync';
 import { palette } from '@/theme/tokens';
 
 void SplashScreen.preventAutoHideAsync();
@@ -34,6 +36,10 @@ export default function RootLayout() {
   // ever has to render a loading state for them.
   const storesHydrated = useHydrateStores();
 
+  // Pushes what is dirty and pulls what changed elsewhere. A no-op when no
+  // sync URL is configured, so a local-only build is unaffected.
+  useSync();
+
   const ready = (fontsLoaded || Boolean(fontError)) && storesHydrated;
 
   useEffect(() => {
@@ -44,6 +50,12 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      {/*
+        Wraps everything, so the full-screen player and the modals are bounded
+        by the frame too. Nested inside SafeAreaProvider it would not be —
+        modals render above the navigator and would escape the phone.
+      */}
+      <PhoneFrame>
       <SafeAreaProvider>
         <StatusBar style="dark" />
         <Stack
@@ -84,6 +96,7 @@ export default function RootLayout() {
           />
         </Stack>
       </SafeAreaProvider>
+      </PhoneFrame>
     </GestureHandlerRootView>
   );
 }
