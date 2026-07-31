@@ -26,13 +26,36 @@ import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 const FRAME_WIDTH = 390;
 const FRAME_HEIGHT = 844;
 
+/**
+ * True on a real touchscreen.
+ *
+ * Width alone is the wrong test and shipped a visible bug: the guard was
+ * `width < 430`, and an iPhone Plus / Pro Max reports exactly 430, so the
+ * larger iPhones drew a phone inside a phone — letterboxed, with the app
+ * inset behind a drop shadow. Bumping the number just moves the seam to the
+ * next handset.
+ *
+ * Pointer type asks the question actually being asked: is this a preview on
+ * a desktop, or is it the device? Evaluated once because a device's primary
+ * input does not change mid-session, and guarded for `window` because the
+ * web build is statically exported.
+ */
+const IS_TOUCH_DEVICE =
+  Platform.OS === 'web' &&
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(pointer: coarse)').matches;
+
 export function PhoneFrame({ children }: { children: ReactNode }) {
   const { width, height } = useWindowDimensions();
 
   // Hooks must run unconditionally, so the platform check comes after them.
   if (Platform.OS !== 'web') return <>{children}</>;
 
-  // On a narrow viewport the frame would be a border around nothing useful.
+  // A real phone browser is not a preview — it is the thing being previewed.
+  if (IS_TOUCH_DEVICE) return <>{children}</>;
+
+  // On a narrow desktop window the frame would be a border around nothing.
   if (width < FRAME_WIDTH + 40) return <>{children}</>;
 
   return (
