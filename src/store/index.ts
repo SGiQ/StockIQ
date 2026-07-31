@@ -12,12 +12,10 @@
  * Nothing else in the app changes, because nothing else imports a storage
  * library.
  */
-import { Platform } from 'react-native';
 import { SYNC_URL, isSyncConfigured } from '@/config';
-import { LocalRepository } from './local/LocalRepository';
-import { SqliteRepository } from './sqlite/SqliteRepository';
+import { createLocal } from './createLocal';
 import { SyncClient, type LinkedDevice } from './sync/SyncClient';
-import { SyncingRepository, type SyncableLocalRepository } from './sync/SyncingRepository';
+import { SyncingRepository } from './sync/SyncingRepository';
 import type { Repository } from './repository';
 
 /**
@@ -57,16 +55,15 @@ let pairingApi: PairingApi | null = null;
 
 function build(): Repository {
   /**
-   * SQLite on device, AsyncStorage on web — `expo-sqlite` needs extra bundler
-   * setup for web that is not worth carrying for a non-shipping target.
+   * SQLite on device, AsyncStorage on web — resolved by FILENAME rather than
+   * by a `Platform.OS` branch (see createLocal.ts). A runtime branch still
+   * leaves both implementations in the import graph, and `expo-sqlite` cannot
+   * be bundled for web at all, so the web build simply could not be produced.
    *
-   * Both now implement the same sync surface, so the wrapper below applies to
-   * either. That matters more than it sounds: without it web was local-only,
-   * and the client half of sync — the cycle, pairing, sign-in — could only be
-   * exercised on a phone. It is now testable in a browser.
+   * Both implement the same sync surface, so everything below applies to
+   * either: the sync cycle, pairing and sign-in behave identically.
    */
-  const local: SyncableLocalRepository =
-    Platform.OS === 'web' ? new LocalRepository() : new SqliteRepository();
+  const local = createLocal();
 
   // Undeployed is a first-class state, not a broken one. With no sync URL the
   // app is exactly what it was before Phase 6: local-only, fully functional,
