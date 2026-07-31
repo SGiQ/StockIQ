@@ -11,7 +11,7 @@
   },
   "rewrites": [
     {
-      "source": "/((?!_expo/|assets/|favicon\\.ico).*)",
+      "source": "/((?!_expo/|assets/|speech/|favicon\\.ico).*)",
       "destination": "/index.html"
     }
   ],
@@ -23,6 +23,10 @@
     {
       "source": "/index.html",
       "headers": [{ "key": "cache-control", "value": "no-cache" }]
+    },
+    {
+      "source": "/speech/(.*)",
+      "headers": [{ "key": "cache-control", "value": "public, max-age=31536000, immutable" }]
     }
   ]
 }

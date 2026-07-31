@@ -60,7 +60,8 @@
     "gen:authoring-prompt": "tsx scripts/generate-authoring-prompt.ts",
     "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
     "start:clear": "expo start --go --clear",
-    "start:dev-client": "expo start --dev-client"
+    "start:dev-client": "expo start --dev-client",
+    "gen:speech": "tsx scripts/generate-speech.ts"
   },
   "private": true
 }
