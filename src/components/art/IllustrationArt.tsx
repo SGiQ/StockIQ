@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { Image, Platform, StyleSheet } from 'react-native';
 import Animated, {
   Easing,
   ReduceMotion,
@@ -43,6 +43,20 @@ export function IllustrationArt({
   }));
 
   const uri = Platform.OS === 'web' ? source : `${WEB_ORIGIN}${source}`;
+
+  // Reanimated's web image adapter can leave the generated <img> at its
+  // bootstrap opacity after a static export. Visibility must not depend on an
+  // animation callback, so web uses a plain image while native keeps motion.
+  if (Platform.OS === 'web') {
+    return (
+      <Image
+        source={{ uri }}
+        accessibilityLabel={alt}
+        resizeMode="cover"
+        style={styles.image}
+      />
+    );
+  }
 
   return (
     <Animated.Image
