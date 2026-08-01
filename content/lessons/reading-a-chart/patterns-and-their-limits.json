@@ -31,6 +31,7 @@
       "title": "The most famous shape",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -189,6 +190,7 @@
       "title": "One chart, two stories",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

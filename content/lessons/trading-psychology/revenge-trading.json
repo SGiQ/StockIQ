@@ -49,6 +49,7 @@
       "title": "Bigger stake, smaller account",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [10000, 9800, 9400, 8600, 7000],

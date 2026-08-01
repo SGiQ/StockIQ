@@ -31,6 +31,7 @@
       "title": "One dollar, three margins",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [40, 15, 9],
@@ -82,6 +83,7 @@
       "title": "The direction matters more than the level",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [38, 39, 41, 43, 46],

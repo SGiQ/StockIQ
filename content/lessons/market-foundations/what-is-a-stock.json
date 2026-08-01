@@ -25,6 +25,7 @@
       "title": "Who owns a company",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [45, 34, 21],

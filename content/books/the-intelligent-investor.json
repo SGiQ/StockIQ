@@ -40,6 +40,7 @@
       "title": "The gap you pay for",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [100, 62, 38],
@@ -63,6 +64,7 @@
       "title": "One business, many quotes",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 118, 92, 140, 76, 104, 130],

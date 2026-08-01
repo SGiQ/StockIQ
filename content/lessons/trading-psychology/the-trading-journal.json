@@ -24,6 +24,7 @@
       "title": "One trade, two records",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 103, 98, 96, 104, 111, 108],

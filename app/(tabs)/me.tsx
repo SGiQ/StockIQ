@@ -7,6 +7,7 @@ import { StreakRow } from '@/components/StreakRow';
 import { CardSurface, Screen, SpeakerIcon, Text } from '@/components/primitives';
 import { getLesson, listCourses, listLessonsInCourse } from '@/content/registry';
 import { pairing } from '@/store';
+import { deriveDashboardMetrics } from '@/lib/dashboard';
 import { courseCompletion, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 
@@ -20,21 +21,13 @@ export default function DashboardTab() {
   const unlockedStrategies = useAppStore((s) => s.unlockedStrategies);
   const courses = listCourses();
 
-  const completed = useMemo(
-    () => Object.values(progress).filter((lesson) => lesson.status === 'completed'),
-    [progress],
-  );
-  const starred = useMemo(() => completed.filter((lesson) => lesson.starred).length, [completed]);
   const totalLessons = useMemo(
     () => courses.reduce((sum, course) => sum + listLessonsInCourse(course.id).length, 0),
     [courses],
   );
-  const recent = useMemo(
-    () => [...completed]
-      .filter((lesson) => lesson.completedAt !== null)
-      .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0))
-      .slice(0, 3),
-    [completed],
+  const metrics = useMemo(
+    () => deriveDashboardMetrics(Object.values(progress), totalLessons),
+    [progress, totalLessons],
   );
 
   const narration = `${profile?.narrationVoice ?? 'female'} · ${profile?.narrationSpeed ?? 1}× · ${profile?.narrationEnabled ? 'autoplay on' : 'autoplay off'}`;
@@ -66,7 +59,7 @@ export default function DashboardTab() {
               <Text variant="label" color={palette.mintSoft} uppercase>Learning portfolio</Text>
               <Text variant="display" color={palette.paper}>{`${profile?.totalXp ?? 0} XP`}</Text>
               <Text variant="caption" color={palette.paper}>
-                {`${completed.length} of ${totalLessons} lessons complete`}
+                {`${metrics.completedCount} of ${totalLessons} lessons complete`}
               </Text>
             </View>
           </View>
@@ -74,7 +67,7 @@ export default function DashboardTab() {
             <View
               style={[
                 styles.heroFill,
-                { width: `${totalLessons > 0 ? (completed.length / totalLessons) * 100 : 0}%` },
+                { width: `${metrics.completion * 100}%` },
               ]}
             />
           </View>
@@ -82,7 +75,7 @@ export default function DashboardTab() {
 
         <View style={styles.statsGrid}>
           <StatCard value={streak?.currentStreak ?? 0} label="Day streak" accent={palette.flame} />
-          <StatCard value={starred} label="Starred lessons" accent={palette.violet} />
+          <StatCard value={metrics.starredCount} label="Starred lessons" accent={palette.violet} />
           <StatCard value={saved.length} label="Saved cards" accent={palette.azure} />
           <StatCard value={unlockedStrategies.length} label="Strategies open" accent={palette.emeraldDeep} />
         </View>
@@ -125,11 +118,11 @@ export default function DashboardTab() {
           );
         })}
 
-        {recent.length > 0 ? (
+        {metrics.recent.length > 0 ? (
           <>
             <SectionTitle title="Recently completed" />
             <CardSurface style={styles.listCard}>
-              {recent.map((lesson, index) => (
+              {metrics.recent.map((lesson, index) => (
                 <Pressable
                   key={lesson.id}
                   onPress={() => router.push(`/lesson/${lesson.courseId}/${lesson.lessonId}` as never)}

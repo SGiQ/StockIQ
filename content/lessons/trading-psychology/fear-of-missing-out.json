@@ -43,6 +43,7 @@
       "title": "Where the crowd arrives",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [30, 29, 31, 30, 33, 40, 49, 58, 64, 57, 49, 44],

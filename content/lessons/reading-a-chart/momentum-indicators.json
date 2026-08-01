@@ -29,6 +29,7 @@
       "title": "Eight weeks above 70",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [46, 54, 63, 70, 75, 78, 76, 82, 79, 75, 72],
@@ -99,6 +100,7 @@
       "title": "The average turns one week late",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 100, 100, 106, 112, 118, 124, 118, 109, 100, 94, 91],

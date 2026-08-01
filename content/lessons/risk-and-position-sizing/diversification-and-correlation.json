@@ -36,6 +36,7 @@
       "title": "Two pairs, one market",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [
@@ -160,6 +161,7 @@
       "body": "In calm markets your holdings wander apart. In a panic, people sell what they can, not what they want to. Correlations climb toward +1 and the spread you paid for thins out exactly when you need it.",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [

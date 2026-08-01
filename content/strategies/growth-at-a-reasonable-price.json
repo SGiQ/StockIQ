@@ -60,6 +60,7 @@
       "title": "Two multiples, two growth rates",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [30, 40, 10, 2],
@@ -101,6 +102,7 @@
       "title": "When both halves move at once",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [60, 62, 41, 33],

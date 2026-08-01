@@ -72,6 +72,7 @@
       "title": "One retailer priced at half its peers",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [

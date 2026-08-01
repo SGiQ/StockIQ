@@ -25,6 +25,7 @@
       "title": "Same price gap, opposite size gap",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [60, 15],

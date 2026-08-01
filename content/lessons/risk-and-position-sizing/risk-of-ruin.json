@@ -25,6 +25,7 @@
       "title": "Same average, opposite outcome",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "compounding",
           "principal": 10000,
@@ -58,6 +59,7 @@
       "title": "The odds of a losing run",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [25, 12.5, 6.25, 3.125, 1.5625],
@@ -89,6 +91,7 @@
       "title": "Six losses, two bet sizes",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [17.8, 88.6],

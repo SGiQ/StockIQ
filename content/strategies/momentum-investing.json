@@ -78,6 +78,7 @@
       "title": "The shape of a momentum crash",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 104, 108, 113, 118, 123, 129, 134, 140, 146, 108, 103],

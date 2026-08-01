@@ -62,6 +62,7 @@
       "title": "The same profit, fewer shares",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [

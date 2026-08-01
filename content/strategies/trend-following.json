@@ -81,6 +81,7 @@
       "title": "Twenty trades, one that mattered",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [13, 4, 2, 1],
@@ -113,6 +114,7 @@
       "title": "The same market, going nowhere",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

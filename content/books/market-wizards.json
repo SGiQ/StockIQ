@@ -33,6 +33,7 @@
       "title": "Why they all guard the downside",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [11, 33, 100, 300],
@@ -81,6 +82,7 @@
       "title": "Many small losses, a few large wins",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 97, 94, 91, 128, 124, 120, 117, 168, 160, 155, 212],

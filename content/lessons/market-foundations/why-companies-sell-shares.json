@@ -42,6 +42,7 @@
       "title": "Dilution in one move",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [60, 48],

@@ -58,6 +58,7 @@
       "title": "A ten-bagger, and the years it takes",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 132, 118, 205, 260, 196, 430, 610, 1010],
@@ -85,6 +86,7 @@
       "title": "Five ideas, one that mattered",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [-100, -55, -20, 45, 900],

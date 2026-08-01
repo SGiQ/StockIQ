@@ -73,6 +73,7 @@
       "title": "A thin market, quoted wide",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -145,6 +146,7 @@
       "title": "The cost of trading often",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [

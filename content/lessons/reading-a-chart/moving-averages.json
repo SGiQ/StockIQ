@@ -109,6 +109,7 @@
       "title": "Crossovers in a range",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [52, 48, 51, 47, 52, 49, 53, 48, 51, 47, 52, 49],

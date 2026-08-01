@@ -59,6 +59,7 @@
       "title": "A gap that stayed open",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [62, 55, 49, 58, 52, 60, 57, 66],
@@ -94,6 +95,7 @@
       "title": "Practising it did not prevent this",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [59.1, 37.1, 48.9, 50.7],

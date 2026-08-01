@@ -101,6 +101,7 @@
       "title": "A gap steps over the level",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

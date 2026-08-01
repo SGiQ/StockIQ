@@ -73,6 +73,7 @@
       "title": "An overshoot and a snapback",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [101, 100, 99, 92, 85, 80, 86, 93, 97, 100, 101],
@@ -104,6 +105,7 @@
       "title": "Nine wins and one loss",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [2, 2, 2, 2, 2, 2, 2, 2, 2, -18],

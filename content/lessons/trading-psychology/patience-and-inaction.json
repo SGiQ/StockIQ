@@ -96,6 +96,7 @@
       "title": "Two points a year",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "compounding",
           "principal": 10000,

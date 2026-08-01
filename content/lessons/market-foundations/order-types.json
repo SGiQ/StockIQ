@@ -73,6 +73,7 @@
       "title": "A stop through a gap down",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

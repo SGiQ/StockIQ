@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, SpeakerIcon, Text } from '@/components/primitives';
@@ -22,6 +23,12 @@ export default function NarrationSettings() {
     voice,
   );
   const preview = useNarration(previewSource, false, speed);
+  const [auditionVoice, setAuditionVoice] = useState<AuditionVoice>('cedar');
+  const audition = useNarration(
+    Platform.OS === 'web' ? `/voice-previews/${auditionVoice}.mp3` : null,
+    false,
+    speed,
+  );
 
   return (
     <Screen tone="warm">
@@ -115,6 +122,44 @@ export default function NarrationSettings() {
           />
         </View>
 
+        <CardSurface style={styles.auditionSection}>
+          <View style={styles.sectionText}>
+            <Text variant="label" color={palette.slate} uppercase>
+              Help choose the new male voice
+            </Text>
+            <Text variant="bodySm" color={palette.inkSoft}>
+              Try three replacements for the current narrator. These samples do not change your saved voice.
+            </Text>
+          </View>
+          <View style={styles.auditionChoices} accessibilityRole="radiogroup">
+            {AUDITION_VOICES.map((candidate) => (
+              <Pressable
+                key={candidate.id}
+                onPress={() => {
+                  audition.stop();
+                  setAuditionVoice(candidate.id);
+                }}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: auditionVoice === candidate.id }}
+                accessibilityLabel={`${candidate.label} voice sample`}
+                style={[
+                  styles.auditionChoice,
+                  auditionVoice === candidate.id && styles.auditionChoiceSelected,
+                ]}
+              >
+                <Text variant="label" color={palette.ink}>{candidate.label}</Text>
+                <Text variant="caption" color={palette.slate}>{candidate.note}</Text>
+              </Pressable>
+            ))}
+          </View>
+          <PillButton
+            label={audition.playing ? 'Stop audition' : `Play ${auditionVoice} sample`}
+            variant="ghost"
+            onPress={audition.playing ? audition.stop : audition.play}
+            disabled={!audition.available}
+          />
+        </CardSurface>
+
         <View style={styles.voiceSection}>
           <Text variant="label" color={palette.slate} uppercase>
             Playback speed
@@ -151,6 +196,14 @@ export default function NarrationSettings() {
     </Screen>
   );
 }
+
+type AuditionVoice = 'cedar' | 'ash' | 'echo';
+
+const AUDITION_VOICES: { id: AuditionVoice; label: string; note: string }[] = [
+  { id: 'cedar', label: 'Cedar', note: 'Warm and polished' },
+  { id: 'ash', label: 'Ash', note: 'Clear and conversational' },
+  { id: 'echo', label: 'Echo', note: 'Steady and understated' },
+];
 
 function SpeedChoice({
   value,
@@ -262,6 +315,26 @@ const styles = StyleSheet.create({
   },
   voiceSection: {
     gap: space.sm,
+  },
+  auditionSection: {
+    gap: space.md,
+  },
+  auditionChoices: {
+    gap: space.sm,
+  },
+  auditionChoice: {
+    minHeight: 66,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: palette.hairline,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+    justifyContent: 'center',
+    gap: space.xxs,
+  },
+  auditionChoiceSelected: {
+    borderColor: palette.emeraldDeep,
+    backgroundColor: palette.mintSoft,
   },
   voiceChoices: {
     gap: space.sm,

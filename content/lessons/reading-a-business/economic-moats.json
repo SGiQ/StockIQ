@@ -124,6 +124,7 @@
       "title": "Margins with no defence",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [

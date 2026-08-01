@@ -78,6 +78,7 @@
       "title": "Where the gain stops and the loss does not",
       "art": {
         "kind": "chart",
+        "motion": "focus",
         "spec": {
           "type": "payoff",
           "legs": [
@@ -112,6 +113,7 @@
       "title": "Eleven wins, one loss",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -28],

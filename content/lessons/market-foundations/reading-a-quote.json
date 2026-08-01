@@ -33,6 +33,7 @@
       "title": "One week of Northwind Robotics",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -98,6 +99,7 @@
       "title": "Volume against its average",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [

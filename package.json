@@ -60,9 +60,11 @@
     "preandroid": "npm run gen:content",
     "gen:authoring-prompt": "tsx scripts/generate-authoring-prompt.ts",
     "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
+    "test:unit": "tsx --test tests/profile-migration.test.ts tests/dashboard-metrics.test.ts tests/art-motion.test.ts",
     "start:clear": "expo start --go --clear",
     "start:dev-client": "expo start --dev-client",
     "gen:speech": "tsx scripts/generate-speech.ts",
+    "gen:voice-previews": "tsx scripts/generate-voice-previews.ts",
     "upload:speech": "tsx scripts/upload-speech-r2.ts"
   },
   "private": true

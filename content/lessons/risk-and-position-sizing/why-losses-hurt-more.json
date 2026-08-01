@@ -25,6 +25,7 @@
       "title": "The gain it takes to get back to even",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [11.1, 25, 42.9, 100, 400],

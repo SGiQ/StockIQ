@@ -64,6 +64,7 @@
       "title": "Growing versus accelerating",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [20, 25, 35, 56],
@@ -112,6 +113,7 @@
       "title": "A base, then a breakout",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

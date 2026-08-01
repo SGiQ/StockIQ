@@ -25,6 +25,7 @@
       "title": "Market-cap weighting is top-heavy",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [7, 6, 4, 0.4, 0.05],

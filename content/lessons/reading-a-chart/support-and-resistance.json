@@ -105,6 +105,7 @@
       "title": "The same level, a new job",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

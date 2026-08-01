@@ -81,6 +81,7 @@
       "title": "Six in ten still fails forty times",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [60, 40],

@@ -52,6 +52,7 @@
       "title": "Wider exit, smaller position",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [50, 20, 10, 5],
@@ -83,6 +84,7 @@
       "title": "Turning the dial",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [10, 20, 40, 60],

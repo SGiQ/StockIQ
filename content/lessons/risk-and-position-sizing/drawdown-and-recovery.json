@@ -25,6 +25,7 @@
       "title": "One drawdown, start to finish",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [78, 88, 100, 84, 70, 60, 63, 71, 79, 87, 94, 100],
@@ -96,6 +97,7 @@
       "title": "Same finish, different road",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [100, 130, 150, 95, 75, 100, 122, 138, 150],

@@ -33,6 +33,7 @@
       "title": "Where the money goes",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [

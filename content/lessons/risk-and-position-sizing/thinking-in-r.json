@@ -40,6 +40,7 @@
       "title": "Ten trades, measured in R",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [-1, 2, -1, -1, 3, -1, 1, -1, 2, -1],

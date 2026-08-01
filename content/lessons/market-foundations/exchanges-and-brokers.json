@@ -74,6 +74,7 @@
       "title": "Volume through a trading day",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [21, 13, 10, 8, 9, 13, 26],
