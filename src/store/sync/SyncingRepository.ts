@@ -126,6 +126,7 @@ export class SyncingRepository implements Repository {
    */
   async signInWithApple(identityToken: string, nonce: string): Promise<void> {
     const result = await this.client.signInWithApple(identityToken, nonce);
+    await this.local.setMeta('accountId', result.accountId);
     await this.adoptAccount(result.merge);
   }
 
@@ -138,7 +139,17 @@ export class SyncingRepository implements Repository {
   /** Same landing behaviour as Apple and pairing; only the proof differs. */
   async signInWithEmail(email: string, code: string): Promise<void> {
     const result = await this.client.signInWithEmail(email, code);
+    await this.local.setMeta('accountId', result.accountId);
+    await this.local.setMeta('signedInEmail', email.trim().toLowerCase());
     await this.adoptAccount(result.merge);
+  }
+
+  /**
+   * The device capability is the real credential; this is deliberately only
+   * a durable, user-facing label so a reload still says who signed in.
+   */
+  async getSession(): Promise<{ email: string | null }> {
+    return { email: await this.local.getMeta('signedInEmail') };
   }
 
   /**

@@ -36,7 +36,7 @@ export default function RootLayout() {
 
   // Pushes what is dirty and pulls what changed elsewhere. A no-op when no
   // sync URL is configured, so a local-only build is unaffected.
-  useSync();
+  useSync(storesHydrated);
 
   const ready = (fontsLoaded || Boolean(fontError)) && storesHydrated;
 

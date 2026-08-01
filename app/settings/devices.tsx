@@ -9,6 +9,7 @@ import {
   signInWithApple,
 } from '@/lib/appleAuth';
 import { pairing } from '@/store';
+import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space, type as typeScale } from '@/theme/tokens';
 
 /**
@@ -38,6 +39,7 @@ export default function DevicesSettings() {
   const [email, setEmail] = useState('');
   const [emailCode, setEmailCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
+  const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
 
   useEffect(() => {
     void isAppleSignInAvailable().then(setAppleAvailable);
@@ -47,8 +49,10 @@ export default function DevicesSettings() {
     if (!api) return;
     try {
       const list = await api.listDevices();
+      const session = await api.getSession();
       setDevices(list.devices);
       setThisDevice(list.thisDeviceId);
+      setSignedInEmail(session.email);
     } catch {
       setStatus('Could not reach sync. Your data is safe on this device.');
     }
@@ -124,6 +128,7 @@ export default function DevicesSettings() {
     try {
       const credential = await signInWithApple();
       await api.signInWithApple(credential.identityToken, credential.nonce);
+      await useAppStore.getState().hydrate();
       setStatus('Signed in. This account can now be recovered on a new device.');
       await refresh();
     } catch (error) {
@@ -162,8 +167,10 @@ export default function DevicesSettings() {
     setStatus(null);
     try {
       await api.signInWithEmail(email.trim(), value);
+      await useAppStore.getState().hydrate();
       setEmailCode('');
       setCodeSent(false);
+      setSignedInEmail(email.trim().toLowerCase());
       setStatus('Signed in. This account can now be recovered by email.');
       await refresh();
     } catch (error) {
@@ -207,6 +214,15 @@ export default function DevicesSettings() {
         <Text variant="label" color={palette.slate} uppercase>
           Email sign-in
         </Text>
+        {signedInEmail ? (
+          <View style={styles.signedInBox}>
+            <Text variant="label" color={palette.forestDeep}>Signed in</Text>
+            <Text variant="body" color={palette.ink}>{signedInEmail}</Text>
+            <Text variant="caption" color={palette.inkSoft}>
+              Progress is saved locally and restored from this account after every reload.
+            </Text>
+          </View>
+        ) : null}
         <Text variant="body" color={palette.inkSoft}>
           We send a six-digit code. There is no password to remember, and you
           can type the code on a different device from the one that received it.
@@ -364,6 +380,12 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     paddingVertical: space.lg,
     gap: space.xs,
+  },
+  signedInBox: {
+    backgroundColor: palette.mintSoft,
+    borderRadius: radius.lg,
+    padding: space.md,
+    gap: space.xxs,
   },
   input: {
     borderWidth: 1,

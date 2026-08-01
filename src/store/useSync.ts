@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { repository } from '.';
+import { useAppStore } from './slices/useAppStore';
 
 /**
  * Drives the sync cycle.
@@ -25,7 +26,7 @@ import { repository } from '.';
 /** Ignore a foreground event within this window of the last sync. */
 const MIN_INTERVAL_MS = 30_000;
 
-export function useSync(): { syncNow: () => void } {
+export function useSync(hydrated: boolean): { syncNow: () => void } {
   const lastRun = useRef(0);
   const running = useRef(false);
 
@@ -39,6 +40,7 @@ export function useSync(): { syncNow: () => void } {
 
     void repository.sync
       .push()
+      .then(() => useAppStore.getState().hydrate())
       .catch((error: unknown) => {
         // Offline is the normal steady state on a phone, and a failed sync
         // costs nothing: records stay dirty and go out next time. Surfacing
@@ -51,13 +53,18 @@ export function useSync(): { syncNow: () => void } {
   }, []);
 
   useEffect(() => {
+    // Hydration owns the first read from persistent storage. Starting a
+    // network pull alongside it creates a race where remote records reach the
+    // repository after Zustand has already rendered an empty snapshot.
+    if (!hydrated) return;
+
     run(true);
 
     const subscription = AppState.addEventListener('change', (state) => {
       if (state === 'active') run();
     });
     return () => subscription.remove();
-  }, [run]);
+  }, [hydrated, run]);
 
   return { syncNow: () => run(true) };
 }
