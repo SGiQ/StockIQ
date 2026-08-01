@@ -40,6 +40,7 @@ export default function DevicesSettings() {
   const [emailCode, setEmailCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
   const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
+  const [signedIn, setSignedIn] = useState(false);
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function DevicesSettings() {
       setDevices(list.devices);
       setThisDevice(list.thisDeviceId);
       setSignedInEmail(session.email);
+      setSignedIn(session.signedIn);
     } catch {
       setStatus('Could not reach sync. Your data is safe on this device.');
     }
@@ -172,6 +174,7 @@ export default function DevicesSettings() {
       setEmailCode('');
       setCodeSent(false);
       setSignedInEmail(email.trim().toLowerCase());
+      setSignedIn(true);
       setStatus('Signed in. This account can now be recovered by email.');
       await refresh();
     } catch (error) {
@@ -187,7 +190,7 @@ export default function DevicesSettings() {
     try {
       await api.signOut();
       await useAppStore.getState().hydrate();
-      router.replace('/(onboarding)/welcome' as never);
+      router.replace('/landing' as never);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Could not sign out.');
       setConfirmingSignOut(false);
@@ -225,6 +228,26 @@ export default function DevicesSettings() {
           </Text>
         )}
 
+        <View style={styles.deviceSessionBox}>
+          <Text variant="label" color={palette.forestDeep} uppercase>This browser</Text>
+          <Text variant="body" color={palette.ink}>
+            {signedIn
+              ? `Signed in${signedInEmail ? ` as ${signedInEmail}` : ''}`
+              : 'Local learning profile'}
+          </Text>
+          <Text variant="caption" color={palette.inkSoft}>
+            Signing out clears StockIQ from this browser but does not delete cloud progress or affect other devices.
+          </Text>
+          {confirmingSignOut ? (
+            <View style={styles.signOutActions}>
+              <PillButton label="Sign out on this device" onPress={signOut} disabled={busy} />
+              <PillButton label="Cancel" variant="ghost" onPress={() => setConfirmingSignOut(false)} disabled={busy} />
+            </View>
+          ) : (
+            <PillButton label="Sign out" variant="ghost" onPress={() => setConfirmingSignOut(true)} disabled={busy} />
+          )}
+        </View>
+
         <View style={styles.divider} />
 
         <Text variant="label" color={palette.slate} uppercase>
@@ -237,17 +260,6 @@ export default function DevicesSettings() {
             <Text variant="caption" color={palette.inkSoft}>
               Progress is saved locally and restored from this account after every reload.
             </Text>
-            {confirmingSignOut ? (
-              <View style={styles.signOutActions}>
-                <Text variant="caption" color={palette.inkSoft}>
-                  This clears StockIQ data from this browser. Your cloud account and other devices are not deleted.
-                </Text>
-                <PillButton label="Sign out on this device" onPress={signOut} disabled={busy} />
-                <PillButton label="Cancel" variant="ghost" onPress={() => setConfirmingSignOut(false)} disabled={busy} />
-              </View>
-            ) : (
-              <PillButton label="Sign out" variant="ghost" onPress={() => setConfirmingSignOut(true)} disabled={busy} />
-            )}
           </View>
         ) : null}
         <Text variant="body" color={palette.inkSoft}>
@@ -413,6 +425,14 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     padding: space.md,
     gap: space.xxs,
+  },
+  deviceSessionBox: {
+    backgroundColor: palette.paperWarm,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: palette.hairline,
+    padding: space.md,
+    gap: space.sm,
   },
   signOutActions: { gap: space.sm, marginTop: space.sm },
   input: {

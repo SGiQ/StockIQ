@@ -148,8 +148,15 @@ export class SyncingRepository implements Repository {
    * The device capability is the real credential; this is deliberately only
    * a durable, user-facing label so a reload still says who signed in.
    */
-  async getSession(): Promise<{ email: string | null }> {
-    return { email: await this.local.getMeta('signedInEmail') };
+  async getSession(): Promise<{ signedIn: boolean; email: string | null }> {
+    try {
+      const session = await this.client.getSession();
+      if (session.email) await this.local.setMeta('signedInEmail', session.email);
+      return session;
+    } catch {
+      const email = await this.local.getMeta('signedInEmail');
+      return { signedIn: Boolean(email), email };
+    }
   }
 
   /** Detach remotely first; only clear local data once the server confirms. */

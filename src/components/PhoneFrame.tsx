@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { usePathname } from 'expo-router';
 
 /**
  * Constrains the web build to phone dimensions.
@@ -48,9 +49,13 @@ const IS_TOUCH_DEVICE =
 
 export function PhoneFrame({ children }: { children: ReactNode }) {
   const { width, height } = useWindowDimensions();
+  const pathname = usePathname();
 
   // Hooks must run unconditionally, so the platform check comes after them.
   if (Platform.OS !== 'web') return <>{children}</>;
+
+  // The public landing route is a responsive website, not a phone preview.
+  if (pathname === '/landing') return <>{children}</>;
 
   // A real phone browser is not a preview — it is the thing being previewed.
   if (IS_TOUCH_DEVICE) return <>{children}</>;

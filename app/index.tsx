@@ -11,5 +11,5 @@ import { useAppStore } from '@/store/slices/useAppStore';
  */
 export default function Index() {
   const acknowledged = useAppStore((s) => s.profile?.disclaimerAcknowledgedAt ?? null);
-  return <Redirect href={acknowledged ? '/(tabs)' : '/(onboarding)/welcome'} />;
+  return <Redirect href={acknowledged ? '/(tabs)' : '/landing'} />;
 }

@@ -48,6 +48,10 @@ const bOnly = await call('/v1/sync', B, { body: { since: 0, changes: [rec('l-b',
 check('B does not see A\'s data before pairing',
   !bOnly.body.changes.some((c) => c.id === 'l-a'),
   JSON.stringify(bOnly.body.changes.map((c) => c.id)));
+const anonymousSession = await call('/v1/auth/session', A, { method: 'GET' });
+check('an anonymous account reports no signed-in identity',
+  anonymousSession.body.signedIn === false && anonymousSession.body.email === null,
+  JSON.stringify(anonymousSession.body));
 
 console.log('\n2. B pairs with A using a link code');
 const start = await call('/v1/link/start', A);

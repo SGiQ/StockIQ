@@ -369,3 +369,18 @@ export async function signOutDevice(
   );
   if (result.rowCount === 0) throw new ProtocolError('device is not signed in');
 }
+
+/** Identity summary for a device that is already authorised on this account. */
+export async function getAccountSession(
+  client: PoolClient,
+  accountId: string,
+): Promise<{ signedIn: boolean; email: string | null }> {
+  const { rows } = await client.query<{ provider: IdentityProvider; subject: string }>(
+    'SELECT provider, subject FROM identities WHERE account_id = $1',
+    [accountId],
+  );
+  return {
+    signedIn: rows.length > 0,
+    email: rows.find((row) => row.provider === 'email')?.subject ?? null,
+  };
+}

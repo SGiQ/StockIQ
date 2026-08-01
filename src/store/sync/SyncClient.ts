@@ -34,6 +34,7 @@ export interface SyncTransport {
   requestEmailCode(email: string): Promise<void>;
   signInWithEmail(email: string, code: string): Promise<AppleSignIn>;
   signOut(): Promise<void>;
+  getSession(): Promise<AccountSession>;
   listDevices(): Promise<DeviceList>;
   revokeDevice(deviceId: string): Promise<void>;
 }
@@ -63,6 +64,11 @@ export interface LinkedDevice {
 export interface DeviceList {
   devices: LinkedDevice[];
   thisDeviceId: string;
+}
+
+export interface AccountSession {
+  signedIn: boolean;
+  email: string | null;
 }
 
 /** Requests are bounded so a stalled network cannot wedge a sync forever. */
@@ -156,6 +162,10 @@ export class SyncClient implements SyncTransport {
 
   async signOut(): Promise<void> {
     await this.request('/v1/auth/sign-out', 'POST', {});
+  }
+
+  getSession(): Promise<AccountSession> {
+    return this.request<AccountSession>('/v1/auth/session', 'GET');
   }
 
   listDevices(): Promise<DeviceList> {

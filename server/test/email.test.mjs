@@ -100,6 +100,13 @@ const ok = await call('/v1/auth/email/verify', phone, { email: alice, code: code
 check('sign-in succeeds', ok.status === 200, JSON.stringify(ok.body));
 check('merge is allowed', ok.body.merge === true, JSON.stringify(ok.body));
 
+const signedInSession = await call('/v1/auth/session', phone, undefined, 'GET');
+check('session reports the signed-in email',
+  signedInSession.status === 200
+    && signedInSession.body.signedIn === true
+    && signedInSession.body.email === alice,
+  JSON.stringify(signedInSession.body));
+
 const afterSignIn = await call('/v1/sync', phone, { since: 0, changes: [] });
 check('offline progress survived',
   afterSignIn.body.changes.some((c) => c.id === 'offline-work'),

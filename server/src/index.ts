@@ -30,6 +30,7 @@ import {
 import {
   claimLinkCode,
   createLinkCode,
+  getAccountSession,
   listDevices,
   normaliseCode,
   resolveAccount,
@@ -123,6 +124,7 @@ const server = createServer((req, res) => {
         '/v1/auth/email/request': 'POST',
         '/v1/auth/email/verify': 'POST',
         '/v1/auth/sign-out': 'POST',
+        '/v1/auth/session': 'GET',
         '/v1/devices': 'GET',
         '/v1/telemetry': 'POST',
       };
@@ -217,6 +219,8 @@ const server = createServer((req, res) => {
         } else if (path === '/v1/auth/sign-out') {
           await signOutDevice(client, accountId, deviceId);
           payload = { ok: true };
+        } else if (path === '/v1/auth/session') {
+          payload = await getAccountSession(client, accountId);
         } else if (path === '/v1/link/claim') {
           const body = (await readBody(req)) as { code?: unknown };
           const result = await claimLinkCode(client, deviceId, label, normaliseCode(body.code));
