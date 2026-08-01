@@ -1,7 +1,7 @@
 import type { ColorValue } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-export type TabIconName = 'home' | 'globe' | 'bookmark' | 'heart';
+export type TabIconName = 'home' | 'globe' | 'bookmark' | 'heart' | 'user';
 
 /**
  * The four bottom-tab glyphs, matching the icon set in the Imprint
@@ -51,6 +51,17 @@ export function TabIcon({
           fill={fill}
           {...stroke}
         />
+      )}
+
+      {name === 'user' && (
+        <>
+          <Circle cx="12" cy="8" r="4" fill={fill} {...stroke} />
+          <Path
+            d="M4.5 21a7.5 7.5 0 0115 0"
+            fill={filled ? color : 'none'}
+            {...stroke}
+          />
+        </>
       )}
     </Svg>
   );

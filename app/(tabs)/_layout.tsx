@@ -7,6 +7,7 @@ const TABS: Array<{ name: string; title: string; icon: TabIconName }> = [
   { name: 'explore', title: 'Explore', icon: 'globe' },
   { name: 'saved', title: 'Saved', icon: 'bookmark' },
   { name: 'liked', title: 'Liked', icon: 'heart' },
+  { name: 'me', title: 'Me', icon: 'user' },
 ];
 
 export default function TabsLayout() {
@@ -24,7 +25,7 @@ export default function TabsLayout() {
         },
         tabBarLabelStyle: {
           fontFamily: fontFamily.bodySemi,
-          fontSize: 11,
+          fontSize: 10,
         },
       }}
     >
