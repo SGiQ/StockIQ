@@ -353,8 +353,8 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "female": "0cfbc5431eac7455"
   },
   "lesson:market-foundations/what-is-a-stock#c3": {
-    "male": "e63de7ff33d58d15",
-    "female": "f074b5d97d6285d4"
+    "male": "580f9715f4096ed4",
+    "female": "9e8797acc099b10a"
   },
   "lesson:market-foundations/what-is-a-stock#c4": {
     "male": "bfb12b17e964caf5",

@@ -17,24 +17,14 @@
       "type": "concept",
       "headline": "Ownership is measured in shares.",
       "body": "A company divides itself into shares. If it has issued 1,000 shares and you hold 10, you own **one percent** of the business — today, tomorrow, and every day until you sell.",
-      "art": { "kind": "scene", "name": "share-ledger", "palette": "lilac", "alt": "A company connected to a shareholder ledger that records ownership." }
+      "art": { "kind": "illustration", "source": "/lesson-art/shares-ledger-paper.jpg", "alt": "Equal paper ownership pieces move from a company into the matching slots of a physical shareholder ledger." }
     },
     {
       "id": "c3",
       "type": "diagram",
       "title": "Who owns a company",
-      "art": {
-        "kind": "chart",
-        "motion": "build",
-        "spec": {
-          "type": "bars",
-          "values": [45, 34, 21],
-          "labels": ["Founders", "Funds", "Public"],
-          "highlightIndex": 2,
-          "yLabel": "% of shares"
-        }
-      },
-      "caption": "Every share that exists belongs to someone. Added together, all shareholders own exactly 100% of the company — no more, no less."
+      "art": { "kind": "illustration", "source": "/lesson-art/ownership-breakdown-paper.jpg", "alt": "Three paper ownership groups hold interlocking sections that assemble into one complete company ownership wheel." },
+      "caption": "In this example, founders hold **45%**, funds hold **34%**, and the public holds **21%**. Together, every shareholder owns exactly 100% of the company."
     },
     {
       "id": "c4",
@@ -76,7 +66,7 @@
       "type": "concept",
       "headline": "Owners are not lenders.",
       "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside.",
-      "art": { "kind": "scene", "name": "equity-vs-debt", "palette": "sky", "alt": "An owner accepting business upside and risk beside a lender holding a fixed claim." }
+      "art": { "kind": "illustration", "source": "/lesson-art/owner-vs-lender-paper.jpg", "alt": "A paper-craft owner holds a piece of the business beside branching upside and downside paths, while a lender holds a fixed note and a straight repayment path." }
     },
     {
       "id": "c7",

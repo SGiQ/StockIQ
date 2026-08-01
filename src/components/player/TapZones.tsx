@@ -18,7 +18,11 @@ export function TapZones({ onBack, onForward }: { onBack: () => void; onForward:
   // tech by name. A desktop click focusing one used to draw the browser's
   // giant orange focus rectangle over one or two thirds of the lesson.
   const invisibleFocusStyle = Platform.OS === 'web'
-    ? ({ outlineWidth: 0 } satisfies ViewStyle)
+    ? ({
+        outlineStyle: 'solid',
+        outlineWidth: 0,
+        outlineColor: 'transparent',
+      } satisfies ViewStyle)
     : undefined;
   return (
     <View style={StyleSheet.absoluteFill}>

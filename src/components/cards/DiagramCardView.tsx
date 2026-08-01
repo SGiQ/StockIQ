@@ -17,7 +17,11 @@ export function DiagramCardView({ card, active = true }: { card: DiagramCard; ac
         </Text>
       )}
 
-      <ArtView spec={card.art} aspectRatio={1.15} active={active} />
+      <ArtView
+        spec={card.art}
+        aspectRatio={card.art.kind === 'illustration' ? 1.35 : 1.15}
+        active={active}
+      />
 
       <RichTextView value={card.caption} variant="body" color={palette.inkSoft} align="center" />
     </View>
