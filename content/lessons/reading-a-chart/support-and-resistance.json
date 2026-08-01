@@ -24,6 +24,7 @@
       "title": "Turns near 100 and near 120",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

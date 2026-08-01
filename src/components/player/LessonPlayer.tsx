@@ -428,6 +428,7 @@ export function LessonPlayer({
                     onAnswered={(correct) => onAnswered?.(windowCard.id, correct)}
                     onAdvance={goForward}
                     shakeStyle={isCurrent ? shakeStyle : undefined}
+                    active={isCurrent}
                   />
 
                   {/*

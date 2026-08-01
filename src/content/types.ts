@@ -16,6 +16,7 @@ export type {
   CardId,
   CardType,
   ChartMarker,
+  ChartMotion,
   ChartSpec,
   ChoiceOption,
   ConceptCard,

@@ -15,6 +15,7 @@ export interface BinaryChoiceCardViewProps {
   onAnswered: (correct: boolean) => void;
   /** Registered by the player so a blocked forward tap can shake this card. */
   shakeStyle?: object;
+  active?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export function BinaryChoiceCardView({
   onChange,
   onAnswered,
   shakeStyle,
+  active = true,
 }: BinaryChoiceCardViewProps) {
   const selected = state.kind === 'choice' ? state.selected : undefined;
   const checked = state.kind === 'choice' ? state.checked : false;
@@ -58,7 +60,7 @@ export function BinaryChoiceCardView({
     <View style={styles.container} pointerEvents="box-none">
       <View style={styles.prompt} pointerEvents="none">
         <RichTextView value={card.prompt} variant="h2" color={palette.ink} />
-        {card.art && <ArtView spec={card.art} aspectRatio={1.5} glyphSize={56} />}
+        {card.art && <ArtView spec={card.art} aspectRatio={1.5} glyphSize={56} active={active} />}
       </View>
 
       <Animated.View style={[styles.options, shakeStyle]}>

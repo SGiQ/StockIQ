@@ -16,6 +16,7 @@ export interface CardRendererProps {
   onAdvance: () => void;
   /** Applied to the interactive block when a blocked forward tap shakes it. */
   shakeStyle?: object;
+  active?: boolean;
 }
 
 /**
@@ -32,13 +33,14 @@ export function CardRenderer({
   onAnswered,
   onAdvance,
   shakeStyle,
+  active = true,
 }: CardRendererProps) {
   switch (card.type) {
     case 'concept':
-      return <ConceptCardView card={card} />;
+      return <ConceptCardView card={card} active={active} />;
 
     case 'diagram':
-      return <DiagramCardView card={card} />;
+      return <DiagramCardView card={card} active={active} />;
 
     case 'sticker_reveal':
       return <StickerRevealCardView card={card} state={state} onChange={onStateChange} />;
@@ -51,6 +53,7 @@ export function CardRenderer({
           onChange={onStateChange}
           onAnswered={onAnswered}
           shakeStyle={shakeStyle}
+          active={active}
         />
       );
 

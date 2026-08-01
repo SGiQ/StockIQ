@@ -21,6 +21,19 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
 
   return (
     <G>
+      {[0.25, 0.5, 0.75].map((fraction) => (
+        <Line
+          key={`grid-${fraction}`}
+          x1={PLOT.x0}
+          y1={PLOT.y0 + PLOT.height * fraction}
+          x2={PLOT.x1}
+          y2={PLOT.y0 + PLOT.height * fraction}
+          stroke={theme.ink}
+          strokeWidth={1}
+          strokeDasharray="3 6"
+          opacity={0.14}
+        />
+      ))}
       <Line x1={PLOT.x0} y1={PLOT.y0} x2={PLOT.x0} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
       <Line x1={PLOT.x0} y1={zeroY} x2={PLOT.x1} y2={zeroY} stroke={theme.ink} strokeWidth={2.5} />
 
@@ -47,6 +60,18 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
               stroke={theme.ink}
               strokeWidth={2.5}
             />
+            {values.length <= 4 ? (
+              <SvgText
+                x={centre}
+                y={Math.max(PLOT.y0 + 10, top - 7)}
+                fill={theme.ink}
+                fontSize={10}
+                fontFamily={fontFamily.bodyBold}
+                textAnchor="middle"
+              >
+                {Number.isInteger(value) ? value : value.toFixed(1)}
+              </SvgText>
+            ) : null}
             {label.lines.map((line, lineIndex) => (
               <SvgText
                 key={lineIndex}

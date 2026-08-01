@@ -63,6 +63,19 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
 
   return (
     <G>
+      {[0.25, 0.5, 0.75].map((fraction) => (
+        <Line
+          key={`grid-${fraction}`}
+          x1={PLOT.x0}
+          y1={PLOT.y0 + PLOT.height * fraction}
+          x2={PLOT.x1}
+          y2={PLOT.y0 + PLOT.height * fraction}
+          stroke={theme.ink}
+          strokeWidth={1}
+          strokeDasharray="3 6"
+          opacity={0.14}
+        />
+      ))}
       {/* axes */}
       <Line x1={PLOT.x0} y1={PLOT.y0} x2={PLOT.x0} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
       <Line x1={PLOT.x0} y1={PLOT.y1} x2={PLOT.x1} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
@@ -110,6 +123,21 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+
+      {points.map((point, index) => {
+        const last = index === points.length - 1;
+        return (
+          <Circle
+            key={`point-${index}`}
+            cx={point.x}
+            cy={point.y}
+            r={last ? 4.5 : 2.25}
+            fill={last ? theme.accent : theme.bg}
+            stroke={theme.ink}
+            strokeWidth={last ? 2.25 : 1.5}
+          />
+        );
+      })}
 
       {/* marker guides */}
       {markers?.map((marker, i) => {

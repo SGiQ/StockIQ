@@ -32,6 +32,7 @@
       "title": "Price and its 5-day average",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [44, 46, 45, 48, 50, 53, 52, 55, 58, 57, 54, 51, 49, 46, 44, 45, 43, 41, 42, 40],

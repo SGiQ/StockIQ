@@ -25,6 +25,7 @@
       "title": "The two axes",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [50, 52, 51, 54, 53],
@@ -52,6 +53,7 @@
       "body": "Draw a line and you are usually plotting the closing price — the last trade before the bell. It is clean, and it hides a lot. A day that opened at $50, fell to $44, then closed at $51 looks like a quiet up day.",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [47, 48, 50, 51, 52],
@@ -105,6 +107,7 @@
       "title": "One year, two stories",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "line",
           "series": [40, 45, 51, 56, 60, 55, 50, 47, 45, 53, 62, 72],

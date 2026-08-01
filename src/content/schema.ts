@@ -255,9 +255,17 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
 ]);
 export type ChartSpec = z.infer<typeof ChartSpecSchema>;
 
+export const ChartMotionSchema = z.enum(['draw', 'build', 'sequence', 'focus']);
+export type ChartMotion = z.infer<typeof ChartMotionSchema>;
+
 export const ArtSpecSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('palette'), preset: PalettePresetSchema }),
-  z.object({ kind: z.literal('chart'), spec: ChartSpecSchema }),
+  z.object({
+    kind: z.literal('chart'),
+    spec: ChartSpecSchema,
+    /** Optional, purposeful entrance motion. Omitted charts remain static. */
+    motion: ChartMotionSchema.optional(),
+  }),
   z.object({
     kind: z.literal('glyph'),
     name: GlyphNameSchema,

@@ -2,6 +2,7 @@ import { Image, StyleSheet, View, type ViewStyle } from 'react-native';
 import type { ArtSpec, PalettePreset } from '@/content/types';
 import { artPalettes, radius } from '@/theme/tokens';
 import { ChartView, type ChartTheme } from './charts';
+import { AnimatedChartView } from './charts/AnimatedChartView';
 import { Glyph } from './Glyph';
 
 export interface ArtViewProps {
@@ -11,6 +12,8 @@ export interface ArtViewProps {
   rounded?: boolean;
   style?: ViewStyle;
   glyphSize?: number;
+  /** Current deck card; entrance motion waits until the learner sees it. */
+  active?: boolean;
 }
 
 export const themeFor = (preset: PalettePreset): ChartTheme => {
@@ -31,6 +34,7 @@ export function ArtView({
   rounded = true,
   style,
   glyphSize = 64,
+  active = true,
 }: ArtViewProps) {
   const container: ViewStyle[] = [
     styles.base,
@@ -62,7 +66,16 @@ export function ArtView({
       const p = artPalettes[preset];
       return (
         <View style={[...container, styles.chart, { backgroundColor: p.bg }]}>
-          <ChartView spec={spec.spec} theme={themeFor(preset)} />
+          {spec.motion ? (
+            <AnimatedChartView
+              spec={spec.spec}
+              theme={themeFor(preset)}
+              motion={spec.motion}
+              active={active}
+            />
+          ) : (
+            <ChartView spec={spec.spec} theme={themeFor(preset)} />
+          )}
         </View>
       );
     }

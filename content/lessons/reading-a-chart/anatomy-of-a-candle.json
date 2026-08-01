@@ -25,6 +25,7 @@
       "title": "Anatomy of one candle",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -44,6 +45,7 @@
       "prompt": "A candle opens at 40, closes at 38, and its high is 45. Did buyers finish the session in control?",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -73,6 +75,7 @@
       "title": "A move that could not hold",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [
@@ -133,6 +136,7 @@
       "title": "Five days, one week",
       "art": {
         "kind": "chart",
+        "motion": "sequence",
         "spec": {
           "type": "candles",
           "candles": [

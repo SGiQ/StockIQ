@@ -10,7 +10,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * Nothing here is interactive, so the whole surface stays transparent to
  * touches and the tap zones underneath handle navigation.
  */
-export function ConceptCardView({ card }: { card: ConceptCard }) {
+export function ConceptCardView({ card, active = true }: { card: ConceptCard; active?: boolean }) {
   // Wholly inert: "none" rather than "box-none" so taps fall through to the
   // navigation zones underneath. box-none would leave the text subtree as a
   // hit target on web and silently swallow every forward tap.
@@ -20,7 +20,7 @@ export function ConceptCardView({ card }: { card: ConceptCard }) {
 
       {card.art && (
         <View style={styles.art}>
-          <ArtView spec={card.art} aspectRatio={1.35} glyphSize={72} />
+          <ArtView spec={card.art} aspectRatio={1.35} glyphSize={72} active={active} />
         </View>
       )}
 

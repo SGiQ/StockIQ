@@ -18,6 +18,19 @@ export function CandleChart({ spec, theme }: { spec: CandleSpec; theme: ChartThe
 
   return (
     <G>
+      {[0.25, 0.5, 0.75].map((fraction) => (
+        <Line
+          key={`grid-${fraction}`}
+          x1={PLOT.x0}
+          y1={PLOT.y0 + PLOT.height * fraction}
+          x2={PLOT.x1}
+          y2={PLOT.y0 + PLOT.height * fraction}
+          stroke={theme.ink}
+          strokeWidth={1}
+          strokeDasharray="3 6"
+          opacity={0.16}
+        />
+      ))}
       <Line x1={PLOT.x0} y1={PLOT.y0} x2={PLOT.x0} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
       <Line x1={PLOT.x0} y1={PLOT.y1} x2={PLOT.x1} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
 
