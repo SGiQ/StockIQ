@@ -13,7 +13,7 @@ import {
   useAppStore,
 } from '@/store/slices/useAppStore';
 import { progressId } from '@/store';
-import { palette, radius, space } from '@/theme/tokens';
+import { palette, radius, shadow, space } from '@/theme/tokens';
 
 /**
  * The course path.
@@ -35,6 +35,11 @@ export default function CourseScreen() {
   const statuses = useMemo(() => courseNodeStatuses(progressMap, courseId), [progressMap, courseId]);
   const progress = useMemo(() => courseCompletion(progressMap, courseId), [progressMap, courseId]);
   const earnedXp = useMemo(() => courseEarnedXp(progressMap, courseId), [progressMap, courseId]);
+  const currentLessonId = useMemo(() => {
+    if (!course) return undefined;
+    const ids = course.units.slice().sort((a, b) => a.index - b.index).flatMap((unit) => unit.lessonIds);
+    return ids.find((id) => statuses[id] === 'in_progress') ?? ids.find((id) => statuses[id] === 'available');
+  }, [course, statuses]);
 
   if (!course) {
     return (
@@ -71,15 +76,18 @@ export default function CourseScreen() {
         </Text>
       </View>
 
-      <View style={styles.stats}>
-        <View style={styles.statPill}>
-          <Text variant="label" color={palette.forestDeep} uppercase>
-            {`${earnedXp} / ${course.totalXp} XP`}
-          </Text>
+      <View style={[styles.overview, shadow.card]}>
+        <View style={styles.overviewTop}>
+          <View>
+            <Text variant="label" color={palette.slate} uppercase>Market map</Text>
+            <Text variant="h3">Your route to fluency</Text>
+          </View>
+          <View style={styles.statPill}>
+            <Text variant="label" color={palette.forestDeep} uppercase>{`${earnedXp} / ${course.totalXp} XP`}</Text>
+          </View>
         </View>
-        <Text variant="caption" color={palette.slate}>
-          {`${Math.round(progress * 100)}% complete`}
-        </Text>
+        <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.round(progress * 100)}%` }]} /></View>
+        <Text variant="caption" color={palette.slate}>{`${Math.round(progress * 100)}% of this market explored`}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.path} showsVerticalScrollIndicator={false}>
@@ -88,7 +96,12 @@ export default function CourseScreen() {
           .sort((a, b) => a.index - b.index)
           .map((unit) => (
             <Fragment key={unit.id}>
-              <UnitBanner index={unit.index} name={unit.name} />
+              <UnitBanner
+                index={unit.index}
+                name={unit.name}
+                total={unit.lessonIds.length}
+                completed={unit.lessonIds.filter((id) => statuses[id] === 'completed').length}
+              />
 
               {unit.lessonIds.map((lessonId, i) => {
                 const lesson = getLesson(course.id, lessonId);
@@ -96,17 +109,15 @@ export default function CourseScreen() {
                 const record = progressMap[progressId(course.id, lessonId)];
 
                 return (
-                  <View
-                    key={lessonId}
-                    style={[
-                      styles.nodeRow,
-                      { justifyContent: i % 2 === 0 ? 'flex-start' : 'flex-end' },
-                    ]}
-                  >
+                  <View key={lessonId}>
                     <LessonNode
+                      lessonId={lessonId}
                       title={lesson.title}
                       status={statuses[lessonId] ?? 'locked'}
                       starred={record?.starred}
+                      position={i % 2 === 0 ? 'left' : 'right'}
+                      isCurrent={lessonId === currentLessonId}
+                      isLast={i === unit.lessonIds.length - 1}
                       onPress={() =>
                         router.push(`/lesson/${course.id}/${lessonId}` as never)
                       }
@@ -136,27 +147,20 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
   },
-  stats: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: space.md,
-    paddingHorizontal: space.lg,
-    paddingTop: space.md,
-  },
+  overview: { marginHorizontal: space.lg, marginTop: space.md, padding: space.md, borderRadius: radius.lg, backgroundColor: palette.paper, gap: space.sm },
+  overviewTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
   statPill: {
     backgroundColor: palette.mint,
     borderRadius: radius.pill,
     paddingHorizontal: space.md,
     paddingVertical: space.xs + 2,
   },
+  progressTrack: { height: 8, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: palette.hairline },
+  progressFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.emeraldDeep },
   path: {
     padding: space.lg,
-    gap: space.lg,
+    gap: space.md,
     paddingBottom: space.xxl,
-  },
-  nodeRow: {
-    flexDirection: 'row',
-    paddingHorizontal: space.xl,
   },
   missing: {
     flex: 1,
