@@ -127,6 +127,11 @@ export default function DevicesSettings() {
     }
   };
 
+  const continueAfterSignIn = () => {
+    const acknowledged = useAppStore.getState().profile?.disclaimerAcknowledgedAt;
+    router.replace(acknowledged ? '/(tabs)' : '/(onboarding)/choose-course');
+  };
+
   const appleSignIn = async () => {
     setBusy(true);
     setStatus(null);
@@ -136,6 +141,7 @@ export default function DevicesSettings() {
       await useAppStore.getState().hydrate();
       setStatus('Signed in. This account can now be recovered on a new device.');
       await refresh();
+      continueAfterSignIn();
     } catch (error) {
       // Cancelling is a choice, not a failure — saying "sign-in failed" after
       // someone deliberately backed out is just wrong.
@@ -179,10 +185,7 @@ export default function DevicesSettings() {
       setSignedIn(true);
       setStatus('Signed in. This account can now be recovered by email.');
       await refresh();
-      if (isOnboardingEntry) {
-        const acknowledged = useAppStore.getState().profile?.disclaimerAcknowledgedAt;
-        router.replace(acknowledged ? '/(tabs)' : '/(onboarding)/choose-course');
-      }
+      continueAfterSignIn();
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Could not sign in.');
     } finally {
