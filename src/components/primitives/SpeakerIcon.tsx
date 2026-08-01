@@ -10,7 +10,7 @@ export function SpeakerIcon({
   muted?: boolean;
 }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" accessibilityElementsHidden>
+    <Svg width={size} height={size} viewBox="0 0 24 24">
       <Path
         d="M4 9.5v5h3.5l4.5 3.8V5.7L7.5 9.5H4z"
         stroke={color}

@@ -9,7 +9,11 @@ import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
  * the caller exits, so a clip can never continue over the next card/screen.
  */
 export function useNarration(source: string | null, enabled: boolean) {
-  const player = useAudioPlayer(null, { downloadFirst: true, updateInterval: 250 });
+  // Give Expo the source at construction time. On web, creating an empty
+  // player and calling `replace()` ourselves can race `play()` against a
+  // source-less HTMLAudioElement. The hook resolves remote URLs consistently
+  // on every platform and releases the previous player when the card changes.
+  const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
   const enabledRef = useRef(enabled);
   const startedFromControl = useRef(false);
@@ -37,7 +41,6 @@ export function useNarration(source: string | null, enabled: boolean) {
   useEffect(() => {
     player.pause();
     try {
-      player.replace(source);
       if (enabledRef.current && source) player.play();
     } catch {
       // A bad/missing remote clip is equivalent to no narration for the card.

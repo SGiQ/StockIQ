@@ -38,7 +38,10 @@ export function narrationUrlFor(
 ): string | null {
   const path = narrationPathFor(deckId, cardId, voice);
   if (!path) return null;
-  if (SPEECH_URL) return `${SPEECH_URL}${path}`;
+  // `public/speech` maps to `/speech` in a same-origin web build. The R2
+  // bucket stores that directory's contents at its root, so its public URL is
+  // `/female/hash.mp3` or `/male/hash.mp3`, without the local folder prefix.
+  if (SPEECH_URL) return `${SPEECH_URL}${path.replace(/^\/speech/, '')}`;
   return Platform.OS === 'web' ? path : null;
 }
 
