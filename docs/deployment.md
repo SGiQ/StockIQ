@@ -27,7 +27,7 @@ Undeployed is a supported state, not a broken one.
 | Postgres | Railway | Managed, persistent, and in the same project as the service that talks to it |
 | Sync service (`server/`) | Railway | Colocated with Postgres — a pooled DB connection across providers is latency and a connection-limit problem you do not need |
 | ASK proxy (`workers/ask/`) | Cloudflare Workers | Stateless, edge-close for streaming, and holds the Anthropic key as a secret |
-| Vercel | *unused* | No honest job for it yet. It is the right home for a marketing or download page when there is one — it is not being used as filler |
+| Vercel | Web app, and optionally narration MP3s | Hosts the exported web app at `stockiq-delta.vercel.app`; content-addressed speech can be served from `/speech/` if the generated library is committed |
 
 ---
 
@@ -301,6 +301,50 @@ few. It is a cost guard, not a security control.
 
 ---
 
+## 3. Narration audio
+
+Narration is generated at authoring time, never on a learner's device. The
+OpenAI key stays on the machine doing the render and is not an app or hosting
+environment variable.
+
+```bash
+# No key, no API calls: verifies counts and shows the current estimate.
+npm run gen:speech -- --check
+
+# Paid one-time render. Do this locally; never paste the key into source.
+OPENAI_API_KEY=sk-... npm run gen:speech
+```
+
+The real library is currently 555 narrated cards × two voices = 1,110 MP3s and
+250 MB. Output is content-addressed under `public/speech/`, and the generated
+lookup table is `src/content/speech.generated.ts`; rerunning after a copy edit
+renders only changed clips and prunes orphans.
+
+Audio is hosted in the public Cloudflare R2 bucket `stockiq-narration`, not in
+Git. After generating new or changed clips, upload them with the authenticated
+Wrangler CLI:
+
+```bash
+npm run upload:speech
+```
+
+The uploader uses eight concurrent transfers, retries failures, and applies
+`audio/mpeg` plus a one-year immutable cache policy. The generated manifest is
+small and belongs in Git; `public/speech/` is intentionally ignored.
+
+Both web and native builds use the public R2 origin:
+
+```
+EXPO_PUBLIC_SPEECH_URL=https://pub-a78029218bb0482fb7f3c97f8ac97a57.r2.dev
+```
+
+This value is public and contains no credential. With no value, or when a clip
+is absent from the manifest, lessons remain fully functional and simply hide
+the narration control. The settings screen clearly discloses that voices are
+AI-generated, as required for OpenAI TTS.
+
+---
+
 ## Testing on your iPhone
 
 ### Expo Go — works now, costs nothing, no Apple account
@@ -347,6 +391,7 @@ This is a supported configuration, not a degraded one:
 | Device pairing by code | ✅ |
 | Email sign-in and account recovery | ✅ *(needs Resend)* |
 | ASK tutor | ✅ bring-your-own-key |
+| Narration playback | ✅ after clips are hosted and `EXPO_PUBLIC_SPEECH_URL` is set |
 | Sign in with Apple | ❌ hidden |
 
 The only thing email sign-in needs is Resend on Railway. **You do not need to
@@ -434,21 +479,23 @@ needed, and everything else is already set.
 |---|---|
 | `EXPO_PUBLIC_SYNC_URL` | `https://stockiq-sync-production.up.railway.app` |
 | `EXPO_PUBLIC_ASK_PROXY_URL` | Empty until the Worker is deployed |
+| `EXPO_PUBLIC_SPEECH_URL` | Public origin containing `/speech/`; required by native narration |
 
 Both are inlined into the bundle and readable by anyone with the app, so only
 public URLs belong there.
 
-## 3. Point the app at both
+## 4. Point the app at deployed services
 
 Put the two variables in `.env` (git-ignored) or your EAS build profile:
 
 ```
 EXPO_PUBLIC_SYNC_URL=https://<railway-service>.up.railway.app
 EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.<sub>.workers.dev
+EXPO_PUBLIC_SPEECH_URL=https://stockiq-delta.vercel.app
 ```
 
 `EXPO_PUBLIC_*` values are **inlined into the bundle** and are readable by
-anyone with the app. That is fine for these two — they are public endpoint
+anyone with the app. That is fine for all three — they are public endpoint
 URLs. Never put a key or token in an `EXPO_PUBLIC_` variable; that would undo
 the entire reason the proxy exists.
 

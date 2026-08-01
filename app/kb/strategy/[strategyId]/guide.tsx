@@ -57,6 +57,7 @@ export default function StrategyGuide() {
   return (
     <LessonPlayer
       cards={strategy.guideCards}
+      narrationDeckId={`strategy:${strategy.id}`}
       onExit={exit}
       onComplete={exit}
       isCardSaved={(cardId) =>

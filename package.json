@@ -9,6 +9,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.9",
     "expo-apple-authentication": "~57.0.1",
+    "expo-audio": "~57.0.3",
     "expo-constants": "~57.0.8",
     "expo-crypto": "~57.0.1",
     "expo-dev-client": "~57.0.10",
@@ -61,7 +62,8 @@
     "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
     "start:clear": "expo start --go --clear",
     "start:dev-client": "expo start --dev-client",
-    "gen:speech": "tsx scripts/generate-speech.ts"
+    "gen:speech": "tsx scripts/generate-speech.ts",
+    "upload:speech": "tsx scripts/upload-speech-r2.ts"
   },
   "private": true
 }

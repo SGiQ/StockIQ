@@ -1,10 +1,16 @@
 import { useMemo } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { getLesson, listCourses } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
-import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import {
+  CardSurface,
+  PillButton,
+  Screen,
+  SpeakerIcon,
+  Text,
+} from '@/components/primitives';
 import {
   courseCompletion,
   courseEarnedXp,
@@ -14,10 +20,14 @@ import {
 import { palette, radius, space } from '@/theme/tokens';
 
 export default function LearnTab() {
+  const router = useRouter();
   const courses = listCourses();
   const totalXp = useAppStore((s) => s.profile?.totalXp ?? 0);
   const streak = useAppStore((s) => s.streak);
   const selectedCourseId = useAppStore((s) => s.profile?.selectedCourseId ?? null);
+  const narrationEnabled = useAppStore(
+    (s) => s.profile?.narrationEnabled ?? false,
+  );
 
   // The chosen course leads; the rest follow in authored order.
   const ordered = useMemo(() => {
@@ -33,10 +43,25 @@ export default function LearnTab() {
           <Text variant="h1" color={palette.ink}>
             Keep going.
           </Text>
-          <View style={styles.xp}>
-            <Text variant="label" color={palette.forestDeep} uppercase>
-              {`${totalXp} XP`}
-            </Text>
+          <View style={styles.headerActions}>
+            <Pressable
+              onPress={() => router.push('/settings/narration' as never)}
+              accessibilityRole="button"
+              accessibilityLabel="Narration settings"
+              style={styles.narrationSettings}
+              hitSlop={8}
+            >
+              <SpeakerIcon
+                size={20}
+                color={narrationEnabled ? palette.forestDeep : palette.slate}
+                muted={!narrationEnabled}
+              />
+            </Pressable>
+            <View style={styles.xp}>
+              <Text variant="label" color={palette.forestDeep} uppercase>
+                {`${totalXp} XP`}
+              </Text>
+            </View>
           </View>
         </View>
 
@@ -141,6 +166,19 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     paddingHorizontal: space.md,
     paddingVertical: space.sm,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+  },
+  narrationSettings: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.pill,
+    backgroundColor: palette.paper,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   streakCard: {
     gap: space.md,

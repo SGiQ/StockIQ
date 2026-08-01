@@ -7,6 +7,7 @@ import Animated, {
 import Svg, { Path } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '@/components/primitives';
+import { SpeakerIcon } from '@/components/primitives/SpeakerIcon';
 import { Sparkle } from './AskSheet';
 import { motion, palette, radius, shadow, space } from '@/theme/tokens';
 
@@ -50,7 +51,7 @@ export function ExitButton({ onPress }: { onPress: () => void }) {
 }
 
 /**
- * The floating action pill: report, save, and the gradient ASK button.
+ * The floating action pill: narration, report, save, and gradient ASK.
  *
  * ASK sits outside the pill as its own circle, matching the reference — it is
  * a different kind of action from the two card-level toggles beside it.
@@ -61,16 +62,44 @@ export function ActionPill({
   onToggleSave,
   onReport,
   onAsk,
+  narrationAvailable = false,
+  narrationEnabled = false,
+  narrationPlaying = false,
+  onToggleNarration,
 }: {
   saved: boolean;
   reported: boolean;
   onToggleSave: () => void;
   onReport: () => void;
   onAsk: () => void;
+  narrationAvailable?: boolean;
+  narrationEnabled?: boolean;
+  narrationPlaying?: boolean;
+  onToggleNarration?: () => void;
 }) {
   return (
     <View style={styles.actionRow}>
       <View style={styles.pill}>
+        {narrationAvailable && onToggleNarration ? (
+          <Pressable
+            onPress={onToggleNarration}
+            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel={
+              narrationEnabled
+                ? 'Turn off card narration'
+                : 'Turn on card narration'
+            }
+            accessibilityState={{ selected: narrationEnabled }}
+            style={styles.pillButton}
+          >
+            <SpeakerIcon
+              color={narrationPlaying ? palette.emerald : palette.ink}
+              muted={!narrationEnabled}
+            />
+          </Pressable>
+        ) : null}
+
         <Pressable
           onPress={onReport}
           hitSlop={10}

@@ -114,6 +114,10 @@ export interface UserProfile extends Syncable {
   hasSeenPlayerTutorial: boolean;
   /** Timestamped acknowledgement of the "not financial advice" disclaimer. */
   disclaimerAcknowledgedAt: number | null;
+  /** Read lesson cards aloud when a rendered clip is available. */
+  narrationEnabled: boolean;
+  /** User-facing choice; vendor voice names stay out of persisted data. */
+  narrationVoice: 'male' | 'female';
 }
 
 export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
@@ -204,3 +208,19 @@ export function touch<T extends Syncable>(record: Omit<T, 'updatedAt'> & { updat
 
 /** Live records only — soft-deleted rows stay on disk for sync. */
 export const isLive = <T extends Syncable>(record: T): boolean => record.deletedAt === null;
+
+/**
+ * Applies fields introduced after the first profile schema shipped.
+ *
+ * Profiles are JSON payloads locally and over sync, so an older device can
+ * legitimately hand us a record without newer fields. Normalising at the
+ * repository boundary keeps every consumer on the current shape without
+ * rewriting an otherwise unchanged profile merely because the app launched.
+ */
+export function withProfileDefaults(profile: UserProfile): UserProfile {
+  return {
+    ...profile,
+    narrationEnabled: profile.narrationEnabled ?? false,
+    narrationVoice: profile.narrationVoice ?? 'female',
+  };
+}

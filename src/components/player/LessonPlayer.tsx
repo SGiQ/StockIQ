@@ -12,7 +12,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as haptics from '@/lib/haptics';
 import type { Card, CardId } from '@/content/types';
 import type { ReportReason } from '@/store/repository';
+import { useAppStore } from '@/store/slices/useAppStore';
 import { CardRenderer } from '@/components/cards/CardRenderer';
+import {
+  narrationUrlFor,
+  type NarrationDeckId,
+} from '@/services/narration/speech';
+import { useNarration } from '@/services/narration/useNarration';
 import { motion, palette, space } from '@/theme/tokens';
 import {
   canAdvance,
@@ -41,6 +47,8 @@ export interface LessonPlayerProps {
   onReport?: (cardId: CardId, reason: ReportReason) => void;
   /** ASK needs these for context; omit to hide the ASK button entirely. */
   askContext?: { lessonTitle: string; courseTitle: string };
+  /** Deck-qualified id used to look up pre-rendered card narration. */
+  narrationDeckId?: NarrationDeckId;
   showTutorial?: boolean;
   onTutorialDismissed?: () => void;
 }
@@ -74,6 +82,7 @@ export function LessonPlayer({
   isCardReported,
   onReport,
   askContext,
+  narrationDeckId,
   showTutorial = false,
   onTutorialDismissed,
 }: LessonPlayerProps) {
@@ -131,6 +140,23 @@ export function LessonPlayer({
   const state = states[card.id] ?? initialStateFor(card);
   const atLast = index === cards.length - 1;
 
+  const narrationEnabled = useAppStore(
+    (s) => s.profile?.narrationEnabled ?? false,
+  );
+  const narrationVoice = useAppStore(
+    (s) => s.profile?.narrationVoice ?? 'female',
+  );
+  const setNarrationEnabled = useAppStore((s) => s.setNarrationEnabled);
+  const narrationSource = narrationDeckId
+    ? narrationUrlFor(narrationDeckId, card.id, narrationVoice)
+    : null;
+  const {
+    available: narrationAvailable,
+    playing: narrationPlaying,
+    play: playNarration,
+    stop: stopNarration,
+  } = useNarration(narrationSource, narrationEnabled);
+
   /** Render window of three: previous, current, next. */
   const visible = useMemo(
     () => [index - 1, index, index + 1].filter((i) => i >= 0 && i < cards.length),
@@ -174,11 +200,12 @@ export function LessonPlayer({
       const direction = next > index ? 1 : -1;
       offset.value = direction * width + offset.value;
 
+      stopNarration();
       setIndex(next);
       onCardIndex?.(next);
       relax();
     },
-    [index, offset, onCardIndex, relax, width],
+    [index, offset, onCardIndex, relax, stopNarration, width],
   );
 
   const refuse = useCallback(() => {
@@ -210,11 +237,23 @@ export function LessonPlayer({
       return;
     }
     if (atLast) {
+      stopNarration();
       onComplete();
       return;
     }
     settle(index + 1);
-  }, [atLast, card, dismissTutorial, index, onComplete, refuse, settle, state, tutorialVisible]);
+  }, [
+    atLast,
+    card,
+    dismissTutorial,
+    index,
+    onComplete,
+    refuse,
+    settle,
+    state,
+    stopNarration,
+    tutorialVisible,
+  ]);
 
   const goBack = useCallback(() => {
     if (tutorialVisible) {
@@ -293,6 +332,24 @@ export function LessonPlayer({
   const saved = isCardSaved?.(card.id) ?? false;
   const reported = isCardReported?.(card.id) ?? false;
 
+  const exit = useCallback(() => {
+    stopNarration();
+    onExit();
+  }, [onExit, stopNarration]);
+
+  const toggleNarration = useCallback(() => {
+    if (!narrationAvailable) return;
+    if (narrationEnabled) stopNarration();
+    else playNarration();
+    void setNarrationEnabled(!narrationEnabled);
+  }, [
+    narrationAvailable,
+    narrationEnabled,
+    playNarration,
+    setNarrationEnabled,
+    stopNarration,
+  ]);
+
   return (
     // Measured here rather than on the stage: GestureDetector does not
     // forward onLayout to its child. The root has no horizontal padding, so
@@ -310,7 +367,7 @@ export function LessonPlayer({
       }}
     >
       <View style={[styles.header, { paddingTop: insets.top + space.sm }]}>
-        <ExitButton onPress={onExit} />
+        <ExitButton onPress={exit} />
         <ProgressBar current={index} total={cards.length} />
         <CardCounter current={index} total={cards.length} />
       </View>
@@ -392,6 +449,10 @@ export function LessonPlayer({
           onToggleSave={() => onToggleSave?.(card.id)}
           onReport={() => setReportOpen(true)}
           onAsk={() => setAskOpen(true)}
+          narrationAvailable={narrationAvailable}
+          narrationEnabled={narrationEnabled}
+          narrationPlaying={narrationPlaying}
+          onToggleNarration={toggleNarration}
         />
       </View>
 

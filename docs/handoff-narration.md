@@ -3,9 +3,10 @@
 **Date:** 2026-07-31
 **Feature:** Read-aloud narration on every lesson card, Imprint-style. Male/female
 voice choice, toggle on/off. Voices generated with OpenAI TTS.
-**Status:** ~40% done. Text extraction + generation script complete and verified.
-Client playback, profile prefs, player wiring, and settings UI still to build.
-Nothing committed yet.
+**Status:** Client and hosting implementation complete on 2026-07-31. Text
+extraction, generation, migrated/synced preferences, Expo Audio playback,
+player wiring, and reachable settings UI are implemented. All 1,110 clips were
+rendered and uploaded to the public `stockiq-narration` Cloudflare R2 bucket.
 
 ---
 
@@ -28,7 +29,7 @@ Nothing committed yet.
 - 555 speakable cards across lessons + book guides + strategy guides
 - 1110 clips (both voices), ~231k chars total
 - **~$2.78 one-time** for the whole library in both voices (`--check` confirmed)
-- ~138 min audio per voice, ~110KB/card, ~48MB/voice, **~97MB both**
+- **250 MB measured on disk for both voices**
 
 ---
 
@@ -72,9 +73,9 @@ Nothing committed yet.
 
 ---
 
-## What's LEFT (tasks #62–#65)
+## Client tasks #62–#65 — complete
 
-### #62 — Narration prefs on the profile (IN PROGRESS, nothing written yet)
+### #62 — Narration prefs on the profile (DONE)
 Add to `UserProfile` (`src/store/repository.ts:111`):
 ```ts
 narrationEnabled: boolean;      // default false — off until audio exists
@@ -92,7 +93,7 @@ narrationVoice: 'male' | 'female';  // default 'female'
   profile as a JSON blob in a column (verify), in which case spreading over
   `defaultProfile()` on read is the fix.
 
-### #63 — Playback service on `expo-audio` (NOT `expo-av`)
+### #63 — Playback service on `expo-audio` (DONE)
 - `npx expo install expo-audio` (SDK 57 — expo-av is superseded).
 - Confirmed API: `useAudioPlayer(source, {downloadFirst:true})`,
   `useAudioPlayerStatus(player)` → `.playing` / `.didJustFinish`; methods
@@ -106,7 +107,7 @@ narrationVoice: 'male' | 'female';  // default 'female'
   web build can't prove native audio. Flag as unverified on device (consistent with
   the standing "nothing has run on real iOS hardware" gap).
 
-### #64 — Wire into `LessonPlayer` + in-player mute
+### #64 — Wire into `LessonPlayer` + in-player mute (DONE)
 - `src/components/player/LessonPlayer.tsx`. Speak current card when enabled; stop on
   advance/back/exit. Card key must match the manifest's deck-qualified scheme — the
   player needs to know its deck id (lesson vs book vs strategy). Check what the player
@@ -116,7 +117,7 @@ narrationVoice: 'male' | 'female';  // default 'female'
   documented history of gesture/overflow bugs — see recent commits `4ffce5f`,
   `c0d47e7`). Verify by driving it, not by reasoning.
 
-### #65 — Settings UI + end-to-end verify
+### #65 — Settings UI + end-to-end verify (CLIENT DONE; REAL AUDIO PENDING)
 - Narration on/off + male/female picker. Settings screens live in `app/settings/`
   (`ask-key.tsx`, `devices.tsx` as patterns). May also want it reachable from
   onboarding, but not required.
@@ -141,7 +142,7 @@ narrationVoice: 'male' | 'female';  // default 'female'
 - `AGENTS.md`: read the exact SDK 57 docs before writing Expo code. Already did for
   expo-audio + OpenAI TTS (notes above).
 
-## Current git state
+## State when the original handoff was written (historical)
 
 - Branch `main`, HEAD `c0d47e7`, clean history (screenshots purged).
 - **Uncommitted:** `M package.json` (gen:speech script), `M vercel.json` (speech
@@ -150,10 +151,9 @@ narrationVoice: 'male' | 'female';  // default 'female'
   `public/speech/` don't exist yet (never ran real generation — no key used).
 - Live site: https://stockiq-delta.vercel.app (does not yet have narration).
 
-## First thing to do on resume
+## Remaining owner steps
 
-1. Get an `OPENAI_API_KEY` from the user (they run `OPENAI_API_KEY=sk-... npm run
-   gen:speech` themselves — you never handle the key). Or continue building the client
-   against a couple of hand-made test clips so playback is testable without the key.
-2. Resolve the migration read-path for #62, then proceed #62→#65 in order.
-3. Before committing anything, settle the 97MB hosting decision with the user.
+1. Listen to representative clips from all seven card types in both voices.
+2. After future content edits, run `npm run gen:speech`, then
+   `npm run upload:speech`, and commit the regenerated manifest.
+3. Verify native audio on real iOS hardware when native testing resumes.

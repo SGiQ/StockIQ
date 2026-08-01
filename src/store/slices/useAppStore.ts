@@ -76,6 +76,8 @@ interface AppState {
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
   selectCourse: (courseId: CourseId) => Promise<void>;
+  setNarrationEnabled: (enabled: boolean) => Promise<void>;
+  setNarrationVoice: (voice: UserProfile['narrationVoice']) => Promise<void>;
   resetAll: () => Promise<void>;
 }
 
@@ -254,6 +256,14 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   selectCourse: async (courseId) => {
     set({ profile: await repository.profile.update({ selectedCourseId: courseId }) });
+  },
+
+  setNarrationEnabled: async (enabled) => {
+    set({ profile: await repository.profile.update({ narrationEnabled: enabled }) });
+  },
+
+  setNarrationVoice: async (voice) => {
+    set({ profile: await repository.profile.update({ narrationVoice: voice }) });
   },
 
   resetAll: async () => {

@@ -49,6 +49,7 @@ export default function BookGuide() {
   return (
     <LessonPlayer
       cards={book.guideCards}
+      narrationDeckId={`book:${book.id}`}
       onExit={exit}
       onComplete={exit}
       isCardSaved={(cardId) =>

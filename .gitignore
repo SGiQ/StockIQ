@@ -47,3 +47,6 @@ yarn-error.*
 
 # Visual reference from other apps — copyrighted, must never be committed.
 docs/reference/
+
+# Generated narration is deployed to Cloudflare R2, not stored in Git.
+/public/speech/

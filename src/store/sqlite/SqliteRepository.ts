@@ -35,6 +35,7 @@ import {
   type SyncStatus,
   type Syncable,
   type UserProfile,
+  withProfileDefaults,
 } from '../repository';
 
 const DB_NAME = 'stockiq.db';
@@ -84,6 +85,8 @@ function defaultProfile(): UserProfile {
     selectedCourseId: null,
     hasSeenPlayerTutorial: false,
     disclaimerAcknowledgedAt: null,
+    narrationEnabled: false,
+    narrationVoice: 'female',
   };
 }
 
@@ -249,7 +252,9 @@ export class SqliteRepository implements Repository {
 
   profile = {
     get: async (): Promise<UserProfile> =>
-      (await this.one<UserProfile>('profile', 'profile')) ?? defaultProfile(),
+      withProfileDefaults(
+        (await this.one<UserProfile>('profile', 'profile')) ?? defaultProfile(),
+      ),
 
     update: async (patch: ProfilePatch): Promise<UserProfile> => {
       const current = await this.profile.get();

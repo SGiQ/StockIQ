@@ -78,6 +78,7 @@ export default function LessonScreen() {
   return (
     <LessonPlayer
       cards={lesson.cards}
+      narrationDeckId={`lesson:${courseId}/${lessonId}`}
       onExit={exit}
       onComplete={handleComplete}
       onCardIndex={(index) => void recordCardIndex(courseId, lessonId, index)}

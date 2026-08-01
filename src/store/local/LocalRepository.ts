@@ -33,6 +33,7 @@ import {
   type Syncable,
   type SyncStatus,
   type UserProfile,
+  withProfileDefaults,
 } from '../repository';
 
 const KEYS = {
@@ -80,6 +81,8 @@ function defaultProfile(): UserProfile {
     selectedCourseId: null,
     hasSeenPlayerTutorial: false,
     disclaimerAcknowledgedAt: null,
+    narrationEnabled: false,
+    narrationVoice: 'female',
   };
 }
 
@@ -129,10 +132,11 @@ export class LocalRepository implements Repository {
    * -------------------------------------------------------------- */
 
   profile = {
-    get: async (): Promise<UserProfile> => this.read(KEYS.profile, defaultProfile),
+    get: async (): Promise<UserProfile> =>
+      withProfileDefaults(await this.read(KEYS.profile, defaultProfile)),
 
     update: async (patch: ProfilePatch): Promise<UserProfile> => {
-      const current = await this.read(KEYS.profile, defaultProfile);
+      const current = await this.profile.get();
       return this.write(KEYS.profile, { ...current, ...patch, updatedAt: now() });
     },
   };

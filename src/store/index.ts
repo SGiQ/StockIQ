@@ -102,3 +102,4 @@ export type {
   UserProfile,
 } from './repository';
 export { progressId, reportId, savedCardId, REPORT_REASONS } from './repository';
+export { withProfileDefaults } from './repository';

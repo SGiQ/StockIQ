@@ -15,6 +15,11 @@ Cloudflare Worker that keeps the Anthropic key off the device. Devices pair
 with a short code, and an account can be secured with Sign in with Apple or a
 passwordless email code, so it survives a lost phone.
 
+Read-aloud narration is wired through every lesson, book guide, and strategy
+guide with synced on/off and male/female preferences. The 1,110 static OpenAI
+TTS clips still need the one-time credentialed render and a final hosting
+decision before narration appears in a release build.
+
 **The sync service is live** at `stockiq-sync-production.up.railway.app`, with
 the protocol, pairing and client-cycle suites passing against it, and
 **passwordless email sign-in is delivering** through Resend from
@@ -52,6 +57,9 @@ error. See [docs/deployment.md](docs/deployment.md).
 | `npm run test:validator` | Assert the validator still catches a deliberately broken fixture |
 | `npm run gen:content` | Validate, then regenerate `src/content/index.generated.ts` |
 | `npm run gen:authoring-prompt` | Regenerate `docs/content-authoring.md` from the schema |
+| `npm run gen:speech -- --check` | Count narration clips and estimate the render without making API calls |
+| `OPENAI_API_KEY=… npm run gen:speech` | Render missing content-addressed narration clips and write the manifest |
+| `npm run upload:speech` | Upload generated narration clips to the public Cloudflare R2 bucket |
 | `npm run new:lesson -- <courseId> <lessonId> "Title"` | Scaffold a valid 10-card lesson stub |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run test:sync-cycle` | Drive the real sync cycle and pairing against a running sync service |
@@ -230,5 +238,9 @@ already just numbers.
   abandons the device identity rather than deleting remote data. A deletion
   path is required before this holds anyone's data but your own.
 - **No payments.** Deliberately deferred until the app is proven.
+- **Narration code is complete, but the audio library is not rendered.** The
+  current manifest is intentionally empty because no OpenAI key is configured.
+  The full render is 1,110 clips and roughly 97 MB; decide whether those files
+  live in git/Vercel or object storage before generating and committing them.
 
 The full plan lives at `~/.claude/plans/i-want-to-create-witty-mccarthy.md`.

@@ -23,5 +23,12 @@ export const SYNC_URL = trim(process.env.EXPO_PUBLIC_SYNC_URL);
 /** Cloudflare Worker ASK proxy, e.g. https://stockiq-ask.<sub>.workers.dev */
 export const ASK_PROXY_URL = trim(process.env.EXPO_PUBLIC_ASK_PROXY_URL);
 
+/**
+ * Public origin serving generated narration, without a trailing slash.
+ * Web uses its own origin; native needs this because `public/` belongs to the
+ * web deployment rather than the native bundle.
+ */
+export const SPEECH_URL = trim(process.env.EXPO_PUBLIC_SPEECH_URL);
+
 export const isSyncConfigured = (): boolean => SYNC_URL.length > 0;
 export const isAskProxyConfigured = (): boolean => ASK_PROXY_URL.length > 0;

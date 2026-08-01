@@ -94,6 +94,7 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen name="kb/book/[bookId]/index" />
+          <Stack.Screen name="settings/narration" />
           <Stack.Screen
             name="kb/book/[bookId]/guide"
             options={{
