@@ -47,7 +47,7 @@ export default function Welcome() {
           <PillButton
             label="Sign in to continue"
             variant="dark"
-            onPress={() => router.push('/settings/devices?entry=onboarding' as never)}
+            onPress={() => router.push('/sign-in')}
           />
         </View>
       </View>

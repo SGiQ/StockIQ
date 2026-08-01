@@ -65,6 +65,7 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" />
           <Stack.Screen name="landing" />
+          <Stack.Screen name="sign-in" />
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="course/[courseId]" />

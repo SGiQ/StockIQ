@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import {
@@ -21,8 +21,6 @@ import { palette, radius, space, type as typeScale } from '@/theme/tokens';
  */
 export default function DevicesSettings() {
   const router = useRouter();
-  const { entry: entryPoint } = useLocalSearchParams<{ entry?: string }>();
-  const isOnboardingEntry = entryPoint === 'onboarding';
   // Captured locally: TypeScript will not carry a narrowing of an imported
   // binding into the callbacks below, and an optional capability is exactly
   // the case where that matters.
@@ -38,9 +36,6 @@ export default function DevicesSettings() {
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailCode, setEmailCode] = useState('');
-  const [codeSent, setCodeSent] = useState(false);
   const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
   const [signedIn, setSignedIn] = useState(false);
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
@@ -152,47 +147,6 @@ export default function DevicesSettings() {
     }
   };
 
-  const sendEmailCode = async () => {
-    const value = email.trim();
-    if (!value) return;
-    setBusy(true);
-    setStatus(null);
-    try {
-      await api.requestEmailCode(value);
-      setCodeSent(true);
-      // Worded so it is true whether or not that address has an account. The
-      // server answers identically either way, and saying "we found your
-      // account" here would leak exactly what it withholds.
-      setStatus(`If ${value} can receive mail, a code is on its way.`);
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Could not send a code.');
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const verifyEmailCode = async () => {
-    const value = emailCode.trim();
-    if (!value) return;
-    setBusy(true);
-    setStatus(null);
-    try {
-      await api.signInWithEmail(email.trim(), value);
-      await useAppStore.getState().hydrate();
-      setEmailCode('');
-      setCodeSent(false);
-      setSignedInEmail(email.trim().toLowerCase());
-      setSignedIn(true);
-      setStatus('Signed in. This account can now be recovered by email.');
-      await refresh();
-      continueAfterSignIn();
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Could not sign in.');
-    } finally {
-      setBusy(false);
-    }
-  };
-
   const signOut = async () => {
     setBusy(true);
     setStatus(null);
@@ -237,7 +191,7 @@ export default function DevicesSettings() {
           </Text>
         )}
 
-        {!isOnboardingEntry ? <View style={styles.deviceSessionBox}>
+        <View style={styles.deviceSessionBox}>
           <Text variant="label" color={palette.forestDeep} uppercase>This browser</Text>
           <Text variant="body" color={palette.ink}>
             {signedIn
@@ -255,9 +209,9 @@ export default function DevicesSettings() {
           ) : (
             <PillButton label="Sign out" variant="ghost" onPress={() => setConfirmingSignOut(true)} disabled={busy} />
           )}
-        </View> : null}
+        </View>
 
-        {!isOnboardingEntry ? <View style={styles.divider} /> : null}
+        <View style={styles.divider} />
 
         <Text variant="label" color={palette.slate} uppercase>
           Email sign-in
@@ -271,44 +225,12 @@ export default function DevicesSettings() {
             </Text>
           </View>
         ) : null}
-        <Text variant="body" color={palette.inkSoft}>
-          We send a six-digit code. There is no password to remember, and you
-          can type the code on a different device from the one that received it.
-        </Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          placeholder="you@example.com"
-          placeholderTextColor={palette.slateLight}
-          style={styles.input}
-        />
-        <PillButton
-          label={codeSent ? 'Send another code' : 'Email me a code'}
-          onPress={sendEmailCode}
-          disabled={busy || !email.trim()}
-        />
-
-        {codeSent ? (
+        {!signedIn ? (
           <>
-            <TextInput
-              value={emailCode}
-              onChangeText={setEmailCode}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              placeholder="6-digit code"
-              placeholderTextColor={palette.slateLight}
-              style={styles.input}
-              maxLength={6}
-            />
-            <PillButton
-              label="Sign in"
-              onPress={verifyEmailCode}
-              disabled={busy || emailCode.trim().length !== 6}
-            />
+            <Text variant="body" color={palette.inkSoft}>
+              Use the focused sign-in flow to create an account or restore progress with a six-digit email code.
+            </Text>
+            <PillButton label="Sign in or create account" onPress={() => router.push('/sign-in')} />
           </>
         ) : null}
 

@@ -35,7 +35,7 @@ export default function LandingPage() {
             variant="ghost"
             fullWidth={false}
             style={styles.navButton}
-            onPress={() => router.push('/settings/devices' as never)}
+            onPress={() => router.push('/sign-in')}
           />
         ) : null}
       </View>
@@ -50,8 +50,8 @@ export default function LandingPage() {
             Bite-sized lessons on stocks, business fundamentals, charts, risk, psychology, and proven investing strategies.
           </Text>
           <View style={[styles.actions, compact && styles.actionsCompact]}>
-            <PillButton label="Start learning free" onPress={() => router.push('/(onboarding)/welcome')} />
-            <PillButton label="I already have an account" variant="ghost" onPress={() => router.push('/settings/devices' as never)} />
+            <PillButton label="Get started" onPress={() => router.push('/sign-in')} />
+            <PillButton label="Explore without an account" variant="ghost" onPress={() => router.push('/(onboarding)/welcome')} />
           </View>
           <Text variant="caption" color={palette.slate}>Educational content—not individualized financial advice.</Text>
         </View>
@@ -82,7 +82,7 @@ export default function LandingPage() {
       <View style={[styles.finalCta, compactSection, compact && styles.roundedSection]}>
         <Text variant="h1" color={palette.paper} align="center">Make the market make sense.</Text>
         <Text variant="body" color={palette.mintSoft} align="center">Five learning paths. Thirty-seven lessons. Your pace.</Text>
-        <PillButton label="Begin with Market Foundations" variant="light" fullWidth={false} onPress={() => router.push('/(onboarding)/welcome')} />
+        <PillButton label="Begin with Market Foundations" variant="light" fullWidth={false} onPress={() => router.push('/sign-in')} />
       </View>
 
       <View style={[styles.footer, compactSection]}>
