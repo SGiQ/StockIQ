@@ -10,14 +10,14 @@
       "type": "concept",
       "headline": "A price is just the last trade someone agreed to.",
       "body": "Nobody sets a stock's price. A buyer and a seller met at $84.20, agreed, and that number became the price. The next trade may happen at $84.19 or at $85. The tape is a running record of agreements, not a verdict on the company.",
-      "art": { "kind": "glyph", "name": "handshake", "bg": "blush" }
+      "art": { "kind": "scene", "name": "trade-agreement", "palette": "blush", "alt": "A buyer and seller agreeing on one price, creating the latest trade." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Supply and demand for the shares.",
       "body": "A price moves when more money wants in than wants out, or the reverse. What gets bid on is the **shares** — a limited number of them. A fine company with no buyers today still falls today.",
-      "art": { "kind": "glyph", "name": "exchange", "bg": "sky" }
+      "art": { "kind": "scene", "name": "supply-demand", "palette": "sky", "alt": "Supply and demand curves crossing at the market price." }
     },
     {
       "id": "c3",
@@ -40,7 +40,8 @@
       "id": "c4",
       "type": "concept",
       "headline": "The price already contains what everyone expects.",
-      "body": "If the whole market expects $1.45, buyers have already paid up for $1.45. Delivering exactly $1.45 changes nothing. Only the gap between what was expected and what arrived is new information — and only new information moves a price."
+      "body": "If the whole market expects $1.45, buyers have already paid up for $1.45. Delivering exactly $1.45 changes nothing. Only the gap between what was expected and what arrived is new information — and only new information moves a price.",
+      "art": { "kind": "scene", "name": "expectations-gap", "palette": "butter", "alt": "A reported result compared with the market expectation, with the difference marked as surprise." }
     },
     {
       "id": "c5",

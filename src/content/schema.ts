@@ -160,6 +160,46 @@ export const GLYPH_NAMES = [
 export const GlyphNameSchema = z.enum(GLYPH_NAMES);
 export type GlyphName = (typeof GLYPH_NAMES)[number];
 
+/**
+ * Purpose-built teaching scenes. Unlike a decorative glyph, each scene
+ * encodes a relationship or process that the learner can read visually.
+ */
+export const SCENE_NAMES = [
+  'ownership-slice',
+  'share-ledger',
+  'equity-vs-debt',
+  'owner-outcomes',
+  'capital-journey',
+  'ipo-launch',
+  'primary-secondary',
+  'liquidity-exit',
+  'market-cap-equation',
+  'price-vs-value',
+  'size-spectrum',
+  'order-route',
+  'matching-engine',
+  'broker-agent',
+  'order-book',
+  'execution-tradeoff',
+  'stop-trigger',
+  'two-sided-market',
+  'spread-toll',
+  'liquidity-depth',
+  'quote-terminal',
+  'price-change',
+  'event-gap',
+  'quote-signal',
+  'trade-agreement',
+  'supply-demand',
+  'expectations-gap',
+  'index-basket',
+  'weighting-tower',
+  'price-weighted',
+  'benchmark-race',
+] as const;
+export const SceneNameSchema = z.enum(SCENE_NAMES);
+export type SceneName = (typeof SCENE_NAMES)[number];
+
 /** A labelled point of interest on a chart's x-axis. */
 export const ChartMarkerSchema = z.object({
   at: z.number().int().min(0),
@@ -270,6 +310,13 @@ export const ArtSpecSchema = z.discriminatedUnion('kind', [
     kind: z.literal('glyph'),
     name: GlyphNameSchema,
     bg: PalettePresetSchema,
+  }),
+  z.object({
+    kind: z.literal('scene'),
+    name: SceneNameSchema,
+    palette: PalettePresetSchema,
+    /** Short spoken description for screen readers. */
+    alt: z.string().min(1).max(160),
   }),
   /**
    * Bitmaps are permitted ONLY for course/book covers, where N is small and

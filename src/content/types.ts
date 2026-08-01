@@ -36,6 +36,7 @@ export type {
   OptionLeg,
   PalettePreset,
   RichText,
+  SceneName,
   StickerRevealCard,
   Strategy,
   StrategyFamily,
@@ -50,6 +51,7 @@ export {
   COURSE_CATEGORIES,
   GLYPH_NAMES,
   PALETTE_PRESETS,
+  SCENE_NAMES,
   PROSE_BUDGET,
   STRATEGY_FAMILIES,
 } from './schema';

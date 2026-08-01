@@ -11,9 +11,10 @@
       "headline": "There is never one price. There are always two.",
       "body": "Look up a stock and you see a single number. That number is history — the last trade that happened. Right now the market is quoting two prices: the most any buyer will pay, and the least any seller will take. You trade against one of them, never the middle.",
       "art": {
-        "kind": "glyph",
-        "name": "eye",
-        "bg": "butter"
+        "kind": "scene",
+        "name": "two-sided-market",
+        "palette": "butter",
+        "alt": "Two live prices showing the best bid to sell and the best ask to buy."
       }
     },
     {
@@ -22,9 +23,10 @@
       "headline": "One quote, two numbers.",
       "body": "Say a company is quoted 10.00 bid, 10.04 ask. The **bid** is the highest price a buyer is willing to pay. The **ask** is the lowest price a seller will accept. The four cents between them is the **spread**.",
       "art": {
-        "kind": "glyph",
-        "name": "exchange",
-        "bg": "sky"
+        "kind": "scene",
+        "name": "two-sided-market",
+        "palette": "sky",
+        "alt": "Bid and ask quote cards separated by the live spread."
       }
     },
     {
@@ -33,9 +35,10 @@
       "headline": "You pay it coming and going.",
       "body": "Buy 100 shares and you pay the ask: 1,004 dollars. Change your mind a second later and sell at the bid: 1,000 dollars. Nothing moved. You are down four dollars, or **0.4 percent**, before the market has done anything at all.",
       "art": {
-        "kind": "glyph",
-        "name": "percent",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "spread-toll",
+        "palette": "blush",
+        "alt": "A round trip crossing from the ask to the bid and paying the spread as a toll."
       }
     },
     {
@@ -62,9 +65,10 @@
       "headline": "Liquidity sets the width.",
       "body": "Spreads are narrow where trading is heavy. A stock trading millions of shares a day may be quoted a penny wide. A stock that trades a few thousand shares a day can sit fifty cents wide, or more. Fewer buyers and sellers, bigger gap.",
       "art": {
-        "kind": "glyph",
-        "name": "people",
-        "bg": "mint"
+        "kind": "scene",
+        "name": "liquidity-depth",
+        "palette": "mint",
+        "alt": "A deep market with many orders compared with a thin market with few orders."
       }
     },
     {

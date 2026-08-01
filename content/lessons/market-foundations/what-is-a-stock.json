@@ -10,14 +10,14 @@
       "type": "concept",
       "headline": "You can own a piece of a company.",
       "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim.",
-      "art": { "kind": "glyph", "name": "key", "bg": "mint" }
+      "art": { "kind": "scene", "name": "ownership-slice", "palette": "mint", "alt": "A company divided into ownership slices, with one highlighted as your share." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Ownership is measured in shares.",
       "body": "A company divides itself into shares. If it has issued 1,000 shares and you hold 10, you own **one percent** of the business — today, tomorrow, and every day until you sell.",
-      "art": { "kind": "glyph", "name": "pie", "bg": "lilac" }
+      "art": { "kind": "scene", "name": "share-ledger", "palette": "lilac", "alt": "A company connected to a shareholder ledger that records ownership." }
     },
     {
       "id": "c3",
@@ -76,7 +76,7 @@
       "type": "concept",
       "headline": "Owners are not lenders.",
       "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside.",
-      "art": { "kind": "glyph", "name": "ladder", "bg": "sky" }
+      "art": { "kind": "scene", "name": "equity-vs-debt", "palette": "sky", "alt": "An owner accepting business upside and risk beside a lender holding a fixed claim." }
     },
     {
       "id": "c7",
@@ -90,7 +90,8 @@
       "id": "c8",
       "type": "concept",
       "headline": "So why buy a slice at all?",
-      "body": "Two reasons, and only two. The business grows, so each slice becomes worth more. Or the business hands cash back to owners as a dividend. Everything else in investing is detail stacked on top."
+      "body": "Two reasons, and only two. The business grows, so each slice becomes worth more. Or the business hands cash back to owners as a dividend. Everything else in investing is detail stacked on top.",
+      "art": { "kind": "scene", "name": "owner-outcomes", "palette": "butter", "alt": "Three owner outcomes: business growth, cash dividends, or loss." }
     },
     {
       "id": "c9",

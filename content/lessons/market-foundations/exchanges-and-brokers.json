@@ -10,21 +10,21 @@
       "type": "concept",
       "headline": "You cannot walk onto an exchange.",
       "body": "The New York Stock Exchange will not take your order. Neither will Nasdaq. Only member firms trade there, so you hire one — a broker — to carry your order in. Tapping buy starts a short relay you never see.",
-      "art": { "kind": "glyph", "name": "lock", "bg": "blush" }
+      "art": { "kind": "scene", "name": "order-route", "palette": "blush", "alt": "An investor order traveling through a broker to a trading venue." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "An exchange is a matching engine.",
       "body": "An exchange is a marketplace that pairs buy orders with sell orders. The NYSE and Nasdaq are the two largest in the US. They do not own the shares and they do not set the price. They match, record, and publish every trade.",
-      "art": { "kind": "glyph", "name": "exchange", "bg": "sky" }
+      "art": { "kind": "scene", "name": "matching-engine", "palette": "sky", "alt": "Buyers and sellers flowing into an exchange matching engine." }
     },
     {
       "id": "c3",
       "type": "concept",
       "headline": "Your broker is your agent.",
       "body": "A broker holds your account, accepts your order, and routes it to a venue where it can be filled. It also holds the shares you buy. You are the owner. The broker is the messenger and the record keeper.",
-      "art": { "kind": "glyph", "name": "briefcase", "bg": "lilac" }
+      "art": { "kind": "scene", "name": "broker-agent", "palette": "lilac", "alt": "An investor connected to the market through a broker acting as agent." }
     },
     {
       "id": "c4",
@@ -56,7 +56,7 @@
       "type": "concept",
       "headline": "The order book is the queue.",
       "body": "Every venue keeps a live list of resting buy and sell orders — the order book. The highest bid and the lowest offer set the current quote. **Market makers** post quotes on both sides all day and earn the small gap between them.",
-      "art": { "kind": "glyph", "name": "ladder", "bg": "butter" }
+      "art": { "kind": "scene", "name": "order-book", "palette": "butter", "alt": "A live order book with stacked bids on one side and asks on the other." }
     },
     {
       "id": "c6",

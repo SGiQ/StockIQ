@@ -4,6 +4,7 @@ import { artPalettes, radius } from '@/theme/tokens';
 import { ChartView, type ChartTheme } from './charts';
 import { AnimatedChartView } from './charts/AnimatedChartView';
 import { Glyph } from './Glyph';
+import { SceneArt } from './SceneArt';
 
 export interface ArtViewProps {
   spec: ArtSpec;
@@ -57,6 +58,18 @@ export function ArtView({
         </View>
       );
     }
+
+    case 'scene':
+      return (
+        <View style={[...container, { backgroundColor: artPalettes[spec.palette].bg }]}>
+          <SceneArt
+            name={spec.name}
+            palette={spec.palette}
+            alt={spec.alt}
+            active={active}
+          />
+        </View>
+      );
 
     case 'chart': {
       // Charts carry their own palette: the profit/payoff family reads best

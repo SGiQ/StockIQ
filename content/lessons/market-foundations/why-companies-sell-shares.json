@@ -10,21 +10,21 @@
       "type": "concept",
       "headline": "Growth costs money the founders do not have.",
       "body": "A chain with 40 stores wants 400. Building them takes cash the owners cannot spare. So the company sells pieces of itself to strangers, and those strangers become owners. That trade is why the stock market exists.",
-      "art": { "kind": "glyph", "name": "building", "bg": "mint" }
+      "art": { "kind": "scene", "name": "capital-journey", "palette": "mint", "alt": "Investor capital flowing into a company and becoming business growth." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Going public has a name: the IPO.",
       "body": "Initial public offering. The company creates brand-new shares, agrees a price with its bankers, and sells them to investors on the first day of trading. It hands over ownership. It walks away with cash to spend.",
-      "art": { "kind": "glyph", "name": "bank", "bg": "sky" }
+      "art": { "kind": "scene", "name": "ipo-launch", "palette": "sky", "alt": "A private company passing through an IPO and becoming publicly owned." }
     },
     {
       "id": "c3",
       "type": "concept",
       "headline": "The company gets paid once.",
       "body": "That IPO cash is the **primary market** — new shares, straight from the company. After that, shares change hands between investors on the **secondary market**. When you buy from another shareholder, the company receives nothing at all.",
-      "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" }
+      "art": { "kind": "scene", "name": "primary-secondary", "palette": "lilac", "alt": "Money reaching the company in the primary sale, then shares trading in the market." }
     },
     {
       "id": "c4",
@@ -66,7 +66,7 @@
       "type": "concept",
       "headline": "A listing also lets early owners cash out.",
       "body": "Founders and venture funds hold shares almost nobody could buy. A listing creates a public market for them, so some sell part of their stake. Those are existing shares, so that money goes to the seller, not the business.",
-      "art": { "kind": "glyph", "name": "handshake", "bg": "blush" }
+      "art": { "kind": "scene", "name": "liquidity-exit", "palette": "blush", "alt": "An early owner selling shares through the public market for cash." }
     },
     {
       "id": "c8",

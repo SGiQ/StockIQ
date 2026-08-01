@@ -136,12 +136,14 @@ configured. `null` is also exactly the signal the screen needs to explain why
 pairing is unavailable, so the boundary made the UI more honest rather than
 more awkward.
 
-**3. In-lesson art is computed, never drawn.** Every visual is an `ArtSpec`
-rendered as SVG from numbers — a compounding curve, a candlestick pattern, a
-payoff diagram. Finance is inherently diagrammatic, so the chart *is* the
-concept: consistent, arithmetically correct, and reliably authorable by an
-LLM. Bitmaps are permitted only for covers, and the validator rejects them
-inside cards.
+**3. In-lesson art is computed, never shipped as card bitmaps.** Every visual
+is an `ArtSpec`: numeric charts for compounding, candles and payoffs, plus
+purpose-built SVG teaching scenes for relationships such as ownership,
+order routing and bid/ask spreads. Motion reveals the relationship without
+changing the underlying data and respects the system reduced-motion setting.
+Bitmaps are permitted only for covers; the validator rejects them inside
+cards. Market Foundations is the visual benchmark, with explanatory scenes
+on all 35 concept cards.
 
 **4. An API key cannot be kept secret inside a client app.** Nothing —
 `.env`, a config field, obfuscation — changes that; anyone can pull the bundle

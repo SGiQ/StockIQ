@@ -40,3 +40,20 @@ test('mobile-facing controls and labels stay within bounded content limits', () 
     }
   }
 });
+
+test('Market Foundations concept cards use explanatory scenes, not generic glyphs', () => {
+  const marketLessons = allLessons.filter((lesson) => lesson.courseId === 'market-foundations');
+  const concepts = marketLessons.flatMap((lesson) =>
+    lesson.cards
+      .filter((card) => card.type === 'concept')
+      .map((card) => ({ lessonId: lesson.id, card })),
+  );
+
+  assert.equal(concepts.length, 35);
+  for (const { lessonId, card } of concepts) {
+    assert.equal(card.art?.kind, 'scene', `${lessonId}/${card.id}: expected bespoke scene art`);
+    if (card.art?.kind === 'scene') {
+      assert.ok(card.art.alt.length >= 24, `${lessonId}/${card.id}: scene needs useful alt text`);
+    }
+  }
+});

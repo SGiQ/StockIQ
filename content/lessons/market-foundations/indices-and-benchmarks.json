@@ -10,14 +10,14 @@
       "type": "concept",
       "headline": "The market was up today. Which market?",
       "body": "Nobody means every stock. They mean one index — usually the S&P 500. An index is a single number that stands in for hundreds of companies at once. When the anchor says the market rose, an index rose. That is all the sentence ever means.",
-      "art": { "kind": "glyph", "name": "newspaper", "bg": "mint" }
+      "art": { "kind": "scene", "name": "index-basket", "palette": "mint", "alt": "A basket of companies transformed by a rule into one market index." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "An index is a basket plus a rule.",
       "body": "Two decisions build an index. Which companies go in the basket, and how much each one counts. That second decision is the **weighting rule**, and it is where the confusion lives: two indices holding similar companies can move differently on the same day.",
-      "art": { "kind": "glyph", "name": "scale", "bg": "lilac" }
+      "art": { "kind": "scene", "name": "weighting-tower", "palette": "lilac", "alt": "An index weighting tower where the largest companies occupy the widest tier." }
     },
     {
       "id": "c3",
@@ -41,7 +41,7 @@
       "type": "concept",
       "headline": "The Dow counts dollars, not size.",
       "body": "The Dow weights its 30 companies by share price. A stock at 400 dollars moves it more than one at 40, even if the second company is far larger. That rule dates to 1896, when adding up prices by hand was the practical option.",
-      "art": { "kind": "glyph", "name": "clock", "bg": "butter" }
+      "art": { "kind": "scene", "name": "price-weighted", "palette": "butter", "alt": "A high-priced share receiving more index weight than a lower-priced share." }
     },
     {
       "id": "c5",
@@ -91,7 +91,7 @@
       "type": "concept",
       "headline": "A benchmark is the honest yardstick.",
       "body": "Up 9 percent last year sounds good until you learn the index returned 14. A benchmark turns a raw number into a verdict. It is also a hard bar: over long periods, most actively managed funds fail to beat the index they are measured against.",
-      "art": { "kind": "glyph", "name": "target", "bg": "sky" }
+      "art": { "kind": "scene", "name": "benchmark-race", "palette": "sky", "alt": "An investment result racing against a benchmark over the same period." }
     },
     {
       "id": "c9",
