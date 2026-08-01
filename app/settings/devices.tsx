@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import {
@@ -21,6 +21,8 @@ import { palette, radius, space, type as typeScale } from '@/theme/tokens';
  */
 export default function DevicesSettings() {
   const router = useRouter();
+  const { entry: entryPoint } = useLocalSearchParams<{ entry?: string }>();
+  const isOnboardingEntry = entryPoint === 'onboarding';
   // Captured locally: TypeScript will not carry a narrowing of an imported
   // binding into the callbacks below, and an optional capability is exactly
   // the case where that matters.
@@ -177,6 +179,10 @@ export default function DevicesSettings() {
       setSignedIn(true);
       setStatus('Signed in. This account can now be recovered by email.');
       await refresh();
+      if (isOnboardingEntry) {
+        const acknowledged = useAppStore.getState().profile?.disclaimerAcknowledgedAt;
+        router.replace(acknowledged ? '/(tabs)' : '/(onboarding)/choose-course');
+      }
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Could not sign in.');
     } finally {
@@ -228,7 +234,7 @@ export default function DevicesSettings() {
           </Text>
         )}
 
-        <View style={styles.deviceSessionBox}>
+        {!isOnboardingEntry ? <View style={styles.deviceSessionBox}>
           <Text variant="label" color={palette.forestDeep} uppercase>This browser</Text>
           <Text variant="body" color={palette.ink}>
             {signedIn
@@ -246,9 +252,9 @@ export default function DevicesSettings() {
           ) : (
             <PillButton label="Sign out" variant="ghost" onPress={() => setConfirmingSignOut(true)} disabled={busy} />
           )}
-        </View>
+        </View> : null}
 
-        <View style={styles.divider} />
+        {!isOnboardingEntry ? <View style={styles.divider} /> : null}
 
         <Text variant="label" color={palette.slate} uppercase>
           Email sign-in

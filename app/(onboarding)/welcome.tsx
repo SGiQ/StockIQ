@@ -38,11 +38,18 @@ export default function Welcome() {
           ))}
         </View>
 
-        <PillButton
-          label="Get started"
-          variant="light"
-          onPress={() => router.push('/(onboarding)/choose-course')}
-        />
+        <View style={styles.actions}>
+          <PillButton
+            label="I'm new — get started"
+            variant="light"
+            onPress={() => router.push('/(onboarding)/choose-course')}
+          />
+          <PillButton
+            label="Sign in to continue"
+            variant="dark"
+            onPress={() => router.push('/settings/devices?entry=onboarding' as never)}
+          />
+        </View>
       </View>
     </Screen>
   );
@@ -54,6 +61,7 @@ const styles = StyleSheet.create({
     padding: space.lg,
     justifyContent: 'space-between',
     paddingBottom: space.xl,
+    gap: space.md,
   },
   hero: {
     marginTop: space.xxl,
@@ -77,5 +85,8 @@ const styles = StyleSheet.create({
   },
   promiseText: {
     flex: 1,
+  },
+  actions: {
+    gap: space.sm,
   },
 });
