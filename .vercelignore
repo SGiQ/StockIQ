@@ -1,0 +1,13 @@
+# Vercel runs the Expo export itself. Never upload local build output.
+dist/
+web-build/
+.expo/
+
+# Full narration lives in Cloudflare R2. Only public/voice-previews ships here.
+public/speech/
+
+# Native and service-only files are not inputs to the static web deployment.
+ios/
+android/
+server/
+workers/
