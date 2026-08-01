@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import test from 'node:test';
 import { allLessons, allStrategies } from '../src/content/index.generated';
 import { initialStateFor } from '../src/components/player/cardState';
+import { lessonArtwork } from '../src/content/lessonArtwork';
+import { listCourses, listLessonsInCourse } from '../src/content/registry';
 
 test('every lesson and strategy exposes authoritative HTTPS sources', () => {
   for (const item of [...allLessons, ...allStrategies]) {
@@ -66,6 +70,21 @@ test('Market Foundations uses editorial openings and explanatory scenes, not gen
     assert.equal(opening && 'art' in opening ? opening.art?.kind : undefined, 'illustration', `${lesson.id}: opening is not editorial`);
     const insight = lesson.cards.find((card) => card.type === 'key_insight');
     assert.equal(insight?.art.kind, 'illustration', `${lesson.id}: insight poster is still generic`);
+  }
+});
+
+test('every lesson has a shipped paper-craft opening and closing bookend', () => {
+  const lessons = listCourses().flatMap((course) => listLessonsInCourse(course.id));
+  assert.equal(lessons.length, 37);
+  assert.equal(Object.keys(lessonArtwork).length, lessons.length);
+
+  for (const lesson of lessons) {
+    const opening = lesson.cards[0];
+    const closing = lesson.cards.at(-1);
+    assert.ok(opening.type === 'concept' && opening.art?.kind === 'illustration', `${lesson.id}: opening has no hero`);
+    assert.ok(closing?.type === 'key_insight' && closing.art.kind === 'illustration', `${lesson.id}: closing has no hero`);
+    assert.equal(opening.art.source, closing.art.source, `${lesson.id}: bookends do not match`);
+    assert.ok(existsSync(join(process.cwd(), 'public', opening.art.source)), `${lesson.id}: missing ${opening.art.source}`);
   }
 });
 

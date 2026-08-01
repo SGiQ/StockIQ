@@ -11,10 +11,11 @@
 import {
   allBooks,
   allCourses,
-  allLessons,
+  allLessons as rawLessons,
   allStrategies,
   allTraders,
 } from './index.generated';
+import { applyLessonArtwork } from './lessonArtwork';
 import type {
   Book,
   BookId,
@@ -35,6 +36,7 @@ import type {
 export const lessonPath = (courseId: CourseId, lessonId: LessonId): LessonPath =>
   `${courseId}/${lessonId}`;
 
+const allLessons = rawLessons.map(applyLessonArtwork);
 const coursesById = new Map<CourseId, Course>(allCourses.map((c) => [c.id, c]));
 const lessonsByPath = new Map<LessonPath, Lesson>(
   allLessons.map((l) => [lessonPath(l.courseId, l.id), l]),
