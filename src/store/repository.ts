@@ -114,10 +114,12 @@ export interface UserProfile extends Syncable {
   hasSeenPlayerTutorial: boolean;
   /** Timestamped acknowledgement of the "not financial advice" disclaimer. */
   disclaimerAcknowledgedAt: number | null;
-  /** Read lesson cards aloud when a rendered clip is available. */
+  /** Automatically read lesson cards aloud when a rendered clip is available. */
   narrationEnabled: boolean;
   /** User-facing choice; vendor voice names stay out of persisted data. */
   narrationVoice: 'male' | 'female';
+  /** Cross-platform playback rates supported by the narration UI. */
+  narrationSpeed: 0.75 | 1 | 1.25 | 1.5;
 }
 
 export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
@@ -222,5 +224,6 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     ...profile,
     narrationEnabled: profile.narrationEnabled ?? false,
     narrationVoice: profile.narrationVoice ?? 'female',
+    narrationSpeed: profile.narrationSpeed ?? 1,
   };
 }

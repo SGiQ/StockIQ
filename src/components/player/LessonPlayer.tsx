@@ -146,6 +146,9 @@ export function LessonPlayer({
   const narrationVoice = useAppStore(
     (s) => s.profile?.narrationVoice ?? 'female',
   );
+  const narrationSpeed = useAppStore(
+    (s) => s.profile?.narrationSpeed ?? 1,
+  );
   const setNarrationEnabled = useAppStore((s) => s.setNarrationEnabled);
   const narrationSource = narrationDeckId
     ? narrationUrlFor(narrationDeckId, card.id, narrationVoice)
@@ -155,7 +158,7 @@ export function LessonPlayer({
     playing: narrationPlaying,
     play: playNarration,
     stop: stopNarration,
-  } = useNarration(narrationSource, narrationEnabled);
+  } = useNarration(narrationSource, narrationEnabled, narrationSpeed);
 
   /** Render window of three: previous, current, next. */
   const visible = useMemo(

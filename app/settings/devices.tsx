@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import Svg, { Path } from 'react-native-svg';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import {
   AppleSignInCancelled,
@@ -17,6 +19,7 @@ import { palette, radius, space, type as typeScale } from '@/theme/tokens';
  * handle a lost phone.
  */
 export default function DevicesSettings() {
+  const router = useRouter();
   // Captured locally: TypeScript will not carry a narrowing of an imported
   // binding into the callbacks below, and an optional capability is exactly
   // the case where that matters.
@@ -60,6 +63,7 @@ export default function DevicesSettings() {
   if (!api) {
     return (
       <Screen>
+        <SettingsHeader onBack={() => (router.canGoBack() ? router.back() : router.replace('/settings' as never))} />
         <View style={styles.note}>
           <Text variant="body" color={palette.inkSoft}>
             Sync is not set up, so this app keeps everything on this device only.
@@ -172,7 +176,8 @@ export default function DevicesSettings() {
   const minutesLeft = Math.max(0, Math.round((expiresAt - Date.now()) / 60000));
 
   return (
-    <Screen>
+    <Screen tone="warm">
+      <SettingsHeader onBack={() => (router.canGoBack() ? router.back() : router.replace('/settings' as never))} />
       <ScrollView contentContainerStyle={styles.body}>
         <Text variant="label" color={palette.slate} uppercase>
           Recovery
@@ -191,10 +196,9 @@ export default function DevicesSettings() {
           </>
         ) : (
           <Text variant="body" color={palette.inkSoft}>
-            Use email below to secure this account so it can be recovered if you
-            lose your devices. Sign in with Apple is not available in Expo Go —
-            it needs a development build — and it is an alternative to email
-            rather than an addition, so nothing is missing here.
+            {Platform.OS === 'web'
+              ? 'Use email below to secure this account, restore it in any browser, and sync progress across your devices.'
+              : 'Use email below to secure this account so it can be recovered if you lose your devices. Sign in with Apple is an optional alternative available in a future development build.'}
           </Text>
         )}
 
@@ -331,8 +335,29 @@ export default function DevicesSettings() {
   );
 }
 
+function SettingsHeader({ onBack }: { onBack: () => void }) {
+  return (
+    <View style={styles.header}>
+      <Pressable onPress={onBack} hitSlop={12} accessibilityRole="button" accessibilityLabel="Back">
+        <Svg width={24} height={24} viewBox="0 0 24 24">
+          <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </Svg>
+      </Pressable>
+      <Text variant="h2" color={palette.ink}>Account & sync</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  body: { gap: space.md, paddingBottom: space.xxl },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.md,
+    paddingHorizontal: space.lg,
+    paddingTop: space.sm,
+    paddingBottom: space.md,
+  },
+  body: { gap: space.md, paddingHorizontal: space.lg, paddingBottom: space.xxl },
   note: { padding: space.lg },
   codeBox: {
     backgroundColor: palette.paperWarm,

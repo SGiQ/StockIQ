@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { getLesson, listCourses } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
@@ -56,6 +57,18 @@ export default function LearnTab() {
                 color={narrationEnabled ? palette.forestDeep : palette.slate}
                 muted={!narrationEnabled}
               />
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/settings' as never)}
+              accessibilityRole="button"
+              accessibilityLabel="Settings"
+              style={styles.narrationSettings}
+              hitSlop={8}
+            >
+              <Svg width={22} height={22} viewBox="0 0 24 24">
+                <Circle cx={12} cy={12} r={3.2} fill="none" stroke={palette.ink} strokeWidth={2} />
+                <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={palette.ink} strokeWidth={2} strokeLinecap="round" />
+              </Svg>
             </Pressable>
             <View style={styles.xp}>
               <Text variant="label" color={palette.forestDeep} uppercase>

@@ -15,7 +15,7 @@ function mayAutoplay(): boolean {
  * pauses and rewinds whenever the source changes, narration is disabled, or
  * the caller exits, so a clip can never continue over the next card/screen.
  */
-export function useNarration(source: string | null, enabled: boolean) {
+export function useNarration(source: string | null, enabled: boolean, playbackRate = 1) {
   // Give Expo the source at construction time. On web, creating an empty
   // player and calling `replace()` ourselves can race `play()` against a
   // source-less HTMLAudioElement. The hook resolves remote URLs consistently
@@ -38,17 +38,25 @@ export function useNarration(source: string | null, enabled: boolean) {
     if (!source) return;
     startedFromControl.current = true;
     try {
+      player.setPlaybackRate(playbackRate);
       player.play();
     } catch {
       // Browser autoplay policy or a failed download can reject playback.
       // The visible card remains completely usable.
     }
-  }, [player, source]);
+  }, [playbackRate, player, source]);
+
+  useEffect(() => {
+    player.setPlaybackRate(playbackRate);
+  }, [playbackRate, player]);
 
   useEffect(() => {
     player.pause();
     try {
-      if (enabledRef.current && source && mayAutoplay()) player.play();
+      if (enabledRef.current && source && mayAutoplay()) {
+        player.setPlaybackRate(playbackRate);
+        player.play();
+      }
     } catch {
       // A bad/missing remote clip is equivalent to no narration for the card.
     }
@@ -56,7 +64,7 @@ export function useNarration(source: string | null, enabled: boolean) {
     return () => {
       player.pause();
     };
-  }, [player, source]);
+  }, [playbackRate, player, source]);
 
   useEffect(() => {
     if (!enabled) {
@@ -72,12 +80,13 @@ export function useNarration(source: string | null, enabled: boolean) {
     }
     if (source && mayAutoplay()) {
       try {
+        player.setPlaybackRate(playbackRate);
         player.play();
       } catch {
         // See the silent-degradation contract above.
       }
     }
-  }, [enabled, player, source, stop]);
+  }, [enabled, playbackRate, player, source, stop]);
 
   return {
     available: source !== null,

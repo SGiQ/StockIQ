@@ -83,6 +83,7 @@ function defaultProfile(): UserProfile {
     disclaimerAcknowledgedAt: null,
     narrationEnabled: false,
     narrationVoice: 'female',
+    narrationSpeed: 1,
   };
 }
 

@@ -1,16 +1,27 @@
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
-import { CardSurface, Screen, SpeakerIcon, Text } from '@/components/primitives';
+import { CardSurface, PillButton, Screen, SpeakerIcon, Text } from '@/components/primitives';
+import { narrationUrlFor } from '@/services/narration/speech';
+import { useNarration } from '@/services/narration/useNarration';
 import { useAppStore } from '@/store/slices/useAppStore';
+import type { UserProfile } from '@/store/repository';
 import { palette, radius, space } from '@/theme/tokens';
 
 export default function NarrationSettings() {
   const router = useRouter();
   const enabled = useAppStore((s) => s.profile?.narrationEnabled ?? false);
   const voice = useAppStore((s) => s.profile?.narrationVoice ?? 'female');
+  const speed = useAppStore((s) => s.profile?.narrationSpeed ?? 1);
   const setEnabled = useAppStore((s) => s.setNarrationEnabled);
   const setVoice = useAppStore((s) => s.setNarrationVoice);
+  const setSpeed = useAppStore((s) => s.setNarrationSpeed);
+  const previewSource = narrationUrlFor(
+    'lesson:market-foundations/bid-ask-and-spread',
+    'c1',
+    voice,
+  );
+  const preview = useNarration(previewSource, false, speed);
 
   return (
     <Screen tone="warm">
@@ -62,17 +73,17 @@ export default function NarrationSettings() {
           <View style={styles.sectionHeading}>
             <View style={styles.sectionText}>
               <Text variant="h3" color={palette.ink}>
-                Read cards aloud
+                Autoplay narration
               </Text>
               <Text variant="caption" color={palette.slate}>
-                You can also toggle this from inside any narrated deck.
+                Start reading each new card automatically.
               </Text>
             </View>
             <Pressable
               onPress={() => void setEnabled(!enabled)}
               accessibilityRole="switch"
               accessibilityState={{ checked: enabled }}
-              accessibilityLabel="Read cards aloud"
+              accessibilityLabel="Autoplay narration"
               style={[styles.switchTrack, enabled && styles.switchTrackOn]}
             >
               <View style={[styles.switchThumb, enabled && styles.switchThumbOn]} />
@@ -96,6 +107,31 @@ export default function NarrationSettings() {
               onPress={() => void setVoice('male')}
             />
           </View>
+          <PillButton
+            label={preview.playing ? 'Stop preview' : `Preview ${voice} voice`}
+            variant="ghost"
+            onPress={preview.playing ? preview.stop : preview.play}
+            disabled={!preview.available}
+          />
+        </View>
+
+        <View style={styles.voiceSection}>
+          <Text variant="label" color={palette.slate} uppercase>
+            Playback speed
+          </Text>
+          <View style={styles.speedChoices} accessibilityRole="radiogroup">
+            {([0.75, 1, 1.25, 1.5] as const).map((value) => (
+              <SpeedChoice
+                key={value}
+                value={value}
+                selected={speed === value}
+                onPress={() => void setSpeed(value)}
+              />
+            ))}
+          </View>
+          <Text variant="caption" color={palette.slate}>
+            Applies to previews and every narrated lesson card.
+          </Text>
         </View>
 
         <View style={styles.note}>
@@ -113,6 +149,30 @@ export default function NarrationSettings() {
         </View>
       </ScrollView>
     </Screen>
+  );
+}
+
+function SpeedChoice({
+  value,
+  selected,
+  onPress,
+}: {
+  value: UserProfile['narrationSpeed'];
+  selected: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="radio"
+      accessibilityState={{ selected }}
+      accessibilityLabel={`${value} times speed`}
+      style={[styles.speedChoice, selected && styles.speedChoiceSelected]}
+    >
+      <Text variant="label" color={selected ? palette.forestDeep : palette.ink}>
+        {`${value}×`}
+      </Text>
+    </Pressable>
   );
 }
 
@@ -205,6 +265,24 @@ const styles = StyleSheet.create({
   },
   voiceChoices: {
     gap: space.sm,
+  },
+  speedChoices: {
+    flexDirection: 'row',
+    gap: space.sm,
+  },
+  speedChoice: {
+    flex: 1,
+    minHeight: 48,
+    borderRadius: radius.pill,
+    borderWidth: 1,
+    borderColor: palette.hairline,
+    backgroundColor: palette.paper,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  speedChoiceSelected: {
+    borderColor: palette.emeraldDeep,
+    backgroundColor: palette.mintSoft,
   },
   voiceChoice: {
     flexDirection: 'row',

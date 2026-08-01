@@ -17,6 +17,7 @@ test('older profiles receive safe narration defaults on read', () => {
     ...legacy,
     narrationEnabled: false,
     narrationVoice: 'female',
+    narrationSpeed: 1,
   });
 });
 
@@ -31,8 +32,10 @@ test('stored narration preferences win over defaults', () => {
     disclaimerAcknowledgedAt: 123,
     narrationEnabled: true,
     narrationVoice: 'male',
+    narrationSpeed: 1.25,
   };
 
   assert.equal(withProfileDefaults(current).narrationEnabled, true);
   assert.equal(withProfileDefaults(current).narrationVoice, 'male');
+  assert.equal(withProfileDefaults(current).narrationSpeed, 1.25);
 });
