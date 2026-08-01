@@ -128,7 +128,19 @@ check('A is unaffected by the revocation',
   stillA.body.changes.some((c) => c.id === 'l-a'),
   JSON.stringify(stillA.body.changes.map((c) => c.id)));
 
-console.log('\n10. Malformed codes are rejected');
+console.log('\n10. Signing out detaches only this device');
+const signedOut = await call('/v1/auth/sign-out', B, { body: {} });
+check('B can sign out', signedOut.status === 200, JSON.stringify(signedOut.body));
+const bFresh = await call('/v1/sync', B, { body: { since: 0, changes: [] } });
+check('B no longer sees the old account',
+  !bFresh.body.changes.some((c) => c.id === 'l-a'),
+  JSON.stringify(bFresh.body.changes.map((c) => c.id)));
+const aAfterSignOut = await call('/v1/sync', A, { body: { since: 0, changes: [] } });
+check('A and its cloud progress are unaffected',
+  aAfterSignOut.body.changes.some((c) => c.id === 'l-a'),
+  JSON.stringify(aAfterSignOut.body.changes.map((c) => c.id)));
+
+console.log('\n11. Malformed codes are rejected');
 const short = await call('/v1/link/claim', B, { body: { code: 'ABC' } });
 check('a short code is rejected', short.status === 400, `status=${short.status}`);
 

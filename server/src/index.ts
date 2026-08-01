@@ -34,6 +34,7 @@ import {
   normaliseCode,
   resolveAccount,
   revokeDevice,
+  signOutDevice,
   signInWithIdentity,
 } from './accounts.ts';
 import { verifyAppleToken } from './apple.ts';
@@ -121,6 +122,7 @@ const server = createServer((req, res) => {
         '/v1/auth/apple': 'POST',
         '/v1/auth/email/request': 'POST',
         '/v1/auth/email/verify': 'POST',
+        '/v1/auth/sign-out': 'POST',
         '/v1/devices': 'GET',
         '/v1/telemetry': 'POST',
       };
@@ -212,6 +214,9 @@ const server = createServer((req, res) => {
             );
             payload = { ...result, resetCursor: true };
           }
+        } else if (path === '/v1/auth/sign-out') {
+          await signOutDevice(client, accountId, deviceId);
+          payload = { ok: true };
         } else if (path === '/v1/link/claim') {
           const body = (await readBody(req)) as { code?: unknown };
           const result = await claimLinkCode(client, deviceId, label, normaliseCode(body.code));

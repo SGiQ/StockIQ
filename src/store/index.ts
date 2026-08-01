@@ -48,6 +48,7 @@ export interface PairingApi {
   requestEmailCode(email: string): Promise<void>;
   signInWithEmail(email: string, code: string): Promise<void>;
   getSession(): Promise<{ email: string | null }>;
+  signOut(): Promise<void>;
   listDevices(): Promise<{ devices: LinkedDevice[]; thisDeviceId: string }>;
   revokeDevice(deviceId: string): Promise<void>;
 }

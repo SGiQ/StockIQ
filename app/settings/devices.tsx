@@ -40,6 +40,7 @@ export default function DevicesSettings() {
   const [emailCode, setEmailCode] = useState('');
   const [codeSent, setCodeSent] = useState(false);
   const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
+  const [confirmingSignOut, setConfirmingSignOut] = useState(false);
 
   useEffect(() => {
     void isAppleSignInAvailable().then(setAppleAvailable);
@@ -180,6 +181,21 @@ export default function DevicesSettings() {
     }
   };
 
+  const signOut = async () => {
+    setBusy(true);
+    setStatus(null);
+    try {
+      await api.signOut();
+      await useAppStore.getState().hydrate();
+      router.replace('/(onboarding)/welcome' as never);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not sign out.');
+      setConfirmingSignOut(false);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const minutesLeft = Math.max(0, Math.round((expiresAt - Date.now()) / 60000));
 
   return (
@@ -221,6 +237,17 @@ export default function DevicesSettings() {
             <Text variant="caption" color={palette.inkSoft}>
               Progress is saved locally and restored from this account after every reload.
             </Text>
+            {confirmingSignOut ? (
+              <View style={styles.signOutActions}>
+                <Text variant="caption" color={palette.inkSoft}>
+                  This clears StockIQ data from this browser. Your cloud account and other devices are not deleted.
+                </Text>
+                <PillButton label="Sign out on this device" onPress={signOut} disabled={busy} />
+                <PillButton label="Cancel" variant="ghost" onPress={() => setConfirmingSignOut(false)} disabled={busy} />
+              </View>
+            ) : (
+              <PillButton label="Sign out" variant="ghost" onPress={() => setConfirmingSignOut(true)} disabled={busy} />
+            )}
           </View>
         ) : null}
         <Text variant="body" color={palette.inkSoft}>
@@ -387,6 +414,7 @@ const styles = StyleSheet.create({
     padding: space.md,
     gap: space.xxs,
   },
+  signOutActions: { gap: space.sm, marginTop: space.sm },
   input: {
     borderWidth: 1,
     borderColor: palette.slateLight,

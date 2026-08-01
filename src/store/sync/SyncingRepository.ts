@@ -152,6 +152,12 @@ export class SyncingRepository implements Repository {
     return { email: await this.local.getMeta('signedInEmail') };
   }
 
+  /** Detach remotely first; only clear local data once the server confirms. */
+  async signOut(): Promise<void> {
+    await this.client.signOut();
+    await this.local.reset();
+  }
+
   /**
    * Resets the cursor and optionally re-contributes local records.
    *

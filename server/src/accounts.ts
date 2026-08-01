@@ -349,3 +349,23 @@ export async function revokeDevice(
   );
   if (result.rowCount === 0) throw new ProtocolError('no such device on this account');
 }
+
+/**
+ * Detaches the caller from its account without deleting that account.
+ *
+ * The next authenticated request from the same installation creates a fresh
+ * anonymous account through `resolveAccount`. Keeping this server-side is
+ * essential: clearing only browser storage would leave the device capability
+ * authorised to read the old account on its next sync.
+ */
+export async function signOutDevice(
+  client: PoolClient,
+  accountId: string,
+  deviceId: string,
+): Promise<void> {
+  const result = await client.query(
+    'DELETE FROM devices WHERE id = $1 AND account_id = $2',
+    [deviceId, accountId],
+  );
+  if (result.rowCount === 0) throw new ProtocolError('device is not signed in');
+}
