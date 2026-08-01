@@ -30,6 +30,7 @@ export function FillBlankCardView({
   shakeStyle,
 }: FillBlankCardViewProps) {
   const picked = state.kind === 'blank' ? state.picked : undefined;
+  const choicesOpen = state.kind === 'blank' ? state.choicesOpen : false;
   const checked = state.kind === 'blank' ? state.checked : false;
   const correct = state.kind === 'blank' ? state.correct : undefined;
 
@@ -37,7 +38,7 @@ export function FillBlankCardView({
     (word: string) => {
       if (checked) return;
       haptics.select();
-      onChange({ kind: 'blank', picked: word, checked: false });
+      onChange({ kind: 'blank', choicesOpen: true, picked: word, checked: false });
     },
     [checked, onChange],
   );
@@ -46,7 +47,7 @@ export function FillBlankCardView({
     if (!picked || checked) return;
     const isCorrect = picked === card.answer;
     haptics.verdict(isCorrect);
-    onChange({ kind: 'blank', picked, checked: true, correct: isCorrect });
+    onChange({ kind: 'blank', choicesOpen: true, picked, checked: true, correct: isCorrect });
     onAnswered(isCorrect);
   }, [card.answer, checked, onAnswered, onChange, picked]);
 
@@ -70,7 +71,16 @@ export function FillBlankCardView({
       </View>
 
       <Animated.View style={[styles.bankWrap, shakeStyle]}>
-        {!checked ? (
+        {!checked && !choicesOpen ? (
+          <PillButton
+            label="Tap the blank to reveal choices"
+            variant="secondary"
+            haptic={false}
+            onPress={() => onChange({ kind: 'blank', choicesOpen: true, checked: false })}
+          />
+        ) : null}
+
+        {!checked && choicesOpen ? (
           <View style={styles.bank}>
             {card.wordBank.map((word) => {
               const isPicked = picked === word;
@@ -101,7 +111,7 @@ export function FillBlankCardView({
           </View>
         ) : null}
 
-        {!checked && (
+        {!checked && choicesOpen && (
           <PillButton label="Check Answer" variant="dark" disabled={!picked} onPress={check} />
         )}
       </Animated.View>

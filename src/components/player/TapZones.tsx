@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 import { Text } from '@/components/primitives';
 import { palette, space } from '@/theme/tokens';
 
@@ -14,17 +14,25 @@ import { palette, space } from '@/theme/tokens';
  * navigation and the answer options from fighting each other.
  */
 export function TapZones({ onBack, onForward }: { onBack: () => void; onForward: () => void }) {
+  // These zones are deliberately invisible and already exposed to assistive
+  // tech by name. A desktop click focusing one used to draw the browser's
+  // giant orange focus rectangle over one or two thirds of the lesson.
+  const invisibleFocusStyle = Platform.OS === 'web'
+    ? ({ outlineWidth: 0 } satisfies ViewStyle)
+    : undefined;
   return (
     <View style={StyleSheet.absoluteFill}>
       <View style={styles.row}>
         <Pressable
-          style={styles.back}
+          style={[styles.back, invisibleFocusStyle]}
+          focusable={false}
           onPress={onBack}
           accessibilityRole="button"
           accessibilityLabel="Previous card"
         />
         <Pressable
-          style={styles.forward}
+          style={[styles.forward, invisibleFocusStyle]}
+          focusable={false}
           onPress={onForward}
           accessibilityRole="button"
           accessibilityLabel="Next card"

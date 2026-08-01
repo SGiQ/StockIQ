@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "You can own a piece of a company.",
       "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim.",
-      "art": { "kind": "scene", "name": "ownership-slice", "palette": "mint", "alt": "A company divided into ownership slices, with one highlighted as your share." }
+      "art": { "kind": "illustration", "source": "/lesson-art/ownership.jpg", "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices." }
     },
     {
       "id": "c2",
@@ -106,7 +106,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "building", "bg": "neon" },
+      "art": { "kind": "illustration", "source": "/lesson-art/ownership.jpg", "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices." },
       "insight": "You are not buying a price. You are buying a fraction of a business, and the price is only today's opinion of what that fraction is worth.",
       "attribution": { "source": "Day 1", "detail": "Market Foundations" }
     }

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { allLessons, allStrategies } from '../src/content/index.generated';
+import { initialStateFor } from '../src/components/player/cardState';
 
 test('every lesson and strategy exposes authoritative HTTPS sources', () => {
   for (const item of [...allLessons, ...allStrategies]) {
@@ -41,7 +42,7 @@ test('mobile-facing controls and labels stay within bounded content limits', () 
   }
 });
 
-test('Market Foundations concept cards use explanatory scenes, not generic glyphs', () => {
+test('Market Foundations uses editorial openings and explanatory scenes, not generic glyphs', () => {
   const marketLessons = allLessons.filter((lesson) => lesson.courseId === 'market-foundations');
   const concepts = marketLessons.flatMap((lesson) =>
     lesson.cards
@@ -51,9 +52,31 @@ test('Market Foundations concept cards use explanatory scenes, not generic glyph
 
   assert.equal(concepts.length, 35);
   for (const { lessonId, card } of concepts) {
-    assert.equal(card.art?.kind, 'scene', `${lessonId}/${card.id}: expected bespoke scene art`);
+    assert.ok(
+      card.art?.kind === 'scene' || card.art?.kind === 'illustration',
+      `${lessonId}/${card.id}: expected bespoke scene or editorial illustration`,
+    );
     if (card.art?.kind === 'scene') {
       assert.ok(card.art.alt.length >= 24, `${lessonId}/${card.id}: scene needs useful alt text`);
     }
   }
+
+  for (const lesson of marketLessons) {
+    const opening = lesson.cards.find((card) => card.id === 'c1');
+    assert.equal(opening && 'art' in opening ? opening.art?.kind : undefined, 'illustration', `${lesson.id}: opening is not editorial`);
+    const insight = lesson.cards.find((card) => card.type === 'key_insight');
+    assert.equal(insight?.art.kind, 'illustration', `${lesson.id}: insight poster is still generic`);
+  }
+});
+
+test('fill-blank cards begin without exposing their word bank', () => {
+  const blank = allLessons
+    .flatMap((lesson) => lesson.cards)
+    .find((card) => card.type === 'fill_blank');
+  assert.ok(blank && blank.type === 'fill_blank');
+  assert.deepEqual(initialStateFor(blank), {
+    kind: 'blank',
+    choicesOpen: false,
+    checked: false,
+  });
 });

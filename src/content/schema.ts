@@ -318,6 +318,13 @@ export const ArtSpecSchema = z.discriminatedUnion('kind', [
     /** Short spoken description for screen readers. */
     alt: z.string().min(1).max(160),
   }),
+  z.object({
+    kind: z.literal('illustration'),
+    /** Public path on web; ArtView resolves the production origin on native. */
+    source: z.string().regex(/^\/lesson-art\/[a-z0-9-]+\.(?:jpg|png)$/),
+    alt: z.string().min(1).max(200),
+    focalY: z.number().min(0).max(1).optional(),
+  }),
   /**
    * Bitmaps are permitted ONLY for course/book covers, where N is small and
    * bounded. The validator rejects `image` anywhere inside lesson cards.

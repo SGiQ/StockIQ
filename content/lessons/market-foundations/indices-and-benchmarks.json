@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "The market was up today. Which market?",
       "body": "Nobody means every stock. They mean one index — usually the S&P 500. An index is a single number that stands in for hundreds of companies at once. When the anchor says the market rose, an index rose. That is all the sentence ever means.",
-      "art": { "kind": "scene", "name": "index-basket", "palette": "mint", "alt": "A basket of companies transformed by a rule into one market index." }
+      "art": { "kind": "illustration", "source": "/lesson-art/index-basket.png", "alt": "Analysts arrange many company buildings into a weighted mechanical basket while an investor runs beside its benchmark track." }
     },
     {
       "id": "c2",
@@ -107,7 +107,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "compass", "bg": "neon" },
+      "art": { "kind": "illustration", "source": "/lesson-art/index-basket.png", "alt": "Analysts arrange many company buildings into a weighted mechanical basket while an investor runs beside its benchmark track." },
       "insight": "Beating the market means nothing until you name the market. The index you compare against decides whether your year was good or merely ordinary.",
       "attribution": { "source": "Day 8", "detail": "Market Foundations" }
     }

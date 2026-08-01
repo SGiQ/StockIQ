@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "A price is just the last trade someone agreed to.",
       "body": "Nobody sets a stock's price. A buyer and a seller met at $84.20, agreed, and that number became the price. The next trade may happen at $84.19 or at $85. The tape is a running record of agreements, not a verdict on the company.",
-      "art": { "kind": "scene", "name": "trade-agreement", "palette": "blush", "alt": "A buyer and seller agreeing on one price, creating the latest trade." }
+      "art": { "kind": "illustration", "source": "/lesson-art/price-surprise.jpg", "alt": "A market audience compares the performance it imagined with the different result revealed on stage." }
     },
     {
       "id": "c2",
@@ -123,7 +123,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "scale", "bg": "neon" },
+      "art": { "kind": "illustration", "source": "/lesson-art/price-surprise.jpg", "alt": "A market audience compares the performance it imagined with the different result revealed on stage." },
       "insight": "The market does not pay for good news. It pays for news that is better than the news it already believed.",
       "attribution": { "source": "Day 2", "detail": "Market Foundations" }
     }

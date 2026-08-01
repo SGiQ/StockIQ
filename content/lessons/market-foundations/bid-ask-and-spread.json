@@ -11,10 +11,9 @@
       "headline": "There is never one price. There are always two.",
       "body": "Look up a stock and you see a single number. That number is history — the last trade that happened. Right now the market is quoting two prices: the most any buyer will pay, and the least any seller will take. You trade against one of them, never the middle.",
       "art": {
-        "kind": "scene",
-        "name": "two-sided-market",
-        "palette": "butter",
-        "alt": "Two live prices showing the best bid to sell and the best ask to buy."
+        "kind": "illustration",
+        "source": "/lesson-art/bid-ask.jpg",
+        "alt": "Competing buyers and sellers face each other across a narrow bridge representing the spread between their prices."
       }
     },
     {
@@ -183,9 +182,9 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "scale",
-        "bg": "neon"
+        "kind": "illustration",
+        "source": "/lesson-art/bid-ask.jpg",
+        "alt": "Competing buyers and sellers face each other across a narrow bridge representing the spread between their prices."
       },
       "insight": "The market never quotes you one price. It quotes two, and the distance between them is the toll you pay for changing your mind.",
       "attribution": {

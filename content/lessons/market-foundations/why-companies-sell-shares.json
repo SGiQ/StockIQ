@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "Growth costs money the founders do not have.",
       "body": "A chain with 40 stores wants 400. Building them takes cash the owners cannot spare. So the company sells pieces of itself to strangers, and those strangers become owners. That trade is why the stock market exists.",
-      "art": { "kind": "scene", "name": "capital-journey", "palette": "mint", "alt": "Investor capital flowing into a company and becoming business growth." }
+      "art": { "kind": "illustration", "source": "/lesson-art/ipo.jpg", "alt": "New shareholders send streams of capital into a workshop where the money becomes equipment, workers, and expansion." }
     },
     {
       "id": "c2",
@@ -66,7 +66,7 @@
       "type": "concept",
       "headline": "A listing also lets early owners cash out.",
       "body": "Founders and venture funds hold shares almost nobody could buy. A listing creates a public market for them, so some sell part of their stake. Those are existing shares, so that money goes to the seller, not the business.",
-      "art": { "kind": "scene", "name": "liquidity-exit", "palette": "blush", "alt": "An early owner selling shares through the public market for cash." }
+      "art": { "kind": "illustration", "source": "/lesson-art/founder-liquidity.jpg", "alt": "An early founder sells only some ownership tiles to new public investors while remaining connected to the company." }
     },
     {
       "id": "c8",
@@ -107,7 +107,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "scale", "bg": "neon" },
+      "art": { "kind": "illustration", "source": "/lesson-art/ipo.jpg", "alt": "New shareholders send streams of capital into a workshop where the money becomes equipment, workers, and expansion." },
       "insight": "A company sells part of itself to buy its future. The cash arrives once; the owners it answers to stay forever.",
       "attribution": { "source": "Market Foundations", "detail": "Going public" }
     }

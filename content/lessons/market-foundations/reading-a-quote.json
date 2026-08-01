@@ -11,10 +11,9 @@
       "headline": "A quote screen is a dozen answers, not one number.",
       "body": "The last price gets all the attention. Everything around it — the ranges, the volume, the ratios — is context that tells you how the price got there and how much it means. Learn the fields once and every brokerage screen reads the same.",
       "art": {
-        "kind": "scene",
-        "name": "quote-terminal",
-        "palette": "blush",
-        "alt": "A stock quote terminal combining price, change, chart, and volume context."
+        "kind": "illustration",
+        "source": "/lesson-art/quote-page.jpg",
+        "alt": "An investor studies a company through layers of market activity, price history, business context, and trading volume."
       }
     },
     {
@@ -215,9 +214,9 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "eye",
-        "bg": "ink"
+        "kind": "illustration",
+        "source": "/lesson-art/quote-page.jpg",
+        "alt": "An investor studies a company through layers of market activity, price history, business context, and trading volume."
       },
       "insight": "A quote tells you what the market decided today. It never tells you whether the market was right.",
       "attribution": {

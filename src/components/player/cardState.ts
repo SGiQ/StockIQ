@@ -12,7 +12,7 @@ export type CardUiState =
   | { kind: 'passive' }
   | { kind: 'sticker'; revealed: number }
   | { kind: 'choice'; selected?: string; checked: boolean; correct?: boolean }
-  | { kind: 'blank'; picked?: string; checked: boolean; correct?: boolean };
+  | { kind: 'blank'; choicesOpen: boolean; picked?: string; checked: boolean; correct?: boolean };
 
 export type CardStateMap = Record<CardId, CardUiState>;
 
@@ -23,7 +23,7 @@ export function initialStateFor(card: Card): CardUiState {
     case 'binary_choice':
       return { kind: 'choice', checked: false };
     case 'fill_blank':
-      return { kind: 'blank', checked: false };
+      return { kind: 'blank', choicesOpen: false, checked: false };
     default:
       return { kind: 'passive' };
   }

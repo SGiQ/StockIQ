@@ -5,6 +5,7 @@ import { ChartView, type ChartTheme } from './charts';
 import { AnimatedChartView } from './charts/AnimatedChartView';
 import { Glyph } from './Glyph';
 import { SceneArt } from './SceneArt';
+import { IllustrationArt } from './IllustrationArt';
 
 export interface ArtViewProps {
   spec: ArtSpec;
@@ -68,6 +69,13 @@ export function ArtView({
             alt={spec.alt}
             active={active}
           />
+        </View>
+      );
+
+    case 'illustration':
+      return (
+        <View style={container}>
+          <IllustrationArt source={spec.source} alt={spec.alt} active={active} />
         </View>
       );
 

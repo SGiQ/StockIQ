@@ -20,6 +20,7 @@ export function KeyInsightPoster({
   card,
   style,
   compact = false,
+  active = true,
 }: {
   card: KeyInsightCard;
   style?: ViewStyle;
@@ -28,6 +29,7 @@ export function KeyInsightPoster({
    * inside a half-width tile and the poster grows to several screens tall.
    */
   compact?: boolean;
+  active?: boolean;
 }) {
   const framed = card.frame === 'gradient';
 
@@ -45,6 +47,7 @@ export function KeyInsightPoster({
           aspectRatio={1}
           rounded={false}
           glyphSize={compact ? 44 : 96}
+          active={active}
         />
 
         <View style={compact ? styles.textCompact : styles.text}>
@@ -88,13 +91,13 @@ export function KeyInsightPoster({
   );
 }
 
-export function KeyInsightCardView({ card }: { card: KeyInsightCard }) {
+export function KeyInsightCardView({ card, active = true }: { card: KeyInsightCard; active?: boolean }) {
   return (
     <View style={styles.container} pointerEvents="none">
       <Text variant="label" color={palette.slate} uppercase align="center">
         Key Insight
       </Text>
-      <KeyInsightPoster card={card} />
+      <KeyInsightPoster card={card} active={active} />
     </View>
   );
 }

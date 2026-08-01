@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "A $500 stock is not expensive.",
       "body": "Price per share tells you what one slice costs. It tells you nothing about the size of the pie. To know how big a company is, you need a second number: how many slices exist.",
-      "art": { "kind": "scene", "name": "price-vs-value", "palette": "sky", "alt": "A five-hundred-dollar share price shown as different from the value of the whole business." }
+      "art": { "kind": "illustration", "source": "/lesson-art/market-cap.jpg", "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows." }
     },
     {
       "id": "c2",
@@ -107,7 +107,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "pie", "bg": "ink" },
+      "art": { "kind": "illustration", "source": "/lesson-art/market-cap.jpg", "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows." },
       "insight": "Price tells you what one slice costs. Only market cap tells you how big the pie is.",
       "attribution": { "source": "Reading the Numbers", "detail": "Market Foundations" }
     }

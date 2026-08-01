@@ -72,7 +72,7 @@ export function CardRenderer({
       return <MainIdeaCardView card={card} onContinue={onAdvance} />;
 
     case 'key_insight':
-      return <KeyInsightCardView card={card} />;
+      return <KeyInsightCardView card={card} active={active} />;
 
     default: {
       const exhaustive: never = card;

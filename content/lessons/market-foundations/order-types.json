@@ -11,10 +11,9 @@
       "headline": "Tapping buy is one decision. How you buy is another.",
       "body": "Your broker gives you one box and several order types. Each one answers a single question: do you care more about getting filled, or about the price you pay? You cannot have both. Every order type is a different answer to that tradeoff.",
       "art": {
-        "kind": "scene",
-        "name": "execution-tradeoff",
-        "palette": "lilac",
-        "alt": "A balance between immediate execution speed and control over price."
+        "kind": "illustration",
+        "source": "/lesson-art/order-types.jpg",
+        "alt": "An investor chooses between a fast route past changing prices and a controlled price gate that may remain closed."
       }
     },
     {
@@ -172,9 +171,9 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "scale",
-        "bg": "neon"
+        "kind": "illustration",
+        "source": "/lesson-art/order-types.jpg",
+        "alt": "An investor chooses between a fast route past changing prices and a controlled price gate that may remain closed."
       },
       "insight": "You can control the price you pay or the certainty of being filled. Never both. Every order you place is a choice between them.",
       "attribution": {

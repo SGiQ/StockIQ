@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "You cannot walk onto an exchange.",
       "body": "The New York Stock Exchange will not take your order. Neither will Nasdaq. Only member firms trade there, so you hire one — a broker — to carry your order in. Tapping buy starts a short relay you never see.",
-      "art": { "kind": "scene", "name": "order-route", "palette": "blush", "alt": "An investor order traveling through a broker to a trading venue." }
+      "art": { "kind": "illustration", "source": "/lesson-art/order-route.jpg", "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall." }
     },
     {
       "id": "c2",
@@ -107,7 +107,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "handshake", "bg": "ink" },
+      "art": { "kind": "illustration", "source": "/lesson-art/order-route.jpg", "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall." },
       "insight": "The price you see is the last handshake between two strangers. Everything between your tap and that handshake is plumbing built to make it fast.",
       "attribution": { "source": "Day 2", "detail": "Market Foundations" }
     }
