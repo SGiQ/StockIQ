@@ -111,5 +111,17 @@
       "insight": "A company sells part of itself to buy its future. The cash arrives once; the owners it answers to stay forever.",
       "attribution": { "source": "Market Foundations", "detail": "Going public" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Order Types",
+      "url": "https://www.finra.org/investors/investing/investment-products/stocks/order-types",
+      "publisher": "FINRA"
+    }
   ]
 }

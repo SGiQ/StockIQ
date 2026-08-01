@@ -120,5 +120,17 @@
       "insight": "Revenue tells you how much a business collects. Margin tells you how much it gets to keep. Only one of those ever reaches the owners.",
       "attribution": { "source": "Margins", "detail": "Reading a Business" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

@@ -120,6 +120,8 @@ export interface UserProfile extends Syncable {
   narrationVoice: 'male' | 'female';
   /** Cross-platform playback rates supported by the narration UI. */
   narrationSpeed: 0.75 | 1 | 1.25 | 1.5;
+  /** Synced preference vote; does not change the production narrator by itself. */
+  maleVoiceVote: 'cedar' | 'ash' | 'echo' | null;
 }
 
 export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
@@ -225,5 +227,6 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     narrationEnabled: profile.narrationEnabled ?? false,
     narrationVoice: profile.narrationVoice ?? 'female',
     narrationSpeed: profile.narrationSpeed ?? 1,
+    maleVoiceVote: profile.maleVoiceVote ?? null,
   };
 }

@@ -74,6 +74,7 @@ export function PillButton({
     <AnimatedPressable
       testID={testID}
       accessibilityRole="button"
+      accessibilityLabel={label}
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPressIn={() => {

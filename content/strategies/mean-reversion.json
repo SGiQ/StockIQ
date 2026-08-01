@@ -190,5 +190,17 @@
       "insight": "A price far from its average is either a mistake about to be corrected or a fact you have not accepted yet. The chart tells you which only afterwards.",
       "attribution": { "source": "Strategy guide", "detail": "Mean Reversion" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Technical Analysis: Modern Perspectives",
+      "url": "https://rpc.cfainstitute.org/research/foundation/2017/technical-analysis",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

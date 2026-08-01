@@ -126,5 +126,17 @@
       "insight": "The market does not pay for good news. It pays for news that is better than the news it already believed.",
       "attribution": { "source": "Day 2", "detail": "Market Foundations" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Order Types",
+      "url": "https://www.finra.org/investors/investing/investment-products/stocks/order-types",
+      "publisher": "FINRA"
+    }
   ]
 }

@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import { SPEECH_URL } from '@/config';
+import { narrationFeedbackCardId } from '@/content/narration';
 import {
   SPEECH_MANIFEST,
   type NarrationVoice,
@@ -13,6 +14,8 @@ export type NarrationDeckId =
 /** Must stay identical to scripts/generate-speech.ts's key convention. */
 export const narrationCardKey = (deckId: NarrationDeckId, cardId: string): string =>
   `${deckId}#${cardId}`;
+
+export { narrationFeedbackCardId };
 
 export function narrationPathFor(
   deckId: NarrationDeckId,

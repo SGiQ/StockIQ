@@ -115,5 +115,17 @@
       "insight": "Conviction and stubbornness look the same from the inside. The only difference is whether you wrote down what would change your mind before you needed to.",
       "attribution": { "source": "Day 5", "detail": "Trading Psychology" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

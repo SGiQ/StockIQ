@@ -136,5 +136,17 @@
       "insight": "The market is not holding your money. There is nothing to win back — only a new trade, priced today, that does not care what you lost.",
       "attribution": { "source": "Day 3", "detail": "Trading Psychology" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

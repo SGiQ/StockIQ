@@ -21,7 +21,11 @@ import { loadEnvFile } from 'node:process';
 import { mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { allBooks, allLessons, allStrategies } from '../src/content/index.generated';
-import { narrationTextFor } from '../src/content/narration';
+import {
+  narrationFeedbackCardId,
+  narrationTextFor,
+  quizFeedbackNarrationTextFor,
+} from '../src/content/narration';
 import type { Card } from '../src/content/types';
 
 /**
@@ -149,21 +153,28 @@ async function main() {
 
   for (const deck of collectDecks()) {
     for (const card of deck.cards) {
-      const text = narrationTextFor(card);
-      if (!text) continue;
-      const key = cardKey(deck.id, card.id);
+      const scripts = [
+        { cardId: card.id, text: narrationTextFor(card) },
+        { cardId: narrationFeedbackCardId(card.id, true), text: quizFeedbackNarrationTextFor(card, true) },
+        { cardId: narrationFeedbackCardId(card.id, false), text: quizFeedbackNarrationTextFor(card, false) },
+      ];
 
-      for (const voice of Object.keys(VOICES) as NarrationVoice[]) {
-        const hash = hashFor(VOICES[voice], text);
-        (manifest[key] ??= {})[voice] = hash;
-        wanted.add(`${voice}/${hash}.mp3`);
+      for (const script of scripts) {
+        if (!script.text) continue;
+        const key = cardKey(deck.id, script.cardId);
 
-        const file = path.join(OUT_DIR, voice, `${hash}.mp3`);
-        const exists = await readFile(file).then(
-          () => true,
-          () => false,
-        );
-        if (!exists) jobs.push({ key, text, voice, hash });
+        for (const voice of Object.keys(VOICES) as NarrationVoice[]) {
+          const hash = hashFor(VOICES[voice], script.text);
+          (manifest[key] ??= {})[voice] = hash;
+          wanted.add(`${voice}/${hash}.mp3`);
+
+          const file = path.join(OUT_DIR, voice, `${hash}.mp3`);
+          const exists = await readFile(file).then(
+            () => true,
+            () => false,
+          );
+          if (!exists) jobs.push({ key, text: script.text, voice, hash });
+        }
       }
     }
   }

@@ -17,6 +17,8 @@ export default function NarrationSettings() {
   const setEnabled = useAppStore((s) => s.setNarrationEnabled);
   const setVoice = useAppStore((s) => s.setNarrationVoice);
   const setSpeed = useAppStore((s) => s.setNarrationSpeed);
+  const maleVoiceVote = useAppStore((s) => s.profile?.maleVoiceVote ?? null);
+  const setMaleVoiceVote = useAppStore((s) => s.setMaleVoiceVote);
   const previewSource = narrationUrlFor(
     'lesson:market-foundations/bid-ask-and-spread',
     'c1',
@@ -70,9 +72,8 @@ export default function NarrationSettings() {
             Listen as you learn.
           </Text>
           <Text variant="body" color={palette.slate}>
-            StockIQ can read each card as it appears. Questions are spoken,
-            but answer choices and explanations stay silent so quizzes are
-            never spoiled.
+            StockIQ can read each card as it appears. Quiz choices stay silent;
+            after you submit an answer, the result and explanation are spoken.
           </Text>
         </View>
 
@@ -157,6 +158,12 @@ export default function NarrationSettings() {
             variant="ghost"
             onPress={audition.playing ? audition.stop : audition.play}
             disabled={!audition.available}
+          />
+          <PillButton
+            label={maleVoiceVote === auditionVoice ? `Voted for ${auditionVoice}` : `Vote for ${auditionVoice}`}
+            variant={maleVoiceVote === auditionVoice ? 'light' : 'dark'}
+            onPress={() => void setMaleVoiceVote(auditionVoice)}
+            disabled={maleVoiceVote === auditionVoice}
           />
         </CardSurface>
 

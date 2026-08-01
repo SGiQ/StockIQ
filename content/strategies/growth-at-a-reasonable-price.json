@@ -172,5 +172,17 @@
       "insight": "A multiple is only half a price. The other half is the growth rate you cannot yet see, and that is the half you can be wrong about.",
       "attribution": { "source": "Growth at a Reasonable Price", "detail": "StockIQ strategy guide" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

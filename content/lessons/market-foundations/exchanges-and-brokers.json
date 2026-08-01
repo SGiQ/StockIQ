@@ -111,5 +111,17 @@
       "insight": "The price you see is the last handshake between two strangers. Everything between your tap and that handshake is plumbing built to make it fast.",
       "attribution": { "source": "Day 2", "detail": "Market Foundations" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Order Types",
+      "url": "https://www.finra.org/investors/investing/investment-products/stocks/order-types",
+      "publisher": "FINRA"
+    }
   ]
 }

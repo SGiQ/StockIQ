@@ -16,6 +16,7 @@
     "test:apple": "tsx test/apple.test.mjs",
     "test:apple-accounts": "node test/apple-accounts.test.mjs",
     "test:email": "node test/email.test.mjs",
+    "test:telemetry": "tsx --test test/telemetry.test.ts",
     "check:email": "tsx src/check-email.ts"
   },
   "dependencies": {

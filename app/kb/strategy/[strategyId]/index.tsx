@@ -8,6 +8,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { CardSurface, Chip, PillButton, RichTextView, Screen, Text } from '@/components/primitives';
 import { BulletBlock, EntityDetail, EntityHeader } from '@/components/kb/EntityScaffold';
 import { RefChips, bookRefs, traderRefs } from '@/components/kb/RefChips';
+import { SourceLinks } from '@/components/kb/SourceLinks';
 import { courseNodeStatuses, useAppStore } from '@/store/slices/useAppStore';
 import { progressId } from '@/store';
 import { palette, radius, space } from '@/theme/tokens';
@@ -50,6 +51,8 @@ export default function StrategyDetail() {
   }
 
   const unlocked = gates.every((g) => g.done);
+  const guideCompleted =
+    progressMap[progressId('strategy', strategy.id)]?.status === 'completed';
   const entityRef = `strategy:${strategy.id}` as EntityRef;
 
   // The gate is enforced here rather than by hiding the row in the hub: the
@@ -82,7 +85,7 @@ export default function StrategyDetail() {
       {strategy.guideCards?.length ? (
         <View style={styles.guide}>
           <PillButton
-            label={`Play the guide · ${strategy.guideCards.length} cards`}
+            label={`${guideCompleted ? 'Review' : 'Play'} the guide · ${strategy.guideCards.length} cards`}
             variant="dark"
             onPress={() => router.push(`/kb/strategy/${strategy.id}/guide` as never)}
           />
@@ -104,6 +107,7 @@ export default function StrategyDetail() {
 
       <RefChips title="Practised by" refs={traderRefs(strategy.practicedBy)} />
       <RefChips title="Further reading" refs={bookRefs(strategy.furtherReading)} />
+      <SourceLinks sources={strategy.sources} />
     </EntityDetail>
   );
 }

@@ -157,5 +157,17 @@
       "insight": "A price level is not a wall. It is a place where a lot of people once made up their minds, and some of them still remember.",
       "attribution": { "source": "Day 4", "detail": "Reading a Chart" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Technical Analysis: Modern Perspectives",
+      "url": "https://rpc.cfainstitute.org/research/foundation/2017/technical-analysis",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

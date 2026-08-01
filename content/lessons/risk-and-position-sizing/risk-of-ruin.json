@@ -144,5 +144,17 @@
       "insight": "An edge cannot save an account that has already reached zero. Survival is decided by the size of your bets, not the accuracy of your calls.",
       "attribution": { "source": "Day 3", "detail": "Risk and Position Sizing" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

@@ -45,13 +45,17 @@ function join(segments: (string | undefined | null)[]): string | null {
   return parts.length > 0 ? parts.join(' ') : null;
 }
 
+/** Must stay identical to the generated manifest's feedback-key convention. */
+export const narrationFeedbackCardId = (cardId: string, correct: boolean): string =>
+  `${cardId}:feedback-${correct ? 'correct' : 'incorrect'}`;
+
 /**
  * The narration script for one card, or null when a card has nothing to say.
  *
  * Scope is the teaching prose and nothing else. Answer options, word banks and
- * explanations are deliberately excluded: narration runs as the card appears,
- * so reading them aloud would hand over the answer before the learner has had
- * a chance at it, and the interactive cards are the ones that actually teach.
+ * explanations are excluded from this pre-answer script: narration runs as
+ * the card appears, so reading them aloud would hand over the answer before
+ * the learner has had a chance at it.
  *
  * The question on an interactive card *is* read, because hearing the prompt is
  * how an audio-first learner knows what is being asked — it sets the problem
@@ -92,5 +96,28 @@ export function narrationTextFor(card: Card): string | null {
       const exhaustive: never = card;
       return exhaustive;
     }
+  }
+}
+
+/**
+ * Spoken only after a learner commits to a quiz answer.
+ *
+ * Keeping this separate from `narrationTextFor` is the anti-spoiler boundary:
+ * no correct answer or explanation can enter the clip loaded before Check
+ * Answer. A wrong fill-blank response includes the answer because the same
+ * information is now visible on screen; a correct response avoids repeating
+ * it and moves straight to the explanation.
+ */
+export function quizFeedbackNarrationTextFor(card: Card, correct: boolean): string | null {
+  switch (card.type) {
+    case 'binary_choice':
+      return join([correct ? 'Correct' : 'Not quite', speak(card.explanation)]);
+    case 'fill_blank':
+      return join([
+        correct ? 'Correct' : `Not quite. The answer is ${card.answer}`,
+        card.explanation ? speak(card.explanation) : null,
+      ]);
+    default:
+      return null;
   }
 }

@@ -177,5 +177,17 @@
         "detail": "Order Types"
       }
     }
+  ],
+  "sources": [
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Order Types",
+      "url": "https://www.finra.org/investors/investing/investment-products/stocks/order-types",
+      "publisher": "FINRA"
+    }
   ]
 }

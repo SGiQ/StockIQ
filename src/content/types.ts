@@ -20,6 +20,7 @@ export type {
   ChartSpec,
   ChoiceOption,
   ConceptCard,
+  ContentSource,
   Course,
   CourseCategory,
   CourseId,

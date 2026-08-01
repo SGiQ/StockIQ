@@ -141,5 +141,17 @@
       "insight": "Price tells you where the last trade happened. Volume tells you how many people were there. One is the number; the other is the crowd behind it.",
       "attribution": { "source": "Day 6", "detail": "Reading a Chart" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Technical Analysis: Modern Perspectives",
+      "url": "https://rpc.cfainstitute.org/research/foundation/2017/technical-analysis",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

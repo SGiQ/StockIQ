@@ -206,5 +206,17 @@
       "insight": "Trend following does not predict. It reacts, loses small most of the time, and depends entirely on the rare trade nobody could identify in advance.",
       "attribution": { "source": "Trend Following", "detail": "StockIQ strategy guide" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Technical Analysis: Modern Perspectives",
+      "url": "https://rpc.cfainstitute.org/research/foundation/2017/technical-analysis",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

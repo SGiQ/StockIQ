@@ -125,5 +125,17 @@
       "insight": "Opportunities repeat. Capital does not. Missing a move costs you nothing you owned; chasing one can cost you something you did.",
       "attribution": { "source": "Trading Psychology", "detail": "Why good plans break" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

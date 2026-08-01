@@ -144,5 +144,17 @@
       "insight": "Decide your exit while you can still do arithmetic. The version of you that is losing money is not the one to ask.",
       "attribution": { "source": "Unit 2", "detail": "Risk and Position Sizing" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

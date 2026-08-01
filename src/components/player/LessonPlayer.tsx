@@ -16,10 +16,12 @@ import { useAppStore } from '@/store/slices/useAppStore';
 import { CardRenderer } from '@/components/cards/CardRenderer';
 import {
   narrationUrlFor,
+  narrationFeedbackCardId,
   type NarrationDeckId,
 } from '@/services/narration/speech';
 import { useNarration } from '@/services/narration/useNarration';
 import { motion, palette, space } from '@/theme/tokens';
+import { trackTelemetry } from '@/services/telemetry';
 import {
   canAdvance,
   consumesTap,
@@ -150,8 +152,16 @@ export function LessonPlayer({
     (s) => s.profile?.narrationSpeed ?? 1,
   );
   const setNarrationEnabled = useAppStore((s) => s.setNarrationEnabled);
+  const answered =
+    state.kind === 'choice' || state.kind === 'blank'
+      ? state.checked
+        ? state.correct
+        : undefined
+      : undefined;
+  const narrationCardId =
+    answered === undefined ? card.id : narrationFeedbackCardId(card.id, answered);
   const narrationSource = narrationDeckId
-    ? narrationUrlFor(narrationDeckId, card.id, narrationVoice)
+    ? narrationUrlFor(narrationDeckId, narrationCardId, narrationVoice)
     : null;
   const {
     available: narrationAvailable,
@@ -352,12 +362,14 @@ export function LessonPlayer({
     // narration is already enabled but that first autoplay was refused, one
     // speaker tap should start the card instead of silently disabling it.
     playNarration();
+    void trackTelemetry('narration_played', narrationDeckId);
     if (!narrationEnabled) void setNarrationEnabled(true);
   }, [
     narrationAvailable,
     narrationEnabled,
     narrationPlaying,
     playNarration,
+    narrationDeckId,
     setNarrationEnabled,
     stopNarration,
   ]);

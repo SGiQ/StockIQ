@@ -24,6 +24,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "38e72a0d4c764151",
     "female": "2d610132bac5e625"
   },
+  "lesson:market-foundations/bid-ask-and-spread#c4:feedback-correct": {
+    "male": "9960d52499d7f910",
+    "female": "a4b87b5748c759aa"
+  },
+  "lesson:market-foundations/bid-ask-and-spread#c4:feedback-incorrect": {
+    "male": "e62427f5e415bf4a",
+    "female": "8f4ddc1bc87c22b5"
+  },
   "lesson:market-foundations/bid-ask-and-spread#c5": {
     "male": "601b3afdef3290bd",
     "female": "4893e32f434f518e"
@@ -35,6 +43,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/bid-ask-and-spread#c7": {
     "male": "bb4c36492a115f44",
     "female": "8a79687492f90e40"
+  },
+  "lesson:market-foundations/bid-ask-and-spread#c7:feedback-correct": {
+    "male": "60bfb81967338fd4",
+    "female": "f707e8deef2892f1"
+  },
+  "lesson:market-foundations/bid-ask-and-spread#c7:feedback-incorrect": {
+    "male": "dcc97d7c09cf62da",
+    "female": "ab2a9cc352b376f3"
   },
   "lesson:market-foundations/bid-ask-and-spread#c8": {
     "male": "ae1006fe6e4eb6bd",
@@ -72,6 +88,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "7054f381b1531eec",
     "female": "0b3933fd7fb86047"
   },
+  "lesson:market-foundations/exchanges-and-brokers#c6:feedback-correct": {
+    "male": "a60efce3e4463939",
+    "female": "331a1b2a0fc9fc89"
+  },
+  "lesson:market-foundations/exchanges-and-brokers#c6:feedback-incorrect": {
+    "male": "69eb9cab9190a480",
+    "female": "07c1abde1f16c558"
+  },
   "lesson:market-foundations/exchanges-and-brokers#c7": {
     "male": "e3bf3b00113be430",
     "female": "4b23c7abe3f66087"
@@ -79,6 +103,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/exchanges-and-brokers#c8": {
     "male": "847bdb83b15fe420",
     "female": "a5b862ae1e124efe"
+  },
+  "lesson:market-foundations/exchanges-and-brokers#c8:feedback-correct": {
+    "male": "e156e93bdb7fcd63",
+    "female": "345882270810bbd5"
+  },
+  "lesson:market-foundations/exchanges-and-brokers#c8:feedback-incorrect": {
+    "male": "13dbf494baadb249",
+    "female": "55523126f490c4e2"
   },
   "lesson:market-foundations/exchanges-and-brokers#c9": {
     "male": "32bd4c7274171e1d",
@@ -108,6 +140,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "3629aea985d0f07b",
     "female": "64ac8950cd52ac6a"
   },
+  "lesson:market-foundations/indices-and-benchmarks#c5:feedback-correct": {
+    "male": "ed8bd4b37b74e60d",
+    "female": "e43f30024f497af3"
+  },
+  "lesson:market-foundations/indices-and-benchmarks#c5:feedback-incorrect": {
+    "male": "9ffd847d78d414b8",
+    "female": "713abc6a27bdd2fb"
+  },
   "lesson:market-foundations/indices-and-benchmarks#c6": {
     "male": "4c3c06312e3c872d",
     "female": "94287e301db93e8b"
@@ -115,6 +155,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/indices-and-benchmarks#c7": {
     "male": "522dc14d48738a5e",
     "female": "a1c98a699c5db946"
+  },
+  "lesson:market-foundations/indices-and-benchmarks#c7:feedback-correct": {
+    "male": "5a221e79d1f4db94",
+    "female": "9ec52c371160b924"
+  },
+  "lesson:market-foundations/indices-and-benchmarks#c7:feedback-incorrect": {
+    "male": "a5cbe77a0a96f076",
+    "female": "5c6c6f264d4c323e"
   },
   "lesson:market-foundations/indices-and-benchmarks#c8": {
     "male": "83bb6806081a8c5a",
@@ -144,6 +192,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "d2f0ccc14997ee82",
     "female": "2ad2914c0f08785e"
   },
+  "lesson:market-foundations/market-cap#c4:feedback-correct": {
+    "male": "fa623583e2c7defe",
+    "female": "4df3713f4f86bc5f"
+  },
+  "lesson:market-foundations/market-cap#c4:feedback-incorrect": {
+    "male": "bf824b4fd35c6846",
+    "female": "d4b5cab73b0bfb7b"
+  },
   "lesson:market-foundations/market-cap#c5": {
     "male": "860d88ca82899bc3",
     "female": "612a926e3ec20262"
@@ -159,6 +215,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/market-cap#c8": {
     "male": "c3e4c2ed5b30f1f0",
     "female": "1dd60a94790d6f4e"
+  },
+  "lesson:market-foundations/market-cap#c8:feedback-correct": {
+    "male": "d8b63bf944dccb58",
+    "female": "0e5f8dcedc0a17f9"
+  },
+  "lesson:market-foundations/market-cap#c8:feedback-incorrect": {
+    "male": "a2880b78ba7cd2e3",
+    "female": "48935081982dd6b5"
   },
   "lesson:market-foundations/market-cap#c9": {
     "male": "1104b3ea232ba740",
@@ -184,6 +248,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "0dea4348ea66848f",
     "female": "b64ae1f42cc5943a"
   },
+  "lesson:market-foundations/order-types#c4:feedback-correct": {
+    "male": "00ba2f9afddd00cc",
+    "female": "5b0b808e6995b2a1"
+  },
+  "lesson:market-foundations/order-types#c4:feedback-incorrect": {
+    "male": "2aade9c765b98424",
+    "female": "24d5e97f405157ef"
+  },
   "lesson:market-foundations/order-types#c5": {
     "male": "1649ca020a45c66f",
     "female": "e048d148f5a3a3ee"
@@ -195,6 +267,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/order-types#c7": {
     "male": "c1a79485dfb01b6e",
     "female": "363feaec4d7376f0"
+  },
+  "lesson:market-foundations/order-types#c7:feedback-correct": {
+    "male": "a9b9ce7fcb9227ae",
+    "female": "32fea3f877252716"
+  },
+  "lesson:market-foundations/order-types#c7:feedback-incorrect": {
+    "male": "39f14d686b3f7a45",
+    "female": "3a702c15a1158f68"
   },
   "lesson:market-foundations/order-types#c8": {
     "male": "1e2ad8f2ead48a33",
@@ -232,6 +312,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "9e1fee92c12c7eb1",
     "female": "e4248cbfed56b4c1"
   },
+  "lesson:market-foundations/reading-a-quote#c6:feedback-correct": {
+    "male": "de34f281119409e6",
+    "female": "560cabea1b9b6da5"
+  },
+  "lesson:market-foundations/reading-a-quote#c6:feedback-incorrect": {
+    "male": "d920cde9195c90c3",
+    "female": "962ca71a409c437a"
+  },
   "lesson:market-foundations/reading-a-quote#c7": {
     "male": "bf955639c8e7b596",
     "female": "c75ef11fd1f2e4af"
@@ -239,6 +327,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/reading-a-quote#c8": {
     "male": "d4c78e0f451692ee",
     "female": "7f85b26dda82e102"
+  },
+  "lesson:market-foundations/reading-a-quote#c8:feedback-correct": {
+    "male": "8f34e7eff4026a5f",
+    "female": "fbbad94a3ebb0b8e"
+  },
+  "lesson:market-foundations/reading-a-quote#c8:feedback-incorrect": {
+    "male": "15c07ef81d05cd7c",
+    "female": "da7cd43761008c41"
   },
   "lesson:market-foundations/reading-a-quote#c9": {
     "male": "1f21d256d6c76a7e",
@@ -268,6 +364,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "8ca95bc803d97836",
     "female": "570193c53c291511"
   },
+  "lesson:market-foundations/what-is-a-stock#c5:feedback-correct": {
+    "male": "8d7aa09d01698af6",
+    "female": "12257a36097d781f"
+  },
+  "lesson:market-foundations/what-is-a-stock#c5:feedback-incorrect": {
+    "male": "1fdae634494243c6",
+    "female": "bd5869039d1c619f"
+  },
   "lesson:market-foundations/what-is-a-stock#c6": {
     "male": "f99405851bb2d6dd",
     "female": "ecb9a1eb0c837489"
@@ -275,6 +379,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/what-is-a-stock#c7": {
     "male": "8edc34561ddf5abf",
     "female": "f5fe0ab35bd56ac7"
+  },
+  "lesson:market-foundations/what-is-a-stock#c7:feedback-correct": {
+    "male": "7139a4a21321aaa4",
+    "female": "9f022c931bf5754b"
+  },
+  "lesson:market-foundations/what-is-a-stock#c7:feedback-incorrect": {
+    "male": "91386e6758101cc8",
+    "female": "6daa3d04c94560e6"
   },
   "lesson:market-foundations/what-is-a-stock#c8": {
     "male": "56080f66e05b287d",
@@ -308,6 +420,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "2e3eb21c8700debd",
     "female": "375e1d9f4aa7d6a5"
   },
+  "lesson:market-foundations/what-moves-a-price#c5:feedback-correct": {
+    "male": "b2fb0b41d29f8e0d",
+    "female": "b0890bc6bad8ea34"
+  },
+  "lesson:market-foundations/what-moves-a-price#c5:feedback-incorrect": {
+    "male": "f6c1b237b2048133",
+    "female": "9ef622dbc758e832"
+  },
   "lesson:market-foundations/what-moves-a-price#c6": {
     "male": "6288c71bae28acdd",
     "female": "ceb1307c5ea9de31"
@@ -319,6 +439,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/what-moves-a-price#c8": {
     "male": "4e2f83fa1480882e",
     "female": "d9baf2466c1e5d64"
+  },
+  "lesson:market-foundations/what-moves-a-price#c8:feedback-correct": {
+    "male": "20691834c1161a6b",
+    "female": "f7c1cef04759360e"
+  },
+  "lesson:market-foundations/what-moves-a-price#c8:feedback-incorrect": {
+    "male": "f597a7131795d839",
+    "female": "8b2886d13bf2ff7f"
   },
   "lesson:market-foundations/what-moves-a-price#c9": {
     "male": "72ad4ecd846b4301",
@@ -344,6 +472,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "db7ed26157bdc51d",
     "female": "fc1d8a32bc4b174b"
   },
+  "lesson:market-foundations/why-companies-sell-shares#c4:feedback-correct": {
+    "male": "e91246815a121558",
+    "female": "0b88607057848774"
+  },
+  "lesson:market-foundations/why-companies-sell-shares#c4:feedback-incorrect": {
+    "male": "e6f7b4957380f871",
+    "female": "85a71cfb4d97d2d1"
+  },
   "lesson:market-foundations/why-companies-sell-shares#c5": {
     "male": "0dc232c39599acd2",
     "female": "b6eb10979127152a"
@@ -351,6 +487,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/why-companies-sell-shares#c6": {
     "male": "ded75aa01de022f6",
     "female": "4e8e44e178c30378"
+  },
+  "lesson:market-foundations/why-companies-sell-shares#c6:feedback-correct": {
+    "male": "7baa47217fc00c0c",
+    "female": "8b762647e3741796"
+  },
+  "lesson:market-foundations/why-companies-sell-shares#c6:feedback-incorrect": {
+    "male": "9e93ea0da659f6e5",
+    "female": "8cb71cdab560fab1"
   },
   "lesson:market-foundations/why-companies-sell-shares#c7": {
     "male": "f5259bc20c08d6e7",
@@ -388,6 +532,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "db2dcf8670a5bda4",
     "female": "97f47649fd49edc4"
   },
+  "lesson:reading-a-business/cash-flow-is-king#c5:feedback-correct": {
+    "male": "2b6ff66c59603737",
+    "female": "e8a9ee9416bcdc10"
+  },
+  "lesson:reading-a-business/cash-flow-is-king#c5:feedback-incorrect": {
+    "male": "52ae144569ef46ae",
+    "female": "3d5f49c5ba758aaf"
+  },
   "lesson:reading-a-business/cash-flow-is-king#c6": {
     "male": "00e7ef50458ca6dc",
     "female": "d70f9c8ca80bbac8"
@@ -395,6 +547,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-business/cash-flow-is-king#c7": {
     "male": "0be1506656f3cc6c",
     "female": "76185c0bf19c2185"
+  },
+  "lesson:reading-a-business/cash-flow-is-king#c7:feedback-correct": {
+    "male": "25a9c32f67c287d1",
+    "female": "361c3f1dc4c32bbd"
+  },
+  "lesson:reading-a-business/cash-flow-is-king#c7:feedback-incorrect": {
+    "male": "6126bfab67342dfe",
+    "female": "df534d559943f25d"
   },
   "lesson:reading-a-business/cash-flow-is-king#c8": {
     "male": "20a272fbdcd9fad5",
@@ -424,6 +584,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "501dcaff1b10d9c4",
     "female": "5a2d009fbcd9f368"
   },
+  "lesson:reading-a-business/dividends-and-buybacks#c4:feedback-correct": {
+    "male": "70e83f3842ecfc34",
+    "female": "4971ebffe920d832"
+  },
+  "lesson:reading-a-business/dividends-and-buybacks#c4:feedback-incorrect": {
+    "male": "098bd0b931983931",
+    "female": "c41efa5ccf3eb996"
+  },
   "lesson:reading-a-business/dividends-and-buybacks#c5": {
     "male": "37ffc61ee6c17f4f",
     "female": "6d2799d6921ba624"
@@ -435,6 +603,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-business/dividends-and-buybacks#c7": {
     "male": "822fafc5d1023323",
     "female": "a43e2781c29135c9"
+  },
+  "lesson:reading-a-business/dividends-and-buybacks#c7:feedback-correct": {
+    "male": "faf3df14df8010ec",
+    "female": "74505407072761a9"
+  },
+  "lesson:reading-a-business/dividends-and-buybacks#c7:feedback-incorrect": {
+    "male": "b52066ce4be4befe",
+    "female": "a0f9d807f460812b"
   },
   "lesson:reading-a-business/dividends-and-buybacks#c8": {
     "male": "f7729604c6e0ecca",
@@ -468,6 +644,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "0d6201815e5f97f8",
     "female": "b24e946cb6874354"
   },
+  "lesson:reading-a-business/economic-moats#c5:feedback-correct": {
+    "male": "b20299c4a0a15f93",
+    "female": "c8f69957b5799642"
+  },
+  "lesson:reading-a-business/economic-moats#c5:feedback-incorrect": {
+    "male": "e6e1bddbd9d2eda0",
+    "female": "1ae15ee7b49a0531"
+  },
   "lesson:reading-a-business/economic-moats#c6": {
     "male": "4a44962bf71e1863",
     "female": "5886c3aca47cb4b8"
@@ -475,6 +659,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-business/economic-moats#c7": {
     "male": "5c90107f6deefdb5",
     "female": "5e9ad8f3c49bf2e4"
+  },
+  "lesson:reading-a-business/economic-moats#c7:feedback-correct": {
+    "male": "d4d69f8812021663",
+    "female": "1cbd7af6c620f94d"
+  },
+  "lesson:reading-a-business/economic-moats#c7:feedback-incorrect": {
+    "male": "735b1645ef53af13",
+    "female": "ffd615cd6c4016c1"
   },
   "lesson:reading-a-business/economic-moats#c8": {
     "male": "8b165885c0822bcb",
@@ -512,6 +704,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "be09f0a7c645da28",
     "female": "43a91c8c267b8726"
   },
+  "lesson:reading-a-business/margins-that-matter#c6:feedback-correct": {
+    "male": "206eadec9cb5c2da",
+    "female": "ffa23cb1c6c6589e"
+  },
+  "lesson:reading-a-business/margins-that-matter#c6:feedback-incorrect": {
+    "male": "41847d662c7ae2d2",
+    "female": "5606d5235fe747a4"
+  },
   "lesson:reading-a-business/margins-that-matter#c7": {
     "male": "11e65518275bf54e",
     "female": "e5e1e52c0d7849e4"
@@ -519,6 +719,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-business/margins-that-matter#c8": {
     "male": "23ac56ae8b85d6e3",
     "female": "53394342faad6bea"
+  },
+  "lesson:reading-a-business/margins-that-matter#c8:feedback-correct": {
+    "male": "fef072ef7130a4ac",
+    "female": "ab1c4dcb1d3d956b"
+  },
+  "lesson:reading-a-business/margins-that-matter#c8:feedback-incorrect": {
+    "male": "28fe71bf7daa57b5",
+    "female": "cd40e3509e998e90"
   },
   "lesson:reading-a-business/margins-that-matter#c9": {
     "male": "1c8bd5e7de365e77",
@@ -548,6 +756,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "d884b1e034c130dc",
     "female": "d965dc6e62f56671"
   },
+  "lesson:reading-a-business/revenue-vs-earnings#c5:feedback-correct": {
+    "male": "86296b681a78948b",
+    "female": "c54bd8ddbf7301be"
+  },
+  "lesson:reading-a-business/revenue-vs-earnings#c5:feedback-incorrect": {
+    "male": "a5b2b980e82f71e2",
+    "female": "70d9beccc759d48f"
+  },
   "lesson:reading-a-business/revenue-vs-earnings#c6": {
     "male": "cd3733e50628861d",
     "female": "92899346134b2c8e"
@@ -559,6 +775,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-business/revenue-vs-earnings#c8": {
     "male": "7c4fb92e0d8ff41f",
     "female": "712a4fd2caa45ac5"
+  },
+  "lesson:reading-a-business/revenue-vs-earnings#c8:feedback-correct": {
+    "male": "eef5dfcb52313606",
+    "female": "3e9f2d5624343993"
+  },
+  "lesson:reading-a-business/revenue-vs-earnings#c8:feedback-incorrect": {
+    "male": "9bb27db758522f65",
+    "female": "7ccdc21dd2dfca94"
   },
   "lesson:reading-a-business/revenue-vs-earnings#c9": {
     "male": "16ae7db50ef55f28",
@@ -584,9 +808,25 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "f32ebbb57fcdb745",
     "female": "ef54369e771b3943"
   },
+  "lesson:reading-a-business/the-price-earnings-ratio#c4:feedback-correct": {
+    "male": "40235602eeb76d4e",
+    "female": "2953bd09be6bdd99"
+  },
+  "lesson:reading-a-business/the-price-earnings-ratio#c4:feedback-incorrect": {
+    "male": "fa2a7ca77a68f53b",
+    "female": "8afe161345f5a359"
+  },
   "lesson:reading-a-business/the-price-earnings-ratio#c5": {
     "male": "ed81901cc894eec2",
     "female": "ec8aad25c0c3e722"
+  },
+  "lesson:reading-a-business/the-price-earnings-ratio#c5:feedback-correct": {
+    "male": "7add7d0e059c47b3",
+    "female": "92978b1015ea7345"
+  },
+  "lesson:reading-a-business/the-price-earnings-ratio#c5:feedback-incorrect": {
+    "male": "20e7dfb017a547cc",
+    "female": "cea2ec878246d923"
   },
   "lesson:reading-a-business/the-price-earnings-ratio#c6": {
     "male": "40e7a62e86c51658",
@@ -624,6 +864,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "7f1311dbe15ac525",
     "female": "e7b37fe9f40b3eb3"
   },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c4:feedback-correct": {
+    "male": "e679ccd8d880676b",
+    "female": "9b3a7e75eebd20f6"
+  },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c4:feedback-incorrect": {
+    "male": "eab9e197ceeb6947",
+    "female": "f6383afd9e29ea8f"
+  },
   "lesson:reading-a-chart/anatomy-of-a-candle#c5": {
     "male": "9d70c4f823c5cc72",
     "female": "16bcdba8b638a50f"
@@ -635,6 +883,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/anatomy-of-a-candle#c7": {
     "male": "25d991d9fe49564c",
     "female": "afdf33d8bc44db82"
+  },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c7:feedback-correct": {
+    "male": "c588d42716edcbc4",
+    "female": "a420a4ea8f58e766"
+  },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c7:feedback-incorrect": {
+    "male": "b77ba468d331b312",
+    "female": "456458fdc3a83c5d"
   },
   "lesson:reading-a-chart/anatomy-of-a-candle#c8": {
     "male": "1ee8678af4fa0070",
@@ -651,6 +907,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/anatomy-of-a-candle#c11": {
     "male": "8321d6689f59276b",
     "female": "d83bc746a7614091"
+  },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c11:feedback-correct": {
+    "male": "2be17081c01af90c",
+    "female": "b53ff304837f796d"
+  },
+  "lesson:reading-a-chart/anatomy-of-a-candle#c11:feedback-incorrect": {
+    "male": "e6c809bcd24cef66",
+    "female": "64a160cfdab81e93"
   },
   "lesson:reading-a-chart/anatomy-of-a-candle#c12": {
     "male": "238930944a0d4d88",
@@ -676,6 +940,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "5199bc09c66bdc4d",
     "female": "75b5a964023b29a2"
   },
+  "lesson:reading-a-chart/momentum-indicators#c4:feedback-correct": {
+    "male": "ef369a9a3d33e3d4",
+    "female": "3c31fb9b3925a121"
+  },
+  "lesson:reading-a-chart/momentum-indicators#c4:feedback-incorrect": {
+    "male": "c126da45db41b2b7",
+    "female": "f136e0c99ef3dca1"
+  },
   "lesson:reading-a-chart/momentum-indicators#c5": {
     "male": "f44340eda54c1217",
     "female": "15d5969fec7667ac"
@@ -695,6 +967,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/momentum-indicators#c9": {
     "male": "50934d91f65ec1da",
     "female": "01588ad8d833f2e1"
+  },
+  "lesson:reading-a-chart/momentum-indicators#c9:feedback-correct": {
+    "male": "ddf295ba16465885",
+    "female": "fc65da389d500a75"
+  },
+  "lesson:reading-a-chart/momentum-indicators#c9:feedback-incorrect": {
+    "male": "9fb2c41ca9acadde",
+    "female": "e017c157e5831966"
   },
   "lesson:reading-a-chart/momentum-indicators#c10": {
     "male": "14887a59418c1ed0",
@@ -720,6 +1000,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "e4201e0accddd75d",
     "female": "b15fd9ab3bd78592"
   },
+  "lesson:reading-a-chart/moving-averages#c3:feedback-correct": {
+    "male": "99afc1aaac36cf42",
+    "female": "8811581ebe000401"
+  },
+  "lesson:reading-a-chart/moving-averages#c3:feedback-incorrect": {
+    "male": "a9f18bed0190e752",
+    "female": "f4588e20f2837303"
+  },
   "lesson:reading-a-chart/moving-averages#c4": {
     "male": "2eba3b996672ece5",
     "female": "29d7d84d9420d08d"
@@ -731,6 +1019,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/moving-averages#c6": {
     "male": "29b02a3ab0bdcc4d",
     "female": "bf1f68ed041925de"
+  },
+  "lesson:reading-a-chart/moving-averages#c6:feedback-correct": {
+    "male": "7c36875db0b53c35",
+    "female": "0ca00aa2368f2368"
+  },
+  "lesson:reading-a-chart/moving-averages#c6:feedback-incorrect": {
+    "male": "173ff78abca9ad1b",
+    "female": "aea18fa6e48dce51"
   },
   "lesson:reading-a-chart/moving-averages#c7": {
     "male": "78dadad164e9bf40",
@@ -772,6 +1068,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "78ad8787b335b6e9",
     "female": "74f84439f2e76202"
   },
+  "lesson:reading-a-chart/patterns-and-their-limits#c4:feedback-correct": {
+    "male": "7ad4f9a0aea8606a",
+    "female": "a2034a8d4f18b503"
+  },
+  "lesson:reading-a-chart/patterns-and-their-limits#c4:feedback-incorrect": {
+    "male": "0720255084ef23c7",
+    "female": "bbaaf18449058dfe"
+  },
   "lesson:reading-a-chart/patterns-and-their-limits#c5": {
     "male": "f1cb899b4c0494ad",
     "female": "7ce9f1767fbc3dcd"
@@ -783,6 +1087,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/patterns-and-their-limits#c7": {
     "male": "4ef6937b65a9d7dc",
     "female": "fd789ddc7668fb9f"
+  },
+  "lesson:reading-a-chart/patterns-and-their-limits#c7:feedback-correct": {
+    "male": "4c5adaceee2c5785",
+    "female": "9b0649a1a88eb478"
+  },
+  "lesson:reading-a-chart/patterns-and-their-limits#c7:feedback-incorrect": {
+    "male": "c3cdf073d0972014",
+    "female": "bce57bdacfd2b924"
   },
   "lesson:reading-a-chart/patterns-and-their-limits#c8": {
     "male": "cab383b32107e4a5",
@@ -820,6 +1132,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "c2d03f3394d48221",
     "female": "91035a477dfceba9"
   },
+  "lesson:reading-a-chart/price-and-time#c4:feedback-correct": {
+    "male": "66ace63e30579f05",
+    "female": "55a4739a783a0610"
+  },
+  "lesson:reading-a-chart/price-and-time#c4:feedback-incorrect": {
+    "male": "c836686ee775c015",
+    "female": "3b6209066e0d2e21"
+  },
   "lesson:reading-a-chart/price-and-time#c5": {
     "male": "f5aa70c44b26afb6",
     "female": "2432411a8b4b8918"
@@ -839,6 +1159,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/price-and-time#c9": {
     "male": "f7193b005a441e30",
     "female": "354cb6452969d2b6"
+  },
+  "lesson:reading-a-chart/price-and-time#c9:feedback-correct": {
+    "male": "0d0a7d94e5926412",
+    "female": "db1e33957f361676"
+  },
+  "lesson:reading-a-chart/price-and-time#c9:feedback-incorrect": {
+    "male": "fc78778be3427641",
+    "female": "330ad569e1a4fc2a"
   },
   "lesson:reading-a-chart/price-and-time#c10": {
     "male": "0d6f0c4ff9b02f76",
@@ -872,6 +1200,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "ff95d90475ee3e61",
     "female": "1858cfb3f1a237c9"
   },
+  "lesson:reading-a-chart/support-and-resistance#c5:feedback-correct": {
+    "male": "d6063513f59d00ed",
+    "female": "0097775c0b42c871"
+  },
+  "lesson:reading-a-chart/support-and-resistance#c5:feedback-incorrect": {
+    "male": "51403a6b57064bfc",
+    "female": "57988ae12b1cd9c2"
+  },
   "lesson:reading-a-chart/support-and-resistance#c6": {
     "male": "e853a97e9b388c67",
     "female": "bc61ac0e29875afd"
@@ -887,6 +1223,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/support-and-resistance#c9": {
     "male": "8f99b8b7e640bfea",
     "female": "f465330fb4731848"
+  },
+  "lesson:reading-a-chart/support-and-resistance#c9:feedback-correct": {
+    "male": "80ca498e43b3c96c",
+    "female": "fc358f1b1036ab0f"
+  },
+  "lesson:reading-a-chart/support-and-resistance#c9:feedback-incorrect": {
+    "male": "9e8e2f82c4137afd",
+    "female": "f4ca78ce6170b1a1"
   },
   "lesson:reading-a-chart/support-and-resistance#c10": {
     "male": "beb529feacd60e5d",
@@ -916,6 +1260,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "98c5d805f5076b07",
     "female": "dd0239ccaaeb747d"
   },
+  "lesson:reading-a-chart/trend-and-structure#c4:feedback-correct": {
+    "male": "dd68b58cbae3c2d2",
+    "female": "ab573b9482fac0c1"
+  },
+  "lesson:reading-a-chart/trend-and-structure#c4:feedback-incorrect": {
+    "male": "a2d3dc2e0f44283e",
+    "female": "7eb00f2cfd0a1ecc"
+  },
   "lesson:reading-a-chart/trend-and-structure#c5": {
     "male": "7b53441cda46c633",
     "female": "57af8a890e64e15b"
@@ -939,6 +1291,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/trend-and-structure#c10": {
     "male": "85e893994706da2a",
     "female": "9838f9284dd36ed2"
+  },
+  "lesson:reading-a-chart/trend-and-structure#c10:feedback-correct": {
+    "male": "5cb5c5149d15029d",
+    "female": "05f4bf682f0478a2"
+  },
+  "lesson:reading-a-chart/trend-and-structure#c10:feedback-incorrect": {
+    "male": "bf175c640c1f4b28",
+    "female": "09d7c07926d29015"
   },
   "lesson:reading-a-chart/trend-and-structure#c11": {
     "male": "24fd2570d98432bf",
@@ -972,6 +1332,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "33822fca154429d9",
     "female": "e69025c6f00dbe42"
   },
+  "lesson:reading-a-chart/volume-confirms#c5:feedback-correct": {
+    "male": "a9750c2f56e84532",
+    "female": "a0ff110f46255401"
+  },
+  "lesson:reading-a-chart/volume-confirms#c5:feedback-incorrect": {
+    "male": "81c5ea25d0e54a9b",
+    "female": "0ad6742a81406d02"
+  },
   "lesson:reading-a-chart/volume-confirms#c6": {
     "male": "c0a1b67702f536f2",
     "female": "303bb586d1f99cb0"
@@ -987,6 +1355,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:reading-a-chart/volume-confirms#c9": {
     "male": "c6697817e9a0c266",
     "female": "2bc599d8f42a3612"
+  },
+  "lesson:reading-a-chart/volume-confirms#c9:feedback-correct": {
+    "male": "6dc45ba7c4724a27",
+    "female": "bfd6f1f1333309e6"
+  },
+  "lesson:reading-a-chart/volume-confirms#c9:feedback-incorrect": {
+    "male": "25593876c08bd535",
+    "female": "c3ad102a6191c13c"
   },
   "lesson:reading-a-chart/volume-confirms#c10": {
     "male": "c26e4f51f56fa4ad",
@@ -1012,6 +1388,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "937e88c307a31050",
     "female": "4d30843227ec7acb"
   },
+  "lesson:risk-and-position-sizing/diversification-and-correlation#c4:feedback-correct": {
+    "male": "816dca81cc25fead",
+    "female": "e7b75738adbe7229"
+  },
+  "lesson:risk-and-position-sizing/diversification-and-correlation#c4:feedback-incorrect": {
+    "male": "13e270c92a2c6bf4",
+    "female": "49f0cc1b8f501a7b"
+  },
   "lesson:risk-and-position-sizing/diversification-and-correlation#c5": {
     "male": "795b0b1cf686b3a9",
     "female": "9b90db0f39015290"
@@ -1027,6 +1411,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/diversification-and-correlation#c8": {
     "male": "40d142c498df2fba",
     "female": "1867d15edfa9027c"
+  },
+  "lesson:risk-and-position-sizing/diversification-and-correlation#c8:feedback-correct": {
+    "male": "3fd0bfe043a05370",
+    "female": "82992e358ef99e53"
+  },
+  "lesson:risk-and-position-sizing/diversification-and-correlation#c8:feedback-incorrect": {
+    "male": "1b8ed8704181e4d6",
+    "female": "5458060114ddc229"
   },
   "lesson:risk-and-position-sizing/diversification-and-correlation#c9": {
     "male": "c6d49c8c31d175a9",
@@ -1060,6 +1452,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "3d290525e1a78dfe",
     "female": "9d57b574134101f3"
   },
+  "lesson:risk-and-position-sizing/drawdown-and-recovery#c4:feedback-correct": {
+    "male": "1a3693c1aaa75cc9",
+    "female": "21aab43d74f00261"
+  },
+  "lesson:risk-and-position-sizing/drawdown-and-recovery#c4:feedback-incorrect": {
+    "male": "70fe654d41566a90",
+    "female": "01afa4b6ef466673"
+  },
   "lesson:risk-and-position-sizing/drawdown-and-recovery#c5": {
     "male": "e70a00d7f8c94c01",
     "female": "faa4c2e6c34548d6"
@@ -1079,6 +1479,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/drawdown-and-recovery#c9": {
     "male": "c63ec3f9664eca70",
     "female": "14d2c91030c30fb2"
+  },
+  "lesson:risk-and-position-sizing/drawdown-and-recovery#c9:feedback-correct": {
+    "male": "a4f8d841521e03f4",
+    "female": "9854d911b8cd5a50"
+  },
+  "lesson:risk-and-position-sizing/drawdown-and-recovery#c9:feedback-incorrect": {
+    "male": "94b1244294e91260",
+    "female": "a573f6981967832f"
   },
   "lesson:risk-and-position-sizing/drawdown-and-recovery#c10": {
     "male": "3f534cc3d06a0e10",
@@ -1112,6 +1520,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "feb96a6f8b9c096e",
     "female": "201a1d2c1dccfe37"
   },
+  "lesson:risk-and-position-sizing/position-sizing#c5:feedback-correct": {
+    "male": "69f2b94ddaa2a457",
+    "female": "621d6354b9fc8f82"
+  },
+  "lesson:risk-and-position-sizing/position-sizing#c5:feedback-incorrect": {
+    "male": "b86136e39e1df1a6",
+    "female": "6eb21583251c8568"
+  },
   "lesson:risk-and-position-sizing/position-sizing#c6": {
     "male": "1e5dc239c091dae4",
     "female": "51caaa876e962f52"
@@ -1119,6 +1535,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/position-sizing#c7": {
     "male": "0caec08b4dcb88dc",
     "female": "2ff49f4a95f916f4"
+  },
+  "lesson:risk-and-position-sizing/position-sizing#c7:feedback-correct": {
+    "male": "ad305e555cd03b55",
+    "female": "b65ea5c650495945"
+  },
+  "lesson:risk-and-position-sizing/position-sizing#c7:feedback-incorrect": {
+    "male": "3cad812a53efbcdf",
+    "female": "d93de5a7b2551b33"
   },
   "lesson:risk-and-position-sizing/position-sizing#c8": {
     "male": "95546a43e81c3d91",
@@ -1156,6 +1580,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "ecf7f025eb18852c",
     "female": "b330bf47713e0eff"
   },
+  "lesson:risk-and-position-sizing/risk-of-ruin#c4:feedback-correct": {
+    "male": "6b0befad7381906c",
+    "female": "105e3bf03d2840a7"
+  },
+  "lesson:risk-and-position-sizing/risk-of-ruin#c4:feedback-incorrect": {
+    "male": "503244d06abf634c",
+    "female": "13bbf606ebf339a3"
+  },
   "lesson:risk-and-position-sizing/risk-of-ruin#c5": {
     "male": "53b5b9aead822aac",
     "female": "6b6ee4690be3a500"
@@ -1167,6 +1599,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/risk-of-ruin#c7": {
     "male": "5e7108c2e6b92624",
     "female": "edcd8e9336a8a72c"
+  },
+  "lesson:risk-and-position-sizing/risk-of-ruin#c7:feedback-correct": {
+    "male": "3da5ea1fcfe77a9b",
+    "female": "1131409d6c8b2047"
+  },
+  "lesson:risk-and-position-sizing/risk-of-ruin#c7:feedback-incorrect": {
+    "male": "5ce7ea029e91af5d",
+    "female": "2274c8781080d539"
   },
   "lesson:risk-and-position-sizing/risk-of-ruin#c8": {
     "male": "0c124a31f4938efa",
@@ -1204,6 +1644,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "63494e1493dd89f3",
     "female": "836b195c21852d08"
   },
+  "lesson:risk-and-position-sizing/stop-losses#c4:feedback-correct": {
+    "male": "3da8463fe5af605d",
+    "female": "c393834186fb81e5"
+  },
+  "lesson:risk-and-position-sizing/stop-losses#c4:feedback-incorrect": {
+    "male": "5231cc9a212a6046",
+    "female": "d7172a5758d77e4c"
+  },
   "lesson:risk-and-position-sizing/stop-losses#c5": {
     "male": "39b1a76c9542c76d",
     "female": "0440173cda2a5632"
@@ -1215,6 +1663,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/stop-losses#c7": {
     "male": "c6741ef0b292af2b",
     "female": "0f33d3f1f0563a0b"
+  },
+  "lesson:risk-and-position-sizing/stop-losses#c7:feedback-correct": {
+    "male": "19eee3f5e20190a5",
+    "female": "f96e6f3ea46f7f1b"
+  },
+  "lesson:risk-and-position-sizing/stop-losses#c7:feedback-incorrect": {
+    "male": "583df398a94c227d",
+    "female": "c4e8da08c03fa198"
   },
   "lesson:risk-and-position-sizing/stop-losses#c8": {
     "male": "0043192ca65e6607",
@@ -1252,6 +1708,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "efd446898302981e",
     "female": "751fc1d721481266"
   },
+  "lesson:risk-and-position-sizing/thinking-in-r#c3:feedback-correct": {
+    "male": "ce99d9efb685753d",
+    "female": "11e9350211eb2ca6"
+  },
+  "lesson:risk-and-position-sizing/thinking-in-r#c3:feedback-incorrect": {
+    "male": "dc3500e1618e87d3",
+    "female": "fc3884eb47c5c477"
+  },
   "lesson:risk-and-position-sizing/thinking-in-r#c4": {
     "male": "1e45025b69e759da",
     "female": "a981324e3f8faf4f"
@@ -1263,6 +1727,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/thinking-in-r#c6": {
     "male": "38ca38c83e0d2cce",
     "female": "c22a1e410a8fa9bb"
+  },
+  "lesson:risk-and-position-sizing/thinking-in-r#c6:feedback-correct": {
+    "male": "cfe568caa97b8149",
+    "female": "0853915279323b70"
+  },
+  "lesson:risk-and-position-sizing/thinking-in-r#c6:feedback-incorrect": {
+    "male": "6ebca518b52eee05",
+    "female": "a217fcb4d8dd1a09"
   },
   "lesson:risk-and-position-sizing/thinking-in-r#c7": {
     "male": "f3978d2e94bc7ce9",
@@ -1279,6 +1751,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/thinking-in-r#c10": {
     "male": "bcbf73b97af650f1",
     "female": "358aa7beb5709baf"
+  },
+  "lesson:risk-and-position-sizing/thinking-in-r#c10:feedback-correct": {
+    "male": "78560b22ab318e32",
+    "female": "0ff954910484a68a"
+  },
+  "lesson:risk-and-position-sizing/thinking-in-r#c10:feedback-incorrect": {
+    "male": "f7df628d36c39be9",
+    "female": "bb5552978e099962"
   },
   "lesson:risk-and-position-sizing/thinking-in-r#c11": {
     "male": "2597f638fbc86955",
@@ -1304,6 +1784,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "9e1439d269026d26",
     "female": "66d1b646cfcaae45"
   },
+  "lesson:risk-and-position-sizing/why-losses-hurt-more#c4:feedback-correct": {
+    "male": "94a5eba0907e7287",
+    "female": "8f3dd6235c84526a"
+  },
+  "lesson:risk-and-position-sizing/why-losses-hurt-more#c4:feedback-incorrect": {
+    "male": "71b27a56dcf0bb46",
+    "female": "f40b7e229cf66b1e"
+  },
   "lesson:risk-and-position-sizing/why-losses-hurt-more#c5": {
     "male": "a177d7fc33b05c1d",
     "female": "338e1000d2542610"
@@ -1319,6 +1807,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:risk-and-position-sizing/why-losses-hurt-more#c8": {
     "male": "bcc51d77d22135c5",
     "female": "142f5bc5b15144bb"
+  },
+  "lesson:risk-and-position-sizing/why-losses-hurt-more#c8:feedback-correct": {
+    "male": "ddfb0e905353bcf1",
+    "female": "b6cfc6fccfc2f055"
+  },
+  "lesson:risk-and-position-sizing/why-losses-hurt-more#c8:feedback-incorrect": {
+    "male": "efcf767fd743b1c9",
+    "female": "57bbeb55c1ca085b"
   },
   "lesson:risk-and-position-sizing/why-losses-hurt-more#c9": {
     "male": "f2b1a54bdd3411fa",
@@ -1352,6 +1848,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "8eb56df00fde919d",
     "female": "d3fd7b635aa6c52c"
   },
+  "lesson:trading-psychology/confirmation-bias#c4:feedback-correct": {
+    "male": "cbba9fc4fae62bf6",
+    "female": "969e83faa57c356c"
+  },
+  "lesson:trading-psychology/confirmation-bias#c4:feedback-incorrect": {
+    "male": "df6794ff58bbd317",
+    "female": "8774e5b54b7bb06a"
+  },
   "lesson:trading-psychology/confirmation-bias#c5": {
     "male": "eedb24a94f1f6a05",
     "female": "147f07f0a0fd8d74"
@@ -1367,6 +1871,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/confirmation-bias#c8": {
     "male": "07382faa1782b680",
     "female": "cfaab0168a942fb7"
+  },
+  "lesson:trading-psychology/confirmation-bias#c8:feedback-correct": {
+    "male": "8514e1dd2a669d0d",
+    "female": "835cda1f6d79e18a"
+  },
+  "lesson:trading-psychology/confirmation-bias#c8:feedback-incorrect": {
+    "male": "eb16b9f0f3d0fba4",
+    "female": "a6520f010f50db3d"
   },
   "lesson:trading-psychology/confirmation-bias#c9": {
     "male": "c69ce62e304429a8",
@@ -1400,6 +1912,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "e83ba8738370b156",
     "female": "68504639b9f023f7"
   },
+  "lesson:trading-psychology/fear-of-missing-out#c4:feedback-correct": {
+    "male": "a007087e957caf95",
+    "female": "3405caccbe016560"
+  },
+  "lesson:trading-psychology/fear-of-missing-out#c4:feedback-incorrect": {
+    "male": "46f85cdab8362969",
+    "female": "789baf676dbe4b75"
+  },
   "lesson:trading-psychology/fear-of-missing-out#c5": {
     "male": "838f3cff66b8a8d6",
     "female": "352f77a02795c075"
@@ -1411,6 +1931,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/fear-of-missing-out#c7": {
     "male": "88edd1d81f559be4",
     "female": "2582348d85c169b9"
+  },
+  "lesson:trading-psychology/fear-of-missing-out#c7:feedback-correct": {
+    "male": "c794e3d72e8f2c68",
+    "female": "c06e8641f94f15ed"
+  },
+  "lesson:trading-psychology/fear-of-missing-out#c7:feedback-incorrect": {
+    "male": "44e33a30485724e0",
+    "female": "83f0d5c95d8e46aa"
   },
   "lesson:trading-psychology/fear-of-missing-out#c8": {
     "male": "26b50b1c314a7efe",
@@ -1444,6 +1972,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "39ecd8e04e814dd4",
     "female": "8f88cb1335f4f192"
   },
+  "lesson:trading-psychology/loss-aversion#c4:feedback-correct": {
+    "male": "c9ce79094fcc2b93",
+    "female": "651efc24ef16e177"
+  },
+  "lesson:trading-psychology/loss-aversion#c4:feedback-incorrect": {
+    "male": "81f2bfd047267d98",
+    "female": "254a35b77748391f"
+  },
   "lesson:trading-psychology/loss-aversion#c5": {
     "male": "f8924ab1ea7f72e6",
     "female": "c3e9786f9d6345f1"
@@ -1456,6 +1992,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "001db8828efde50d",
     "female": "185954e291dd9d88"
   },
+  "lesson:trading-psychology/loss-aversion#c7:feedback-correct": {
+    "male": "1c7540127203d695",
+    "female": "4bc998bad792a18a"
+  },
+  "lesson:trading-psychology/loss-aversion#c7:feedback-incorrect": {
+    "male": "25ccc3ba88e094d3",
+    "female": "01dd819c98947b5c"
+  },
   "lesson:trading-psychology/loss-aversion#c8": {
     "male": "954dcc58b1065cb8",
     "female": "f1171e01e4f8485c"
@@ -1467,6 +2011,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/loss-aversion#c10": {
     "male": "79223feca5eaa158",
     "female": "4b43f52c8f607329"
+  },
+  "lesson:trading-psychology/loss-aversion#c10:feedback-correct": {
+    "male": "0aefb942f51d3580",
+    "female": "4b168b74b94e455e"
+  },
+  "lesson:trading-psychology/loss-aversion#c10:feedback-incorrect": {
+    "male": "f669416609cb6728",
+    "female": "f72e10e72318bb6d"
   },
   "lesson:trading-psychology/loss-aversion#c11": {
     "male": "9c9d23bae27d6e10",
@@ -1496,6 +2048,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "99ea568010c9dfdd",
     "female": "556914a48f247c14"
   },
+  "lesson:trading-psychology/patience-and-inaction#c5:feedback-correct": {
+    "male": "eb04588ca03a4cfe",
+    "female": "200b3a6c728c0b44"
+  },
+  "lesson:trading-psychology/patience-and-inaction#c5:feedback-incorrect": {
+    "male": "85b1592123a3483c",
+    "female": "a61d384b5f023f63"
+  },
   "lesson:trading-psychology/patience-and-inaction#c6": {
     "male": "dc1f90efe64e7a3f",
     "female": "501dde7cd4d9d55c"
@@ -1507,6 +2067,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/patience-and-inaction#c8": {
     "male": "1df2d5f39a3a7970",
     "female": "ec0b5ff6b5d6e72c"
+  },
+  "lesson:trading-psychology/patience-and-inaction#c8:feedback-correct": {
+    "male": "1b0d10136a04ff92",
+    "female": "f559707b8c704b10"
+  },
+  "lesson:trading-psychology/patience-and-inaction#c8:feedback-incorrect": {
+    "male": "f4f320d1f5af55a2",
+    "female": "c422834762075dbf"
   },
   "lesson:trading-psychology/patience-and-inaction#c9": {
     "male": "878f56692858d593",
@@ -1548,6 +2116,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "024f9486df3b9ab6",
     "female": "4ec1d175dc2fcfd3"
   },
+  "lesson:trading-psychology/process-vs-outcome#c6:feedback-correct": {
+    "male": "2b3aaf45ac950383",
+    "female": "eaac738ca0c1490e"
+  },
+  "lesson:trading-psychology/process-vs-outcome#c6:feedback-incorrect": {
+    "male": "5755cfb7dab57341",
+    "female": "b57c4a22b4597b9e"
+  },
   "lesson:trading-psychology/process-vs-outcome#c7": {
     "male": "0c802ec853d7b6f9",
     "female": "06696693154aa8b4"
@@ -1559,6 +2135,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/process-vs-outcome#c9": {
     "male": "40ec62ca0d0aebca",
     "female": "f0cb50a3c28ae1db"
+  },
+  "lesson:trading-psychology/process-vs-outcome#c9:feedback-correct": {
+    "male": "16d9e2887f08b588",
+    "female": "36d441fbf3bdd813"
+  },
+  "lesson:trading-psychology/process-vs-outcome#c9:feedback-incorrect": {
+    "male": "068aa7ec23cecc8c",
+    "female": "677744ef68302aa2"
   },
   "lesson:trading-psychology/process-vs-outcome#c10": {
     "male": "10f82bcebf8a8f45",
@@ -1588,6 +2172,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "e55ff226dffa401d",
     "female": "c7c03ce432686645"
   },
+  "lesson:trading-psychology/revenge-trading#c4:feedback-correct": {
+    "male": "8ca5a2795acd8682",
+    "female": "e8b7d9c806eef23a"
+  },
+  "lesson:trading-psychology/revenge-trading#c4:feedback-incorrect": {
+    "male": "42a9f437f8294825",
+    "female": "e37fdc9a34577c12"
+  },
   "lesson:trading-psychology/revenge-trading#c5": {
     "male": "daaf721de71e8eaf",
     "female": "288e7b7c0f62a6fe"
@@ -1607,6 +2199,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/revenge-trading#c9": {
     "male": "81c3687fa43b15fd",
     "female": "6e7fe31da6767ec3"
+  },
+  "lesson:trading-psychology/revenge-trading#c9:feedback-correct": {
+    "male": "771429aad3377f68",
+    "female": "b90e6127cf89b666"
+  },
+  "lesson:trading-psychology/revenge-trading#c9:feedback-incorrect": {
+    "male": "fdf1679a5de63ff1",
+    "female": "da051ce761629db9"
   },
   "lesson:trading-psychology/revenge-trading#c10": {
     "male": "f60f47794bcc3d26",
@@ -1644,6 +2244,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "8fa45639ec2af0b5",
     "female": "9a40aa949d23fd73"
   },
+  "lesson:trading-psychology/the-trading-journal#c5:feedback-correct": {
+    "male": "5aebad1c404eabdf",
+    "female": "71f15ac26225b0ed"
+  },
+  "lesson:trading-psychology/the-trading-journal#c5:feedback-incorrect": {
+    "male": "47ca3dc8e0068e25",
+    "female": "20d5b9d03459ae40"
+  },
   "lesson:trading-psychology/the-trading-journal#c6": {
     "male": "5f3c99a631447cdf",
     "female": "ca987736bcdb447d"
@@ -1659,6 +2267,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:trading-psychology/the-trading-journal#c9": {
     "male": "4a86bd6112f33b82",
     "female": "7ec5dc8e8762254a"
+  },
+  "lesson:trading-psychology/the-trading-journal#c9:feedback-correct": {
+    "male": "cd8eef5b94c788be",
+    "female": "663cdb9ceb30a865"
+  },
+  "lesson:trading-psychology/the-trading-journal#c9:feedback-incorrect": {
+    "male": "cbfe482dddbb30a5",
+    "female": "78b2434979e4335f"
   },
   "lesson:trading-psychology/the-trading-journal#c10": {
     "male": "bb27d6edac31e326",
@@ -1692,6 +2308,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "257b450992adbef1",
     "female": "61f0867378c59d21"
   },
+  "book:market-wizards#c5:feedback-correct": {
+    "male": "44016cbcc09f9e31",
+    "female": "bc353d278361b0ee"
+  },
+  "book:market-wizards#c5:feedback-incorrect": {
+    "male": "9cc875cc73e2ceb3",
+    "female": "1cd3af6317f775a7"
+  },
   "book:market-wizards#c6": {
     "male": "98775a1db1358f0c",
     "female": "7b1db9dd9210292d"
@@ -1699,6 +2323,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "book:market-wizards#c7": {
     "male": "160759851f0b4f34",
     "female": "1e464df8948a807e"
+  },
+  "book:market-wizards#c7:feedback-correct": {
+    "male": "ed5fbc26e8814aea",
+    "female": "f14edc6208818643"
+  },
+  "book:market-wizards#c7:feedback-incorrect": {
+    "male": "85ffb2592d148e43",
+    "female": "25d53ee4d235bf84"
   },
   "book:market-wizards#c8": {
     "male": "d730e52acaf08b3b",
@@ -1732,6 +2364,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "246b2fef4b1e39df",
     "female": "5487938cae2b4091"
   },
+  "book:one-up-on-wall-street#c3:feedback-correct": {
+    "male": "36769c7ce796f932",
+    "female": "f5e6873cf0452b39"
+  },
+  "book:one-up-on-wall-street#c3:feedback-incorrect": {
+    "male": "55c13d5fe51b21a1",
+    "female": "21b21ccefbbf6c61"
+  },
   "book:one-up-on-wall-street#c4": {
     "male": "907cab87ecfd214b",
     "female": "d406ac3a59ad40f4"
@@ -1739,6 +2379,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "book:one-up-on-wall-street#c5": {
     "male": "dac41591745736d6",
     "female": "d5bac1b2971f0ea9"
+  },
+  "book:one-up-on-wall-street#c5:feedback-correct": {
+    "male": "6642ccd7c0e22d58",
+    "female": "6c56a5abea992589"
+  },
+  "book:one-up-on-wall-street#c5:feedback-incorrect": {
+    "male": "f25401d650ce54bd",
+    "female": "46e91591b4671177"
   },
   "book:one-up-on-wall-street#c6": {
     "male": "6d7c3b72131c88de",
@@ -1784,6 +2432,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "59b1aac75de5eede",
     "female": "3fc819c9a48fbebe"
   },
+  "book:reminiscences-of-a-stock-operator#c4:feedback-correct": {
+    "male": "86d03110e02173d8",
+    "female": "9708277d588a192c"
+  },
+  "book:reminiscences-of-a-stock-operator#c4:feedback-incorrect": {
+    "male": "8dc4b1f0acbd63b6",
+    "female": "a95dfec67395bd2e"
+  },
   "book:reminiscences-of-a-stock-operator#c5": {
     "male": "93b4bf13339661e1",
     "female": "1260367fd190c65e"
@@ -1791,6 +2447,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "book:reminiscences-of-a-stock-operator#c6": {
     "male": "860a1db9483ccf9a",
     "female": "600e73b86942408c"
+  },
+  "book:reminiscences-of-a-stock-operator#c6:feedback-correct": {
+    "male": "1448dfb32b2d51a4",
+    "female": "43d33318ca97e462"
+  },
+  "book:reminiscences-of-a-stock-operator#c6:feedback-incorrect": {
+    "male": "7317317b62a58316",
+    "female": "f10541a8ea151177"
   },
   "book:reminiscences-of-a-stock-operator#c7": {
     "male": "cd4091bb9bb74616",
@@ -1820,6 +2484,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "3f1dfd784004e9bd",
     "female": "64122aaa4f0a18fb"
   },
+  "book:the-intelligent-investor#c3:feedback-correct": {
+    "male": "dae9bc9c08b818f4",
+    "female": "2abb6ab16160ed96"
+  },
+  "book:the-intelligent-investor#c3:feedback-incorrect": {
+    "male": "c29c52b35dbbabcb",
+    "female": "f591145910d3b3e2"
+  },
   "book:the-intelligent-investor#c4": {
     "male": "6e7035b634f38b1b",
     "female": "d2a88e1bdc1889e1"
@@ -1839,6 +2511,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "book:the-intelligent-investor#c8": {
     "male": "1f9a39c6a5362fd3",
     "female": "617ae2854ce02429"
+  },
+  "book:the-intelligent-investor#c8:feedback-correct": {
+    "male": "289a8c74acbb0614",
+    "female": "74719fbdbf54bec9"
+  },
+  "book:the-intelligent-investor#c8:feedback-incorrect": {
+    "male": "8bdfda9d91a49ab7",
+    "female": "85b24cc32d257e02"
   },
   "book:the-intelligent-investor#c9": {
     "male": "dd2dbe12a5277223",
@@ -1868,6 +2548,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "7c358f1c266fb1c0",
     "female": "7bc94b2639a6d974"
   },
+  "book:trading-in-the-zone#c4:feedback-correct": {
+    "male": "e5663414a0f337df",
+    "female": "3e504f8190c869e1"
+  },
+  "book:trading-in-the-zone#c4:feedback-incorrect": {
+    "male": "92dee88d1fe8e94b",
+    "female": "0b243cd97278ebd6"
+  },
   "book:trading-in-the-zone#c5": {
     "male": "765df02a58f7db08",
     "female": "e95ffe26cbee90ab"
@@ -1875,6 +2563,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "book:trading-in-the-zone#c6": {
     "male": "df8e9549639a37ad",
     "female": "419e34b12138baa7"
+  },
+  "book:trading-in-the-zone#c6:feedback-correct": {
+    "male": "4e4e58f39221e303",
+    "female": "a4ae7f6f9694fd49"
+  },
+  "book:trading-in-the-zone#c6:feedback-incorrect": {
+    "male": "c896eb5d7a97a8e2",
+    "female": "fc3a0eaf31239157"
   },
   "book:trading-in-the-zone#c7": {
     "male": "6e71d23a186a55b3",
@@ -1920,6 +2616,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "4724d5667d41de47",
     "female": "bac0e0a4ea0e3786"
   },
+  "strategy:canslim#c7:feedback-correct": {
+    "male": "a2fccf265f3ecafa",
+    "female": "e51e4fba569bf14b"
+  },
+  "strategy:canslim#c7:feedback-incorrect": {
+    "male": "39253e74f760e5f1",
+    "female": "cf12340b0344f4ea"
+  },
   "strategy:canslim#c8": {
     "male": "c2cb2eba5e22a993",
     "female": "da27780f374d697e"
@@ -1927,6 +2631,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:canslim#c9": {
     "male": "06f649f598f19f99",
     "female": "28a505ba42e3de4b"
+  },
+  "strategy:canslim#c9:feedback-correct": {
+    "male": "ecf61eca9ab20c68",
+    "female": "14b9145fcec9b09b"
+  },
+  "strategy:canslim#c9:feedback-incorrect": {
+    "male": "71ae5700632cae72",
+    "female": "5f915b20d8faefa6"
   },
   "strategy:canslim#c10": {
     "male": "9bc7f0bad8d00a4a",
@@ -1956,6 +2668,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "f3e57de43910fd0f",
     "female": "1fee4cebb7a1a8de"
   },
+  "strategy:covered-call-wheel#c4:feedback-correct": {
+    "male": "31ab1f17c9cd6e51",
+    "female": "daabbafeec4e70bd"
+  },
+  "strategy:covered-call-wheel#c4:feedback-incorrect": {
+    "male": "2693fda4308f33d0",
+    "female": "7b870c1fdc1a00ad"
+  },
   "strategy:covered-call-wheel#c5": {
     "male": "b550b2997b564f5f",
     "female": "70160f3dc7087d5d"
@@ -1967,6 +2687,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:covered-call-wheel#c7": {
     "male": "9ea1bbcefe989b2d",
     "female": "b54a815ee581bf14"
+  },
+  "strategy:covered-call-wheel#c7:feedback-correct": {
+    "male": "3c08d2948d132546",
+    "female": "36dc7f6b43d99d7c"
+  },
+  "strategy:covered-call-wheel#c7:feedback-incorrect": {
+    "male": "4aede5380a0fe641",
+    "female": "59f560ad3fc17a77"
   },
   "strategy:covered-call-wheel#c8": {
     "male": "795d9432ef5d7917",
@@ -2004,6 +2732,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "c04b60b95dbf0b24",
     "female": "d89283dee745173d"
   },
+  "strategy:growth-at-a-reasonable-price#c4:feedback-correct": {
+    "male": "2d79645f5013b352",
+    "female": "80af27e36cb0ff4a"
+  },
+  "strategy:growth-at-a-reasonable-price#c4:feedback-incorrect": {
+    "male": "df6f1b6dcbb434a1",
+    "female": "bca912888e864dd7"
+  },
   "strategy:growth-at-a-reasonable-price#c5": {
     "male": "adf14f439b20540a",
     "female": "2140c2e1fba63386"
@@ -2011,6 +2747,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:growth-at-a-reasonable-price#c6": {
     "male": "2eca6e2a9955306d",
     "female": "dfa098782147fae8"
+  },
+  "strategy:growth-at-a-reasonable-price#c6:feedback-correct": {
+    "male": "527cadc44e15ef80",
+    "female": "24664cf879a5ea03"
+  },
+  "strategy:growth-at-a-reasonable-price#c6:feedback-incorrect": {
+    "male": "aa820795f67f2bb6",
+    "female": "9221734de353da74"
   },
   "strategy:growth-at-a-reasonable-price#c7": {
     "male": "880a8cc643b71f41",
@@ -2052,6 +2796,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "2710edd355033fdb",
     "female": "b43ca5c3c29093ab"
   },
+  "strategy:mean-reversion#c4:feedback-correct": {
+    "male": "2b8c7a20cb551091",
+    "female": "97d73c9809ddcf8a"
+  },
+  "strategy:mean-reversion#c4:feedback-incorrect": {
+    "male": "f47a3161dc4397aa",
+    "female": "6fbacbf27b373804"
+  },
   "strategy:mean-reversion#c5": {
     "male": "4e6d165064f848a0",
     "female": "ecdad5a63f1a3573"
@@ -2063,6 +2815,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:mean-reversion#c7": {
     "male": "80d0f6c3454991b4",
     "female": "f37149bdb36683cc"
+  },
+  "strategy:mean-reversion#c7:feedback-correct": {
+    "male": "2f356230d1ceeeae",
+    "female": "150bfc4206753860"
+  },
+  "strategy:mean-reversion#c7:feedback-incorrect": {
+    "male": "6ed28b4130e124d5",
+    "female": "913f8a962907e72b"
   },
   "strategy:mean-reversion#c8": {
     "male": "39b0ade53d628695",
@@ -2100,6 +2860,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "78c55221313a1b1f",
     "female": "be9f895f81cb3c76"
   },
+  "strategy:momentum-investing#c4:feedback-correct": {
+    "male": "677703005169c216",
+    "female": "95ce76e632fe04ca"
+  },
+  "strategy:momentum-investing#c4:feedback-incorrect": {
+    "male": "cdeb196f26524b07",
+    "female": "b0001a0dd18cb5f6"
+  },
   "strategy:momentum-investing#c5": {
     "male": "18ead2daef0dc592",
     "female": "122abbb75955214e"
@@ -2111,6 +2879,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:momentum-investing#c7": {
     "male": "9cd8c83fe81909bd",
     "female": "7c724d9ad725d69a"
+  },
+  "strategy:momentum-investing#c7:feedback-correct": {
+    "male": "9be0b912dcf04c40",
+    "female": "dd82a4f2249e2af4"
+  },
+  "strategy:momentum-investing#c7:feedback-incorrect": {
+    "male": "48cf4319bf2dc7ef",
+    "female": "13e00850ff3f2e6b"
   },
   "strategy:momentum-investing#c8": {
     "male": "834bf12cb5e23673",
@@ -2148,6 +2924,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "7984dad9529f8153",
     "female": "ab4ddb3d259c394b"
   },
+  "strategy:trend-following#c4:feedback-correct": {
+    "male": "5a5e488460f4bb82",
+    "female": "0682bb8ccb8475c1"
+  },
+  "strategy:trend-following#c4:feedback-incorrect": {
+    "male": "0cb75d9d668ebe89",
+    "female": "76495cde3ffe06bb"
+  },
   "strategy:trend-following#c5": {
     "male": "ebed2e1ad19e99fe",
     "female": "0d93ff4c8eee993f"
@@ -2159,6 +2943,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:trend-following#c7": {
     "male": "33db04eb2dc4a39a",
     "female": "365c79ced6cbea5d"
+  },
+  "strategy:trend-following#c7:feedback-correct": {
+    "male": "bc21c8bcb59136fe",
+    "female": "f0a5a1465b6d4f20"
+  },
+  "strategy:trend-following#c7:feedback-incorrect": {
+    "male": "90877d6ca9a1cd21",
+    "female": "83443e98e5c94a5a"
   },
   "strategy:trend-following#c8": {
     "male": "85e61042bcba4f32",
@@ -2196,6 +2988,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
     "male": "c8ebb4cc7ac44c4e",
     "female": "04f7304ec2870a6f"
   },
+  "strategy:value-investing#c4:feedback-correct": {
+    "male": "77c28c93f641dcb2",
+    "female": "540d0d8c734ea6cc"
+  },
+  "strategy:value-investing#c4:feedback-incorrect": {
+    "male": "6a27cfa3eaf5ad6b",
+    "female": "94f39b2d757c64b1"
+  },
   "strategy:value-investing#c5": {
     "male": "5d48b541d9be0595",
     "female": "7ffa9e2a02695c51"
@@ -2207,6 +3007,14 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "strategy:value-investing#c7": {
     "male": "963e6d1da9d5a2e4",
     "female": "87f156ce445e5078"
+  },
+  "strategy:value-investing#c7:feedback-correct": {
+    "male": "ed2fcb61d65624ed",
+    "female": "0a55a5ae23c91a84"
+  },
+  "strategy:value-investing#c7:feedback-incorrect": {
+    "male": "d2e1d1db3030b236",
+    "female": "18c066e00ccce65a"
   },
   "strategy:value-investing#c8": {
     "male": "48d7e50ed64147bc",

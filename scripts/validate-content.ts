@@ -58,6 +58,21 @@ const err = (file: string, message: string) =>
 const warn = (file: string, message: string) =>
   warnings.push(`${relative(ROOT, file)}: ${message}`);
 
+const ADVICE_LANGUAGE = [
+  /\byou should (?:buy|sell|short|hold|invest)\b/i,
+  /\bwe recommend (?:buying|selling|shorting|holding|investing)\b/i,
+  /\b(?:guaranteed returns?|risk[- ]free returns?|sure thing)\b/i,
+  /\b(?:always|never) (?:buy|sell|short) (?:this|that) (?:stock|security|option)\b/i,
+];
+
+function checkAdviceLanguage(file: string, value: unknown, context: string): void {
+  const text = JSON.stringify(value);
+  for (const pattern of ADVICE_LANGUAGE) {
+    const match = text.match(pattern)?.[0];
+    if (match) err(file, `${context}: advice-like phrase "${match}" is not allowed`);
+  }
+}
+
 /** Locates a card so error messages point at something findable. */
 const at = (card: Card, field?: string) =>
   `card "${card.id}" (${card.type})${field ? ` field "${field}"` : ''}`;
@@ -207,6 +222,13 @@ for (const { file, data: strategy } of strategies) {
       err(file, `prerequisiteLessons: unresolved lesson "${path}"`);
     }
   }
+}
+
+for (const { file, data: lesson } of lessons) {
+  checkAdviceLanguage(file, lesson.cards, `lesson "${lesson.id}"`);
+}
+for (const { file, data: strategy } of strategies) {
+  checkAdviceLanguage(file, strategy, `strategy "${strategy.id}"`);
 }
 
 for (const { file, data: book } of books) {

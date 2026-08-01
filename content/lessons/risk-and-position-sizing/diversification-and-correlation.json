@@ -252,5 +252,17 @@
       },
       "frame": "gradient"
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

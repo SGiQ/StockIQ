@@ -12,7 +12,7 @@
  */
 import { create } from 'zustand';
 import { getLesson, lessonPath, listLessonsInCourse } from '@/content/registry';
-import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
+import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { toDayISO } from '@/lib/dates';
 import { repository } from '../index';
 import {
@@ -58,7 +58,11 @@ interface AppState {
     lessonId: LessonId,
     attempt: CardAttempt,
   ) => Promise<void>;
-  completeLesson: (courseId: CourseId, lessonId: LessonId) => Promise<LessonCompletion>;
+  completeLesson: (
+    courseId: CourseId,
+    lessonId: LessonId,
+    cardsOverride?: Card[],
+  ) => Promise<LessonCompletion>;
 
   toggleSavedCard: (courseId: CourseId, lessonId: LessonId, cardId: CardId) => Promise<void>;
   isCardSaved: (courseId: CourseId, lessonId: LessonId, cardId: CardId) => boolean;
@@ -79,6 +83,7 @@ interface AppState {
   setNarrationEnabled: (enabled: boolean) => Promise<void>;
   setNarrationVoice: (voice: UserProfile['narrationVoice']) => Promise<void>;
   setNarrationSpeed: (speed: UserProfile['narrationSpeed']) => Promise<void>;
+  setMaleVoiceVote: (voice: NonNullable<UserProfile['maleVoiceVote']>) => Promise<void>;
   resetAll: () => Promise<void>;
 }
 
@@ -161,14 +166,15 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((state) => ({ progress: { ...state.progress, [key]: record } }));
   },
 
-  completeLesson: async (courseId, lessonId) => {
+  completeLesson: async (courseId, lessonId, cardsOverride) => {
     const key = progressId(courseId, lessonId);
     const lesson = getLesson(courseId, lessonId);
     const existing = get().progress[key];
     const previousStreak = get().streak;
 
+    const completionCards = cardsOverride ?? lesson?.cards ?? [];
     const interactiveIds = new Set(
-      (lesson?.cards ?? [])
+      completionCards
         .filter((c) => c.type === 'binary_choice' || c.type === 'fill_blank')
         .map((c) => c.id),
     );
@@ -187,7 +193,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       courseId,
       lessonId,
       status: 'completed',
-      lastCardIndex: Math.max(existing?.lastCardIndex ?? 0, (lesson?.cards.length ?? 1) - 1),
+      lastCardIndex: Math.max(existing?.lastCardIndex ?? 0, Math.max(0, completionCards.length - 1)),
       starred,
       xpAwarded,
       completedAt: existing?.completedAt ?? Date.now(),
@@ -269,6 +275,10 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setNarrationSpeed: async (speed) => {
     set({ profile: await repository.profile.update({ narrationSpeed: speed }) });
+  },
+
+  setMaleVoiceVote: async (voice) => {
+    set({ profile: await repository.profile.update({ maleVoiceVote: voice }) });
   },
 
   resetAll: async () => {

@@ -166,5 +166,17 @@
       "insight": "Momentum asks you to hold what already worked, knowing the stretch when it stops can take back what the years of working built.",
       "attribution": { "source": "Momentum", "detail": "StockIQ strategy guide" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Technical Analysis: Modern Perspectives",
+      "url": "https://rpc.cfainstitute.org/research/foundation/2017/technical-analysis",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

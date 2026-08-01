@@ -189,5 +189,17 @@
       "insight": "A checklist built from yesterday's winners describes what worked. Whether it predicts is a separate question, and the checklist cannot answer it.",
       "attribution": { "source": "CANSLIM", "detail": "Strategy guide" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

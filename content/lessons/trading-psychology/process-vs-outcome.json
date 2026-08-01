@@ -134,5 +134,17 @@
       "insight": "Judge the decision, not the result. The market decides what you get paid. You decide what you deserved.",
       "attribution": { "source": "Unit 2", "detail": "Seeing Clearly" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

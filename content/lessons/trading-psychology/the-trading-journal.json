@@ -135,5 +135,17 @@
       "insight": "You cannot audit a memory. Write down what you believe while you still do not know whether you were right.",
       "attribution": { "source": "Building the Habit", "detail": "Trading Psychology" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

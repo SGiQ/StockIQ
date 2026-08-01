@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as haptics from '@/lib/haptics';
 import { getCourse, getLesson, getNextLesson } from '@/content/registry';
@@ -7,9 +7,11 @@ import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
+import { SourceLinks } from '@/components/kb/SourceLinks';
 import { reportId, savedCardId } from '@/store';
 import { useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { trackTelemetry } from '@/services/telemetry';
 
 export default function LessonScreen() {
   const { courseId, lessonId } = useLocalSearchParams<{ courseId: string; lessonId: string }>();
@@ -40,12 +42,16 @@ export default function LessonScreen() {
   const [completion, setCompletion] = useState<LessonCompletion | null>(null);
 
   useEffect(() => {
-    if (lesson) void startLesson(courseId, lessonId);
+    if (lesson) {
+      void startLesson(courseId, lessonId);
+      void trackTelemetry('lesson_started', `${courseId}/${lessonId}`);
+    }
   }, [courseId, lesson, lessonId, startLesson]);
 
   const handleComplete = useCallback(async () => {
     haptics.success();
     setCompletion(await completeLesson(courseId, lessonId));
+    void trackTelemetry('lesson_completed', `${courseId}/${lessonId}`);
   }, [completeLesson, courseId, lessonId]);
 
   const exit = useCallback(() => {
@@ -70,6 +76,7 @@ export default function LessonScreen() {
         completion={completion}
         courseId={courseId}
         lessonId={lessonId}
+        sources={lesson.sources}
         onExit={exit}
       />
     );
@@ -82,9 +89,10 @@ export default function LessonScreen() {
       onExit={exit}
       onComplete={handleComplete}
       onCardIndex={(index) => void recordCardIndex(courseId, lessonId, index)}
-      onAnswered={(cardId, correct) =>
-        void recordAttempt(courseId, lessonId, { cardId, correct, at: Date.now() })
-      }
+      onAnswered={(cardId, correct) => {
+        void recordAttempt(courseId, lessonId, { cardId, correct, at: Date.now() });
+        void trackTelemetry('quiz_answered', `${courseId}/${lessonId}`, correct ? 'correct' : 'incorrect');
+      }}
       isCardSaved={(cardId) =>
         savedCards.some((c) => c.id === savedCardId(courseId, lessonId, cardId))
       }
@@ -113,18 +121,20 @@ function CompletionScreen({
   courseId,
   lessonId,
   onExit,
+  sources,
 }: {
   completion: LessonCompletion;
   courseId: string;
   lessonId: string;
   onExit: () => void;
+  sources: NonNullable<ReturnType<typeof getLesson>>['sources'];
 }) {
   const router = useRouter();
   const next = getNextLesson(courseId, lessonId);
 
   return (
     <Screen tone="paper">
-      <View style={styles.completion}>
+      <ScrollView contentContainerStyle={styles.completion} showsVerticalScrollIndicator={false}>
         <View style={styles.badge}>
           <Glyph
             name={completion.starred ? 'target' : 'check'}
@@ -178,7 +188,9 @@ function CompletionScreen({
           )}
           <PillButton label="Done" variant="ghost" onPress={onExit} />
         </View>
-      </View>
+
+        <SourceLinks sources={sources} compact />
+      </ScrollView>
     </Screen>
   );
 }
@@ -192,11 +204,12 @@ const styles = StyleSheet.create({
     padding: space.lg,
   },
   completion: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: space.lg,
     padding: space.lg,
+    paddingBottom: space.xxl,
   },
   badge: {
     width: 104,

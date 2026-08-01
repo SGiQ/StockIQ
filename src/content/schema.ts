@@ -283,6 +283,14 @@ export const ArtSpecSchema = z.discriminatedUnion('kind', [
 ]);
 export type ArtSpec = z.infer<typeof ArtSpecSchema>;
 
+/** A checkable, learner-visible source for educational claims. */
+export const ContentSourceSchema = z.object({
+  title: z.string().min(1).max(120),
+  url: z.string().url(),
+  publisher: z.string().min(1).max(80),
+});
+export type ContentSource = z.infer<typeof ContentSourceSchema>;
+
 /* ------------------------------------------------------------------ *
  * Cards — the seven types the whole product is built around
  * ------------------------------------------------------------------ */
@@ -447,6 +455,8 @@ export const LessonSchema = z.object({
   /** Completing this lesson may unlock knowledge-base entities. */
   unlocks: z.array(EntityRefSchema).optional(),
   refs: z.array(EntityRefSchema).optional(),
+  /** At least one authoritative reference for the lesson's factual claims. */
+  sources: z.array(ContentSourceSchema).min(1).max(6),
 });
 export type Lesson = z.infer<typeof LessonSchema>;
 
@@ -529,6 +539,8 @@ export const StrategySchema = z.object({
   furtherReading: z.array(BookIdSchema),
   /** THE unlock gate — the strategy stays locked until all are completed. */
   prerequisiteLessons: z.array(LessonPathSchema).min(1),
+  /** Evidence or first-party educational material; never promotional copy alone. */
+  sources: z.array(ContentSourceSchema).min(1).max(6),
   illustrativeChart: ChartSpecSchema.optional(),
   /**
    * A playable deck, in the same `Card[]` union a lesson uses.

@@ -46,6 +46,7 @@ import {
   signInMessage,
 } from './mailer.ts';
 import { pushAndPull } from './sync.ts';
+import { recordTelemetry } from './telemetry.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
 /** Requests larger than this are refused before being buffered. */
@@ -121,6 +122,7 @@ const server = createServer((req, res) => {
         '/v1/auth/email/request': 'POST',
         '/v1/auth/email/verify': 'POST',
         '/v1/devices': 'GET',
+        '/v1/telemetry': 'POST',
       };
       const path = (req.url ?? '').split('?')[0] ?? '';
       const isRevoke = req.method === 'DELETE' && path.startsWith('/v1/devices/');
@@ -151,6 +153,8 @@ const server = createServer((req, res) => {
           payload = await pushAndPull(client, accountId, since, changes);
         } else if (path === '/v1/link/start') {
           payload = await createLinkCode(client, accountId);
+        } else if (path === '/v1/telemetry') {
+          payload = await recordTelemetry(client, accountId, await readBody(req));
         } else if (path === '/v1/auth/apple') {
           const body = (await readBody(req)) as {
             identityToken?: unknown;

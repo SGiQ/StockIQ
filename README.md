@@ -5,7 +5,7 @@ Imprint interaction model applied to finance.
 
 **Phases 1–6 are complete.** Five courses (37 lessons, 740 XP)
 play end to end with all seven card types, advance-gating, XP, streaks, and
-local persistence — behind a four-tab shell with onboarding, an Explore grid,
+local persistence — behind a five-tab shell with onboarding, an Explore grid,
 a Saved Cards gallery, and share-as-image. The knowledge base adds 8 traders,
 7 strategies, and 5 book guides, cross-linked, with strategies gated behind
 the lessons that teach them. A card-scoped Claude tutor and a report action
@@ -15,10 +15,11 @@ Cloudflare Worker that keeps the Anthropic key off the device. Devices pair
 with a short code, and an account can be secured with Sign in with Apple or a
 passwordless email code, so it survives a lost phone.
 
-Read-aloud narration is wired through every lesson, book guide, and strategy
-guide with synced on/off and male/female preferences. The 1,110 static OpenAI
-TTS clips still need the one-time credentialed render and a final hosting
-decision before narration appears in a release build.
+Read-aloud narration is live through every lesson, book guide, and strategy
+guide with synced on/off, voice and speed preferences. Quiz prompts are spoken
+without their choices; after submission, a separate clip reads the verdict and
+explanation. Static OpenAI TTS clips are hosted on Cloudflare R2, so no speech
+API key or lesson text is sent from a learner's device.
 
 **The sync service is live** at `stockiq-sync-production.up.railway.app`, with
 the protocol, pairing and client-cycle suites passing against it, and
@@ -38,10 +39,10 @@ npm install
 npm start          # validates content, regenerates the index, starts Expo
 ```
 
-Then scan the QR code with **Expo Go** on your iPhone. Everything runs there
-except Sign in with Apple, which needs a development build — the module is
-imported lazily so Expo Go never loads it, and email sign-in covers the same
-job on every platform.
+The primary test target is the responsive web app. `npm run web` opens it
+locally; production is at `https://stockiq-delta.vercel.app`. Native exports
+remain supported, but real-device testing is deferred until an Apple Developer
+account is available. Email sign-in covers accounts on the web today.
 
 **After editing `.env`, run `npm run start:clear`.** `EXPO_PUBLIC_*` values are
 inlined at transform time and Metro caches per file; since `src/config.ts`
@@ -56,6 +57,8 @@ error. See [docs/deployment.md](docs/deployment.md).
 | `npm run validate:content` | Five-pass content validation |
 | `npm run test:validator` | Assert the validator still catches a deliberately broken fixture |
 | `npm run gen:content` | Validate, then regenerate `src/content/index.generated.ts` |
+| `npm run audit:sources` | Reapply authoritative lesson/strategy sources and validate |
+| `npm run test:unit` | Narration, sourcing, mobile-content, art, dashboard and migration tests |
 | `npm run gen:authoring-prompt` | Regenerate `docs/content-authoring.md` from the schema |
 | `npm run gen:speech -- --check` | Count narration clips and estimate the render without making API calls |
 | `OPENAI_API_KEY=… npm run gen:speech` | Render missing content-addressed narration clips and write the manifest |
@@ -63,6 +66,7 @@ error. See [docs/deployment.md](docs/deployment.md).
 | `npm run new:lesson -- <courseId> <lessonId> "Title"` | Scaffold a valid 10-card lesson stub |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run test:sync-cycle` | Drive the real sync cycle and pairing against a running sync service |
+| `cd server && npm run test:telemetry` | Assert monitoring accepts only bounded, non-content labels |
 
 ## Layout
 
@@ -166,7 +170,7 @@ already just numbers.
 
 ## Known gaps
 
-- **Web is not a supported target yet.** Reanimated's entering/layout
+- **Web is the primary test target.** Reanimated's entering/layout
   animations behave unreliably in the web build, so the deck's resting
   position is deliberately a plain style with animation applied only as a
   decorative offset — correctness never depends on an animation landing. That
@@ -206,27 +210,21 @@ already just numbers.
   when they drift, and that warning caught five stale entries during the
   rewrite.
 
-- **The sync service is deployed;** the ASK proxy and Resend are not. Both need
-  credentials only the account owner can create. The live service is at
+- **The sync service and Resend email sign-in are deployed;** the ASK proxy is
+  deferred. The live service is at
   `stockiq-sync-production.up.railway.app` and the protocol, pairing and
   client-cycle suites all pass against it.
 - **Orphaned accounts accumulate.** A device that pairs into another account
   leaves its old one behind by design, and once its last device goes the
   account is unreachable but never deleted. Confirmed on the live deployment.
   Needs a retention job — the same one the deletion path below needs.
-- **A device secret is a capability token, not authentication.** `X-Device-Id`
+- **A device secret authenticates the device, while email identifies the account.** `X-Device-Id`
   is a 256-bit random value from the keychain, and whoever holds it can read
   and write that account. Each device keeps its own — none is ever shared,
   which is what makes revoking a lost phone meaningful — but it is still a
-  bearer token. That buys multi-device sync with no password and no personal
-  data, acceptable *only* because the data is lesson progress. Real per-user
-  auth is required before anything sensitive is stored or before this is
-  public.
-- **Email sign-in delivers, but no code has been redeemed in the app.** A real
-  six-digit code was requested through the production endpoint and arrived in a
-  real inbox, so Resend, the verified domain, challenge creation and delivery
-  are all proven. What has only been exercised against a local Postgres is the
-  other half — typing that code in, the account claim, and the cursor reset.
+  bearer token. Revocation removes that device while passwordless email lets a
+  learner recover the account elsewhere. Keep the synced payload limited to
+  learning progress until account deletion and stronger session controls ship.
 
 - **Sign in with Apple has never run against Apple.** The token verification is
   covered thoroughly — signature, issuer, audience, expiry and nonce, each with
@@ -238,9 +236,8 @@ already just numbers.
   abandons the device identity rather than deleting remote data. A deletion
   path is required before this holds anyone's data but your own.
 - **No payments.** Deliberately deferred until the app is proven.
-- **Narration code is complete, but the audio library is not rendered.** The
-  current manifest is intentionally empty because no OpenAI key is configured.
-  The full render is 1,110 clips and roughly 97 MB; decide whether those files
-  live in git/Vercel or object storage before generating and committing them.
+- **The current male narrator is temporary.** Cedar, Ash and Echo auditions
+  and a synced vote live in Narration Settings. Regenerate the male R2 library
+  only after a replacement wins; doing it sooner would spend money twice.
 
 The full plan lives at `~/.claude/plans/i-want-to-create-witty-mccarthy.md`.

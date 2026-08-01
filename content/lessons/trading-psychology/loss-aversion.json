@@ -128,5 +128,17 @@
       "insight": "The loss happened when the price moved, not when you sold. Holding on does not undo it. It only delays the moment you admit it.",
       "attribution": { "source": "Day 1", "detail": "Trading Psychology" }
     }
+  ],
+  "sources": [
+    {
+      "title": "The Behavioral Biases of Individuals",
+      "url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/the-behavioral-biases-of-individuals",
+      "publisher": "CFA Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

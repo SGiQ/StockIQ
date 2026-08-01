@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { getStrategy } from '@/content/registry';
@@ -21,9 +21,8 @@ import { palette, space } from '@/theme/tokens';
  *
  * Cards are addressed with the reserved course id "strategy" (see `findCard`)
  * so they save and share through the same storage path as lesson cards. Like
- * book guides they award no XP and do not touch the streak — a guide is
- * reference material, not a graded lesson, and the strategy's unlock gate is
- * already satisfied by the time anyone can open it.
+ * book guides they award no XP, but their quiz attempts and completion state
+ * sync across devices just like lessons.
  */
 const STRATEGY_COURSE_ID = 'strategy';
 
@@ -34,6 +33,17 @@ export default function StrategyGuide() {
 
   const toggleSavedCard = useAppStore((s) => s.toggleSavedCard);
   const savedCards = useAppStore((s) => s.saved);
+  const startLesson = useAppStore((s) => s.startLesson);
+  const recordCardIndex = useAppStore((s) => s.recordCardIndex);
+  const recordAttempt = useAppStore((s) => s.recordAttempt);
+  const completeLesson = useAppStore((s) => s.completeLesson);
+  const unlockedStrategies = useAppStore((s) => s.unlockedStrategies);
+
+  useEffect(() => {
+    if (strategy?.guideCards?.length && unlockedStrategies.includes(strategy.id)) {
+      void startLesson(STRATEGY_COURSE_ID, strategy.id);
+    }
+  }, [startLesson, strategy, unlockedStrategies]);
 
   const exit = useCallback(() => {
     if (router.canGoBack()) router.back();
@@ -43,11 +53,13 @@ export default function StrategyGuide() {
   // `guideCards` is optional on the schema, so a strategy can ship its page
   // before its deck. Both absent-strategy and absent-guide land here rather
   // than rendering an empty player.
-  if (!strategy?.guideCards?.length) {
+  if (!strategy?.guideCards?.length || !unlockedStrategies.includes(strategy.id)) {
     return (
       <Screen tone="paper">
         <View style={styles.centre}>
-          <Text variant="h2">Guide not found</Text>
+          <Text variant="h2">
+            {!strategy?.guideCards?.length ? 'Guide not found' : 'Finish the prerequisites first'}
+          </Text>
           <PillButton label="Go back" variant="dark" fullWidth={false} onPress={exit} />
         </View>
       </Screen>
@@ -59,7 +71,13 @@ export default function StrategyGuide() {
       cards={strategy.guideCards}
       narrationDeckId={`strategy:${strategy.id}`}
       onExit={exit}
-      onComplete={exit}
+      onComplete={() => {
+        void completeLesson(STRATEGY_COURSE_ID, strategy.id, strategy.guideCards).then(exit);
+      }}
+      onCardIndex={(index) => void recordCardIndex(STRATEGY_COURSE_ID, strategy.id, index)}
+      onAnswered={(cardId, correct) =>
+        void recordAttempt(STRATEGY_COURSE_ID, strategy.id, { cardId, correct, at: Date.now() })
+      }
       isCardSaved={(cardId) =>
         savedCards.some((c) => c.id === savedCardId(STRATEGY_COURSE_ID, strategy.id, cardId))
       }

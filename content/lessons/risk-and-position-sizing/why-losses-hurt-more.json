@@ -124,5 +124,17 @@
       "insight": "A loss and a gain of the same size are not opposites. The loss always asks for more back than it took.",
       "attribution": { "source": "Day 1", "detail": "Risk and Position Sizing" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

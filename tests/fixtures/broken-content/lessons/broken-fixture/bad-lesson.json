@@ -19,5 +19,12 @@
     { "id": "c7", "type": "main_idea", "summary": "One", "bullets": ["a","b"] },
     { "id": "c8", "type": "main_idea", "summary": "Two recaps", "bullets": ["a","b"] },
     { "id": "c9", "type": "concept", "headline": "Long", "body": "This card deliberately runs far past the fifty five word prose budget so that the fifth validation pass has something to complain about, because a card this long would never feel like Imprint on a phone screen where the whole point is that you can read the thing in a single glance and move on quickly without ever once scrolling down." }
+  ],
+  "sources": [
+    {
+      "title": "Fixture source",
+      "url": "https://example.com/fixture",
+      "publisher": "Test publisher"
+    }
   ]
 }

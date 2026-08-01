@@ -4,18 +4,16 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {
-  Poppins_600SemiBold,
-  Poppins_700Bold,
-  useFonts,
-} from '@expo-google-fonts/poppins';
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-} from '@expo-google-fonts/inter';
+import { useFonts } from 'expo-font';
+import { Poppins_600SemiBold } from '@expo-google-fonts/poppins/600SemiBold';
+import { Poppins_700Bold } from '@expo-google-fonts/poppins/700Bold';
+import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
+import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
+import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
+import { Inter_700Bold } from '@expo-google-fonts/inter/700Bold';
 import { PhoneFrame } from '@/components/PhoneFrame';
+import { Telemetry } from '@/components/Telemetry';
+import { AppErrorBoundary } from '@/components/AppErrorBoundary';
 import { useHydrateStores } from '@/store/useHydrateStores';
 import { useSync } from '@/store/useSync';
 import { palette } from '@/theme/tokens';
@@ -50,6 +48,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppErrorBoundary>
       {/*
         Wraps everything, so the full-screen player and the modals are bounded
         by the frame too. Nested inside SafeAreaProvider it would not be —
@@ -108,6 +107,8 @@ export default function RootLayout() {
         </Stack>
       </SafeAreaProvider>
       </PhoneFrame>
+      <Telemetry />
+      </AppErrorBoundary>
     </GestureHandlerRootView>
   );
 }

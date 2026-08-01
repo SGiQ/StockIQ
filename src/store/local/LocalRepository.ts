@@ -84,6 +84,7 @@ function defaultProfile(): UserProfile {
     narrationEnabled: false,
     narrationVoice: 'female',
     narrationSpeed: 1,
+    maleVoiceVote: null,
   };
 }
 

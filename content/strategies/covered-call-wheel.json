@@ -175,5 +175,17 @@
       "insight": "Premium is not income. It is the price someone paid you for your upside, and you still own everything below.",
       "attribution": { "source": "The Wheel", "detail": "Strategy guide" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Options Institute Learning Resources",
+      "url": "https://www.cboe.com/optionsinstitute/",
+      "publisher": "Cboe Options Institute"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

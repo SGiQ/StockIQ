@@ -109,5 +109,17 @@
       "insight": "Being right is not the same as making money. Measure every trade in units of risk, and the two stop being confused.",
       "attribution": { "source": "Day 6", "detail": "Risk and Position Sizing" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }

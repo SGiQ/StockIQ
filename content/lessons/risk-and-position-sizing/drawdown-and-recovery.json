@@ -142,5 +142,17 @@
       "insight": "A strategy is only as good as the worst stretch you can sit through. The depth ends portfolios; the waiting ends investors.",
       "attribution": { "source": "Day 2", "detail": "Risk and Position Sizing" }
     }
+  ],
+  "sources": [
+    {
+      "title": "Diversify Your Investments",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/diversify-your-investments",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Introduction to Investing",
+      "url": "https://www.investor.gov/introduction-investing",
+      "publisher": "U.S. SEC Investor.gov"
+    }
   ]
 }
