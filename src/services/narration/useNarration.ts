@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
+import { Platform } from 'react-native';
+
+/** Browsers require one document interaction before programmatic playback. */
+function mayAutoplay(): boolean {
+  if (Platform.OS !== 'web') return true;
+  return typeof navigator !== 'undefined' && navigator.userActivation?.hasBeenActive === true;
+}
 
 /**
  * Owns one short-lived card narrator.
@@ -41,7 +48,7 @@ export function useNarration(source: string | null, enabled: boolean) {
   useEffect(() => {
     player.pause();
     try {
-      if (enabledRef.current && source) player.play();
+      if (enabledRef.current && source && mayAutoplay()) player.play();
     } catch {
       // A bad/missing remote clip is equivalent to no narration for the card.
     }
@@ -63,7 +70,7 @@ export function useNarration(source: string | null, enabled: boolean) {
       startedFromControl.current = false;
       return;
     }
-    if (source) {
+    if (source && mayAutoplay()) {
       try {
         player.play();
       } catch {

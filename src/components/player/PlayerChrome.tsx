@@ -86,9 +86,11 @@ export function ActionPill({
             hitSlop={10}
             accessibilityRole="button"
             accessibilityLabel={
-              narrationEnabled
+              narrationPlaying
                 ? 'Turn off card narration'
-                : 'Turn on card narration'
+                : narrationEnabled
+                  ? 'Play card narration'
+                  : 'Turn on card narration'
             }
             accessibilityState={{ selected: narrationEnabled }}
             style={styles.pillButton}

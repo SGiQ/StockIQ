@@ -339,12 +339,21 @@ export function LessonPlayer({
 
   const toggleNarration = useCallback(() => {
     if (!narrationAvailable) return;
-    if (narrationEnabled) stopNarration();
-    else playNarration();
-    void setNarrationEnabled(!narrationEnabled);
+    if (narrationPlaying) {
+      stopNarration();
+      void setNarrationEnabled(false);
+      return;
+    }
+
+    // Browsers block autoplay until the learner interacts with the page. If
+    // narration is already enabled but that first autoplay was refused, one
+    // speaker tap should start the card instead of silently disabling it.
+    playNarration();
+    if (!narrationEnabled) void setNarrationEnabled(true);
   }, [
     narrationAvailable,
     narrationEnabled,
+    narrationPlaying,
     playNarration,
     setNarrationEnabled,
     stopNarration,
