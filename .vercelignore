@@ -3,6 +3,11 @@ dist/
 web-build/
 .expo/
 
+# Local generation credentials must never enter a web deployment upload.
+.env
+.env.*
+!.env.example
+
 # Full narration lives in Cloudflare R2. Only public/voice-previews ships here.
 public/speech/
 
