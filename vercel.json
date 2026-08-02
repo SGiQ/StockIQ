@@ -7,7 +7,7 @@
     "env": {
       "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
       "EXPO_PUBLIC_ASK_PROXY_URL": "",
-      "EXPO_PUBLIC_SPEECH_URL": "https://pub-a78029218bb0482fb7f3c97f8ac97a57.r2.dev"
+      "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev"
     }
   },
   "rewrites": [

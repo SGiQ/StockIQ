@@ -1,0 +1,10 @@
+name = "stockiq-narration"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+# Serve the pre-rendered lesson audio straight from R2. No secrets, no custom
+# domain — this runs on the account's workers.dev subdomain so nothing about
+# sgiq.ai's DNS has to change.
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "stockiq-narration"

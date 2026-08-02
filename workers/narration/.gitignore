@@ -1,0 +1,3 @@
+# Local miniflare runtime state from `wrangler dev` — regenerated on demand.
+.wrangler/
+node_modules/
