@@ -6,6 +6,7 @@ import { allLessons, allStrategies } from '../src/content/index.generated';
 import { initialStateFor } from '../src/components/player/cardState';
 import { lessonArtwork } from '../src/content/lessonArtwork';
 import { listCourses, listLessonsInCourse } from '../src/content/registry';
+import type { Card } from '../src/content/types';
 
 test('every lesson and strategy exposes authoritative HTTPS sources', () => {
   for (const item of [...allLessons, ...allStrategies]) {
@@ -87,6 +88,27 @@ test('Reading a Business uses explanatory visuals for every full-size art card',
     if (card.art?.kind === 'scene') {
       assert.ok(card.art.alt.length >= 24, `${lessonId}/${card.id}: scene needs useful alt text`);
     }
+  }
+});
+
+test('Revenue vs. Earnings uses a unique visual story through its instructional middle', () => {
+  const lesson = allLessons.find(
+    (candidate) => candidate.courseId === 'reading-a-business' && candidate.id === 'revenue-vs-earnings',
+  );
+  assert.ok(lesson);
+
+  const expectedScenes = new Map([
+    ['c2', 'coffee-register'],
+    ['c3', 'coffee-profit-journey'],
+    ['c4', 'coffee-gross-profit'],
+    ['c5', 'coffee-operating-costs'],
+    ['c7', 'coffee-expansion-risk'],
+  ]);
+
+  for (const [cardId, sceneName] of expectedScenes) {
+    const card: Card | undefined = lesson.cards.find((candidate) => candidate.id === cardId);
+    assert.ok(card && 'art' in card && card.art?.kind === 'scene', `${cardId}: missing story scene`);
+    assert.equal(card.art.name, sceneName, `${cardId}: fell back to a generic scene`);
   }
 });
 

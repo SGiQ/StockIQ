@@ -215,6 +215,11 @@ export const SCENE_NAMES = [
   'pe-equation',
   'pe-payback',
   'value-trap',
+  'coffee-register',
+  'coffee-profit-journey',
+  'coffee-gross-profit',
+  'coffee-operating-costs',
+  'coffee-expansion-risk',
 ] as const;
 export const SceneNameSchema = z.enum(SCENE_NAMES);
 export type SceneName = (typeof SCENE_NAMES)[number];

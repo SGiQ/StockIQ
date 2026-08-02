@@ -24,9 +24,9 @@
       "body": "A coffee chain sells **100 million dollars** of coffee in a year. That is revenue — the top line of the income statement. Every cost the business paid to earn it sits below that number, waiting.",
       "art": {
         "kind": "scene",
-        "name": "income-waterfall",
+        "name": "coffee-register",
         "palette": "butter",
-        "alt": "Revenue steps down through gross profit and operating income to a much smaller net income."
+        "alt": "A coffee shop register records one hundred million dollars of sales before any business costs are paid."
       }
     },
     {
@@ -34,25 +34,10 @@
       "type": "diagram",
       "title": "Where the money goes",
       "art": {
-        "kind": "chart",
-        "motion": "build",
-        "spec": {
-          "type": "bars",
-          "values": [
-            100,
-            38,
-            8,
-            3
-          ],
-          "labels": [
-            "Revenue",
-            "Gross profit",
-            "Operating income",
-            "Net income"
-          ],
-          "highlightIndex": 3,
-          "yLabel": "$ millions"
-        }
+        "kind": "scene",
+        "name": "coffee-profit-journey",
+        "palette": "sky",
+        "alt": "A coffee sale moves through four illustrated checkpoints, shrinking from one hundred million dollars of revenue to three million dollars of net income."
       },
       "caption": "Same company, four rungs down. 100 million came in. After beans, staff, rent, interest and tax, **3 million** stayed. That last bar is the business."
     },
@@ -63,15 +48,21 @@
       "body": "Take the 100 million and subtract what the coffee itself cost — beans, milk, cups — 62 million. That leaves **38 million** of gross profit. This is what the product earns before you run a company around it.",
       "art": {
         "kind": "scene",
-        "name": "gross-margin",
+        "name": "coffee-gross-profit",
         "palette": "lilac",
-        "alt": "Sales revenue falls to gross profit after the direct cost of the product is removed."
+        "alt": "A coffee receipt subtracts beans, milk, and cups from sales, leaving thirty-eight million dollars of gross profit."
       }
     },
     {
       "id": "c5",
       "type": "binary_choice",
       "prompt": "The chain spends 30 million on staff, rent and marketing. Which line does that come out of?",
+      "art": {
+        "kind": "scene",
+        "name": "coffee-operating-costs",
+        "palette": "mint",
+        "alt": "Staff, rent, and marketing bills come out of gross profit and leave eight million dollars of operating income."
+      },
       "options": [
         {
           "id": "gross",
@@ -139,9 +130,9 @@
       "body": "Next year the chain opens 40 shops. Revenue climbs to **130 million** — a record. But gross profit only reaches 49 million, new staff and rent cost 47 million, and interest takes 5 million. The year ends at minus 3 million.",
       "art": {
         "kind": "scene",
-        "name": "revenue-profit-diverge",
+        "name": "coffee-expansion-risk",
         "palette": "blush",
-        "alt": "A rising revenue line separates from a falling profit line as business costs grow."
+        "alt": "New coffee shops increase sales while rent, staffing, and interest costs push earnings below zero."
       }
     },
     {

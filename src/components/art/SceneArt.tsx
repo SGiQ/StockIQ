@@ -429,7 +429,53 @@ const MoneyStack = ({ x, y, count, theme, faded = false }: { x: number; y: numbe
   </G>
 );
 
+const CoffeeCup = ({ x, y, theme, scale = 1 }: { x: number; y: number; theme: SceneTheme; scale?: number }) => (
+  <G transform={`translate(${x} ${y}) scale(${scale})`} fill="none" stroke={theme.ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <Path d="M4 12h24l-3 28H7z" fill={theme.accent} fillOpacity="0.28" />
+    <Path d="M2 12h28M9 7h16" />
+    <Path d="M12 3c-3-4 4-5 1-9M21 3c-3-4 4-5 1-9" strokeOpacity="0.55" />
+  </G>
+);
+
+const CoffeeShop = ({ x, y, theme, open = true }: { x: number; y: number; theme: SceneTheme; open?: boolean }) => (
+  <G transform={`translate(${x} ${y})`} fill="none" stroke={theme.ink} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <Path d="M5 27h58v42H5z" fill={theme.accent} fillOpacity={open ? 0.22 : 0.08} />
+    <Path d="M1 27l8-17h50l8 17M12 10v17M23 10v17M34 10v17M45 10v17M56 10v17" />
+    <Path d="M13 69V42h18v27M39 43h16v14H39z" />
+    <Circle cx="26" cy="56" r="1.5" fill={theme.ink} />
+    {!open && <Path d="M8 17l52 44M60 17L8 61" strokeWidth="4" />}
+  </G>
+);
+
+const CostChip = ({ x, y, label, theme, strong = false }: { x: number; y: number; label: string; theme: SceneTheme; strong?: boolean }) => (
+  <G transform={`translate(${x} ${y})`}>
+    <Rect width="54" height="22" rx="7" fill={strong ? theme.accent : theme.ink} fillOpacity={strong ? 0.48 : 0.08} stroke={theme.ink} strokeOpacity="0.18" />
+    <Label x={27} y={15} theme={theme}>{label}</Label>
+  </G>
+);
+
 function BusinessScene({ name, theme }: { name: SceneName; theme: SceneTheme }) {
+  if (name === 'coffee-register') {
+    return <><CoffeeShop x={13} y={32} theme={theme} /><CoffeeCup x={89} y={50} theme={theme} scale={0.8} /><Arrow x1={119} y1={69} x2={145} y2={69} theme={theme} /><G transform="translate(153 24)"><Rect width="70" height="82" rx="13" fill={theme.ink} fillOpacity="0.08" stroke={theme.ink} strokeWidth="2" /><Rect x="10" y="10" width="50" height="23" rx="5" fill={theme.accent} fillOpacity="0.45" /><SvgText x="35" y="27" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="13" textAnchor="middle">$100M</SvgText><Path d="M12 45h46M12 56h46M12 67h29" stroke={theme.ink} strokeOpacity="0.35" strokeWidth="2" /><Label x={35} y={77} theme={theme}>SALES IN</Label></G><Label x={46} y={118} theme={theme}>COFFEE SHOP</Label><MutedLabel x={188} y={118} theme={theme}>BEFORE COSTS</MutedLabel></>;
+  }
+  if (name === 'coffee-profit-journey') {
+    const stops = [
+      { x: 8, amount: '$100M', label: 'SALES', opacity: 0.5 },
+      { x: 65, amount: '$38M', label: 'PRODUCT', opacity: 0.38 },
+      { x: 122, amount: '$8M', label: 'SHOP', opacity: 0.27 },
+      { x: 179, amount: '$3M', label: 'KEPT', opacity: 0.72 },
+    ];
+    return <><Path d="M27 63h183" stroke={theme.ink} strokeOpacity="0.22" strokeWidth="3" />{stops.map((stop, index) => <G key={stop.label} transform={`translate(${stop.x} 32)`}><Circle cx="21" cy="31" r={index === 3 ? 22 : 19} fill={index === 3 ? theme.accent : theme.ink} fillOpacity={stop.opacity} stroke={theme.ink} strokeWidth="2" /><SvgText x="21" y="35" fill={theme.ink} fontFamily="Inter_700Bold" fontSize={index === 0 ? 10 : 11} textAnchor="middle">{stop.amount}</SvgText><MutedLabel x={21} y={64} theme={theme}>{stop.label}</MutedLabel>{index < 3 && <Path d="M43 31l9 0-4-4m4 4-4 4" fill="none" stroke={theme.ink} strokeWidth="2" />}</G>)}<CoffeeCup x={17} y={2} theme={theme} scale={0.36} /><G fill={theme.ink} fillOpacity="0.45"><Circle cx="79" cy="12" r="4" /><Circle cx="88" cy="9" r="4" /><Circle cx="92" cy="17" r="4" /></G><G transform="translate(132 1) scale(.3)"><CoffeeShop x={0} y={0} theme={theme} /></G><G transform="translate(192 1) scale(.65)"><MoneyStack x={0} y={0} count={3} theme={theme} /></G><Label x={120} y={116} theme={theme}>EVERY COST TAKES A CUT</Label></>;
+  }
+  if (name === 'coffee-gross-profit') {
+    return <><G transform="translate(10 18)"><Rect width="75" height="88" rx="12" fill={theme.ink} fillOpacity="0.07" stroke={theme.ink} strokeWidth="2" /><Label x={37.5} y={17} theme={theme}>SALE</Label><SvgText x="37.5" y="43" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="18" textAnchor="middle">$100M</SvgText><Path d="M12 55h51M12 65h37M12 75h44" stroke={theme.ink} strokeOpacity="0.28" strokeWidth="2" /><MutedLabel x={37.5} y={84} theme={theme}>RECEIPT</MutedLabel></G><SvgText x="100" y="67" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="19" textAnchor="middle">−</SvgText><G transform="translate(113 17)"><CostChip x={0} y={0} label="BEANS" theme={theme} /><CostChip x={0} y={29} label="MILK" theme={theme} /><CostChip x={0} y={58} label="CUPS" theme={theme} /></G><SvgText x="179" y="67" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="19" textAnchor="middle">=</SvgText><G transform="translate(190 29)"><Rect width="42" height="65" rx="12" fill={theme.accent} fillOpacity="0.48" stroke={theme.ink} strokeWidth="2" /><SvgText x="21" y="31" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="13" textAnchor="middle">$38M</SvgText><Label x={21} y={49} theme={theme}>GROSS</Label></G></>;
+  }
+  if (name === 'coffee-operating-costs') {
+    return <><G transform="translate(8 32)"><Rect width="52" height="65" rx="12" fill={theme.accent} fillOpacity="0.35" stroke={theme.ink} strokeWidth="2" /><SvgText x="26" y="29" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="13" textAnchor="middle">$38M</SvgText><Label x={26} y={48} theme={theme}>GROSS</Label></G><SvgText x="72" y="68" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="19" textAnchor="middle">−</SvgText><G transform="translate(84 16)"><CostChip x={0} y={0} label="STAFF" theme={theme} /><CostChip x={0} y={29} label="RENT" theme={theme} /><CostChip x={0} y={58} label="ADS" theme={theme} /></G><SvgText x="152" y="68" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="19" textAnchor="middle">=</SvgText><G transform="translate(166 31)"><CoffeeShop x={0} y={0} theme={theme} /><SvgText x="34" y="82" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="13" textAnchor="middle">$8M</SvgText><Label x={34} y={96} theme={theme}>OPERATING</Label></G></>;
+  }
+  if (name === 'coffee-expansion-risk') {
+    return <><G transform="translate(8 25) scale(.68)"><CoffeeShop x={0} y={0} theme={theme} /></G><G transform="translate(57 16) scale(.68)"><CoffeeShop x={0} y={0} theme={theme} /></G><G transform="translate(106 8) scale(.68)"><CoffeeShop x={0} y={0} theme={theme} /></G><Path d="M16 103C62 92 95 73 142 34" fill="none" stroke={theme.accent} strokeWidth="4" /><Path d="M142 34l-10 1 7 7" fill="none" stroke={theme.accent} strokeWidth="3" /><Label x={90} y={119} theme={theme}>SALES $130M</Label><G transform="translate(158 20)"><CostChip x={0} y={0} label="RENT" theme={theme} /><CostChip x={8} y={27} label="STAFF" theme={theme} /><CostChip x={16} y={54} label="DEBT" theme={theme} /></G><Rect x="160" y="84" width="54" height="18" rx="6" fill={theme.bg} /><SvgText x="187" y="97" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="12" textAnchor="middle">−$3M</SvgText><Path d="M161 104l54 16" stroke={theme.ink} strokeWidth="4" /><Path d="M215 120l-8-8-3 9" fill="none" stroke={theme.ink} strokeWidth="3" /></>;
+  }
   if (name === 'cash-vs-profit') {
     return <><Label x={57} y={24} theme={theme}>PROFIT</Label><Label x={183} y={24} theme={theme}>CASH</Label><G transform="translate(24 37)"><Rect width="66" height="58" rx="13" fill={theme.ink} fillOpacity="0.08" /><Path d="M14 43l14-17 10 9 15-22" fill="none" stroke={theme.ink} strokeWidth="3" /><Path d="M49 13h6v6" fill="none" stroke={theme.ink} strokeWidth="2" /></G><SvgText x="120" y="72" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="22" textAnchor="middle">≠</SvgText><G transform="translate(151 37)"><Rect width="66" height="58" rx="13" fill={theme.accent} fillOpacity="0.3" /><MoneyStack x={12} y={17} count={4} theme={theme} /></G></>;
   }
@@ -493,7 +539,7 @@ function sceneFor(name: SceneName, theme: SceneTheme) {
   if (['two-sided-market', 'spread-toll', 'liquidity-depth'].includes(name)) return <TradingScene name={name} theme={theme} />;
   if (['quote-terminal', 'price-change', 'event-gap', 'quote-signal'].includes(name)) return <QuoteScene name={name} theme={theme} />;
   if (['trade-agreement', 'supply-demand', 'expectations-gap'].includes(name)) return <PriceScene name={name} theme={theme} />;
-  if (['cash-vs-profit', 'accrual-timing', 'noncash-charge', 'free-cash-flow', 'dividend-per-share', 'payout-pressure', 'buyback-slices', 'yield-trap', 'competition-cycle', 'moat-defense', 'customer-moat', 'moat-erosion', 'gross-margin', 'operating-margin', 'income-waterfall', 'revenue-profit-diverge', 'pe-equation', 'pe-payback', 'value-trap'].includes(name)) return <BusinessScene name={name} theme={theme} />;
+  if (['cash-vs-profit', 'accrual-timing', 'noncash-charge', 'free-cash-flow', 'dividend-per-share', 'payout-pressure', 'buyback-slices', 'yield-trap', 'competition-cycle', 'moat-defense', 'customer-moat', 'moat-erosion', 'gross-margin', 'operating-margin', 'income-waterfall', 'revenue-profit-diverge', 'pe-equation', 'pe-payback', 'value-trap', 'coffee-register', 'coffee-profit-journey', 'coffee-gross-profit', 'coffee-operating-costs', 'coffee-expansion-risk'].includes(name)) return <BusinessScene name={name} theme={theme} />;
   return <IndexScene name={name} theme={theme} />;
 }
 
