@@ -10,21 +10,21 @@
       "type": "concept",
       "headline": "A profitable company can still run out of cash.",
       "body": "Profit is an accounting result. Cash is a bank balance. They are not the same number, and the difference is where a lot of bad surprises live. A company can report record earnings and still miss payroll.",
-      "art": { "kind": "glyph", "name": "bank", "bg": "butter" }
+      "art": { "kind": "scene", "name": "cash-vs-profit", "palette": "butter", "alt": "Accounting profit and cash shown as two different measures rather than the same thing." }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Revenue is booked when it is earned.",
       "body": "Under accrual accounting, a sale counts the day you **ship** the product, not the day the money lands. Deliver $10m of equipment in December on 90-day terms and December's income statement shows $10m. Your bank account shows nothing until March.",
-      "art": { "kind": "glyph", "name": "calendar", "bg": "sky" }
+      "art": { "kind": "scene", "name": "accrual-timing", "palette": "sky", "alt": "An invoice recorded now with a dotted timeline leading to cash arriving later." }
     },
     {
       "id": "c3",
       "type": "concept",
       "headline": "Some costs never touch the bank.",
       "body": "Depreciation spreads the cost of a machine over its useful life. This year the company charges $30m of depreciation against earnings, but **no cash moves**. The cash went out years ago, when the machine was bought.",
-      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+      "art": { "kind": "scene", "name": "noncash-charge", "palette": "lilac", "alt": "A long-lived asset gradually becoming an accounting expense without a new cash payment." }
     },
     {
       "id": "c4",
@@ -58,7 +58,7 @@
       "type": "concept",
       "headline": "Free cash flow is what is left.",
       "body": "Operating cash flow is $40m — the cash the business itself generated. But keeping the machines running costs $25m of capital spending. Free cash flow is the **$15m** that survives, and only that $15m can repay debt, buy back shares, or fund a dividend.",
-      "art": { "kind": "glyph", "name": "coins-stack", "bg": "mint" }
+      "art": { "kind": "scene", "name": "free-cash-flow", "palette": "mint", "alt": "Cash coming into a business minus capital spending leaves free cash flow." }
     },
     {
       "id": "c7",
@@ -99,7 +99,7 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "dollar", "bg": "neon" },
+      "art": { "kind": "scene", "name": "free-cash-flow", "palette": "neon", "alt": "Operating cash after necessary investment becomes cash the owners can ultimately use." },
       "insight": "Earnings tell you what a company says it made. Cash flow tells you what it actually collected. When they disagree, follow the cash.",
       "attribution": { "source": "Day 3", "detail": "Reading a Business" }
     }

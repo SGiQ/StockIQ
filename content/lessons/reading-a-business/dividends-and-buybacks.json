@@ -17,9 +17,10 @@
       "headline": "A dividend is cash, per share.",
       "body": "A tool maker earns **200 million dollars** and has 100 million shares, so each share earned 2 dollars. It pays 1.20 of that out as a dividend. At a 40 dollar share price, that is a **3 percent** yield: 1.20 divided by 40.",
       "art": {
-        "kind": "glyph",
-        "name": "coin",
-        "bg": "butter"
+        "kind": "scene",
+        "name": "dividend-per-share",
+        "palette": "butter",
+        "alt": "A company cash stack divided into equal cash payments for each share."
       }
     },
     {
@@ -28,9 +29,10 @@
       "headline": "The payout ratio shows the strain.",
       "body": "That 1.20 dividend comes out of 2.00 of earnings per share. The **payout ratio** is 60 percent: 60 cents of every dollar earned goes out, 40 cents stays to fund growth. Near 100 percent, there is nothing left to absorb a bad year.",
       "art": {
-        "kind": "glyph",
-        "name": "pie",
-        "bg": "sky"
+        "kind": "scene",
+        "name": "payout-pressure",
+        "palette": "sky",
+        "alt": "A high payout gauge beside a small remaining cash cushion."
       }
     },
     {
@@ -51,9 +53,10 @@
       "headline": "A buyback cuts the pie into fewer slices.",
       "body": "A second tool maker earns the same 200 million but pays no dividend. It spends the cash retiring its own shares instead. Split 200 million across 100 million shares and each earns 2.00. Across 80 million shares, each earns **2.50**.",
       "art": {
-        "kind": "glyph",
-        "name": "exchange",
-        "bg": "mint"
+        "kind": "scene",
+        "name": "buyback-slices",
+        "palette": "mint",
+        "alt": "Four ownership slices become three after a buyback, making each remaining slice larger."
       }
     },
     {
@@ -109,9 +112,10 @@
       "headline": "A big yield can be a warning.",
       "body": "Yield is a fraction: dividend over price. If earnings sag and the price falls from 40 to 15, that unchanged 1.20 now reads as an **8 percent** yield. The number did not improve. The denominator collapsed, and the market may be pricing in a cut.",
       "art": {
-        "kind": "glyph",
-        "name": "warning",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "yield-trap",
+        "palette": "blush",
+        "alt": "A high dividend yield sits above a funnel created by a falling share price."
       }
     },
     {
@@ -129,9 +133,10 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "handshake",
-        "bg": "neon"
+        "kind": "scene",
+        "name": "dividend-per-share",
+        "palette": "neon",
+        "alt": "Cash leaves the company and is distributed to the people who own its shares."
       },
       "insight": "Cash returned to owners is the moment a business stops being a story and starts being a payment.",
       "attribution": {

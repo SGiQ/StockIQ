@@ -14,9 +14,10 @@
       "headline": "Profit is a magnet for competitors.",
       "body": "A business earns fat margins. Rivals notice, copy the product, and cut prices to win the customers. Margins fall back toward average. That is the default ending for most profitable ideas — unless something is defending them.",
       "art": {
-        "kind": "glyph",
-        "name": "target",
-        "bg": "butter"
+        "kind": "scene",
+        "name": "competition-cycle",
+        "palette": "butter",
+        "alt": "High profits attract a growing group of competitors into the market."
       }
     },
     {
@@ -25,9 +26,10 @@
       "headline": "A moat is a structural defence.",
       "body": "Picture a castle. The walls are the profitable business; the moat is the ditch that makes attacking expensive. In a company the ditch is not effort or talent. It is a feature a rival cannot copy just by spending more.",
       "art": {
-        "kind": "glyph",
-        "name": "shield",
-        "bg": "forest"
+        "kind": "scene",
+        "name": "moat-defense",
+        "palette": "forest",
+        "alt": "A profitable business is protected by a deep structural barrier that rivals struggle to cross."
       }
     },
     {
@@ -95,9 +97,10 @@
       "headline": "Two of them work on the customer.",
       "body": "Switching costs: moving your payroll system to a rival means retraining every manager, so you stay even when a cheaper option appears. Network effects: a payment network is worth joining because everyone else already joined, and each new member makes leaving worse.",
       "art": {
-        "kind": "glyph",
-        "name": "handshake",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "customer-moat",
+        "palette": "blush",
+        "alt": "Customers remain inside a strong business barrier because switching away is costly."
       }
     },
     {
@@ -181,9 +184,10 @@
       "headline": "Moats get filled in.",
       "body": "A patent expires. A regulator opens the market. New technology makes an old switching cost irrelevant. So the question is never only whether a moat exists. It is how fast it is being worn down, and by what.",
       "art": {
-        "kind": "glyph",
-        "name": "clock",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "moat-erosion",
+        "palette": "blush",
+        "alt": "A once-wide competitive barrier narrows and develops a break as its protection erodes."
       }
     },
     {
@@ -201,9 +205,10 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "anchor",
-        "bg": "ink"
+        "kind": "scene",
+        "name": "moat-defense",
+        "palette": "ink",
+        "alt": "A durable structural barrier protects a profitable business from competitors."
       },
       "insight": "Anyone can earn high profits for a year. The question worth asking is what stops someone else from taking them next year.",
       "attribution": {

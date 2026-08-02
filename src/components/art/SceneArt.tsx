@@ -421,6 +421,70 @@ function IndexScene({ name, theme }: { name: SceneName; theme: SceneTheme }) {
   );
 }
 
+const MoneyStack = ({ x, y, count, theme, faded = false }: { x: number; y: number; count: number; theme: SceneTheme; faded?: boolean }) => (
+  <G transform={`translate(${x} ${y})`} opacity={faded ? 0.42 : 1}>
+    {Array.from({ length: count }, (_, i) => (
+      <Rect key={i} x={0} y={22 - i * 6} width="42" height="10" rx="4" fill={i === count - 1 ? theme.accent : theme.ink} fillOpacity={i === count - 1 ? 0.72 : 0.12 + i * 0.06} stroke={theme.ink} strokeWidth="1.2" />
+    ))}
+  </G>
+);
+
+function BusinessScene({ name, theme }: { name: SceneName; theme: SceneTheme }) {
+  if (name === 'cash-vs-profit') {
+    return <><Label x={57} y={24} theme={theme}>PROFIT</Label><Label x={183} y={24} theme={theme}>CASH</Label><G transform="translate(24 37)"><Rect width="66" height="58" rx="13" fill={theme.ink} fillOpacity="0.08" /><Path d="M14 43l14-17 10 9 15-22" fill="none" stroke={theme.ink} strokeWidth="3" /><Path d="M49 13h6v6" fill="none" stroke={theme.ink} strokeWidth="2" /></G><SvgText x="120" y="72" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="22" textAnchor="middle">≠</SvgText><G transform="translate(151 37)"><Rect width="66" height="58" rx="13" fill={theme.accent} fillOpacity="0.3" /><MoneyStack x={12} y={17} count={4} theme={theme} /></G></>;
+  }
+  if (name === 'accrual-timing') {
+    return <><G transform="translate(18 27)"><Rect width="65" height="72" rx="12" fill={theme.ink} fillOpacity="0.08" /><Path d="M13 20h39M13 33h30M13 46h34" stroke={theme.ink} strokeWidth="2" /><Label x={32} y={64} theme={theme}>INVOICE</Label></G><Arrow x1={88} y1={62} x2={145} y2={62} theme={theme} dashed /><G transform="translate(155 28)"><Circle cx="31" cy="31" r="29" fill={theme.accent} fillOpacity="0.28" stroke={theme.ink} strokeWidth="2" /><Path d="M31 14v18l12 8" fill="none" stroke={theme.ink} strokeWidth="3" /><Label x={31} y={76} theme={theme}>CASH LATER</Label></G></>;
+  }
+  if (name === 'noncash-charge') {
+    return <><G transform="translate(20 27)"><Rect width="72" height="72" rx="14" fill={theme.ink} fillOpacity="0.08" /><Path d="M18 51V23h36v28M12 51h48M29 32v11M43 32v11" fill="none" stroke={theme.ink} strokeWidth="2" /><Label x={36} y={66} theme={theme}>ASSET</Label></G><Arrow x1={101} y1={62} x2={143} y2={62} theme={theme} /><G transform="translate(153 27)"><Rect width="66" height="72" rx="14" fill={theme.accent} fillOpacity="0.24" /><Path d="M14 22h38M14 35h31M14 48h22" stroke={theme.ink} strokeWidth="2" strokeDasharray="4 3" /><Label x={33} y={66} theme={theme}>EXPENSE</Label></G></>;
+  }
+  if (name === 'free-cash-flow') {
+    return <><MoneyStack x={18} y={28} count={6} theme={theme} /><Label x={39} y={92} theme={theme}>CASH IN</Label><SvgText x="82" y="65" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="20" textAnchor="middle">−</SvgText><G transform="translate(96 30)"><Rect width="48" height="52" rx="10" fill={theme.ink} fillOpacity="0.1" /><Path d="M10 39V20l14-9 14 9v19M6 39h36" fill="none" stroke={theme.ink} strokeWidth="2" /><Label x={24} y={65} theme={theme}>CAPEX</Label></G><SvgText x="160" y="65" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="20" textAnchor="middle">=</SvgText><MoneyStack x={181} y={34} count={3} theme={theme} /><Label x={202} y={92} theme={theme}>FREE CASH</Label></>;
+  }
+  if (name === 'dividend-per-share') {
+    return <><MoneyStack x={18} y={25} count={5} theme={theme} /><Arrow x1={68} y1={61} x2={104} y2={61} theme={theme} />{[0,1,2].map(i=><G key={i} transform={`translate(${112+i*39} 35)`}><Circle cx="14" cy="14" r="14" fill={theme.accent} fillOpacity={0.25+i*0.12} stroke={theme.ink} strokeWidth="1.5" /><SvgText x="14" y="19" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="14" textAnchor="middle">$</SvgText></G>)}<Label x={163} y={88} theme={theme}>CASH PER SHARE</Label></>;
+  }
+  if (name === 'payout-pressure') {
+    return <><G transform="translate(23 32)"><Circle cx="43" cy="43" r="38" fill="none" stroke={theme.ink} strokeOpacity="0.15" strokeWidth="12" /><Path d="M43 5a38 38 0 0136 50" fill="none" stroke={theme.accent} strokeWidth="12" strokeLinecap="round" /><SvgText x="43" y="49" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="17" textAnchor="middle">85%</SvgText></G><G transform="translate(132 24)"><Rect width="82" height="82" rx="14" fill={theme.ink} fillOpacity="0.08" /><MoneyStack x={20} y={22} count={2} theme={theme} /><Label x={41} y={68} theme={theme}>CUSHION</Label></G></>;
+  }
+  if (name === 'buyback-slices') {
+    return <><Label x={58} y={22} theme={theme}>BEFORE</Label><Label x={182} y={22} theme={theme}>AFTER</Label><G transform="translate(25 34)">{[0,1,2,3].map(i=><Rect key={i} x={(i%2)*34} y={Math.floor(i/2)*34} width="29" height="29" rx="7" fill={theme.ink} fillOpacity="0.12" />)}</G><Arrow x1={102} y1={66} x2={137} y2={66} theme={theme} /><G transform="translate(151 34)">{[0,1,2].map(i=><Rect key={i} x={(i%2)*34} y={Math.floor(i/2)*34} width="29" height="29" rx="7" fill={i===0?theme.accent:theme.ink} fillOpacity={i===0?0.7:0.12} />)}</G><Label x={181} y={112} theme={theme}>BIGGER SLICE</Label></>;
+  }
+  if (name === 'yield-trap') {
+    return <><G transform="translate(22 24)"><Rect width="88" height="78" rx="14" fill={theme.accent} fillOpacity="0.25" /><SvgText x="44" y="47" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="25" textAnchor="middle">12%</SvgText><Label x={44} y={67} theme={theme}>YIELD</Label></G><G transform="translate(137 24)"><Path d="M8 14h70L57 74H29z" fill={theme.ink} fillOpacity="0.1" stroke={theme.ink} strokeWidth="2" /><Path d="M30 39h27" stroke={theme.accent} strokeWidth="4" /><Label x={43} y={94} theme={theme}>PRICE FALL</Label></G></>;
+  }
+  if (name === 'competition-cycle') {
+    return <><G transform="translate(18 33)"><Rect width="62" height="62" rx="14" fill={theme.accent} fillOpacity="0.28" /><Path d="M15 46l12-14 9 7 12-20" fill="none" stroke={theme.ink} strokeWidth="3" /><Label x={31} y={57} theme={theme}>PROFIT</Label></G><Arrow x1={86} y1={64} x2={121} y2={64} theme={theme} /><G transform="translate(130 30)"><Rect width="84" height="68" rx="14" fill={theme.ink} fillOpacity="0.08" />{[0,1,2].map(i=><Path key={i} d={`M${16+i*23} 48V28l8-7 8 7v20`} fill="none" stroke={theme.ink} strokeWidth="2" />)}<Label x={42} y={61} theme={theme}>RIVALS</Label></G></>;
+  }
+  if (name === 'moat-defense' || name === 'customer-moat') {
+    const customer = name === 'customer-moat';
+    return <><G transform="translate(72 19)"><Rect x="18" y="23" width="60" height="70" rx="12" fill={theme.accent} fillOpacity="0.24" stroke={theme.ink} strokeWidth="2" /><Path d="M29 70V42l19-12 19 12v28M23 70h50" fill="none" stroke={theme.ink} strokeWidth="2" /><Path d="M8 18c-21 16-21 68 0 86M88 18c21 16 21 68 0 86" fill="none" stroke={theme.ink} strokeWidth="5" strokeLinecap="round" /><Label x={48} y={88} theme={theme}>{customer?'CUSTOMERS':'PROFIT'}</Label></G><MutedLabel x={120} y={121} theme={theme}>{customer?'HARD TO LEAVE':'HARD TO ATTACK'}</MutedLabel></>;
+  }
+  if (name === 'moat-erosion') {
+    return <><Path d="M20 87C52 33 83 32 112 65s58 31 108-22" fill="none" stroke={theme.ink} strokeOpacity="0.18" strokeWidth="12" /><Path d="M21 87C51 38 81 42 111 70s60 26 108-11" fill="none" stroke={theme.accent} strokeWidth="3" strokeDasharray="9 7" /><Path d="M105 45l14 22-20 15" fill={theme.bg} stroke={theme.ink} strokeWidth="2" /><Label x={120} y={25} theme={theme}>MOAT NARROWS</Label></>;
+  }
+  if (name === 'gross-margin' || name === 'operating-margin') {
+    const operating = name === 'operating-margin';
+    const items = operating ? [['REVENUE',100],['PRODUCT',62],['RUNNING',24],['KEPT',14]] : [['SALE',100],['PRODUCT',62],['GROSS',38]];
+    return <>{items.map(([label,value],i)=><G key={String(label)} transform={`translate(18 ${18+i*27})`}><Rect width={Number(value)*1.9} height="18" rx="5" fill={i===items.length-1?theme.accent:theme.ink} fillOpacity={i===items.length-1?0.68:0.09+i*0.04} /><Label x={7} y={13} anchor="start" theme={theme}>{label}</Label><MutedLabel x={220} y={13} anchor="end" theme={theme}>{`${value}%`}</MutedLabel></G>)}</>;
+  }
+  if (name === 'income-waterfall') {
+    const bars=[['REVENUE',100],['GROSS',58],['OPERATING',25],['NET',14]];
+    return <>{bars.map(([label,value],i)=><G key={String(label)} transform={`translate(${18+i*55} ${105-Number(value)*.7})`}><Rect width="42" height={Number(value)*.7} rx="7" fill={i===3?theme.accent:theme.ink} fillOpacity={i===3?.68:.08+i*.06} /><MutedLabel x={21} y={Number(value)*.7+14} theme={theme}>{label}</MutedLabel></G>)}</>;
+  }
+  if (name === 'revenue-profit-diverge') {
+    return <><Path d="M18 99l40-15 40-18 40-21 40-18 43-11" fill="none" stroke={theme.accent} strokeWidth="4" /><Path d="M18 78l40 2 40 7 40 8 40 10 43 8" fill="none" stroke={theme.ink} strokeWidth="4" /><Label x={183} y={21} anchor="start" theme={theme}>REVENUE</Label><Label x={177} y={124} anchor="start" theme={theme}>PROFIT</Label></>;
+  }
+  if (name === 'pe-equation') {
+    return <><G transform="translate(20 31)"><Rect width="72" height="62" rx="13" fill={theme.ink} fillOpacity="0.08" /><SvgText x="36" y="37" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="20" textAnchor="middle">$60</SvgText><Label x={36} y={55} theme={theme}>PRICE</Label></G><SvgText x="112" y="70" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="22" textAnchor="middle">÷</SvgText><G transform="translate(132 31)"><Rect width="72" height="62" rx="13" fill={theme.ink} fillOpacity="0.08" /><SvgText x="36" y="37" fill={theme.ink} fontFamily="Inter_700Bold" fontSize="20" textAnchor="middle">$3</SvgText><Label x={36} y={55} theme={theme}>EPS</Label></G><SvgText x="220" y="70" fill={theme.accent} fontFamily="Inter_700Bold" fontSize="18" textAnchor="middle">20×</SvgText></>;
+  }
+  if (name === 'pe-payback') {
+    return <><G transform="translate(17 26)"><Rect width="206" height="76" rx="14" fill={theme.ink} fillOpacity="0.07" />{Array.from({length:10},(_,i)=><Rect key={i} x={11+i*19} y="20" width="13" height="36" rx="4" fill={i<4?theme.accent:theme.ink} fillOpacity={i<4?.68:.12} />)}<Label x={103} y={69} theme={theme}>YEARS OF CURRENT EARNINGS</Label></G></>;
+  }
+  return <><G transform="translate(19 26)"><Rect width="202" height="76" rx="14" fill={theme.ink} fillOpacity="0.07" /><Path d="M16 20l36 10 34 12 36 13 32 8 31 7" fill="none" stroke={theme.accent} strokeWidth="4" /><Path d="M16 56h169" stroke={theme.ink} strokeOpacity="0.2" strokeWidth="2" /><Path d="M151 48l17 15-17 15" fill="none" stroke={theme.ink} strokeWidth="2" /><Label x={101} y={69} theme={theme}>CHEAP FOR A REASON</Label></G></>;
+}
+
 function sceneFor(name: SceneName, theme: SceneTheme) {
   if (['ownership-slice', 'share-ledger', 'equity-vs-debt', 'owner-outcomes'].includes(name)) return <OwnershipScene name={name} theme={theme} />;
   if (['capital-journey', 'ipo-launch', 'primary-secondary', 'liquidity-exit'].includes(name)) return <CapitalScene name={name} theme={theme} />;
@@ -429,6 +493,7 @@ function sceneFor(name: SceneName, theme: SceneTheme) {
   if (['two-sided-market', 'spread-toll', 'liquidity-depth'].includes(name)) return <TradingScene name={name} theme={theme} />;
   if (['quote-terminal', 'price-change', 'event-gap', 'quote-signal'].includes(name)) return <QuoteScene name={name} theme={theme} />;
   if (['trade-agreement', 'supply-demand', 'expectations-gap'].includes(name)) return <PriceScene name={name} theme={theme} />;
+  if (['cash-vs-profit', 'accrual-timing', 'noncash-charge', 'free-cash-flow', 'dividend-per-share', 'payout-pressure', 'buyback-slices', 'yield-trap', 'competition-cycle', 'moat-defense', 'customer-moat', 'moat-erosion', 'gross-margin', 'operating-margin', 'income-waterfall', 'revenue-profit-diverge', 'pe-equation', 'pe-payback', 'value-trap'].includes(name)) return <BusinessScene name={name} theme={theme} />;
   return <IndexScene name={name} theme={theme} />;
 }
 

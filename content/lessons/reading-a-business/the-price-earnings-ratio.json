@@ -20,9 +20,10 @@
       "headline": "It is one division, nothing more.",
       "body": "Northwind Foods trades at **$60** a share. Over the last year it earned **$3** of profit per share. Sixty divided by three is **20**. Northwind has a P/E of 20: you pay $20 for every $1 of annual profit.",
       "art": {
-        "kind": "glyph",
-        "name": "scale",
-        "bg": "lilac"
+        "kind": "scene",
+        "name": "pe-equation",
+        "palette": "lilac",
+        "alt": "A sixty dollar share price divided by three dollars of earnings per share equals a P/E of twenty."
       }
     },
     {
@@ -31,9 +32,10 @@
       "headline": "Read it as years of earnings.",
       "body": "A P/E of 20 means you are handing over 20 years of Northwind's current profit to own one share today. That is the honest reading. It also shows why the number is only a starting question: earnings rarely stay still.",
       "art": {
-        "kind": "glyph",
-        "name": "clock",
-        "bg": "sky"
+        "kind": "scene",
+        "name": "pe-payback",
+        "palette": "sky",
+        "alt": "A row of years represents how many years of current earnings are embedded in the share price."
       }
     },
     {
@@ -99,9 +101,10 @@
       "headline": "The value trap, in one line.",
       "body": "Harborline trades at $27 on $3 of earnings per share — a P/E of 9. Now suppose earnings fall to $1.50, as the market expects. That same $27 price is 18 times earnings. Cheap became expensive and the price never moved.",
       "art": {
-        "kind": "glyph",
-        "name": "warning",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "value-trap",
+        "palette": "blush",
+        "alt": "A low valuation follows declining earnings into a value trap marked cheap for a reason."
       }
     },
     {
@@ -165,9 +168,10 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "eye",
-        "bg": "ink"
+        "kind": "scene",
+        "name": "pe-equation",
+        "palette": "ink",
+        "alt": "Price divided by earnings produces a valuation multiple that reflects market expectations."
       },
       "insight": "A P/E is not a price tag. It is the market's forecast written as a number — and forecasts can be wrong in both directions.",
       "attribution": {

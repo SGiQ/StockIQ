@@ -73,6 +73,23 @@ test('Market Foundations uses editorial openings and explanatory scenes, not gen
   }
 });
 
+test('Reading a Business uses explanatory visuals for every full-size art card', () => {
+  const businessLessons = allLessons.filter((lesson) => lesson.courseId === 'reading-a-business');
+  const fullSizeArtCards = businessLessons.flatMap((lesson) =>
+    lesson.cards
+      .filter((card) => card.type === 'concept' || card.type === 'diagram' || card.type === 'key_insight')
+      .map((card) => ({ lessonId: lesson.id, card })),
+  );
+
+  assert.equal(businessLessons.length, 6);
+  for (const { lessonId, card } of fullSizeArtCards) {
+    assert.notEqual(card.art?.kind, 'glyph', `${lessonId}/${card.id}: full-size card still uses a generic glyph`);
+    if (card.art?.kind === 'scene') {
+      assert.ok(card.art.alt.length >= 24, `${lessonId}/${card.id}: scene needs useful alt text`);
+    }
+  }
+});
+
 test('every lesson has a shipped paper-craft opening and closing bookend', () => {
   const lessons = listCourses().flatMap((course) => listLessonsInCourse(course.id));
   assert.equal(lessons.length, 37);

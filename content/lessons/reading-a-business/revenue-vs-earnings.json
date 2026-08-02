@@ -11,9 +11,10 @@
       "headline": "Record revenue can hide a losing business.",
       "body": "Revenue is every dollar that came in the door. Profit is what is left after you pay for all of it. A headline about **record revenue** tells you how much money arrived. It says nothing about how much stayed.",
       "art": {
-        "kind": "glyph",
-        "name": "newspaper",
-        "bg": "sky"
+        "kind": "scene",
+        "name": "revenue-profit-diverge",
+        "palette": "sky",
+        "alt": "Revenue rises while profit falls, showing that record sales can hide a losing business."
       }
     },
     {
@@ -22,9 +23,10 @@
       "headline": "The top line is only the start.",
       "body": "A coffee chain sells **100 million dollars** of coffee in a year. That is revenue — the top line of the income statement. Every cost the business paid to earn it sits below that number, waiting.",
       "art": {
-        "kind": "glyph",
-        "name": "coins-stack",
-        "bg": "butter"
+        "kind": "scene",
+        "name": "income-waterfall",
+        "palette": "butter",
+        "alt": "Revenue steps down through gross profit and operating income to a much smaller net income."
       }
     },
     {
@@ -60,9 +62,10 @@
       "headline": "First rung: gross profit.",
       "body": "Take the 100 million and subtract what the coffee itself cost — beans, milk, cups — 62 million. That leaves **38 million** of gross profit. This is what the product earns before you run a company around it.",
       "art": {
-        "kind": "glyph",
-        "name": "ladder",
-        "bg": "lilac"
+        "kind": "scene",
+        "name": "gross-margin",
+        "palette": "lilac",
+        "alt": "Sales revenue falls to gross profit after the direct cost of the product is removed."
       }
     },
     {
@@ -135,9 +138,10 @@
       "headline": "Growing revenue, vanishing profit.",
       "body": "Next year the chain opens 40 shops. Revenue climbs to **130 million** — a record. But gross profit only reaches 49 million, new staff and rent cost 47 million, and interest takes 5 million. The year ends at minus 3 million.",
       "art": {
-        "kind": "glyph",
-        "name": "chart-down",
-        "bg": "blush"
+        "kind": "scene",
+        "name": "revenue-profit-diverge",
+        "palette": "blush",
+        "alt": "A rising revenue line separates from a falling profit line as business costs grow."
       }
     },
     {
@@ -168,9 +172,10 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "glyph",
-        "name": "scale",
-        "bg": "ink"
+        "kind": "scene",
+        "name": "income-waterfall",
+        "palette": "ink",
+        "alt": "A large revenue column steps down through costs to the smaller earnings the business retains."
       },
       "insight": "Revenue proves people want what you sell. Earnings prove the business can afford to sell it.",
       "attribution": {
