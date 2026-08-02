@@ -1,30 +1,28 @@
 import { StyleSheet, View } from 'react-native';
-import { Glyph } from '@/components/art/Glyph';
 import { Text } from '@/components/primitives';
-import { palette, radius, shadow, space } from '@/theme/tokens';
+import { palette, radius, space } from '@/theme/tokens';
 
 export function UnitBanner({ index, name, completed, total }: { index: number; name: string; completed: number; total: number }) {
-  const pct = total ? completed / total : 0;
+  const done = completed === total;
   return (
-    <View style={[styles.banner, shadow.card]}>
-      <View style={styles.badge}>
-        <Glyph name={completed === total ? 'check' : 'building'} size={25} color={palette.paper} strokeWidth={2.3} />
+    <View style={styles.wrap}>
+      <View style={[styles.line, done && styles.lineDone]} />
+      <View style={[styles.zone, done && styles.zoneDone]}>
+        <Text variant="h3" color={palette.paper}>{index}</Text>
       </View>
       <View style={styles.copy}>
-        <Text variant="label" color={palette.violetInk} uppercase>{`District ${index}`}</Text>
-        <Text variant="bodySm" color={palette.ink} numberOfLines={2} style={styles.name}>{name}</Text>
-        <View style={styles.track}><View style={[styles.fill, { width: `${Math.round(pct * 100)}%` }]} /></View>
+        <Text variant="label" color={done ? palette.emeraldDeep : palette.slate} uppercase>{`Zone ${index} · ${completed}/${total}`}</Text>
+        <Text variant="h2" color={done ? palette.ink : palette.inkSoft}>{name}</Text>
       </View>
-      <Text variant="label" color={palette.slate}>{`${completed}/${total}`}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  banner: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderWidth: 1, borderColor: '#D8C9F2', backgroundColor: '#F5F0FC', borderRadius: radius.lg, padding: space.md, marginBottom: space.sm },
-  badge: { width: 48, height: 48, borderRadius: radius.md, backgroundColor: palette.violet, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: '-2deg' }] },
-  copy: { flex: 1, gap: space.xs },
-  name: { fontWeight: '700' },
-  track: { height: 5, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: '#DDD4EA' },
-  fill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.emeraldDeep },
+  wrap: { minHeight: 88, position: 'relative', paddingLeft: 70, paddingBottom: space.md, justifyContent: 'center' },
+  line: { position: 'absolute', left: 25, top: 44, bottom: 0, width: 4, backgroundColor: '#D8DED9' },
+  lineDone: { backgroundColor: palette.emeraldDeep },
+  zone: { position: 'absolute', left: 4, top: 16, width: 46, height: 46, borderRadius: radius.sm, backgroundColor: palette.slate, alignItems: 'center', justifyContent: 'center' },
+  zoneDone: { backgroundColor: palette.forestInk },
+  copy: { gap: space.xs },
 });

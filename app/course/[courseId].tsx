@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { getCourse, getLesson } from '@/content/registry';
@@ -13,7 +13,8 @@ import {
   useAppStore,
 } from '@/store/slices/useAppStore';
 import { progressId } from '@/store';
-import { palette, radius, shadow, space } from '@/theme/tokens';
+import { toPlainText } from '@/content/richtext';
+import { palette, radius, space } from '@/theme/tokens';
 
 /**
  * The course path.
@@ -74,20 +75,18 @@ export default function CourseScreen() {
         <Text variant="h3" color={palette.ink} numberOfLines={2} style={styles.headerTitle}>
           {course.title}
         </Text>
+        <View style={styles.logoCrop} accessibilityLabel="StockIQ">
+          <Image source={require('../../public/logo/SG.png')} resizeMode="contain" style={styles.logo} />
+        </View>
       </View>
 
-      <View style={[styles.overview, shadow.card]}>
-        <View style={styles.overviewTop}>
-          <View>
-            <Text variant="label" color={palette.slate} uppercase>Market map</Text>
-            <Text variant="h3">Your route to fluency</Text>
-          </View>
-          <View style={styles.statPill}>
-            <Text variant="label" color={palette.forestDeep} uppercase>{`${earnedXp} / ${course.totalXp} XP`}</Text>
-          </View>
+      <View style={styles.progressHeader}>
+        <View style={styles.progressCopy}>
+          <Text variant="label" color={palette.slate} uppercase>Introduction to equities</Text>
+          <Text variant="caption" color={palette.forestDeep}>{`${earnedXp} / ${course.totalXp} XP`}</Text>
         </View>
         <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.round(progress * 100)}%` }]} /></View>
-        <Text variant="caption" color={palette.slate}>{`${Math.round(progress * 100)}% of this market explored`}</Text>
+        <Text variant="label" color={palette.forestDeep}>{`${Math.round(progress * 100)}%`}</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.path} showsVerticalScrollIndicator={false}>
@@ -107,17 +106,19 @@ export default function CourseScreen() {
                 const lesson = getLesson(course.id, lessonId);
                 if (!lesson) return null;
                 const record = progressMap[progressId(course.id, lessonId)];
+                const intro = lesson.cards.find((card) => card.type === 'concept');
+                const summary = intro ? toPlainText(intro.body) : `Build the next part of your ${course.category} foundation.`;
 
                 return (
                   <View key={lessonId}>
                     <LessonNode
                       lessonId={lessonId}
                       title={lesson.title}
+                      summary={summary}
+                      estimatedMinutes={lesson.estimatedMinutes}
                       status={statuses[lessonId] ?? 'locked'}
                       starred={record?.starred}
-                      position={i % 2 === 0 ? 'left' : 'right'}
                       isCurrent={lessonId === currentLessonId}
-                      isLast={i === unit.lessonIds.length - 1}
                       onPress={() =>
                         router.push(`/lesson/${course.id}/${lessonId}` as never)
                       }
@@ -147,19 +148,15 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
   },
-  overview: { marginHorizontal: space.lg, marginTop: space.md, padding: space.md, borderRadius: radius.lg, backgroundColor: palette.paper, gap: space.sm },
-  overviewTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
-  statPill: {
-    backgroundColor: palette.mint,
-    borderRadius: radius.pill,
-    paddingHorizontal: space.md,
-    paddingVertical: space.xs + 2,
-  },
-  progressTrack: { height: 8, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: palette.hairline },
+  logoCrop: { width: 48, height: 44, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: palette.paper },
+  logo: { position: 'absolute', width: 92, height: 92, left: -22, top: -24 },
+  progressHeader: { flexDirection: 'row', alignItems: 'center', gap: space.sm, paddingHorizontal: space.lg, paddingTop: space.md, paddingBottom: space.sm, borderBottomWidth: 1, borderBottomColor: palette.hairline },
+  progressCopy: { flex: 1 },
+  progressTrack: { width: 84, height: 5, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: palette.hairline },
   progressFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.emeraldDeep },
   path: {
-    padding: space.lg,
-    gap: space.md,
+    paddingHorizontal: space.lg,
+    paddingTop: space.md,
     paddingBottom: space.xxl,
   },
   missing: {

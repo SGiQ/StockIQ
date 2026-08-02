@@ -1,122 +1,136 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { Glyph } from '@/components/art/Glyph';
 import { Text } from '@/components/primitives';
 import type { GlyphName } from '@/content/types';
 import type { LessonNodeStatus } from '@/store/slices/useAppStore';
-import { artPalettes, palette, radius, shadow, space } from '@/theme/tokens';
+import { palette, radius, shadow, space } from '@/theme/tokens';
 
 export interface LessonNodeProps {
   lessonId: string;
   title: string;
+  summary: string;
+  estimatedMinutes: number;
   status: LessonNodeStatus;
   starred?: boolean;
-  position: 'left' | 'right';
   isCurrent?: boolean;
-  isLast?: boolean;
   onPress: () => void;
 }
 
-const landmarkFor = (id: string): GlyphName => {
+const categoryFor = (id: string): string => {
+  if (id.includes('candle') || id.includes('chart') || id.includes('trend')) return 'Chart reading';
+  if (id.includes('exchange') || id.includes('spread') || id.includes('order')) return 'Market structure';
+  if (id.includes('share') || id.includes('stock')) return 'Core concept';
+  if (id.includes('cash') || id.includes('revenue') || id.includes('margin')) return 'Business quality';
+  if (id.includes('cap') || id.includes('ratio') || id.includes('quote')) return 'Valuation metrics';
+  if (id.includes('risk') || id.includes('loss') || id.includes('stop')) return 'Risk control';
+  if (id.includes('bias') || id.includes('fear') || id.includes('revenge')) return 'Investor behavior';
+  return 'Market lesson';
+};
+
+const glyphFor = (id: string): GlyphName => {
   if (id.includes('candle')) return 'candle';
-  if (id.includes('chart') || id.includes('price') || id.includes('trend') || id.includes('momentum')) return 'chart-up';
+  if (id.includes('price') || id.includes('trend') || id.includes('momentum')) return 'chart-up';
   if (id.includes('exchange') || id.includes('spread') || id.includes('order')) return 'exchange';
   if (id.includes('share') || id.includes('stock') || id.includes('diversif')) return 'pie';
-  if (id.includes('cash') || id.includes('revenue') || id.includes('earning') || id.includes('margin')) return 'coins-stack';
-  if (id.includes('cap') || id.includes('index') || id.includes('quote')) return 'building';
+  if (id.includes('cash') || id.includes('revenue') || id.includes('earning')) return 'coins-stack';
   if (id.includes('risk') || id.includes('loss') || id.includes('stop')) return 'shield';
-  if (id.includes('position') || id.includes('ratio') || id.includes('correlation')) return 'scale';
-  if (id.includes('journal') || id.includes('process')) return 'briefcase';
-  if (id.includes('fear') || id.includes('bias') || id.includes('revenge')) return 'brain';
-  if (id.includes('patience') || id.includes('average')) return 'clock';
-  return 'bank';
+  if (id.includes('bias') || id.includes('fear') || id.includes('revenge')) return 'brain';
+  return 'building';
 };
 
 export function LessonNode({
   lessonId,
   title,
+  summary,
+  estimatedMinutes,
   status,
   starred,
-  position,
   isCurrent,
-  isLast,
   onPress,
 }: LessonNodeProps) {
   const locked = status === 'locked';
   const completed = status === 'completed';
-  const routeColor = completed ? palette.emeraldDeep : palette.hairline;
-  const art = completed ? artPalettes.mint : locked ? { bg: '#F1F1EF', ink: palette.slateLight } : artPalettes.butter;
 
   return (
-    <View style={styles.row}>
-      {!isLast ? <View style={[styles.routeDown, { backgroundColor: routeColor }]} /> : null}
+    <View style={[styles.row, isCurrent && styles.currentRow]}>
+      <View style={[styles.line, completed || isCurrent ? styles.lineComplete : styles.lineLocked]} />
       <View
         style={[
-          styles.routeAcross,
-          position === 'left' ? styles.routeLeft : styles.routeRight,
-          { backgroundColor: routeColor },
+          styles.station,
+          completed && styles.stationComplete,
+          isCurrent && styles.stationCurrent,
+          locked && styles.stationLocked,
         ]}
-      />
-      <View style={[styles.stop, position === 'left' ? styles.stopLeft : styles.stopRight]}>
-        {isCurrent ? (
-          <View style={styles.currentLabel}>
-            <Text variant="label" color={palette.forestDeep} uppercase>You are here</Text>
+      >
+        <Glyph
+          name={completed ? 'check' : locked ? 'lock' : glyphFor(lessonId)}
+          size={isCurrent ? 25 : 20}
+          color={completed || isCurrent ? palette.paper : palette.slateLight}
+          strokeWidth={2.3}
+        />
+      </View>
+
+      {isCurrent ? (
+        <Pressable
+          onPress={onPress}
+          accessibilityRole="button"
+          accessibilityLabel={`Continue ${title}`}
+          accessibilityState={{ selected: true }}
+          style={({ pressed }) => [styles.currentCard, shadow.card, pressed && styles.pressed]}
+        >
+          <View style={styles.currentMeta}>
+            <View style={styles.continueChip}>
+              <Text variant="label" color={palette.paper} uppercase>Continue</Text>
+            </View>
+            <Text variant="label" color={palette.slate} uppercase>{`${estimatedMinutes} min`}</Text>
           </View>
-        ) : null}
+          <Text variant="h2" color={palette.forestInk}>{title}</Text>
+          <Text variant="bodySm" color={palette.inkSoft} numberOfLines={3}>{summary}</Text>
+          <View style={styles.resumeButton}>
+            <Text variant="label" color={palette.paper} uppercase>Resume journey</Text>
+            <Svg width={18} height={18} viewBox="0 0 24 24">
+              <Path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke={palette.paper} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+            </Svg>
+          </View>
+        </Pressable>
+      ) : (
         <Pressable
           onPress={onPress}
           disabled={locked}
           accessibilityRole="button"
           accessibilityLabel={title}
-          accessibilityState={{ disabled: locked, selected: isCurrent }}
-          style={({ pressed }) => [
-            styles.landmark,
-            locked && styles.landmarkLocked,
-            isCurrent && styles.landmarkCurrent,
-            !locked && shadow.card,
-            { transform: [{ rotate: position === 'left' ? '-1deg' : '1deg' }, { scale: pressed ? 0.97 : 1 }] },
-          ]}
+          accessibilityState={{ disabled: locked }}
+          style={({ pressed }) => [styles.compactStop, pressed && !locked && styles.pressed]}
         >
-          <View style={[styles.iconTile, { backgroundColor: art.bg }]}>
-            <Glyph name={locked ? 'lock' : landmarkFor(lessonId)} size={36} color={art.ink} strokeWidth={2.1} />
-          </View>
-          <View style={styles.copy}>
-            <Text variant="label" color={completed ? palette.emeraldDeep : locked ? palette.slateLight : palette.flame} uppercase>
-              {completed ? (starred ? 'Mastered ★' : 'Complete') : locked ? 'Locked' : isCurrent ? 'Next stop' : 'Open'}
-            </Text>
-            <Text variant="bodySm" color={locked ? palette.slateLight : palette.ink} numberOfLines={3} style={styles.title}>
-              {title}
+          <Text variant="h3" color={locked ? palette.slateLight : completed ? palette.slate : palette.ink}>{title}</Text>
+          <View style={styles.categoryRow}>
+            <Glyph name={locked ? 'lock' : glyphFor(lessonId)} size={16} color={locked ? palette.slateLight : palette.slate} />
+            <Text variant="label" color={locked ? palette.slateLight : palette.slate} uppercase>
+              {completed && starred ? `${categoryFor(lessonId)} · Starred` : categoryFor(lessonId)}
             </Text>
           </View>
         </Pressable>
-        <View
-          style={[
-            styles.routePin,
-            position === 'left' ? styles.pinRight : styles.pinLeft,
-            { backgroundColor: completed ? palette.emeraldDeep : isCurrent ? palette.flame : palette.hairline },
-          ]}
-        />
-      </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { height: 156, position: 'relative' },
-  routeDown: { position: 'absolute', width: 4, top: 78, bottom: -78, left: '50%', marginLeft: -2, borderRadius: radius.pill },
-  routeAcross: { position: 'absolute', height: 4, top: 76, width: '26%', borderRadius: radius.pill },
-  routeLeft: { left: '25%' },
-  routeRight: { right: '25%' },
-  stop: { position: 'absolute', width: '48%', top: 10 },
-  stopLeft: { left: 0 },
-  stopRight: { right: 0 },
-  currentLabel: { alignSelf: 'center', backgroundColor: '#FFF4D7', borderColor: palette.flameSoft, borderWidth: 1, borderRadius: radius.pill, paddingHorizontal: 10, paddingVertical: 3, marginBottom: -5, zIndex: 2 },
-  landmark: { minHeight: 124, backgroundColor: palette.paper, borderRadius: radius.md, borderWidth: 1, borderColor: '#DED8CE', padding: space.sm, flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  landmarkLocked: { backgroundColor: '#F8F8F6', borderColor: palette.hairline, shadowOpacity: 0 },
-  landmarkCurrent: { borderColor: palette.flame, borderWidth: 2, backgroundColor: '#FFFCF5' },
-  iconTile: { width: 58, height: 78, borderRadius: radius.sm, alignItems: 'center', justifyContent: 'center' },
-  copy: { flex: 1, gap: space.xs },
-  title: { fontWeight: '600' },
-  routePin: { position: 'absolute', width: 16, height: 16, borderRadius: radius.pill, top: 60, borderWidth: 4, borderColor: palette.paper, ...(shadow.sticker as object) },
-  pinRight: { right: -8 },
-  pinLeft: { left: -8 },
+  row: { position: 'relative', minHeight: 112, paddingLeft: 70, paddingRight: space.xs, paddingBottom: space.lg },
+  currentRow: { minHeight: 286 },
+  line: { position: 'absolute', left: 25, top: 0, bottom: 0, width: 4 },
+  lineComplete: { backgroundColor: palette.emeraldDeep },
+  lineLocked: { backgroundColor: '#D8DED9' },
+  station: { position: 'absolute', left: 8, top: 4, width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 4, borderColor: palette.paperWarm, zIndex: 2 },
+  stationComplete: { backgroundColor: palette.emeraldDeep },
+  stationCurrent: { left: 4, top: 0, width: 46, height: 46, backgroundColor: palette.forestInk, borderColor: palette.paper, ...shadow.floating },
+  stationLocked: { backgroundColor: '#E5E8E5', borderWidth: 2, borderColor: '#CBD1CC' },
+  compactStop: { gap: space.sm, paddingTop: space.xs },
+  categoryRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  currentCard: { backgroundColor: '#E6F2FA', borderColor: '#A9D1C0', borderWidth: 1.5, borderRadius: radius.md, padding: space.lg, gap: space.md },
+  currentMeta: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  continueChip: { backgroundColor: palette.emeraldDeep, borderRadius: radius.pill, paddingHorizontal: space.sm, paddingVertical: space.xs },
+  resumeButton: { marginTop: space.sm, backgroundColor: palette.forestInk, minHeight: 52, paddingHorizontal: space.md, flexDirection: 'row', gap: space.sm, alignItems: 'center', justifyContent: 'center', borderRadius: radius.sm },
+  pressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
 });
