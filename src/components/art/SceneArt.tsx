@@ -1,15 +1,19 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useId, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   Easing,
+  Extrapolation,
+  interpolate,
   ReduceMotion,
+  useAnimatedProps,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
   withDelay,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
-import Svg, { Circle, G, Line, Path, Rect, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, ClipPath, Defs, G, Line, Path, Rect, Text as SvgText } from 'react-native-svg';
 import type { PalettePreset, SceneName } from '@/content/types';
 import { artPalettes } from '@/theme/tokens';
 
@@ -21,6 +25,40 @@ interface SceneArtProps {
 }
 
 type SceneTheme = { bg: string; ink: string; accent: string };
+
+const AnimatedG = Animated.createAnimatedComponent(G);
+const COFFEE_STORY_SCENES: SceneName[] = [
+  'coffee-register',
+  'coffee-profit-journey',
+  'coffee-gross-profit',
+  'coffee-operating-costs',
+  'coffee-expansion-risk',
+];
+
+function SceneStage({
+  progress,
+  index,
+  clipId,
+  children,
+}: {
+  progress: SharedValue<number>;
+  index: number;
+  clipId: string;
+  children: ReactNode;
+}) {
+  const animatedProps = useAnimatedProps(() => {
+    const start = 0.04 + index * 0.18;
+    return {
+      opacity: interpolate(progress.value, [start, start + 0.24], [0, 1], Extrapolation.CLAMP),
+    };
+  });
+
+  return (
+    <AnimatedG animatedProps={animatedProps} clipPath={`url(#${clipId})`}>
+      {children}
+    </AnimatedG>
+  );
+}
 
 const Label = ({ x, y, children, theme, anchor = 'middle' }: {
   x: number; y: number; children: ReactNode; theme: SceneTheme; anchor?: 'start' | 'middle' | 'end';
@@ -547,6 +585,8 @@ function sceneFor(name: SceneName, theme: SceneTheme) {
 export function SceneArt({ name, palette, alt, active }: SceneArtProps) {
   const theme = artPalettes[palette];
   const reduceMotion = useReducedMotion();
+  const clipPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, '');
+  const sequenced = COFFEE_STORY_SCENES.includes(name);
   const progress = useSharedValue(active && !reduceMotion ? 0 : 1);
 
   useEffect(() => {
@@ -556,8 +596,12 @@ export function SceneArt({ name, palette, alt, active }: SceneArtProps) {
     }
     progress.value = reduceMotion
       ? 1
-      : withDelay(100, withTiming(1, { duration: 850, easing: Easing.out(Easing.cubic), reduceMotion: ReduceMotion.System }));
-  }, [active, progress, reduceMotion]);
+      : withDelay(100, withTiming(1, {
+          duration: sequenced ? 1400 : 850,
+          easing: sequenced ? Easing.linear : Easing.out(Easing.cubic),
+          reduceMotion: ReduceMotion.System,
+        }));
+  }, [active, progress, reduceMotion, sequenced]);
 
   const enterStyle = useAnimatedStyle(() => ({
     opacity: 0.35 + progress.value * 0.65,
@@ -573,7 +617,27 @@ export function SceneArt({ name, palette, alt, active }: SceneArtProps) {
         <Svg width="100%" height="100%" viewBox="0 0 240 128">
           <Path d="M12 114H228" stroke={theme.ink} strokeOpacity={0.08} strokeWidth="1" />
           <Path d="M12 14H228" stroke={theme.ink} strokeOpacity={0.05} strokeWidth="1" />
-          {sceneFor(name, theme)}
+          {sequenced ? (
+            <>
+              <Defs>
+                {[0, 1, 2, 3].map((index) => (
+                  <ClipPath key={index} id={`${clipPrefix}-stage-${index}`}>
+                    <Rect x={index * 60} y="0" width="61" height="128" />
+                  </ClipPath>
+                ))}
+              </Defs>
+              {[0, 1, 2, 3].map((index) => (
+                <SceneStage
+                  key={index}
+                  progress={progress}
+                  index={index}
+                  clipId={`${clipPrefix}-stage-${index}`}
+                >
+                  {sceneFor(name, theme)}
+                </SceneStage>
+              ))}
+            </>
+          ) : sceneFor(name, theme)}
         </Svg>
       </Animated.View>
       {!reduceMotion && active ? <Animated.View style={[styles.sweep, { backgroundColor: theme.accent }, sweepStyle]} /> : null}
