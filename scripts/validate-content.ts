@@ -313,6 +313,17 @@ function checkCards(file: string, cards: Card[], context: string): void {
         `${at(card, 'art')}: kind "image" is not allowed inside cards — use "chart", "glyph", or "palette"`,
       );
     }
+
+    // An illustration names a file under public/lesson-art. The schema pins
+    // the path shape; this pins that the file is actually there, so a typo or
+    // a card wired ahead of its art fails loudly here instead of rendering a
+    // blank panel in the app.
+    if (art && art.kind === 'illustration') {
+      const rel = art.source.replace(/^\//, '');
+      if (!existsSync(join(ROOT, 'public', rel))) {
+        err(file, `${at(card, 'art')}: illustration file public/${rel} does not exist`);
+      }
+    }
     if (card.type === 'sticker_reveal') {
       for (const [i, sticker] of card.stickers.entries()) {
         if (sticker.art.kind === 'image') {

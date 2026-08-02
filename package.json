@@ -67,7 +67,8 @@
     "start:dev-client": "expo start --dev-client",
     "gen:speech": "tsx scripts/generate-speech.ts",
     "gen:voice-previews": "tsx scripts/generate-voice-previews.ts",
-    "upload:speech": "tsx scripts/upload-speech-r2.ts"
+    "upload:speech": "tsx scripts/upload-speech-r2.ts",
+    "art:apply-scenes": "tsx scripts/apply-scene-illustrations.ts"
   },
   "private": true
 }
