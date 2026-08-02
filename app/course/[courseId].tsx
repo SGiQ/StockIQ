@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
   },
-  logoCrop: { width: 48, height: 44, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: palette.paper },
-  logo: { position: 'absolute', width: 92, height: 92, left: -22, top: -24 },
+  logoCrop: { width: 64, height: 42, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: palette.paper },
+  logo: { width: '100%', height: '100%' },
   progressHeader: { flexDirection: 'row', alignItems: 'center', gap: space.sm, paddingHorizontal: space.lg, paddingTop: space.md, paddingBottom: space.sm, borderBottomWidth: 1, borderBottomColor: palette.hairline },
   progressCopy: { flex: 1 },
   progressTrack: { width: 84, height: 5, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: palette.hairline },
