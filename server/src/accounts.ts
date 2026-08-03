@@ -370,6 +370,29 @@ export async function signOutDevice(
   if (result.rowCount === 0) throw new ProtocolError('device is not signed in');
 }
 
+/**
+ * Erases an account and every trace of it.
+ *
+ * `records` is keyed by `owner_id` as a plain column with no foreign key, so
+ * it does not fall to the accounts cascade and must be deleted explicitly.
+ * Everything else that belongs to an account — devices, identities,
+ * apple_identities, link_codes, telemetry_events — carries
+ * `REFERENCES accounts(id) ON DELETE CASCADE`, so dropping the account row
+ * removes all of it in the same statement.
+ *
+ * Runs inside the caller's transaction, so either the whole account and its
+ * data disappear together or nothing does. Afterwards the device's next
+ * request resolves to a brand-new empty account through `resolveAccount`,
+ * exactly as a fresh install would — there is no lingering authorised state.
+ *
+ * This is the deletion Apple's guideline 5.1.1(v) requires and the erasure
+ * right under GDPR/CCPA: unlike sign-out, no rows are left behind.
+ */
+export async function deleteAccount(client: PoolClient, accountId: string): Promise<void> {
+  await client.query('DELETE FROM records WHERE owner_id = $1', [accountId]);
+  await client.query('DELETE FROM accounts WHERE id = $1', [accountId]);
+}
+
 /** Identity summary for a device that is already authorised on this account. */
 export async function getAccountSession(
   client: PoolClient,

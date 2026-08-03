@@ -21,7 +21,9 @@ export type PillVariant =
   /** White on a coloured surface — "Continue" during onboarding. */
   | 'light'
   /** Transparent with a hairline border. */
-  | 'ghost';
+  | 'ghost'
+  /** Filled red — irreversible, destructive actions like deleting an account. */
+  | 'danger';
 
 export interface PillButtonProps {
   label: string;
@@ -40,6 +42,7 @@ const SURFACES: Record<PillVariant, { bg: string; fg: string; border?: string }>
   dark: { bg: palette.ink, fg: palette.paper },
   light: { bg: palette.paper, fg: palette.ink },
   ghost: { bg: 'transparent', fg: palette.ink, border: palette.hairline },
+  danger: { bg: palette.danger, fg: palette.paper },
 };
 
 /**

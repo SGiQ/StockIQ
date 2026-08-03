@@ -21,13 +21,17 @@ App Store."
 
 ## Tier 0 — Hard App Store blockers (cannot submit without these)
 
-1. **In-app account deletion + server DELETE endpoint.** Apple 5.1.1(v)
-   requires it for any app with sign-in (we have email + Apple). Today the
-   server exposes no delete path; sign-out only detaches the device, rows
-   persist forever (`server/src/index.ts`, `docs/deployment.md` says retention
-   is "deliberately not built"). Also a GDPR/CCPA right-to-erasure gap. Needs:
-   a `DELETE` endpoint (FK cascades already exist) + an in-app "delete account"
-   flow + an orphan-cleanup job.
+1. ~~**In-app account deletion + server DELETE endpoint.**~~ **DONE** — shipped
+   `DELETE /v1/account` (`server/src/accounts.ts` `deleteAccount`, wired in
+   `index.ts`): erases records (explicit — no FK) plus the account and its
+   cascade (devices, identities, link codes, telemetry). Client path:
+   `SyncClient.deleteAccount` → `SyncingRepository.deleteAccount` (server first,
+   then full local wipe) → `PairingApi`. In-app danger-zone flow with two-step
+   confirm in `app/settings/devices.tsx`. Verified end-to-end on real Postgres
+   (`server/test/delete.test.mjs`): records erased, linked device cascade-
+   removed, fresh empty account, no resurfacing; sync + pairing regressions
+   pass. Still worth adding later: a scheduled orphan-account cleanup job (the
+   pre-existing retention gap, not a blocker).
 2. **Privacy policy + Terms of Service.** None exist anywhere. Apple requires a
    reachable privacy-policy URL (in Connect *and* in-app). We collect email and
    sync data. Needs: write + host the policy, link it from settings.

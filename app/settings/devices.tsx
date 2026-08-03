@@ -39,6 +39,7 @@ export default function DevicesSettings() {
   const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
   const [signedIn, setSignedIn] = useState(false);
   const [confirmingSignOut, setConfirmingSignOut] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   useEffect(() => {
     void isAppleSignInAvailable().then(setAppleAvailable);
@@ -157,6 +158,24 @@ export default function DevicesSettings() {
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Could not sign out.');
       setConfirmingSignOut(false);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const deleteAccount = async () => {
+    setBusy(true);
+    setStatus(null);
+    try {
+      // Erases everything server-side, then wipes this device. On failure the
+      // local data is left intact (see SyncingRepository.deleteAccount), so we
+      // surface the error and let the person retry rather than half-deleting.
+      await api.deleteAccount();
+      await useAppStore.getState().hydrate();
+      router.replace('/landing' as never);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not delete your account. Try again.');
+      setConfirmingDelete(false);
     } finally {
       setBusy(false);
     }
@@ -318,6 +337,28 @@ export default function DevicesSettings() {
           Removing a device stops it reading this account. Use it if you lose a
           phone — the other devices are unaffected.
         </Text>
+
+        <View style={styles.divider} />
+
+        <Text variant="label" color={palette.danger} uppercase>
+          Delete account
+        </Text>
+        <View style={styles.dangerBox}>
+          <Text variant="body" color={palette.ink}>
+            Permanently delete your account and all of its data.
+          </Text>
+          <Text variant="caption" color={palette.inkSoft}>
+            {`This erases your cloud progress, saved cards, sign-in email, and every linked device from our servers, and wipes StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'}. Other devices lose access too. This cannot be undone.`}
+          </Text>
+          {confirmingDelete ? (
+            <View style={styles.signOutActions}>
+              <PillButton label="Delete everything permanently" variant="danger" onPress={deleteAccount} disabled={busy} />
+              <PillButton label="Cancel" variant="ghost" onPress={() => setConfirmingDelete(false)} disabled={busy} />
+            </View>
+          ) : (
+            <PillButton label="Delete account & data" variant="ghost" onPress={() => setConfirmingDelete(true)} disabled={busy} />
+          )}
+        </View>
       </ScrollView>
     </Screen>
   );
@@ -368,6 +409,14 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   signOutActions: { gap: space.sm, marginTop: space.sm },
+  dangerBox: {
+    backgroundColor: palette.dangerSoft,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: palette.danger,
+    padding: space.md,
+    gap: space.sm,
+  },
   input: {
     borderWidth: 1,
     borderColor: palette.slateLight,

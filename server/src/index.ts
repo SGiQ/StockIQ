@@ -30,6 +30,7 @@ import {
 import {
   claimLinkCode,
   createLinkCode,
+  deleteAccount,
   getAccountSession,
   listDevices,
   normaliseCode,
@@ -125,6 +126,7 @@ const server = createServer((req, res) => {
         '/v1/auth/email/verify': 'POST',
         '/v1/auth/sign-out': 'POST',
         '/v1/auth/session': 'GET',
+        '/v1/account': 'DELETE',
         '/v1/devices': 'GET',
         '/v1/telemetry': 'POST',
       };
@@ -218,6 +220,12 @@ const server = createServer((req, res) => {
           }
         } else if (path === '/v1/auth/sign-out') {
           await signOutDevice(client, accountId, deviceId);
+          payload = { ok: true };
+        } else if (path === '/v1/account') {
+          // DELETE — erase this account and all its data (records, devices,
+          // identities, link codes, telemetry). Unlike sign-out, nothing is
+          // left behind. The device's next request starts a fresh account.
+          await deleteAccount(client, accountId);
           payload = { ok: true };
         } else if (path === '/v1/auth/session') {
           payload = await getAccountSession(client, accountId);

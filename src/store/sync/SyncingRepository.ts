@@ -166,6 +166,22 @@ export class SyncingRepository implements Repository {
   }
 
   /**
+   * Permanently deletes the account and every record it holds, then wipes this
+   * device clean.
+   *
+   * Server first, exactly like sign-out: if the delete call fails, the local
+   * data is left untouched so the person can retry rather than being left with
+   * a wiped device and an account that still exists in the cloud. Once the
+   * server confirms, `reset()` clears local records and all sync metadata, and
+   * the next authenticated request starts a fresh empty account — so there is
+   * no lingering signed-in state on the phone either.
+   */
+  async deleteAccount(): Promise<void> {
+    await this.client.deleteAccount();
+    await this.local.reset();
+  }
+
+  /**
    * Resets the cursor and optionally re-contributes local records.
    *
    * The cursor always resets: it counts positions in the old account's change

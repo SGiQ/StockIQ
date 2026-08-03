@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "StockIQ sync service — Postgres-backed last-write-wins record sync.",
+  "description": "StockIQ sync service \u2014 Postgres-backed last-write-wins record sync.",
   "engines": {
     "node": ">=20"
   },
@@ -17,7 +17,8 @@
     "test:apple-accounts": "node test/apple-accounts.test.mjs",
     "test:email": "node test/email.test.mjs",
     "test:telemetry": "tsx --test test/telemetry.test.ts",
-    "check:email": "tsx src/check-email.ts"
+    "check:email": "tsx src/check-email.ts",
+    "test:delete": "node test/delete.test.mjs"
   },
   "dependencies": {
     "jose": "^6.2.5",

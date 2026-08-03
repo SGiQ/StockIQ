@@ -51,6 +51,8 @@ export interface PairingApi {
   signOut(): Promise<void>;
   listDevices(): Promise<{ devices: LinkedDevice[]; thisDeviceId: string }>;
   revokeDevice(deviceId: string): Promise<void>;
+  /** Permanently erase the account and all its data, then wipe this device. */
+  deleteAccount(): Promise<void>;
 }
 
 let pairingApi: PairingApi | null = null;

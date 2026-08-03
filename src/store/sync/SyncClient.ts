@@ -34,6 +34,7 @@ export interface SyncTransport {
   requestEmailCode(email: string): Promise<void>;
   signInWithEmail(email: string, code: string): Promise<AppleSignIn>;
   signOut(): Promise<void>;
+  deleteAccount(): Promise<void>;
   getSession(): Promise<AccountSession>;
   listDevices(): Promise<DeviceList>;
   revokeDevice(deviceId: string): Promise<void>;
@@ -162,6 +163,11 @@ export class SyncClient implements SyncTransport {
 
   async signOut(): Promise<void> {
     await this.request('/v1/auth/sign-out', 'POST', {});
+  }
+
+  /** Erases the account and all its data on the server. */
+  async deleteAccount(): Promise<void> {
+    await this.request('/v1/account', 'DELETE');
   }
 
   getSession(): Promise<AccountSession> {
