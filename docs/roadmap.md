@@ -1,0 +1,103 @@
+# StockIQ — "what else we need" roadmap
+
+Synthesis of a four-part deep-dive audit (content, screens/flows, production,
+legal/store) run 2026-08-03. Ordered by priority. The web app is live and in
+genuinely strong shape; this is the list between "works" and "shippable to the
+App Store."
+
+## What's already solid (so we don't re-litigate)
+- **Content**: validator passes clean — 5 courses / 37 lessons / 555 cards /
+  740 XP, no stubs, reputable sources, no dead cross-links or orphans.
+- **"Not financial advice"**: all 3 required placements present (onboarding
+  timestamped ack, ASK footer, strategy detail). Advice-shaped content is clean.
+- **Copyright/attribution**: book guides are original with disclaimers; Imprint
+  screenshots purged from history; attribution enforced by schema + shown in UI.
+- **Config/secrets**: clean — only public URLs in the client bundle; no secrets
+  committed anywhere. Offline-first resilience is real and tested.
+- **Deployed & live**: Web (Vercel), Sync (Railway), Narration worker (CF) all
+  healthy.
+
+---
+
+## Tier 0 — Hard App Store blockers (cannot submit without these)
+
+1. **In-app account deletion + server DELETE endpoint.** Apple 5.1.1(v)
+   requires it for any app with sign-in (we have email + Apple). Today the
+   server exposes no delete path; sign-out only detaches the device, rows
+   persist forever (`server/src/index.ts`, `docs/deployment.md` says retention
+   is "deliberately not built"). Also a GDPR/CCPA right-to-erasure gap. Needs:
+   a `DELETE` endpoint (FK cascades already exist) + an in-app "delete account"
+   flow + an orphan-cleanup job.
+2. **Privacy policy + Terms of Service.** None exist anywhere. Apple requires a
+   reachable privacy-policy URL (in Connect *and* in-app). We collect email and
+   sync data. Needs: write + host the policy, link it from settings.
+3. **iOS privacy manifest (`PrivacyInfo.xcprivacy`) + Connect privacy answers.**
+   Absent. `expo-secure-store`/`expo-sqlite` touch required-reason APIs and we
+   collect email. Needs a manifest (Expo can generate at prebuild) + the App
+   Store Connect data questionnaire (email, device id, telemetry).
+4. **Native build has never happened; EAS isn't linked.** No `extra.eas.projectId`
+   in app.json, only ever run as Expo Go + web. Needs: Apple Developer account
+   ($99/yr), `eas build:configure`, enable Sign in with Apple on the App ID,
+   first `eas build --platform ios`. This is also where touch gestures finally
+   get verified on real hardware (still unverified).
+5. **Splash screen misconfig.** The `expo-splash-screen` plugin block sets only
+   background/resize, never references `splash-icon.png` — native splash may
+   render blank. One-line fix in app.json.
+
+## Tier 1 — Real bugs to fix now (cheap, user-visible)
+
+6. **Every course shows the wrong eyebrow label.** `app/course/[courseId].tsx:85`
+   hardcodes "Introduction to equities" above the progress bar for *all*
+   courses. Straight bug.
+7. **Dead ASK surface in shipped config.** `app/settings/ask-key.tsx` is
+   unreachable (registered/linked nowhere), and because `EXPO_PUBLIC_ASK_PROXY_URL`
+   is set the app uses `ProxyAskService` — but the proxy isn't deployed, so the
+   BYOK entry UI (`AskSheet` SetUpInline) is also dead. Decide: deploy the ASK
+   worker (see Tier 2) or remove the dead screens/paths.
+8. **Landing CTA dumps new users onto an email wall.** Landing's primary buttons
+   ("Get started", "Begin with Market Foundations") route to `/sign-in`, not
+   onboarding. The friendly `welcome.tsx` is only reachable via the secondary
+   "Explore without an account", and duplicates the sign-in screen's own
+   "continue without account". Reconcile into one coherent entrance.
+9. **Web-only copy leaks into native.** `settings/devices.tsx` and `sign-in.tsx`
+   say "this browser", "after every reload"; landing hardcodes a
+   `stockiq-delta.vercel.app` hero URL on native. Reads wrong in a real app.
+10. **Apple sign-in is buried.** It's only in `settings/devices.tsx`, not on the
+    main `sign-in.tsx` — iOS users expect it there (and Apple prefers it offered
+    alongside other sign-in).
+11. **Half-wired "help choose the male voice" survey** in `settings/narration.tsx`
+    — audition samples are web-only, so the button is permanently disabled on
+    native while the whole voting section still renders. Hide on native or finish.
+
+## Tier 2 — Before a public launch (quality / safety)
+
+12. **Deploy the ASK worker** (KV namespace + `wrangler secret put
+    ANTHROPIC_API_KEY`, set `EXPO_PUBLIC_ASK_PROXY_URL`) so the tutor uses the
+    tamper-proof server prompt instead of a user-pasted key — or decide BYOK-only
+    on purpose. `wrangler.toml` still has the `REPLACE_WITH_KV_NAMESPACE_ID`
+    placeholder.
+13. **CI.** No `.github/` at all; nothing gates merges while Vercel/Railway
+    auto-deploy. Add typecheck + `validate:content` + sync tests on PR.
+14. **Tests for the two Cloudflare Workers** (ASK handles money + the advice
+    prompt; narration handles Range/CORS) — both currently untested.
+15. **Missing loading/error states** on the landing hero image and the devices
+    screen (no skeletons; failures collapse to a one-liner).
+16. **Fix `docs/deployment.md` drift** — it still documents the narration origin
+    as the r2.dev dev URL / Vercel, not the live `stockiq-narration` Worker; a
+    redeploy following the doc would point at the wrong origin.
+
+## Tier 3 — Content depth (post-launch is fine)
+
+17. **Options-basics lesson.** The covered-call/wheel strategy assumes
+    calls/puts/premium/strike/assignment, but no lesson teaches them — the one
+    clear curriculum hole.
+18. **Upgrade trader track-record sources** from free-text to verifiable
+    `ContentSource` links (these are the most accuracy/defamation-sensitive
+    claims). Also human-verify the forward-dated Buffett "2026 DEF 14A" citation.
+19. **Consider** portfolio construction / allocation / rebalancing and an
+    account-types/fees/taxes lesson — topics beginners expect.
+
+## In flight (not a gap)
+- **Lesson scene art**: 5/45 paper-craft images done + verified; 40 to go, with
+  tightened prompts ready (`docs/notes-lesson-art.md`,
+  `docs/lesson-art-generation.md`). Owner is generating them.
