@@ -192,14 +192,16 @@ export default function DevicesSettings() {
         )}
 
         <View style={styles.deviceSessionBox}>
-          <Text variant="label" color={palette.forestDeep} uppercase>This browser</Text>
+          <Text variant="label" color={palette.forestDeep} uppercase>
+            {Platform.OS === 'web' ? 'This browser' : 'This device'}
+          </Text>
           <Text variant="body" color={palette.ink}>
             {signedIn
               ? `Signed in${signedInEmail ? ` as ${signedInEmail}` : ''}`
               : 'Local learning profile'}
           </Text>
           <Text variant="caption" color={palette.inkSoft}>
-            Signing out clears StockIQ from this browser but does not delete cloud progress or affect other devices.
+            {`Signing out clears StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'} but does not delete cloud progress or affect other devices.`}
           </Text>
           {confirmingSignOut ? (
             <View style={styles.signOutActions}>
@@ -221,7 +223,7 @@ export default function DevicesSettings() {
             <Text variant="label" color={palette.forestDeep}>Signed in</Text>
             <Text variant="body" color={palette.ink}>{signedInEmail}</Text>
             <Text variant="caption" color={palette.inkSoft}>
-              Progress is saved locally and restored from this account after every reload.
+              Progress is saved locally and restored from this account each time you return.
             </Text>
           </View>
         ) : null}

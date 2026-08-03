@@ -157,7 +157,7 @@ export default function SignIn() {
                 onPress={() => router.replace('/(onboarding)/choose-course')}
               />
               <Text variant="caption" color={palette.slate} align="center">
-                Guest progress stays in this browser until you secure it with email.
+                Guest progress stays on this device until you secure it with email.
               </Text>
             </>
           ) : (

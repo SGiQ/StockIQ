@@ -123,6 +123,10 @@ export default function NarrationSettings() {
           />
         </View>
 
+        {/* Internal voice-selection survey. The sample clips only exist on the
+            web preview, so this is web-only — on native the play button would
+            be permanently disabled and the whole section reads as broken. */}
+        {Platform.OS === 'web' ? (
         <CardSurface style={styles.auditionSection}>
           <View style={styles.sectionText}>
             <Text variant="label" color={palette.slate} uppercase>
@@ -166,6 +170,7 @@ export default function NarrationSettings() {
             disabled={maleVoiceVote === auditionVoice}
           />
         </CardSurface>
+        ) : null}
 
         <View style={styles.voiceSection}>
           <Text variant="label" color={palette.slate} uppercase>

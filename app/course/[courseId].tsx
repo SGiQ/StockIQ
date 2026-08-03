@@ -42,6 +42,16 @@ export default function CourseScreen() {
     return ids.find((id) => statuses[id] === 'in_progress') ?? ids.find((id) => statuses[id] === 'available');
   }, [course, statuses]);
 
+  // The eyebrow over the progress bar names where you are in the course — the
+  // unit holding the current lesson — rather than a fixed string. It fell back
+  // to a hardcoded "Introduction to equities" that was wrong on every course
+  // but the first.
+  const currentUnitName = useMemo(() => {
+    if (!course) return undefined;
+    const sorted = course.units.slice().sort((a, b) => a.index - b.index);
+    return (sorted.find((u) => u.lessonIds.includes(currentLessonId ?? '')) ?? sorted[0])?.name;
+  }, [course, currentLessonId]);
+
   if (!course) {
     return (
       <Screen tone="warm">
@@ -82,7 +92,7 @@ export default function CourseScreen() {
 
       <View style={styles.progressHeader}>
         <View style={styles.progressCopy}>
-          <Text variant="label" color={palette.slate} uppercase>Introduction to equities</Text>
+          <Text variant="label" color={palette.slate} uppercase>{currentUnitName ?? 'Your progress'}</Text>
           <Text variant="caption" color={palette.forestDeep}>{`${earnedXp} / ${course.totalXp} XP`}</Text>
         </View>
         <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.round(progress * 100)}%` }]} /></View>
