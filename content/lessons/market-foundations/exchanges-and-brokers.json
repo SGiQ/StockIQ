@@ -10,21 +10,33 @@
       "type": "concept",
       "headline": "You cannot walk onto an exchange.",
       "body": "The New York Stock Exchange will not take your order. Neither will Nasdaq. Only member firms trade there, so you hire one — a broker — to carry your order in. Tapping buy starts a short relay you never see.",
-      "art": { "kind": "illustration", "source": "/lesson-art/order-route.jpg", "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/order-route.jpg",
+        "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall."
+      }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "An exchange is a matching engine.",
       "body": "An exchange is a marketplace that pairs buy orders with sell orders. The NYSE and Nasdaq are the two largest in the US. They do not own the shares and they do not set the price. They match, record, and publish every trade.",
-      "art": { "kind": "scene", "name": "matching-engine", "palette": "sky", "alt": "Buyers and sellers flowing into an exchange matching engine." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/matching-engine.jpg",
+        "alt": "Buyers and sellers flowing into an exchange matching engine."
+      }
     },
     {
       "id": "c3",
       "type": "concept",
       "headline": "Your broker is your agent.",
       "body": "A broker holds your account, accepts your order, and routes it to a venue where it can be filled. It also holds the shares you buy. You are the owner. The broker is the messenger and the record keeper.",
-      "art": { "kind": "scene", "name": "broker-agent", "palette": "lilac", "alt": "An investor connected to the market through a broker acting as agent." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/broker-agent.jpg",
+        "alt": "An investor connected to the market through a broker acting as agent."
+      }
     },
     {
       "id": "c4",
@@ -33,20 +45,41 @@
       "stickers": [
         {
           "label": "You place the order",
-          "art": { "kind": "glyph", "name": "people", "bg": "butter" },
-          "anchor": { "x": 0.3, "y": 0.16 },
+          "art": {
+            "kind": "glyph",
+            "name": "people",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.3,
+            "y": 0.16
+          },
           "rotation": -6
         },
         {
           "label": "Your broker routes it",
-          "art": { "kind": "glyph", "name": "compass", "bg": "sky" },
-          "anchor": { "x": 0.7, "y": 0.48 },
+          "art": {
+            "kind": "glyph",
+            "name": "compass",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.7,
+            "y": 0.48
+          },
           "rotation": 5
         },
         {
           "label": "A venue matches it",
-          "art": { "kind": "glyph", "name": "exchange", "bg": "mint" },
-          "anchor": { "x": 0.36, "y": 0.8 },
+          "art": {
+            "kind": "glyph",
+            "name": "exchange",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.8
+          },
           "rotation": -3
         }
       ]
@@ -56,15 +89,28 @@
       "type": "concept",
       "headline": "The order book is the queue.",
       "body": "Every venue keeps a live list of resting buy and sell orders — the order book. The highest bid and the lowest offer set the current quote. **Market makers** post quotes on both sides all day and earn the small gap between them.",
-      "art": { "kind": "scene", "name": "order-book", "palette": "butter", "alt": "A live order book with stacked bids on one side and asks on the other." }
+      "art": {
+        "kind": "scene",
+        "name": "order-book",
+        "palette": "butter",
+        "alt": "A live order book with stacked bids on one side and asks on the other."
+      }
     },
     {
       "id": "c6",
       "type": "binary_choice",
       "prompt": "You place an order at 7:00 a.m. Eastern, two and a half hours before the opening bell. What should you expect?",
       "options": [
-        { "id": "thin", "label": "Fewer participants and wider spreads", "correct": true },
-        { "id": "same", "label": "The same depth as midday trading", "correct": false }
+        {
+          "id": "thin",
+          "label": "Fewer participants and wider spreads",
+          "correct": true
+        },
+        {
+          "id": "same",
+          "label": "The same depth as midday trading",
+          "correct": false
+        }
       ],
       "explanation": "US regular hours run **9:30 a.m. to 4:00 p.m. Eastern**. Pre-market and after-hours sessions do trade, but on far thinner volume, so the gap between bid and ask is usually wider and prices move on smaller orders."
     },
@@ -77,8 +123,24 @@
         "motion": "build",
         "spec": {
           "type": "bars",
-          "values": [21, 13, 10, 8, 9, 13, 26],
-          "labels": ["9:30", "10:30", "11:30", "12:30", "1:30", "2:30", "3:30"],
+          "values": [
+            21,
+            13,
+            10,
+            8,
+            9,
+            13,
+            26
+          ],
+          "labels": [
+            "9:30",
+            "10:30",
+            "11:30",
+            "12:30",
+            "1:30",
+            "2:30",
+            "3:30"
+          ],
           "highlightIndex": 6,
           "yLabel": "% of daily volume"
         }
@@ -89,7 +151,11 @@
       "id": "c8",
       "type": "fill_blank",
       "body": "The trade prints instantly, but cash and shares officially change hands one business day later. US markets call this [[1]].",
-      "wordBank": ["T+1", "T+2", "T+3"],
+      "wordBank": [
+        "T+1",
+        "T+2",
+        "T+3"
+      ],
       "answer": "T+1",
       "explanation": "The US shortened settlement from T+2 to **T+1** on May 28, 2024. Your broker shows the position right away, but the official transfer completes the next business day."
     },
@@ -107,9 +173,16 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "illustration", "source": "/lesson-art/order-route.jpg", "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall." },
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/order-route.jpg",
+        "alt": "An investor hands an order ticket to a broker who routes it into a busy exchange matching hall."
+      },
       "insight": "The price you see is the last handshake between two strangers. Everything between your tap and that handshake is plumbing built to make it fast.",
-      "attribution": { "source": "Day 2", "detail": "Market Foundations" }
+      "attribution": {
+        "source": "Day 2",
+        "detail": "Market Foundations"
+      }
     }
   ],
   "sources": [

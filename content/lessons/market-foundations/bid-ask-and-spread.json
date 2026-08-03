@@ -22,9 +22,8 @@
       "headline": "One quote, two numbers.",
       "body": "Say a company is quoted 10.00 bid, 10.04 ask. The **bid** is the highest price a buyer is willing to pay. The **ask** is the lowest price a seller will accept. The four cents between them is the **spread**.",
       "art": {
-        "kind": "scene",
-        "name": "two-sided-market",
-        "palette": "sky",
+        "kind": "illustration",
+        "source": "/lesson-art/two-sided-market.jpg",
         "alt": "Bid and ask quote cards separated by the live spread."
       }
     },
@@ -34,9 +33,8 @@
       "headline": "You pay it coming and going.",
       "body": "Buy 100 shares and you pay the ask: 1,004 dollars. Change your mind a second later and sell at the bid: 1,000 dollars. Nothing moved. You are down four dollars, or **0.4 percent**, before the market has done anything at all.",
       "art": {
-        "kind": "scene",
-        "name": "spread-toll",
-        "palette": "blush",
+        "kind": "illustration",
+        "source": "/lesson-art/spread-toll.jpg",
         "alt": "A round trip crossing from the ask to the bid and paying the spread as a toll."
       }
     },
@@ -64,9 +62,8 @@
       "headline": "Liquidity sets the width.",
       "body": "Spreads are narrow where trading is heavy. A stock trading millions of shares a day may be quoted a penny wide. A stock that trades a few thousand shares a day can sit fifty cents wide, or more. Fewer buyers and sellers, bigger gap.",
       "art": {
-        "kind": "scene",
-        "name": "liquidity-depth",
-        "palette": "mint",
+        "kind": "illustration",
+        "source": "/lesson-art/liquidity-depth.jpg",
         "alt": "A deep market with many orders compared with a thin market with few orders."
       }
     },
