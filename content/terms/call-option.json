@@ -1,0 +1,12 @@
+{
+  "id": "call-option",
+  "term": "Call option",
+  "aliases": [
+    "call"
+  ],
+  "definition": "An option giving the right to buy a stock at a set strike price before expiration. It gains value as the stock rises.",
+  "learnMore": "lesson:market-foundations/options-basics",
+  "related": [
+    "term:put-option"
+  ]
+}

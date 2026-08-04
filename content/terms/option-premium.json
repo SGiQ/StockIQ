@@ -1,0 +1,9 @@
+{
+  "id": "option-premium",
+  "term": "Option premium",
+  "aliases": [
+    "premium"
+  ],
+  "definition": "The price paid to buy an option contract. For the buyer, it is the most they can lose.",
+  "learnMore": "lesson:market-foundations/options-basics"
+}

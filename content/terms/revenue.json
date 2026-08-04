@@ -1,0 +1,9 @@
+{
+  "id": "revenue",
+  "term": "Revenue",
+  "definition": "The total money a company takes in from sales, before any costs. Also called the top line.",
+  "learnMore": "lesson:reading-a-business/revenue-vs-earnings",
+  "related": [
+    "term:earnings"
+  ]
+}

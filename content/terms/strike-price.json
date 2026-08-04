@@ -1,0 +1,9 @@
+{
+  "id": "strike-price",
+  "term": "Strike price",
+  "aliases": [
+    "strike"
+  ],
+  "definition": "The fixed price at which an option lets you buy (a call) or sell (a put) the underlying stock.",
+  "learnMore": "lesson:market-foundations/options-basics"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "earnings-per-share",
+  "term": "Earnings per share",
+  "aliases": [
+    "EPS"
+  ],
+  "definition": "A company's earnings divided by its number of shares — the slice of profit attributable to each share.",
+  "learnMore": "lesson:reading-a-business/the-price-earnings-ratio"
+}

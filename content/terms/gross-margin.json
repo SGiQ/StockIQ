@@ -1,0 +1,9 @@
+{
+  "id": "gross-margin",
+  "term": "Gross margin",
+  "definition": "Revenue minus the direct cost of making the product, as a percentage of revenue. It shows the raw profitability of what a company sells.",
+  "learnMore": "lesson:reading-a-business/margins-that-matter",
+  "related": [
+    "term:operating-margin"
+  ]
+}

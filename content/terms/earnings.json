@@ -1,0 +1,10 @@
+{
+  "id": "earnings",
+  "term": "Earnings",
+  "aliases": [
+    "net income",
+    "profit"
+  ],
+  "definition": "What a company keeps after all costs, taxes, and expenses are subtracted from revenue. Also called net income, or the bottom line.",
+  "learnMore": "lesson:reading-a-business/revenue-vs-earnings"
+}

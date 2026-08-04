@@ -1,0 +1,6 @@
+{
+  "id": "expectancy",
+  "term": "Expectancy",
+  "definition": "The average result you can expect per trade over many trades, combining how often you win with how much you win and lose.",
+  "learnMore": "lesson:risk-and-position-sizing/thinking-in-r"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "benchmark",
+  "term": "Benchmark",
+  "definition": "A standard, usually a market index, that you measure an investment's performance against.",
+  "learnMore": "lesson:market-foundations/indices-and-benchmarks",
+  "related": [
+    "term:market-index"
+  ]
+}

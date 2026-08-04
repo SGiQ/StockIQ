@@ -1,0 +1,9 @@
+{
+  "id": "breakout",
+  "term": "Breakout",
+  "definition": "When price pushes decisively through a support or resistance level, often on rising volume.",
+  "learnMore": "lesson:reading-a-chart/support-and-resistance",
+  "related": [
+    "term:resistance"
+  ]
+}

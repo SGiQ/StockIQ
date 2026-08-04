@@ -1,0 +1,10 @@
+{
+  "id": "market-maker",
+  "term": "Market maker",
+  "definition": "A firm that continuously quotes both a buy and a sell price, providing liquidity so you can trade at once — and earning the spread.",
+  "learnMore": "lesson:market-foundations/exchanges-and-brokers",
+  "related": [
+    "term:bid-ask-spread",
+    "term:liquidity"
+  ]
+}

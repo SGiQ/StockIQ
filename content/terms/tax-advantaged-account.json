@@ -1,0 +1,10 @@
+{
+  "id": "tax-advantaged-account",
+  "term": "Tax-advantaged account",
+  "aliases": [
+    "IRA",
+    "401(k)"
+  ],
+  "definition": "A retirement account like an IRA or 401(k) that reduces or defers taxes on your investments, in exchange for limits on access.",
+  "learnMore": "lesson:getting-started/accounts-fees-and-taxes"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "one-percent-rule",
+  "term": "The 1% rule",
+  "definition": "A common risk guideline: never put more than about 1% of your account at risk on any single trade.",
+  "learnMore": "lesson:risk-and-position-sizing/position-sizing",
+  "related": [
+    "term:position-sizing"
+  ]
+}

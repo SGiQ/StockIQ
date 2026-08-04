@@ -1,0 +1,9 @@
+{
+  "id": "disposition-effect",
+  "term": "Disposition effect",
+  "definition": "The tendency to sell winners too early and hold losers too long, driven by loss aversion.",
+  "learnMore": "lesson:trading-psychology/loss-aversion",
+  "related": [
+    "term:loss-aversion"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "primary-market",
+  "term": "Primary market",
+  "definition": "Where new shares are sold by the company itself, as in an IPO, with the proceeds going to the business.",
+  "learnMore": "lesson:market-foundations/why-companies-sell-shares",
+  "related": [
+    "term:secondary-market"
+  ]
+}

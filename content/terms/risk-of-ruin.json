@@ -1,0 +1,6 @@
+{
+  "id": "risk-of-ruin",
+  "term": "Risk of ruin",
+  "definition": "The probability of losing so much that you can no longer keep trading. Even a real edge fails if position sizes make ruin likely.",
+  "learnMore": "lesson:risk-and-position-sizing/risk-of-ruin"
+}

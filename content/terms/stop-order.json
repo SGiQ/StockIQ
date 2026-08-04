@@ -1,0 +1,9 @@
+{
+  "id": "stop-order",
+  "term": "Stop order",
+  "definition": "An order that stays dormant until the price hits a set trigger, then executes. Often used to cap a loss.",
+  "learnMore": "lesson:market-foundations/order-types",
+  "related": [
+    "term:stop-loss"
+  ]
+}

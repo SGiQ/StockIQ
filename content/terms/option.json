@@ -1,0 +1,10 @@
+{
+  "id": "option",
+  "term": "Option",
+  "definition": "A contract giving the right, not the obligation, to buy or sell a stock at a set price before a set date.",
+  "learnMore": "lesson:market-foundations/options-basics",
+  "related": [
+    "term:call-option",
+    "term:put-option"
+  ]
+}

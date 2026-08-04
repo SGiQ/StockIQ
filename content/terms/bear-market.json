@@ -1,0 +1,9 @@
+{
+  "id": "bear-market",
+  "term": "Bear market",
+  "definition": "A prolonged stretch of falling prices, often defined as a decline of 20% or more from the peak.",
+  "learnMore": "lesson:market-foundations/what-moves-a-price",
+  "related": [
+    "term:bull-market"
+  ]
+}

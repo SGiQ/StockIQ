@@ -1,0 +1,9 @@
+{
+  "id": "share-buyback",
+  "term": "Share buyback",
+  "aliases": [
+    "buyback"
+  ],
+  "definition": "When a company spends cash to buy its own shares, shrinking the share count so each remaining share owns a bigger slice.",
+  "learnMore": "lesson:reading-a-business/dividends-and-buybacks"
+}

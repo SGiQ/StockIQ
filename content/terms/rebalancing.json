@@ -1,0 +1,6 @@
+{
+  "id": "rebalancing",
+  "term": "Rebalancing",
+  "definition": "Periodically trimming what has grown and topping up what has lagged, to return a portfolio to its target mix.",
+  "learnMore": "lesson:getting-started/building-a-portfolio"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "market-order",
+  "term": "Market order",
+  "definition": "An order to buy or sell immediately at the best available price. It guarantees execution but not the exact price.",
+  "learnMore": "lesson:market-foundations/order-types",
+  "related": [
+    "term:limit-order"
+  ]
+}

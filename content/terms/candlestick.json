@@ -1,0 +1,6 @@
+{
+  "id": "candlestick",
+  "term": "Candlestick",
+  "definition": "A chart symbol showing a period's open, high, low, and close in one shape. Its body and wicks map the tug-of-war between buyers and sellers.",
+  "learnMore": "lesson:reading-a-chart/anatomy-of-a-candle"
+}
