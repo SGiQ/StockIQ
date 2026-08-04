@@ -132,6 +132,13 @@ App Store."
   component breakdown on the dashboard, framed throughout as *not* a trade
   signal. Retakeable check at `app/assessment.tsx` samples real `binary_choice`
   cards across the five courses; best score feeds the meter. Verified live.
+- **Register-first onboarding.** Account creation now precedes onboarding:
+  welcome ("Create your account") → email sign-in (**required**, guest bypass
+  removed) → experience → course → disclaimer → app. Returning onboarded users
+  still skip to the app. Deployed to production; email delivery confirmed
+  (Resend accepted + inbox-delivered from the verified `no-reply@sgiq.ai`).
+  Note: web is email-only (Apple sign-in is native-only, appears on a device
+  build), so new-user signup depends on Resend — now verified working.
 
 ## Tier 3 — Content depth (post-launch is fine)
 
@@ -143,6 +150,25 @@ App Store."
     claims). Also human-verify the forward-dated Buffett "2026 DEF 14A" citation.
 19. **Consider** portfolio construction / allocation / rebalancing and an
     account-types/fees/taxes lesson — topics beginners expect.
+20. **Glossary / "terms & phrases" — a reference layer, not a new course.**
+    Terminology is already *taught* in context (48+ `fill_blank` answer-terms
+    plus bold concept terms), but there is no way to *look a term up* — the
+    `{{…}}` cross-links only point at trader/strategy/book/lesson
+    (`schema.ts:52`), never a definition. Different job from the courses:
+    courses are for learning (sequential, in-context), a glossary is for
+    reference ("what's a P/E again?" right now). High value for a beginner
+    audience and cheap given the architecture:
+    - Add a **`term:` `EntityRef` kind** + a "Glossary" section in the KB, reusing
+      the existing cross-linked-entity + detail-screen pattern (`app/kb/`).
+    - Each term = **one-sentence definition + a backlink to the lesson that
+      teaches it**. Keep definitions short and linked so they never duplicate or
+      drift from the authoritative lesson (the one real maintenance risk).
+    - Highest-leverage form: **tap-to-define** inline terms in lessons (the
+      `{{…}}` grammar already nearly does this), plus a browsable A–Z list.
+    - **Bootstrap** ~80–120 entries from the existing fill-blank + bold terms
+      rather than authoring from scratch.
+    Do the options-basics lesson (#17) first if authoring time is scarce — that
+    is a coverage *hole*; the glossary is a convenience layer.
 
 ## In flight (not a gap)
 - **Lesson scene art**: 5/45 paper-craft images done + verified; 40 to go, with
