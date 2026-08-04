@@ -41,6 +41,8 @@ export type {
   Strategy,
   StrategyFamily,
   StrategyId,
+  Term,
+  TermId,
   Trader,
   TraderId,
   Unit,

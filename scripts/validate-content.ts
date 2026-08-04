@@ -24,6 +24,7 @@ import {
   LessonSchema,
   PROSE_BUDGET,
   StrategySchema,
+  TermSchema,
   TraderSchema,
   type Book,
   type Card,
@@ -31,6 +32,7 @@ import {
   type EntityRef,
   type Lesson,
   type Strategy,
+  type Term,
   type Trader,
 } from '../src/content/schema';
 import { countWords, parseRichText } from '../src/content/richtext';
@@ -126,12 +128,14 @@ const lessons = load<Lesson>(join(CONTENT, 'lessons'), LessonSchema, 'Lesson');
 const traders = load<Trader>(join(CONTENT, 'traders'), TraderSchema, 'Trader');
 const strategies = load<Strategy>(join(CONTENT, 'strategies'), StrategySchema, 'Strategy');
 const books = load<Book>(join(CONTENT, 'books'), BookSchema, 'Book');
+const terms = load<Term>(join(CONTENT, 'terms'), TermSchema, 'Term');
 
 const courseById = new Map(courses.map((c) => [c.data.id, c]));
 const lessonByPath = new Map(lessons.map((l) => [`${l.data.courseId}/${l.data.id}`, l]));
 const traderById = new Map(traders.map((t) => [t.data.id, t]));
 const strategyById = new Map(strategies.map((s) => [s.data.id, s]));
 const bookById = new Map(books.map((b) => [b.data.id, b]));
+const termById = new Map(terms.map((t) => [t.data.id, t]));
 
 /* ------------------------------------------------------------------ *
  * Pass 2 — referential integrity
@@ -147,7 +151,9 @@ function checkRef(file: string, ref: EntityRef, where: string): void {
         ? strategyById.has(rest)
         : kind === 'book'
           ? bookById.has(rest)
-          : lessonByPath.has(rest);
+          : kind === 'term'
+            ? termById.has(rest)
+            : lessonByPath.has(rest);
   if (!exists) {
     err(file, `${where}: unresolved reference "${ref}" — no such ${kind}`);
   }
@@ -244,6 +250,15 @@ for (const { file, data: book } of books) {
 for (const { file, data: strategy } of strategies) {
   for (const card of strategy.guideCards ?? []) {
     for (const ref of card.refs ?? []) checkRef(file, ref, at(card, 'refs'));
+  }
+}
+
+// A term's backlink and related chips must resolve like any other cross-link.
+for (const { file, data: term } of terms) {
+  if (term.learnMore) checkRef(file, term.learnMore, 'learnMore');
+  for (const ref of term.related ?? []) checkRef(file, ref, 'related');
+  if ((term.related ?? []).includes(`term:${term.id}`)) {
+    err(file, `related lists the term itself ("${term.id}")`);
   }
 }
 
@@ -349,6 +364,7 @@ checkUniqueIds(courses, 'course');
 checkUniqueIds(traders, 'trader');
 checkUniqueIds(strategies, 'strategy');
 checkUniqueIds(books, 'book');
+checkUniqueIds(terms, 'term');
 
 for (const { file, data: course } of courses) {
   const unitIds = course.units.map((u) => u.id);
@@ -448,6 +464,13 @@ for (const { file, data: strategy } of strategies) {
   for (const { data: book } of books) {
     (book.relatedTraders ?? []).forEach((id) => note(`trader:${id}`));
     (book.relatedStrategies ?? []).forEach((id) => note(`strategy:${id}`));
+  }
+  // Terms are a reference layer: their backlinks count as references, but a
+  // term that nothing links to is fine — learners reach it by browsing the
+  // glossary, so terms are intentionally exempt from the orphan warning below.
+  for (const { data: term } of terms) {
+    if (term.learnMore) note(term.learnMore);
+    (term.related ?? []).forEach((ref) => note(ref));
   }
 
   for (const { file, data } of traders) {
@@ -587,12 +610,22 @@ for (const { file, data } of strategies) {
   lintRich(file, 'riskManagement', data.riskManagement);
 }
 for (const { file, data } of books) lintRich(file, 'summary', [data.summary]);
+for (const { file, data } of terms) {
+  lintRich(file, 'definition', [data.definition]);
+  const words = countWords(data.definition);
+  if (words > PROSE_BUDGET.termDefinition) {
+    warn(
+      file,
+      `definition: ${words} words exceeds the ${PROSE_BUDGET.termDefinition}-word budget — a glossary entry is a glance, not a lesson`,
+    );
+  }
+}
 
 /* ------------------------------------------------------------------ *
  * Report
  * ------------------------------------------------------------------ */
 
-const counts = `${courses.length} course(s), ${lessons.length} lesson(s), ${traders.length} trader(s), ${strategies.length} strategy(ies), ${books.length} book(s)`;
+const counts = `${courses.length} course(s), ${lessons.length} lesson(s), ${traders.length} trader(s), ${strategies.length} strategy(ies), ${books.length} book(s), ${terms.length} term(s)`;
 
 if (warnings.length) {
   console.log(`\n⚠  ${warnings.length} warning(s):`);

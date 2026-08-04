@@ -29,6 +29,7 @@ export const LessonIdSchema = slug('lessonId');
 export const TraderIdSchema = slug('traderId');
 export const StrategyIdSchema = slug('strategyId');
 export const BookIdSchema = slug('bookId');
+export const TermIdSchema = slug('termId');
 /** Card ids are lesson-local and short: "c1", "c2", ... */
 export const CardIdSchema = z.string().regex(/^c[0-9]+$/, 'cardId must look like "c1"');
 
@@ -39,6 +40,7 @@ export type CardId = string;
 export type TraderId = string;
 export type StrategyId = string;
 export type BookId = string;
+export type TermId = string;
 
 /* ------------------------------------------------------------------ *
  * Cross-links
@@ -53,16 +55,17 @@ export type EntityRef =
   | `trader:${TraderId}`
   | `strategy:${StrategyId}`
   | `book:${BookId}`
+  | `term:${TermId}`
   | `lesson:${CourseId}/${LessonId}`;
 
 const ENTITY_REF =
-  /^(?:(?:trader|strategy|book):[a-z0-9]+(?:-[a-z0-9]+)*|lesson:[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*)$/;
+  /^(?:(?:trader|strategy|book|term):[a-z0-9]+(?:-[a-z0-9]+)*|lesson:[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*)$/;
 
 export const EntityRefSchema = z.custom<EntityRef>(
   (v) => typeof v === 'string' && ENTITY_REF.test(v),
   {
     message:
-      'EntityRef must be "trader:<id>", "strategy:<id>", "book:<id>", or "lesson:<courseId>/<lessonId>"',
+      'EntityRef must be "trader:<id>", "strategy:<id>", "book:<id>", "term:<id>", or "lesson:<courseId>/<lessonId>"',
   },
 );
 
@@ -656,6 +659,29 @@ export const BookSchema = z.object({
 });
 export type Book = z.infer<typeof BookSchema>;
 
+/**
+ * A glossary term — a reference entry, not a lesson.
+ *
+ * Deliberately tiny: one short definition and a link back to the lesson that
+ * actually teaches it. Keeping the definition to a sentence or two (enforced by
+ * the prose budget) is what stops the glossary becoming a second, drifting copy
+ * of the curriculum. It teaches nothing new; it lets a learner look a word up.
+ */
+export const TermSchema = z.object({
+  id: TermIdSchema,
+  /** The display term, e.g. "Bid-ask spread". */
+  term: z.string().min(1).max(60),
+  /** Other spellings/synonyms this entry should also be found by (search, links). */
+  aliases: z.array(z.string().min(1).max(60)).max(6).optional(),
+  /** One or two plain sentences. Prose-budget enforced. */
+  definition: RichTextSchema,
+  /** The lesson (or KB entity) that teaches it — the "learn more" backlink. */
+  learnMore: EntityRefSchema.optional(),
+  /** Related terms or entities, shown as chips. */
+  related: z.array(EntityRefSchema).max(6).optional(),
+});
+export type Term = z.infer<typeof TermSchema>;
+
 /* ------------------------------------------------------------------ *
  * Prose budgets
  * ------------------------------------------------------------------ */
@@ -675,4 +701,5 @@ export const PROSE_BUDGET = {
   mainIdeaSummary: 35,
   mainIdeaBullet: 25,
   keyInsight: 30,
+  termDefinition: 40,
 } as const;

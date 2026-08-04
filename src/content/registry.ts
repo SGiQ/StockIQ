@@ -13,6 +13,7 @@ import {
   allCourses,
   allLessons as rawLessons,
   allStrategies,
+  allTerms,
   allTraders,
 } from './index.generated';
 import { applyLessonArtwork } from './lessonArtwork';
@@ -28,6 +29,8 @@ import type {
   LessonPath,
   Strategy,
   StrategyId,
+  Term,
+  TermId,
   Trader,
   TraderId,
   Unit,
@@ -44,6 +47,7 @@ const lessonsByPath = new Map<LessonPath, Lesson>(
 const tradersById = new Map<TraderId, Trader>(allTraders.map((t) => [t.id, t]));
 const strategiesById = new Map<StrategyId, Strategy>(allStrategies.map((s) => [s.id, s]));
 const booksById = new Map<BookId, Book>(allBooks.map((b) => [b.id, b]));
+const termsById = new Map<TermId, Term>(allTerms.map((t) => [t.id, t]));
 
 /* ------------------------------------------------------------------ *
  * Lookups
@@ -53,6 +57,7 @@ export const getCourse = (id: CourseId): Course | undefined => coursesById.get(i
 export const getTrader = (id: TraderId): Trader | undefined => tradersById.get(id);
 export const getStrategy = (id: StrategyId): Strategy | undefined => strategiesById.get(id);
 export const getBook = (id: BookId): Book | undefined => booksById.get(id);
+export const getTerm = (id: TermId): Term | undefined => termsById.get(id);
 
 export const getLesson = (courseId: CourseId, lessonId: LessonId): Lesson | undefined =>
   lessonsByPath.get(lessonPath(courseId, lessonId));
@@ -73,6 +78,10 @@ export const listStrategies = (): Strategy[] =>
   [...allStrategies].sort((a, b) => a.name.localeCompare(b.name));
 
 export const listBooks = (): Book[] => [...allBooks].sort((a, b) => a.year - b.year);
+
+/** Glossary terms A→Z by display term (case-insensitive). */
+export const listTerms = (): Term[] =>
+  [...allTerms].sort((a, b) => a.term.localeCompare(b.term, undefined, { sensitivity: 'base' }));
 
 /** Every lesson of a course, flattened in unit order. */
 export function listLessonsInCourse(courseId: CourseId): Lesson[] {
@@ -109,7 +118,7 @@ export function getNextLesson(courseId: CourseId, lessonId: LessonId): Lesson | 
 
 export interface ResolvedRef {
   ref: EntityRef;
-  kind: 'trader' | 'strategy' | 'book' | 'lesson';
+  kind: 'trader' | 'strategy' | 'book' | 'term' | 'lesson';
   id: string;
   title: string;
   /** The expo-router href for this entity. */
@@ -139,6 +148,10 @@ export function resolveRef(ref: EntityRef): ResolvedRef | undefined {
     case 'book': {
       const book = booksById.get(id);
       return book && { ref, kind, id, title: book.title, href: `/kb/book/${id}` };
+    }
+    case 'term': {
+      const term = termsById.get(id);
+      return term && { ref, kind, id, title: term.term, href: `/kb/term/${id}` };
     }
     case 'lesson': {
       const lesson = lessonsByPath.get(id as LessonPath);

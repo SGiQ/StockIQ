@@ -1,0 +1,9 @@
+{
+  "id": "moving-average",
+  "term": "Moving average",
+  "aliases": [
+    "MA"
+  ],
+  "definition": "The average closing price over a rolling window of days, redrawn each day as new prices arrive. It smooths out daily noise to make the underlying trend easier to see.",
+  "learnMore": "lesson:reading-a-chart/moving-averages"
+}

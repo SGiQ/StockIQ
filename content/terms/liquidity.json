@@ -1,0 +1,9 @@
+{
+  "id": "liquidity",
+  "term": "Liquidity",
+  "definition": "How easily an asset can be bought or sold without moving its price. A liquid stock has many buyers and sellers and a narrow bid-ask spread; an illiquid one has neither.",
+  "learnMore": "lesson:market-foundations/bid-ask-and-spread",
+  "related": [
+    "term:bid-ask-spread"
+  ]
+}

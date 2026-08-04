@@ -46,7 +46,7 @@ const SUSPECT = [
 ];
 
 const ENTITY_REF =
-  /^(?:(?:trader|strategy|book):[a-z0-9]+(?:-[a-z0-9]+)*|lesson:[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*)$/;
+  /^(?:(?:trader|strategy|book|term):[a-z0-9]+(?:-[a-z0-9]+)*|lesson:[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*)$/;
 
 export function parseRichText(input: string): RichParseResult {
   const nodes: RichNode[] = [];

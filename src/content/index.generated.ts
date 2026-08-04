@@ -6,7 +6,7 @@
  * listed explicitly here rather than loaded dynamically.
  */
 /* eslint-disable */
-import type { Book, Course, Lesson, Strategy, Trader } from './schema';
+import type { Book, Course, Lesson, Strategy, Term, Trader } from './schema';
 
 import course_marketFoundations from '../../content/courses/market-foundations.json';
 import course_readingABusiness from '../../content/courses/reading-a-business.json';
@@ -70,6 +70,18 @@ import book_oneUpOnWallStreet from '../../content/books/one-up-on-wall-street.js
 import book_reminiscencesOfAStockOperator from '../../content/books/reminiscences-of-a-stock-operator.json';
 import book_theIntelligentInvestor from '../../content/books/the-intelligent-investor.json';
 import book_tradingInTheZone from '../../content/books/trading-in-the-zone.json';
+import term_bidAskSpread from '../../content/terms/bid-ask-spread.json';
+import term_dilution from '../../content/terms/dilution.json';
+import term_dividend from '../../content/terms/dividend.json';
+import term_drawdown from '../../content/terms/drawdown.json';
+import term_economicMoat from '../../content/terms/economic-moat.json';
+import term_limitOrder from '../../content/terms/limit-order.json';
+import term_liquidity from '../../content/terms/liquidity.json';
+import term_marketCapitalisation from '../../content/terms/market-capitalisation.json';
+import term_movingAverage from '../../content/terms/moving-average.json';
+import term_priceEarningsRatio from '../../content/terms/price-earnings-ratio.json';
+import term_share from '../../content/terms/share.json';
+import term_stopLoss from '../../content/terms/stop-loss.json';
 
 export const allCourses: Course[] = [
   course_marketFoundations as unknown as Course,
@@ -146,4 +158,19 @@ export const allBooks: Book[] = [
   book_reminiscencesOfAStockOperator as unknown as Book,
   book_theIntelligentInvestor as unknown as Book,
   book_tradingInTheZone as unknown as Book,
+];
+
+export const allTerms: Term[] = [
+  term_bidAskSpread as unknown as Term,
+  term_dilution as unknown as Term,
+  term_dividend as unknown as Term,
+  term_drawdown as unknown as Term,
+  term_economicMoat as unknown as Term,
+  term_limitOrder as unknown as Term,
+  term_liquidity as unknown as Term,
+  term_marketCapitalisation as unknown as Term,
+  term_movingAverage as unknown as Term,
+  term_priceEarningsRatio as unknown as Term,
+  term_share as unknown as Term,
+  term_stopLoss as unknown as Term,
 ];
