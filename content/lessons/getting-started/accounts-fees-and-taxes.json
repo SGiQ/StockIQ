@@ -1,0 +1,132 @@
+{
+  "id": "accounts-fees-and-taxes",
+  "courseId": "getting-started",
+  "title": "Accounts, Fees, and Taxes",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Where your shares actually live.",
+      "body": "You do not hold shares directly — they sit in a **brokerage account** you open with a broker. Which type of account you use quietly changes how much of your return you keep.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "sky" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Two flavours of account.",
+      "body": "A **taxable brokerage** account is flexible: invest and withdraw anytime, but you owe tax on gains. **Retirement accounts** like an IRA or 401(k) trade some of that access for large tax advantages.",
+      "art": { "kind": "glyph", "name": "briefcase", "bg": "butter" }
+    },
+    {
+      "id": "c3",
+      "type": "sticker_reveal",
+      "body": "Three costs quietly eat into returns. None feels big on its own; together, over decades, they add up.",
+      "stickers": [
+        {
+          "label": "Commissions to trade",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -5
+        },
+        {
+          "label": "Fund expense ratios",
+          "art": { "kind": "glyph", "name": "percent", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.47 },
+          "rotation": 4
+        },
+        {
+          "label": "The bid-ask spread",
+          "art": { "kind": "glyph", "name": "scale", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.79 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "What a 1% fee costs",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "compounding",
+          "principal": 10000,
+          "rate": 0.07,
+          "years": 30,
+          "compareRate": 0.06
+        }
+      },
+      "caption": "Same $10,000 over 30 years. Earning **7%** versus **6%** — a single 1% fee — leaves a strikingly different final balance. Fees compound against you."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Sell for a profit, and tax appears.",
+      "body": "In a **taxable** account, selling a stock for more than you paid creates a **capital gain** — and you owe tax on it. Hold longer than a year and the rate is usually lower.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "You sell a stock at a profit after holding it 13 months. Which tax usually applies?",
+      "options": [
+        { "id": "short", "label": "Short-term — the higher rate", "correct": false },
+        { "id": "long", "label": "Long-term — usually a lower rate", "correct": true }
+      ],
+      "explanation": "Held **longer than one year**, the gain is **long-term**, usually taxed more gently than a short-term gain. Thirteen months clears that one-year bar."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Accounts that shelter growth.",
+      "body": "**Tax-advantaged** accounts are the biggest lever most people have. A traditional IRA or 401(k) defers tax until you withdraw; a **Roth** is funded with already-taxed money and then grows tax-free.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Holding a stock longer than [[1]] usually qualifies the gain for the lower long-term rate.",
+      "wordBank": ["one year", "one month", "one week"],
+      "answer": "one year",
+      "explanation": "In the U.S., a gain becomes **long-term** once you have held for more than a year — and long-term gains are usually taxed more gently than short-term ones."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "The honest caveat.",
+      "body": "Tax rules vary by country and by your own situation, and they change. This teaches the **shape** of how accounts, fees, and taxes work — not your specific bill. For that, ask a professional.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "butter" }
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "summary": "The account you choose, the fees you pay, and the tax on your gains quietly decide how much you actually keep.",
+      "bullets": [
+        "Taxable accounts are flexible; retirement accounts save tax.",
+        "Small fees compound into a large drag over decades.",
+        "Held over a year, gains usually get the lower long-term rate."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" },
+      "insight": "Your return is what you earn. What you keep is that minus fees and taxes — and those are the parts you can most control.",
+      "attribution": { "source": "Accounts, fees, and taxes", "detail": "Getting Started" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Understanding Fees",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/understanding-fees",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Topic no. 409, Capital Gains and Losses",
+      "url": "https://www.irs.gov/taxtopics/tc409",
+      "publisher": "U.S. Internal Revenue Service"
+    }
+  ]
+}

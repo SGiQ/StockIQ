@@ -8,11 +8,14 @@
 /* eslint-disable */
 import type { Book, Course, Lesson, Strategy, Trader } from './schema';
 
+import course_gettingStarted from '../../content/courses/getting-started.json';
 import course_marketFoundations from '../../content/courses/market-foundations.json';
 import course_readingABusiness from '../../content/courses/reading-a-business.json';
 import course_readingAChart from '../../content/courses/reading-a-chart.json';
 import course_riskAndPositionSizing from '../../content/courses/risk-and-position-sizing.json';
 import course_tradingPsychology from '../../content/courses/trading-psychology.json';
+import lesson_gettingStarted_accountsFeesAndTaxes from '../../content/lessons/getting-started/accounts-fees-and-taxes.json';
+import lesson_gettingStarted_buildingAPortfolio from '../../content/lessons/getting-started/building-a-portfolio.json';
 import lesson_marketFoundations_bidAskAndSpread from '../../content/lessons/market-foundations/bid-ask-and-spread.json';
 import lesson_marketFoundations_exchangesAndBrokers from '../../content/lessons/market-foundations/exchanges-and-brokers.json';
 import lesson_marketFoundations_indicesAndBenchmarks from '../../content/lessons/market-foundations/indices-and-benchmarks.json';
@@ -73,6 +76,7 @@ import book_theIntelligentInvestor from '../../content/books/the-intelligent-inv
 import book_tradingInTheZone from '../../content/books/trading-in-the-zone.json';
 
 export const allCourses: Course[] = [
+  course_gettingStarted as unknown as Course,
   course_marketFoundations as unknown as Course,
   course_readingABusiness as unknown as Course,
   course_readingAChart as unknown as Course,
@@ -81,6 +85,8 @@ export const allCourses: Course[] = [
 ];
 
 export const allLessons: Lesson[] = [
+  lesson_gettingStarted_accountsFeesAndTaxes as unknown as Lesson,
+  lesson_gettingStarted_buildingAPortfolio as unknown as Lesson,
   lesson_marketFoundations_bidAskAndSpread as unknown as Lesson,
   lesson_marketFoundations_exchangesAndBrokers as unknown as Lesson,
   lesson_marketFoundations_indicesAndBenchmarks as unknown as Lesson,

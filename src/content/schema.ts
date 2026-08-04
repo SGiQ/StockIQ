@@ -493,6 +493,7 @@ export const COURSE_CATEGORIES = [
   'risk',
   'psychology',
   'strategies',
+  'getting-started',
 ] as const;
 export const CourseCategorySchema = z.enum(COURSE_CATEGORIES);
 export type CourseCategory = (typeof COURSE_CATEGORIES)[number];

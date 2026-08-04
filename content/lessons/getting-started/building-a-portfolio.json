@@ -1,0 +1,132 @@
+{
+  "id": "building-a-portfolio",
+  "courseId": "getting-started",
+  "title": "Building a Portfolio",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "One stock is a bet. A portfolio is a plan.",
+      "body": "A portfolio is everything you own, held together. The point is not to pick the single winner — it is to arrange many holdings so that no one mistake can sink you.",
+      "art": { "kind": "glyph", "name": "pie", "bg": "mint" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Don't put it all in one basket.",
+      "body": "**Diversification** means spreading money across many investments, so that if one loses, the others can cushion the blow. It is the closest thing investing has to a free lunch.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "A sample allocation",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "bars",
+          "values": [60, 30, 10],
+          "labels": ["Stocks", "Bonds", "Cash"],
+          "highlightIndex": 0,
+          "yLabel": "% of portfolio"
+        }
+      },
+      "caption": "**Asset allocation** is how you split money across stocks, bonds, and cash. A longer time horizon usually means more in stocks; a shorter one, less."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Allocation drives your risk.",
+      "body": "The split between stocks, bonds, and cash shapes your risk more than any single pick does. It follows two things: your **time horizon**, and how large a fall you can actually stomach.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "butter" }
+    },
+    {
+      "id": "c5",
+      "type": "sticker_reveal",
+      "body": "Real diversification spreads risk along three different lines, not just across a handful of names.",
+      "stickers": [
+        {
+          "label": "Across companies",
+          "art": { "kind": "glyph", "name": "building", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -5
+        },
+        {
+          "label": "Across sectors",
+          "art": { "kind": "glyph", "name": "briefcase", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.47 },
+          "rotation": 4
+        },
+        {
+          "label": "Across asset types",
+          "art": { "kind": "glyph", "name": "coins-stack", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.79 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "You own 20 technology stocks. Are you well diversified?",
+      "options": [
+        { "id": "yes", "label": "Yes — twenty is a lot of stocks", "correct": false },
+        { "id": "no", "label": "No — they can all fall together", "correct": true }
+      ],
+      "explanation": "Twenty names in one **sector** still tend to rise and fall together. Diversification is about holding things that do not move in lockstep — not simply holding many things."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Winners drift your mix.",
+      "body": "Over time your best performers grow into an outsized share of the portfolio. **Rebalancing** trims them back toward your targets — a built-in habit of selling a little high and buying a little low.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "sky" }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Diversification can lower your risk, but it can never fully [[1]] it.",
+      "wordBank": ["remove", "spread", "measure"],
+      "answer": "remove",
+      "explanation": "Spreading out cuts the risk tied to any one company. But when the whole market falls, most things fall with it — and that shared risk stays."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "What it can't do.",
+      "body": "Diversification tames company-specific risk, not market-wide risk. In a broad crash most assets drop together. Owning more names softens the blow; it does not make a portfolio crash-proof.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "butter" }
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "summary": "A portfolio spreads your money on purpose, so no single loss can undo you — then rebalances to stay that way.",
+      "bullets": [
+        "Diversify across companies, sectors, and asset types.",
+        "Allocation — your stock, bond, and cash mix — sets your risk.",
+        "Rebalance back to target as winners drift the mix."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "pie", "bg": "mint" },
+      "insight": "You cannot reliably pick the one winner. You can decide how much of any single loss you are willing to feel.",
+      "attribution": { "source": "Building a portfolio", "detail": "Getting Started" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginners' Guide to Asset Allocation, Diversification, and Rebalancing",
+      "url": "https://www.investor.gov/additional-resources/general-resources/publications-research/info-sheets/beginners-guide-asset",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Asset Allocation and Diversification",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/asset-allocation",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}
