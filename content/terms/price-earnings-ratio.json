@@ -1,0 +1,10 @@
+{
+  "id": "price-earnings-ratio",
+  "term": "Price-to-earnings ratio",
+  "aliases": [
+    "P/E ratio",
+    "PE ratio"
+  ],
+  "definition": "A company's share price divided by its earnings per share. It roughly says how many years of current earnings you are paying for — a quick gauge of how expensive a stock is.",
+  "learnMore": "lesson:reading-a-business/the-price-earnings-ratio"
+}

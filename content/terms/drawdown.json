@@ -1,0 +1,6 @@
+{
+  "id": "drawdown",
+  "term": "Drawdown",
+  "definition": "The peak-to-trough drop in an account or investment, stated as a percentage. A 50% drawdown needs a 100% gain to recover, which is why large ones are so damaging.",
+  "learnMore": "lesson:risk-and-position-sizing/drawdown-and-recovery"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "share",
+  "term": "Share",
+  "aliases": [
+    "stock",
+    "equity"
+  ],
+  "definition": "A unit of ownership in a company. Owning one share makes you a part-owner, with a claim on a slice of the company's profits and assets in proportion to how many shares you hold.",
+  "learnMore": "lesson:market-foundations/what-is-a-stock",
+  "related": [
+    "term:dilution"
+  ]
+}

@@ -95,6 +95,11 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen name="kb/book/[bookId]/index" />
+          <Stack.Screen name="kb/glossary" />
+          <Stack.Screen
+            name="kb/term/[termId]/index"
+            options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+          />
           <Stack.Screen name="settings/index" />
           <Stack.Screen name="settings/narration" />
           <Stack.Screen name="settings/devices" />

@@ -11,6 +11,7 @@ const KIND_GLYPH = {
   trader: 'people',
   strategy: 'target',
   book: 'newspaper',
+  term: 'lightbulb',
   lesson: 'lightbulb',
 } as const;
 
@@ -18,6 +19,7 @@ const KIND_LABEL = {
   trader: 'Trader',
   strategy: 'Strategy',
   book: 'Book',
+  term: 'Term',
   lesson: 'Lesson',
 } as const;
 

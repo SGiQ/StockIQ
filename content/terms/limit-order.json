@@ -1,0 +1,9 @@
+{
+  "id": "limit-order",
+  "term": "Limit order",
+  "aliases": [
+    "limit"
+  ],
+  "definition": "An order to buy or sell only at a specified price or better. It controls the price you get, but it does not guarantee the order will fill.",
+  "learnMore": "lesson:market-foundations/order-types"
+}

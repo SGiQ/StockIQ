@@ -1,0 +1,9 @@
+{
+  "id": "market-capitalisation",
+  "term": "Market capitalisation",
+  "aliases": [
+    "market cap"
+  ],
+  "definition": "The total market value of a company's shares: the share price multiplied by the number of shares outstanding. It is what the market currently thinks the whole company is worth.",
+  "learnMore": "lesson:market-foundations/market-cap"
+}

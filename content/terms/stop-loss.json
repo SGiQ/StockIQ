@@ -1,0 +1,9 @@
+{
+  "id": "stop-loss",
+  "term": "Stop-loss",
+  "aliases": [
+    "stop"
+  ],
+  "definition": "A pre-set order to sell if the price falls to a chosen level, capping the loss on a position. It decides the exit in advance, before emotion can take over.",
+  "learnMore": "lesson:risk-and-position-sizing/stop-losses"
+}

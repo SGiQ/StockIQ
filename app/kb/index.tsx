@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { listBooks, listStrategies, listTraders } from '@/content/registry';
+import { listBooks, listStrategies, listTerms, listTraders } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
 import { Glyph } from '@/components/art/Glyph';
 import { CardSurface, Screen, Text } from '@/components/primitives';
@@ -19,6 +19,7 @@ export default function KnowledgeBase() {
   const traders = listTraders();
   const strategies = listStrategies();
   const books = listBooks();
+  const terms = listTerms();
 
   const unlocked = useAppStore((s) => s.unlockedStrategies);
   const lockedCount = useMemo(
@@ -88,6 +89,15 @@ export default function KnowledgeBase() {
               onPress={() => router.push(`/kb/book/${book.id}` as never)}
             />
           ))}
+        </Section>
+
+        <Section title="Glossary" count={terms.length} subtitle="Look up any term">
+          <Row
+            art={{ kind: 'glyph', name: 'magnifier', bg: 'sky' }}
+            title="Browse all terms"
+            subtitle="Plain-language definitions, linked back to the lessons that teach them"
+            onPress={() => router.push('/kb/glossary' as never)}
+          />
         </Section>
 
         <Text variant="caption" color={palette.slateLight} align="center">

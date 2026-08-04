@@ -1,0 +1,9 @@
+{
+  "id": "dilution",
+  "term": "Dilution",
+  "definition": "The drop in each existing share's ownership stake when a company issues new shares. The same profits are split across more shares, so each one now represents a smaller slice.",
+  "learnMore": "lesson:market-foundations/why-companies-sell-shares",
+  "related": [
+    "term:share"
+  ]
+}

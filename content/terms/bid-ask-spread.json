@@ -1,0 +1,12 @@
+{
+  "id": "bid-ask-spread",
+  "term": "Bid-ask spread",
+  "aliases": [
+    "spread"
+  ],
+  "definition": "The gap between the highest price buyers will pay (the bid) and the lowest price sellers will accept (the ask). It is a real cost of trading, and it is widest in thinly traded stocks.",
+  "learnMore": "lesson:market-foundations/bid-ask-and-spread",
+  "related": [
+    "term:liquidity"
+  ]
+}

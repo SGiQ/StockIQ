@@ -9,6 +9,7 @@ const TONE = {
   trader: 'violet',
   strategy: 'mint',
   book: 'azure',
+  term: 'flame',
   lesson: 'neutral',
 } as const;
 
