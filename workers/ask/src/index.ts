@@ -13,9 +13,9 @@
  *    client could simply drop them. Here they cannot be edited by the caller,
  *    and they can be corrected without shipping an app release.
  *
- * 2. Model, max_tokens, and effort. The request body carries only a question
- *    and card context, so a caller cannot ask this endpoint — spending the
- *    owner's money — to generate something expensive or unrelated.
+ * 2. Model and max_tokens. The request body carries only a question and card
+ *    context, so a caller cannot ask this endpoint — spending the owner's
+ *    money — to generate something expensive or unrelated.
  */
 
 interface Env {
@@ -26,7 +26,11 @@ interface Env {
   DAILY_LIMIT?: string;
 }
 
-const MODEL = 'claude-opus-4-8';
+// Haiku, deliberately, to cap cost: the tutor answers a short, tightly scoped
+// question in <=120 words, which Haiku does well, at roughly a fifth of Opus's
+// price. No extended thinking — it is not needed for a direct explanation, and
+// `thinking: adaptive` is a 4.6+ feature that a 4.5 model rejects.
+const MODEL = 'claude-haiku-4-5';
 const MAX_TOKENS = 1024;
 const DEFAULT_DAILY_LIMIT = 100;
 
@@ -124,8 +128,6 @@ export default {
         model: MODEL,
         max_tokens: MAX_TOKENS,
         stream: true,
-        thinking: { type: 'adaptive' },
-        output_config: { effort: 'low' },
         system: SYSTEM_PROMPT,
         messages: [
           {
