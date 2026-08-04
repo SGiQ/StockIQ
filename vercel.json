@@ -12,7 +12,7 @@
   },
   "rewrites": [
     {
-      "source": "/((?!_expo/|assets/|favicon\\.ico).*)",
+      "source": "/((?!_expo/|assets/|legal/|favicon\\.ico).*)",
       "destination": "/index.html"
     }
   ],

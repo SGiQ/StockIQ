@@ -32,9 +32,15 @@ App Store."
    removed, fresh empty account, no resurfacing; sync + pairing regressions
    pass. Still worth adding later: a scheduled orphan-account cleanup job (the
    pre-existing retention gap, not a blocker).
-2. **Privacy policy + Terms of Service.** None exist anywhere. Apple requires a
-   reachable privacy-policy URL (in Connect *and* in-app). We collect email and
-   sync data. Needs: write + host the policy, link it from settings.
+2. ~~**Privacy policy + Terms of Service.**~~ **DONE** — both written as static
+   pages in `public/legal/` (privacy.html, terms.html), accurate to what the app
+   actually collects. Served as plain HTML (added `legal/` to the vercel.json
+   rewrite exclusion; regex re-verified), so the URL works without JS for App
+   Store Connect. In-app access via a new **Legal** section in Settings
+   (`openLegal` → `src/lib/legal.ts`, origin from `SITE_URL`). Verified: pages
+   render, settings links open them. **Owner step:** paste
+   `https://stockiq-delta.vercel.app/legal/privacy.html` into App Store Connect,
+   and have the text reviewed (it's a solid, accurate draft, not lawyer-vetted).
 3. **iOS privacy manifest (`PrivacyInfo.xcprivacy`) + Connect privacy answers.**
    Absent. `expo-secure-store`/`expo-sqlite` touch required-reason APIs and we
    collect email. Needs a manifest (Expo can generate at prebuild) + the App
@@ -44,9 +50,10 @@ App Store."
    ($99/yr), `eas build:configure`, enable Sign in with Apple on the App ID,
    first `eas build --platform ios`. This is also where touch gestures finally
    get verified on real hardware (still unverified).
-5. **Splash screen misconfig.** The `expo-splash-screen` plugin block sets only
-   background/resize, never references `splash-icon.png` — native splash may
-   render blank. One-line fix in app.json.
+5. ~~**Splash screen misconfig.**~~ **DONE** — the `expo-splash-screen` plugin now
+   references `./assets/splash-icon.png` (`imageWidth: 200`) in app.json, so the
+   native splash shows the logo instead of a blank green screen. Renders only in
+   a native build, so verify visually on the first `eas build`.
 
 ## Tier 1 — Real bugs to fix now (cheap, user-visible)
 

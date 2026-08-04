@@ -30,5 +30,13 @@ export const ASK_PROXY_URL = trim(process.env.EXPO_PUBLIC_ASK_PROXY_URL);
  */
 export const SPEECH_URL = trim(process.env.EXPO_PUBLIC_SPEECH_URL);
 
+/**
+ * Public website origin, without a trailing slash. Used for links that must
+ * resolve outside the app — the legal pages live in the web deploy's
+ * `public/legal/`, so a native build needs an absolute URL to reach them.
+ * Defaults to the production web deploy when unset.
+ */
+export const SITE_URL = trim(process.env.EXPO_PUBLIC_SITE_URL) || 'https://stockiq-delta.vercel.app';
+
 export const isSyncConfigured = (): boolean => SYNC_URL.length > 0;
 export const isAskProxyConfigured = (): boolean => ASK_PROXY_URL.length > 0;
