@@ -88,11 +88,14 @@ App Store."
 
 ## Tier 2 — Before a public launch (quality / safety)
 
-12. **Deploy the ASK worker** (KV namespace + `wrangler secret put
-    ANTHROPIC_API_KEY`, set `EXPO_PUBLIC_ASK_PROXY_URL`) so the tutor uses the
-    tamper-proof server prompt instead of a user-pasted key — or decide BYOK-only
-    on purpose. `wrangler.toml` still has the `REPLACE_WITH_KV_NAMESPACE_ID`
-    placeholder.
+12. ~~**Deploy the ASK worker.**~~ **DONE** — deployed to
+    stockiq-ask.sgiqbusiness.workers.dev (Haiku 4.5, KV rate-limit namespace,
+    Anthropic key as a Cloudflare secret). App wired via EXPO_PUBLIC_ASK_PROXY_URL
+    in vercel.json/eas.json. Verified end-to-end on the live site: tapping ASK
+    streams a real answer, the request routes to the Worker (not api.anthropic.com),
+    the not-advice guardrail refuses buy/sell questions server-side, and it fails
+    closed without the key. This also resolves the "guardrail ships in the client
+    bundle" concern — it is now server-side and unremovable.
 13. **CI.** No `.github/` at all; nothing gates merges while Vercel/Railway
     auto-deploy. Add typecheck + `validate:content` + sync tests on PR.
 14. **Tests for the two Cloudflare Workers** (ASK handles money + the advice
