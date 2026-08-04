@@ -17,6 +17,7 @@ import lesson_marketFoundations_bidAskAndSpread from '../../content/lessons/mark
 import lesson_marketFoundations_exchangesAndBrokers from '../../content/lessons/market-foundations/exchanges-and-brokers.json';
 import lesson_marketFoundations_indicesAndBenchmarks from '../../content/lessons/market-foundations/indices-and-benchmarks.json';
 import lesson_marketFoundations_marketCap from '../../content/lessons/market-foundations/market-cap.json';
+import lesson_marketFoundations_optionsBasics from '../../content/lessons/market-foundations/options-basics.json';
 import lesson_marketFoundations_orderTypes from '../../content/lessons/market-foundations/order-types.json';
 import lesson_marketFoundations_readingAQuote from '../../content/lessons/market-foundations/reading-a-quote.json';
 import lesson_marketFoundations_whatIsAStock from '../../content/lessons/market-foundations/what-is-a-stock.json';
@@ -84,6 +85,7 @@ export const allLessons: Lesson[] = [
   lesson_marketFoundations_exchangesAndBrokers as unknown as Lesson,
   lesson_marketFoundations_indicesAndBenchmarks as unknown as Lesson,
   lesson_marketFoundations_marketCap as unknown as Lesson,
+  lesson_marketFoundations_optionsBasics as unknown as Lesson,
   lesson_marketFoundations_orderTypes as unknown as Lesson,
   lesson_marketFoundations_readingAQuote as unknown as Lesson,
   lesson_marketFoundations_whatIsAStock as unknown as Lesson,

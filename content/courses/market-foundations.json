@@ -25,7 +25,13 @@
       "index": 3,
       "name": "READING THE NUMBERS",
       "lessonIds": ["market-cap", "indices-and-benchmarks", "reading-a-quote"]
+    },
+    {
+      "id": "unit-4",
+      "index": 4,
+      "name": "BEYOND SHARES",
+      "lessonIds": ["options-basics"]
     }
   ],
-  "totalXp": 180
+  "totalXp": 200
 }

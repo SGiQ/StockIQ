@@ -1,0 +1,131 @@
+{
+  "id": "options-basics",
+  "courseId": "market-foundations",
+  "title": "Options: The Right, Not the Obligation",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "unlocks": ["strategy:covered-call-wheel"],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A contract, not a share.",
+      "body": "An option is a contract. It gives you the **right** — but never the obligation — to buy or sell a stock at a set price before a set date. You pay for that right up front.",
+      "art": { "kind": "glyph", "name": "key", "bg": "lilac" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Two types: calls and puts.",
+      "body": "A **call** is the right to **buy** a stock at a fixed price; a **put** is the right to **sell** one. A call gains if the price rises far enough, a put if it falls.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Every contract has four parts.",
+      "body": "The **type** (call or put), the **strike** (the fixed price), the **expiration** (the deadline), and the **premium** (what the contract costs). Change any one and you have a different contract.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "A call buyer's payoff",
+      "art": {
+        "kind": "chart",
+        "spec": {
+          "type": "payoff",
+          "legs": [{ "kind": "call", "side": "long", "strike": 100, "premium": 5 }],
+          "spotRange": [80, 130]
+        }
+      },
+      "caption": "Buy a $100 call for **$5**. Below $100 you lose only the $5 premium. Above **$105** — strike plus premium — every extra dollar is profit."
+    },
+    {
+      "id": "c5",
+      "type": "sticker_reveal",
+      "body": "Every option has two sides. One pays for a right; the other sells it and takes on a duty.",
+      "stickers": [
+        {
+          "label": "Buyer pays the premium",
+          "art": { "kind": "glyph", "name": "dollar", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.18 },
+          "rotation": -5
+        },
+        {
+          "label": "Seller collects it",
+          "art": { "kind": "glyph", "name": "coins-stack", "bg": "butter" },
+          "anchor": { "x": 0.68, "y": 0.47 },
+          "rotation": 4
+        },
+        {
+          "label": "Seller owes the duty",
+          "art": { "kind": "glyph", "name": "shield", "bg": "blush" },
+          "anchor": { "x": 0.34, "y": 0.79 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "You buy a $100 call for $5. At expiration the stock is $103. Are you ahead?",
+      "options": [
+        { "id": "yes", "label": "Yes — it's above $100", "correct": false },
+        { "id": "no", "label": "No — I need $105 to break even", "correct": true }
+      ],
+      "explanation": "The stock cleared the **strike**, but not by enough to cover the $5 premium. Break-even is strike plus premium: $105. At $103 you recover $3 of the $5 you paid."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Sellers can be assigned.",
+      "body": "If you **sell** an option and it finishes in the money, you can be **assigned** — forced to honour it. A call seller must deliver shares; a put seller must buy them, at the strike.",
+      "art": { "kind": "glyph", "name": "bell", "bg": "blush" }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "The most an option **buyer** can lose is the [[1]] they paid for the contract.",
+      "wordBank": ["premium", "strike", "dividend"],
+      "answer": "premium",
+      "explanation": "A buyer's loss is capped at what they paid. If the option expires worthless, the premium is gone — but never more than that."
+    },
+    {
+      "id": "c9",
+      "type": "concept",
+      "headline": "Small bets, big swings.",
+      "body": "One contract usually controls **100 shares**, so a little money moves a lot of exposure. That cuts both ways: options can multiply a gain, expire at zero, and — for sellers — carry very large losses.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "butter" }
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "summary": "An option is a paid right to buy or sell at a set price by a set date — powerful, and easy to lose in full.",
+      "bullets": [
+        "Calls are the right to buy; puts, the right to sell.",
+        "Buyers risk only the premium; sellers can owe far more.",
+        "Break-even is the strike plus the premium you paid."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": { "kind": "glyph", "name": "key", "bg": "lilac" },
+      "insight": "An option is not a share. It is a bet on a price by a deadline, and if the deadline wins, the bet expires at zero.",
+      "attribution": { "source": "Options, the basics", "detail": "Market Foundations" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Investor Bulletin: An Introduction to Options",
+      "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-63",
+      "publisher": "U.S. SEC Office of Investor Education and Advocacy"
+    },
+    {
+      "title": "Options",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/options",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}
