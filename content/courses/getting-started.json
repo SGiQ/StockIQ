@@ -1,0 +1,25 @@
+{
+  "id": "getting-started",
+  "title": "Getting Started: Putting It to Work",
+  "author": "StockIQ",
+  "category": "getting-started",
+  "cover": { "kind": "glyph", "name": "seed", "bg": "butter" },
+  "blurb": "You know what stocks are — now the practical part. How to spread risk across a portfolio, and the accounts, fees, and taxes that quietly decide what you actually keep.",
+  "order": 6,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "BUILDING A PORTFOLIO",
+      "lessonIds": ["building-a-portfolio"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "ACCOUNTS, FEES & TAXES",
+      "lessonIds": ["accounts-fees-and-taxes"]
+    }
+  ],
+  "totalXp": 40
+}
