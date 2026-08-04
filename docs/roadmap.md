@@ -41,15 +41,21 @@ App Store."
    render, settings links open them. **Owner step:** paste
    `https://stockiq-delta.vercel.app/legal/privacy.html` into App Store Connect,
    and have the text reviewed (it's a solid, accurate draft, not lawyer-vetted).
-3. **iOS privacy manifest (`PrivacyInfo.xcprivacy`) + Connect privacy answers.**
-   Absent. `expo-secure-store`/`expo-sqlite` touch required-reason APIs and we
-   collect email. Needs a manifest (Expo can generate at prebuild) + the App
-   Store Connect data questionnaire (email, device id, telemetry).
-4. **Native build has never happened; EAS isn't linked.** No `extra.eas.projectId`
-   in app.json, only ever run as Expo Go + web. Needs: Apple Developer account
-   ($99/yr), `eas build:configure`, enable Sign in with Apple on the App ID,
-   first `eas build --platform ios`. This is also where touch gestures finally
-   get verified on real hardware (still unverified).
+3. ~~**iOS privacy manifest (`PrivacyInfo.xcprivacy`).**~~ **DONE** — configured
+   `ios.privacyManifests` in app.json; a prebuild dry-run confirmed it generates
+   a correct manifest (Email/User ID/Product Interaction, all linked, none
+   tracking; UserDefaults CA92.1 + FileTimestamp C617.1). **Owner step:** answer
+   the matching App Store Connect privacy questionnaire (mapping is in
+   `docs/native-build-checklist.md`).
+4. **Native build.** **PREPPED** — everything doable without an Apple account is
+   done and verified: bundle id, icons, splash, Apple-signin entitlement, privacy
+   manifest, export-compliance flag, EAS profiles with env, expo-doctor 20/20,
+   clean `expo prebuild`. Peer-dep + version drift fixed (`expo-asset` added,
+   SDK 57 patches aligned, stale `newArchEnabled` removed). **Owner steps** (full
+   ordered guide in `docs/native-build-checklist.md`): Apple Developer account,
+   `eas login`, `eas init` (writes `extra.eas.projectId` — the one value I can't
+   add), then `eas build --platform ios`. This is where touch gestures, native
+   audio, and Sign in with Apple finally get verified on real hardware.
 5. ~~**Splash screen misconfig.**~~ **DONE** — the `expo-splash-screen` plugin now
    references `./assets/splash-icon.png` (`imageWidth: 200`) in app.json, so the
    native splash shows the logo instead of a blank green screen. Renders only in

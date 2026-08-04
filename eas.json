@@ -23,7 +23,9 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
+        "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
     },
     "preview": {
@@ -33,7 +35,9 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
+        "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
     },
     "production": {
@@ -50,7 +54,9 @@
         "resourceClass": "m-medium"
       },
       "env": {
-        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app"
+        "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
+        "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
     }
   },
