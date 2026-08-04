@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import type { ArtSpec, EntityRef } from '@/content/types';
@@ -165,12 +165,38 @@ export function BulletBlock({
 }
 
 /** Key/value rows with a required source line — used for track records. */
+/**
+ * The "Source: …" line under a claim about a real person. Tappable when a
+ * primary source is genuinely online; plain text otherwise (a book, a print
+ * interview) — the citation text is always shown either way.
+ */
+export function SourceCite({ source, url }: { source: string; url?: string }) {
+  if (!url) {
+    return (
+      <Text variant="caption" color={palette.slateLight}>
+        {`Source: ${source}`}
+      </Text>
+    );
+  }
+  return (
+    <Pressable
+      onPress={() => void Linking.openURL(url)}
+      accessibilityRole="link"
+      accessibilityLabel={`Source: ${source}`}
+    >
+      <Text variant="caption" color={palette.azure} style={styles.sourceLink}>
+        {`Source: ${source}`}
+      </Text>
+    </Pressable>
+  );
+}
+
 export function SourcedRows({
   title,
   rows,
 }: {
   title: string;
-  rows: Array<{ metric: string; value: string; note?: string; source: string }>;
+  rows: Array<{ metric: string; value: string; note?: string; source: string; sourceUrl?: string }>;
 }) {
   if (rows.length === 0) return null;
   return (
@@ -199,9 +225,7 @@ export function SourcedRows({
             is exactly what the schema's required `source` field exists to
             prevent.
           */}
-          <Text variant="caption" color={palette.slateLight}>
-            {`Source: ${row.source}`}
-          </Text>
+          <SourceCite source={row.source} url={row.sourceUrl} />
         </View>
       ))}
     </View>
@@ -258,6 +282,9 @@ const styles = StyleSheet.create({
   },
   rowMetric: {
     flex: 1,
+  },
+  sourceLink: {
+    textDecorationLine: 'underline',
   },
   notice: {
     backgroundColor: palette.violetSoft,
