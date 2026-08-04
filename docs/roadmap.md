@@ -102,9 +102,14 @@ App Store."
     prompt; narration handles Range/CORS) — both currently untested.
 15. **Missing loading/error states** on the landing hero image and the devices
     screen (no skeletons; failures collapse to a one-liner).
-16. **Fix `docs/deployment.md` drift** — it still documents the narration origin
-    as the r2.dev dev URL / Vercel, not the live `stockiq-narration` Worker; a
-    redeploy following the doc would point at the wrong origin.
+16. ~~**Fix `docs/deployment.md` drift.**~~ **DONE** — narration origin corrected
+    from the r2.dev dev URL / Vercel to the live `stockiq-narration` Worker; ASK
+    proxy re-documented as deployed (Haiku 4.5, KV cap, key as a CF secret);
+    added the narration Worker to "what runs where"; refreshed the top status
+    block (all three services live, migrations 0001–0005), the variable tables
+    (real URLs + `EXPO_PUBLIC_SITE_URL`), and the "deliberately not built"
+    section (accounts/pairing/sign-in + `DELETE /v1/account` are built; only
+    payments and the orphan-cleanup job remain).
 
 ## Tier 3 — Content depth (post-launch is fine)
 
