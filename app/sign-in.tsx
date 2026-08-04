@@ -80,7 +80,8 @@ export default function SignIn() {
       await api.signInWithEmail(normalisedEmail, code.trim());
       await useAppStore.getState().hydrate();
       const acknowledged = useAppStore.getState().profile?.disclaimerAcknowledgedAt;
-      router.replace(acknowledged ? '/(tabs)' : '/(onboarding)/choose-course');
+      // New account → into personalisation; returning (already onboarded) → app.
+      router.replace((acknowledged ? '/(tabs)' : '/(onboarding)/experience') as never);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'That code did not work. Try again.');
       setCode('');
@@ -96,7 +97,7 @@ export default function SignIn() {
         <View style={styles.shell}>
           <Text variant="h1">Sign-in is temporarily unavailable.</Text>
           <Text variant="body" color={palette.inkSoft}>You can still learn without an account on this device.</Text>
-          <PillButton label="Continue without an account" onPress={() => router.replace('/(onboarding)/welcome')} />
+          <PillButton label="Continue without an account" onPress={() => router.replace('/(onboarding)/experience' as never)} />
         </View>
       </Screen>
     );
@@ -145,20 +146,6 @@ export default function SignIn() {
                 />
                 <PillButton label="Email me a code" onPress={requestCode} disabled={busy || !emailLooksValid} />
               </View>
-
-              <View style={styles.dividerRow}>
-                <View style={styles.divider} />
-                <Text variant="caption" color={palette.slate}>or</Text>
-                <View style={styles.divider} />
-              </View>
-              <PillButton
-                label="Continue without an account"
-                variant="ghost"
-                onPress={() => router.replace('/(onboarding)/choose-course')}
-              />
-              <Text variant="caption" color={palette.slate} align="center">
-                Guest progress stays on this device until you secure it with email.
-              </Text>
             </>
           ) : (
             <>

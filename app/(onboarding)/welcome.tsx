@@ -39,13 +39,16 @@ export default function Welcome() {
         </View>
 
         <View style={styles.actions}>
+          {/* Registration comes first: create the account, then personalise.
+              Both buttons land on the one passwordless screen, which creates a
+              new account or restores an existing one from the same email code. */}
           <PillButton
-            label="I'm new — get started"
+            label="Create your account"
             variant="light"
-            onPress={() => router.push('/(onboarding)/experience' as never)}
+            onPress={() => router.push('/sign-in')}
           />
           <PillButton
-            label="Sign in to continue"
+            label="I already have an account"
             variant="dark"
             onPress={() => router.push('/sign-in')}
           />
