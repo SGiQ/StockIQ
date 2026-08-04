@@ -111,6 +111,28 @@ App Store."
     section (accounts/pairing/sign-in + `DELETE /v1/account` are built; only
     payments and the orphan-cleanup job remain).
 
+## Shipped after the audit — engagement & onboarding
+
+- **Personalised onboarding.** New `app/(onboarding)/experience.tsx` between
+  welcome and course pick: two taps (experience level + goal) that recommend and
+  pre-select a course (the "Recommended for you" row on choose-course). Stored on
+  the profile (`experienceLevel`, `primaryGoal`). Verified live on web.
+  (Aside: the "Get started → straight to a lesson" report was a stale cached
+  bundle; the live routing already goes welcome → experience → course →
+  disclaimer → tabs.)
+- **Badges.** 17-badge achievement system (`src/features/achievements/badges.ts`)
+  — first lesson, per-course completion, streaks, perfect runs, quiz accuracy,
+  strategy unlocks, assessment pass, XP, full curriculum. Earned records ride the
+  existing sync (`badges` collection, both repos). Evaluated in `completeLesson`
+  and on dashboard focus; surfaced on the completion screen, a dashboard shelf,
+  and `app/badges.tsx`. Award/dedup logic covered by `tests/achievements.test.ts`.
+- **Market Readiness.** A 0–100 educational score + tier
+  (`src/features/achievements/readiness.ts`) from coverage, quiz mastery, topic
+  breadth, a retakeable assessment, and streak — shown as a ring meter with a
+  component breakdown on the dashboard, framed throughout as *not* a trade
+  signal. Retakeable check at `app/assessment.tsx` samples real `binary_choice`
+  cards across the five courses; best score feeds the meter. Verified live.
+
 ## Tier 3 — Content depth (post-launch is fine)
 
 17. **Options-basics lesson.** The covered-call/wheel strategy assumes

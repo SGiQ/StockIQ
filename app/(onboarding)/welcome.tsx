@@ -42,7 +42,7 @@ export default function Welcome() {
           <PillButton
             label="I'm new — get started"
             variant="light"
-            onPress={() => router.push('/(onboarding)/choose-course')}
+            onPress={() => router.push('/(onboarding)/experience' as never)}
           />
           <PillButton
             label="Sign in to continue"

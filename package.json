@@ -63,7 +63,7 @@
     "preandroid": "npm run gen:content",
     "gen:authoring-prompt": "tsx scripts/generate-authoring-prompt.ts",
     "test:sync-cycle": "tsx tests/sync-cycle.test.ts",
-    "test:unit": "tsx --test tests/profile-migration.test.ts tests/dashboard-metrics.test.ts tests/art-motion.test.ts tests/narration-feedback.test.ts tests/content-quality.test.ts",
+    "test:unit": "tsx --test tests/profile-migration.test.ts tests/dashboard-metrics.test.ts tests/art-motion.test.ts tests/narration-feedback.test.ts tests/content-quality.test.ts tests/achievements.test.ts",
     "start:clear": "expo start --go --clear",
     "start:dev-client": "expo start --dev-client",
     "gen:speech": "tsx scripts/generate-speech.ts",

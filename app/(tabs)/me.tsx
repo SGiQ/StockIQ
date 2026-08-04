@@ -1,14 +1,17 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
+import { ReadinessMeter } from '@/components/ReadinessMeter';
+import { BadgeMedallion } from '@/components/BadgeMedallion';
 import { CardSurface, Screen, SpeakerIcon, Text } from '@/components/primitives';
 import { getLesson, listCourses, listLessonsInCourse } from '@/content/registry';
+import { BADGES } from '@/features/achievements';
 import { pairing } from '@/store';
 import { deriveDashboardMetrics } from '@/lib/dashboard';
-import { courseCompletion, useAppStore } from '@/store/slices/useAppStore';
+import { courseCompletion, selectReadiness, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 
 export default function DashboardTab() {
@@ -19,7 +22,32 @@ export default function DashboardTab() {
   const saved = useAppStore((s) => s.saved);
   const liked = useAppStore((s) => s.liked);
   const unlockedStrategies = useAppStore((s) => s.unlockedStrategies);
+  const badges = useAppStore((s) => s.badges);
+  const refreshAchievements = useAppStore((s) => s.refreshAchievements);
   const courses = listCourses();
+
+  // Re-evaluate on every visit so badges earned by non-lesson actions (saving
+  // cards, taking the assessment on another screen) show up without a reload.
+  useFocusEffect(
+    useCallback(() => {
+      void refreshAchievements();
+    }, [refreshAchievements]),
+  );
+
+  const readiness = useMemo(
+    () => selectReadiness({ progress, streak, saved, unlockedStrategies, profile }),
+    [progress, streak, saved, unlockedStrategies, profile],
+  );
+
+  const earnedBadgeIds = useMemo(() => new Set(badges.map((b) => b.id)), [badges]);
+  // Earned first, then locked — the shelf doubles as a goal board.
+  const shelfBadges = useMemo(
+    () =>
+      [...BADGES]
+        .map((def) => ({ def, earned: earnedBadgeIds.has(def.id) }))
+        .sort((a, b) => Number(b.earned) - Number(a.earned)),
+    [earnedBadgeIds],
+  );
 
   const totalLessons = useMemo(
     () => courses.reduce((sum, course) => sum + listLessonsInCourse(course.id).length, 0),
@@ -73,6 +101,12 @@ export default function DashboardTab() {
           </View>
         </CardSurface>
 
+        <ReadinessMeter
+          readiness={readiness}
+          assessmentTaken={(profile?.assessmentAttempts ?? 0) > 0}
+          onTakeCheck={() => router.push('/assessment' as never)}
+        />
+
         <View style={styles.statsGrid}>
           <StatCard value={streak?.currentStreak ?? 0} label="Day streak" accent={palette.flame} />
           <StatCard value={metrics.starredCount} label="Starred lessons" accent={palette.violet} />
@@ -89,6 +123,33 @@ export default function DashboardTab() {
           </View>
           <StreakRow activeDays={streak?.activeDays ?? []} />
         </CardSurface>
+
+        <Pressable
+          onPress={() => router.push('/badges' as never)}
+          accessibilityRole="button"
+          accessibilityLabel={`Badges, ${badges.length} of ${BADGES.length} earned`}
+        >
+          <CardSurface style={styles.badgesCard}>
+            <View style={styles.badgesHeader}>
+              <View>
+                <Text variant="h3" color={palette.ink}>Badges</Text>
+                <Text variant="caption" color={palette.slate}>
+                  {`${badges.length} of ${BADGES.length} earned`}
+                </Text>
+              </View>
+              <Text variant="label" color={palette.forestDeep}>See all ›</Text>
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.badgesRow}
+            >
+              {shelfBadges.map(({ def, earned }) => (
+                <BadgeMedallion key={def.id} badge={def} earned={earned} size={48} />
+              ))}
+            </ScrollView>
+          </CardSurface>
+        </Pressable>
 
         <SectionTitle title="Course progress" />
         {courses.map((course) => {
@@ -225,6 +286,9 @@ const styles = StyleSheet.create({
   statCard: { width: '48.5%', minHeight: 118, gap: space.xs },
   statDot: { width: 10, height: 10, borderRadius: radius.pill },
   streakCard: { gap: space.md },
+  badgesCard: { gap: space.md },
+  badgesHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  badgesRow: { gap: space.md, paddingRight: space.sm },
   courseRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderRadius: radius.lg },
   courseArt: { width: 52, borderRadius: radius.md, overflow: 'hidden' },
   courseCopy: { flex: 1, gap: space.xs },
