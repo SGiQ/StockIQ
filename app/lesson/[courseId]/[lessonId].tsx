@@ -5,6 +5,7 @@ import * as haptics from '@/lib/haptics';
 import { getCourse, getLesson, getNextLesson } from '@/content/registry';
 import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { Glyph } from '@/components/art/Glyph';
+import { BadgeMedallion } from '@/components/BadgeMedallion';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
 import { SourceLinks } from '@/components/kb/SourceLinks';
@@ -172,6 +173,19 @@ function CompletionScreen({
             : `You're on a ${completion.streak.currentStreak}-day streak.`}
         </Text>
 
+        {completion.newBadges.length > 0 ? (
+          <View style={styles.badgesUnlocked}>
+            <Text variant="label" color={palette.forestDeep} uppercase>
+              {completion.newBadges.length === 1 ? 'Badge unlocked' : 'Badges unlocked'}
+            </Text>
+            <View style={styles.badgesUnlockedRow}>
+              {completion.newBadges.map((badge) => (
+                <BadgeMedallion key={badge.id} badge={badge} earned size={54} showLabel />
+              ))}
+            </View>
+          </View>
+        ) : null}
+
         <View style={styles.actions}>
           {next ? (
             <PillButton
@@ -228,6 +242,18 @@ const styles = StyleSheet.create({
   streakRow: {
     alignSelf: 'stretch',
     marginTop: space.sm,
+  },
+  badgesUnlocked: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    gap: space.sm,
+    marginTop: space.sm,
+  },
+  badgesUnlockedRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: space.md,
   },
   actions: {
     alignSelf: 'stretch',

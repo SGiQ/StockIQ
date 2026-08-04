@@ -20,6 +20,7 @@ import {
   progressId,
   reportId,
   savedCardId,
+  type BadgeAward,
   type CardReport,
   type CardReportInput,
   type LessonProgress,
@@ -43,6 +44,7 @@ const KEYS = {
   liked: 'stockiq:liked:v1',
   reports: 'stockiq:reports:v1',
   streak: 'stockiq:streak:v1',
+  badges: 'stockiq:badges:v1',
   /** Sync bookkeeping — see the note above `syncedStamps`. */
   synced: 'stockiq:synced:v1',
   meta: 'stockiq:syncmeta:v1',
@@ -53,7 +55,7 @@ const KEYS = {
  * pushed from the web build and one pushed from the phone have to land in the
  * same server-side collection, or the same lesson would sync as two records.
  */
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak';
+type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges';
 
 /** Collections holding one object; the rest are id-keyed maps. */
 const SINGLETONS: Partial<Record<Collection, string>> = { profile: 'profile', streak: 'streak' };
@@ -65,6 +67,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   liked: KEYS.liked,
   reports: KEYS.reports,
   streak: KEYS.streak,
+  badges: KEYS.badges,
 };
 
 /** Trailing window retained for the streak row; older days are pruned. */
@@ -81,6 +84,11 @@ function defaultProfile(): UserProfile {
     selectedCourseId: null,
     hasSeenPlayerTutorial: false,
     disclaimerAcknowledgedAt: null,
+    experienceLevel: null,
+    primaryGoal: null,
+    assessmentBestScore: null,
+    assessmentLastTakenAt: null,
+    assessmentAttempts: 0,
     narrationEnabled: false,
     narrationVoice: 'female',
     narrationSpeed: 1,
@@ -376,6 +384,41 @@ export class LocalRepository implements Repository {
       all.filter((p) => p.status === 'completed').map((p) => `${p.courseId}/${p.lessonId}`),
     );
   }
+
+  /* -------------------------------------------------------------- *
+   * Badges
+   * -------------------------------------------------------------- */
+
+  private async allBadges(): Promise<Record<string, BadgeAward>> {
+    return this.read<Record<string, BadgeAward>>(KEYS.badges, () => ({}));
+  }
+
+  badges = {
+    list: async (): Promise<BadgeAward[]> => {
+      const all = await this.allBadges();
+      return Object.values(all)
+        .filter((b) => b.deletedAt === null)
+        .sort((a, b) => a.unlockedAt - b.unlockedAt);
+    },
+
+    award: async (badgeId: string): Promise<BadgeAward> => {
+      const all = await this.allBadges();
+      const existing = all[badgeId];
+      // Earned once: a second award keeps the original date rather than
+      // resetting it, so "unlocked 3 weeks ago" stays true.
+      if (existing && existing.deletedAt === null) return existing;
+      const timestamp = now();
+      const record: BadgeAward = {
+        id: badgeId,
+        badgeId,
+        unlockedAt: existing?.unlockedAt ?? timestamp,
+        updatedAt: timestamp,
+        deletedAt: null,
+      };
+      await this.write(KEYS.badges, { ...all, [badgeId]: record });
+      return record;
+    },
+  };
 
   /* -------------------------------------------------------------- *
    * Sync surface

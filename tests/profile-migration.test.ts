@@ -15,6 +15,11 @@ test('older profiles receive safe narration defaults on read', () => {
 
   assert.deepEqual(withProfileDefaults(legacy), {
     ...legacy,
+    experienceLevel: null,
+    primaryGoal: null,
+    assessmentBestScore: null,
+    assessmentLastTakenAt: null,
+    assessmentAttempts: 0,
     narrationEnabled: false,
     narrationVoice: 'female',
     narrationSpeed: 1,
@@ -31,6 +36,11 @@ test('stored narration preferences win over defaults', () => {
     selectedCourseId: null,
     hasSeenPlayerTutorial: true,
     disclaimerAcknowledgedAt: 123,
+    experienceLevel: 'some',
+    primaryGoal: 'invest',
+    assessmentBestScore: 0.9,
+    assessmentLastTakenAt: 456,
+    assessmentAttempts: 2,
     narrationEnabled: true,
     narrationVoice: 'male',
     narrationSpeed: 1.25,

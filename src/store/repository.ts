@@ -108,12 +108,30 @@ export interface StreakState extends Syncable {
   activeDays: string[];
 }
 
+/** Where the learner places themselves in onboarding; personalises the start. */
+export type ExperienceLevel = 'new' | 'some' | 'active';
+/** What the learner is here to do; personalises tone and the recommended course. */
+export type LearningGoal = 'invest' | 'trade' | 'understand';
+
 export interface UserProfile extends Syncable {
   totalXp: number;
   selectedCourseId: CourseId | null;
   hasSeenPlayerTutorial: boolean;
   /** Timestamped acknowledgement of the "not financial advice" disclaimer. */
   disclaimerAcknowledgedAt: number | null;
+  /** Self-reported starting point, captured in onboarding. Null until answered. */
+  experienceLevel: ExperienceLevel | null;
+  /** Self-reported goal, captured in onboarding. Null until answered. */
+  primaryGoal: LearningGoal | null;
+  /**
+   * Best Market Readiness assessment result, 0..1. Null until first taken.
+   * "Best of", not "latest", so a shaky retake never lowers a proven score.
+   */
+  assessmentBestScore: number | null;
+  /** Epoch ms of the most recent assessment, for the "last taken" label. */
+  assessmentLastTakenAt: number | null;
+  /** How many times the assessment has been taken. */
+  assessmentAttempts: number;
   /** Automatically read lesson cards aloud when a rendered clip is available. */
   narrationEnabled: boolean;
   /** User-facing choice; vendor voice names stay out of persisted data. */
@@ -122,6 +140,17 @@ export interface UserProfile extends Syncable {
   narrationSpeed: 0.75 | 1 | 1.25 | 1.5;
   /** Synced preference vote; does not change the production narrator by itself. */
   maleVoiceVote: 'cedar' | 'ash' | 'echo' | null;
+}
+
+/**
+ * One earned badge. The record `id` IS the badge id from the catalog, so a
+ * badge can be earned at most once and awarding it twice is a harmless
+ * idempotent write. The catalog (definition, glyph, criteria) lives in code,
+ * never in storage — only the fact that it was earned, and when, is persisted.
+ */
+export interface BadgeAward extends Syncable {
+  badgeId: string;
+  unlockedAt: number;
 }
 
 export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
@@ -175,6 +204,12 @@ export interface Repository {
     listUnlockedStrategies(): Promise<StrategyId[]>;
   };
 
+  badges: {
+    list(): Promise<BadgeAward[]>;
+    /** Idempotent: awarding an already-earned badge keeps the original date. */
+    award(badgeId: string): Promise<BadgeAward>;
+  };
+
   /**
    * No-ops in v1. Present so that callers are written against the final
    * shape from the start rather than being retrofitted later.
@@ -224,6 +259,11 @@ export const isLive = <T extends Syncable>(record: T): boolean => record.deleted
 export function withProfileDefaults(profile: UserProfile): UserProfile {
   return {
     ...profile,
+    experienceLevel: profile.experienceLevel ?? null,
+    primaryGoal: profile.primaryGoal ?? null,
+    assessmentBestScore: profile.assessmentBestScore ?? null,
+    assessmentLastTakenAt: profile.assessmentLastTakenAt ?? null,
+    assessmentAttempts: profile.assessmentAttempts ?? 0,
     narrationEnabled: profile.narrationEnabled ?? false,
     narrationVoice: profile.narrationVoice ?? 'female',
     narrationSpeed: profile.narrationSpeed ?? 1,

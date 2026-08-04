@@ -14,11 +14,21 @@ import { create } from 'zustand';
 import { getLesson, lessonPath, listLessonsInCourse } from '@/content/registry';
 import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { toDayISO } from '@/lib/dates';
+import {
+  computeAchievementStats,
+  computeReadiness,
+  evaluateNewBadges,
+  type BadgeDef,
+  type MarketReadiness,
+} from '@/features/achievements';
 import { repository } from '../index';
 import {
   progressId,
   savedCardId,
+  type BadgeAward,
   type CardAttempt,
+  type ExperienceLevel,
+  type LearningGoal,
   type LessonProgress,
   type LikedItem,
   type CardReport,
@@ -35,6 +45,8 @@ export interface LessonCompletion {
   /** True when this completion extended the streak (drives the celebration). */
   streakExtended: boolean;
   unlockedStrategies: StrategyId[];
+  /** Badges earned by this completion, surfaced on the completion screen. */
+  newBadges: BadgeDef[];
 }
 
 interface AppState {
@@ -48,6 +60,7 @@ interface AppState {
   liked: LikedItem[];
   reports: CardReport[];
   unlockedStrategies: StrategyId[];
+  badges: BadgeAward[];
 
   hydrate: () => Promise<void>;
 
@@ -77,6 +90,12 @@ interface AppState {
     reason: ReportReason,
   ) => Promise<void>;
 
+  /** Recompute badge criteria and award any newly earned. Returns the new ones. */
+  refreshAchievements: () => Promise<BadgeDef[]>;
+  /** Records an assessment result (best-of) and re-evaluates badges. */
+  recordAssessment: (score: number) => Promise<BadgeDef[]>;
+  setExperience: (level: ExperienceLevel, goal: LearningGoal) => Promise<void>;
+
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
   selectCourse: (courseId: CourseId) => Promise<void>;
@@ -98,9 +117,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   liked: [],
   reports: [],
   unlockedStrategies: [],
+  badges: [],
 
   hydrate: async () => {
-    const [profile, streak, progressList, saved, liked, reports, unlockedStrategies] =
+    const [profile, streak, progressList, saved, liked, reports, unlockedStrategies, badges] =
       await Promise.all([
         repository.profile.get(),
         repository.streak.get(),
@@ -109,6 +129,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         repository.liked.list(),
         repository.reports.list(),
         repository.unlocks.listUnlockedStrategies(),
+        repository.badges.list(),
       ]);
 
     set({
@@ -120,7 +141,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       liked,
       reports,
       unlockedStrategies,
+      badges,
     });
+
+    // Backfill: award any badges the learner already qualifies for but never
+    // received (e.g. badges added in an update, or earned before this system
+    // shipped). Cheap, and it means the shelf is correct on first open.
+    await get().refreshAchievements();
   },
 
   startLesson: async (courseId, lessonId) => {
@@ -223,7 +250,18 @@ export const useAppStore = create<AppState>((set, get) => ({
       unlockedStrategies,
     }));
 
-    return { xpAwarded: xpDelta, starred, streak, streakExtended, unlockedStrategies: newlyUnlocked };
+    // Evaluated after the state above lands, so the snapshot sees this
+    // completion (its XP, star, streak bump, and any freshly unlocked strategy).
+    const newBadges = await get().refreshAchievements();
+
+    return {
+      xpAwarded: xpDelta,
+      starred,
+      streak,
+      streakExtended,
+      unlockedStrategies: newlyUnlocked,
+      newBadges,
+    };
   },
 
   toggleSavedCard: async (courseId, lessonId, cardId) => {
@@ -251,6 +289,35 @@ export const useAppStore = create<AppState>((set, get) => ({
   reportCard: async (courseId, lessonId, cardId, reason) => {
     await repository.reports.add({ courseId, lessonId, cardId, reason });
     set({ reports: await repository.reports.list() });
+  },
+
+  refreshAchievements: async () => {
+    const { progress, streak, saved, unlockedStrategies, profile, badges } = get();
+    const stats = computeAchievementStats({ progress, streak, saved, unlockedStrategies, profile });
+    const earnedIds = new Set(badges.map((b) => b.id));
+    const newDefs = evaluateNewBadges(stats, earnedIds);
+    if (newDefs.length === 0) return [];
+
+    for (const def of newDefs) await repository.badges.award(def.id);
+    set({ badges: await repository.badges.list() });
+    return newDefs;
+  },
+
+  recordAssessment: async (score) => {
+    const current = get().profile;
+    const best = Math.max(current?.assessmentBestScore ?? 0, score);
+    const profile = await repository.profile.update({
+      assessmentBestScore: best,
+      assessmentLastTakenAt: Date.now(),
+      assessmentAttempts: (current?.assessmentAttempts ?? 0) + 1,
+    });
+    set({ profile });
+    // The assessment feeds both the score and the "Checked out" badge.
+    return get().refreshAchievements();
+  },
+
+  setExperience: async (level, goal) => {
+    set({ profile: await repository.profile.update({ experienceLevel: level, primaryGoal: goal }) });
   },
 
   acknowledgeDisclaimer: async () => {
@@ -362,6 +429,30 @@ export function courseEarnedXp(progress: ProgressMap, courseId: CourseId): numbe
   return listLessonsInCourse(courseId).reduce(
     (sum, l) => sum + (progress[progressId(courseId, l.id)]?.xpAwarded ?? 0),
     0,
+  );
+}
+
+/**
+ * Market Readiness, derived the same way the other selectors are — a pure
+ * function over store slices, memoised by the screen. Nothing is stored; the
+ * score is always recomputed from progress, streak, saves, unlocks and the
+ * assessment result, so it can never fall out of step with them.
+ */
+export function selectReadiness(state: {
+  progress: ProgressMap;
+  streak: StreakState | null;
+  saved: SavedCard[];
+  unlockedStrategies: StrategyId[];
+  profile: UserProfile | null;
+}): MarketReadiness {
+  return computeReadiness(
+    computeAchievementStats({
+      progress: state.progress,
+      streak: state.streak,
+      saved: state.saved,
+      unlockedStrategies: state.unlockedStrategies,
+      profile: state.profile,
+    }),
   );
 }
 

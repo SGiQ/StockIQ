@@ -22,6 +22,7 @@ import {
   progressId,
   reportId,
   savedCardId,
+  type BadgeAward,
   type CardReport,
   type CardReportInput,
   type LessonProgress,
@@ -40,10 +41,14 @@ import {
 
 const DB_NAME = 'stockiq.db';
 
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak';
+type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges';
 
-/** Legacy AsyncStorage keys, read once during the one-time migration. */
-const LEGACY_KEYS: Record<Collection, string> = {
+/**
+ * Legacy AsyncStorage keys, read once during the one-time migration. Partial
+ * because collections added after the SQLite cutover (e.g. `badges`) never had
+ * an AsyncStorage predecessor to migrate from.
+ */
+const LEGACY_KEYS: Partial<Record<Collection, string>> = {
   profile: 'stockiq:profile:v1',
   progress: 'stockiq:progress:v1',
   saved: 'stockiq:saved:v1',
@@ -85,6 +90,11 @@ function defaultProfile(): UserProfile {
     selectedCourseId: null,
     hasSeenPlayerTutorial: false,
     disclaimerAcknowledgedAt: null,
+    experienceLevel: null,
+    primaryGoal: null,
+    assessmentBestScore: null,
+    assessmentLastTakenAt: null,
+    assessmentAttempts: 0,
     narrationEnabled: false,
     narrationVoice: 'female',
     narrationSpeed: 1,
@@ -438,6 +448,29 @@ export class SqliteRepository implements Repository {
       all.filter((p) => p.status === 'completed').map((p) => `${p.courseId}/${p.lessonId}`),
     );
   }
+
+  /* -------------------------------------------------------------- *
+   * Badges
+   * -------------------------------------------------------------- */
+
+  badges = {
+    list: async (): Promise<BadgeAward[]> =>
+      (await this.all<BadgeAward>('badges')).sort((a, b) => a.unlockedAt - b.unlockedAt),
+
+    award: async (badgeId: string): Promise<BadgeAward> => {
+      const existing = await this.one<BadgeAward>('badges', badgeId);
+      // Earned once: keep the original unlock date on a repeat award.
+      if (existing && existing.deletedAt === null) return existing;
+      const timestamp = now();
+      return this.save('badges', {
+        id: badgeId,
+        badgeId,
+        unlockedAt: existing?.unlockedAt ?? timestamp,
+        updatedAt: timestamp,
+        deletedAt: null,
+      });
+    },
+  };
 
   /* -------------------------------------------------------------- *
    * Sync — inert in v1, but the query it will need already exists

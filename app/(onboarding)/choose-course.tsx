@@ -12,7 +12,10 @@ export default function ChooseCourse() {
   const router = useRouter();
   const courses = listCourses();
   const selectCourse = useAppStore((s) => s.selectCourse);
-  const [selected, setSelected] = useState<string | null>(courses[0]?.id ?? null);
+  // Pre-select whatever the personalisation step recommended (stored on the
+  // profile), falling back to the first course for anyone who skipped it.
+  const recommended = useAppStore((s) => s.profile?.selectedCourseId ?? null);
+  const [selected, setSelected] = useState<string | null>(recommended ?? courses[0]?.id ?? null);
 
   return (
     <Screen tone="forest">
@@ -40,9 +43,18 @@ export default function ChooseCourse() {
                 <View style={styles.cover}>
                   <ArtView spec={course.cover} aspectRatio={1} glyphSize={36} />
                 </View>
-                <Text variant="h3" color={palette.ink} style={styles.rowTitle}>
-                  {course.title}
-                </Text>
+                <View style={styles.rowTitle}>
+                  <Text variant="h3" color={palette.ink}>
+                    {course.title}
+                  </Text>
+                  {course.id === recommended ? (
+                    <View style={styles.recommendedTag}>
+                      <Text variant="label" color={palette.forestDeep} uppercase>
+                        Recommended for you
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
               </Pressable>
             );
           })}
@@ -98,5 +110,13 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     flex: 1,
+    gap: space.xs,
+  },
+  recommendedTag: {
+    alignSelf: 'flex-start',
+    backgroundColor: palette.mintSoft,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.sm,
+    paddingVertical: 3,
   },
 });

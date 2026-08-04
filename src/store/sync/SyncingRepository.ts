@@ -67,6 +67,9 @@ export class SyncingRepository implements Repository {
   get unlocks() {
     return this.local.unlocks;
   }
+  get badges() {
+    return this.local.badges;
+  }
 
   reset = (): Promise<void> => this.local.reset();
 
