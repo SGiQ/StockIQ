@@ -1,0 +1,12 @@
+{
+  "id": "market-index",
+  "term": "Market index",
+  "aliases": [
+    "index"
+  ],
+  "definition": "A basket of stocks tracked as a single number to gauge how a market or sector is doing, like the S&P 500.",
+  "learnMore": "lesson:market-foundations/indices-and-benchmarks",
+  "related": [
+    "term:benchmark"
+  ]
+}

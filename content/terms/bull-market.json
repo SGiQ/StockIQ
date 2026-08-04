@@ -1,0 +1,9 @@
+{
+  "id": "bull-market",
+  "term": "Bull market",
+  "definition": "A prolonged stretch of rising prices and broad optimism.",
+  "learnMore": "lesson:market-foundations/what-moves-a-price",
+  "related": [
+    "term:bear-market"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "diversification",
+  "term": "Diversification",
+  "definition": "Spreading money across many uncorrelated investments so that one loss cannot sink the whole portfolio.",
+  "learnMore": "lesson:risk-and-position-sizing/diversification-and-correlation",
+  "related": [
+    "term:correlation"
+  ]
+}

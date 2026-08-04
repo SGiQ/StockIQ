@@ -1,0 +1,9 @@
+{
+  "id": "dividend-yield",
+  "term": "Dividend yield",
+  "definition": "A stock's annual dividend as a percentage of its price — how much cash income you get per dollar invested.",
+  "learnMore": "lesson:reading-a-business/dividends-and-buybacks",
+  "related": [
+    "term:dividend"
+  ]
+}

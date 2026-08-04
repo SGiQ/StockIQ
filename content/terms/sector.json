@@ -1,0 +1,9 @@
+{
+  "id": "sector",
+  "term": "Sector",
+  "definition": "A group of companies in the same line of business, such as technology or energy. Holding one sector heavily concentrates risk.",
+  "learnMore": "lesson:getting-started/building-a-portfolio",
+  "related": [
+    "term:diversification"
+  ]
+}

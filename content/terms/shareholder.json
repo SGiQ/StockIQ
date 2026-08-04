@@ -1,0 +1,9 @@
+{
+  "id": "shareholder",
+  "term": "Shareholder",
+  "definition": "A person or institution that owns shares in a company, and so owns a proportional slice of its profits and assets.",
+  "learnMore": "lesson:market-foundations/what-is-a-stock",
+  "related": [
+    "term:share"
+  ]
+}

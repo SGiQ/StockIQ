@@ -74,18 +74,92 @@ import book_oneUpOnWallStreet from '../../content/books/one-up-on-wall-street.js
 import book_reminiscencesOfAStockOperator from '../../content/books/reminiscences-of-a-stock-operator.json';
 import book_theIntelligentInvestor from '../../content/books/the-intelligent-investor.json';
 import book_tradingInTheZone from '../../content/books/trading-in-the-zone.json';
+import term_assetAllocation from '../../content/terms/asset-allocation.json';
+import term_assignment from '../../content/terms/assignment.json';
+import term_bearMarket from '../../content/terms/bear-market.json';
+import term_benchmark from '../../content/terms/benchmark.json';
 import term_bidAskSpread from '../../content/terms/bid-ask-spread.json';
+import term_bond from '../../content/terms/bond.json';
+import term_breakout from '../../content/terms/breakout.json';
+import term_broker from '../../content/terms/broker.json';
+import term_brokerageAccount from '../../content/terms/brokerage-account.json';
+import term_bullMarket from '../../content/terms/bull-market.json';
+import term_callOption from '../../content/terms/call-option.json';
+import term_candlestick from '../../content/terms/candlestick.json';
+import term_capitalGain from '../../content/terms/capital-gain.json';
+import term_cashFlow from '../../content/terms/cash-flow.json';
+import term_chartPattern from '../../content/terms/chart-pattern.json';
+import term_commission from '../../content/terms/commission.json';
+import term_confirmationBias from '../../content/terms/confirmation-bias.json';
+import term_correlation from '../../content/terms/correlation.json';
 import term_dilution from '../../content/terms/dilution.json';
+import term_dispositionEffect from '../../content/terms/disposition-effect.json';
+import term_diversification from '../../content/terms/diversification.json';
+import term_dividendYield from '../../content/terms/dividend-yield.json';
 import term_dividend from '../../content/terms/dividend.json';
 import term_drawdown from '../../content/terms/drawdown.json';
+import term_earningsPerShare from '../../content/terms/earnings-per-share.json';
+import term_earnings from '../../content/terms/earnings.json';
 import term_economicMoat from '../../content/terms/economic-moat.json';
+import term_exchange from '../../content/terms/exchange.json';
+import term_expectancy from '../../content/terms/expectancy.json';
+import term_expenseRatio from '../../content/terms/expense-ratio.json';
+import term_expiration from '../../content/terms/expiration.json';
+import term_fearOfMissingOut from '../../content/terms/fear-of-missing-out.json';
+import term_freeCashFlow from '../../content/terms/free-cash-flow.json';
+import term_grossMargin from '../../content/terms/gross-margin.json';
+import term_growthInvesting from '../../content/terms/growth-investing.json';
+import term_headAndShoulders from '../../content/terms/head-and-shoulders.json';
+import term_initialPublicOffering from '../../content/terms/initial-public-offering.json';
 import term_limitOrder from '../../content/terms/limit-order.json';
 import term_liquidity from '../../content/terms/liquidity.json';
+import term_lossAversion from '../../content/terms/loss-aversion.json';
+import term_macd from '../../content/terms/macd.json';
 import term_marketCapitalisation from '../../content/terms/market-capitalisation.json';
+import term_marketIndex from '../../content/terms/market-index.json';
+import term_marketMaker from '../../content/terms/market-maker.json';
+import term_marketOrder from '../../content/terms/market-order.json';
+import term_momentum from '../../content/terms/momentum.json';
 import term_movingAverage from '../../content/terms/moving-average.json';
+import term_onePercentRule from '../../content/terms/one-percent-rule.json';
+import term_openHighLowClose from '../../content/terms/open-high-low-close.json';
+import term_operatingMargin from '../../content/terms/operating-margin.json';
+import term_optionPremium from '../../content/terms/option-premium.json';
+import term_option from '../../content/terms/option.json';
+import term_portfolio from '../../content/terms/portfolio.json';
+import term_positionSizing from '../../content/terms/position-sizing.json';
 import term_priceEarningsRatio from '../../content/terms/price-earnings-ratio.json';
+import term_primaryMarket from '../../content/terms/primary-market.json';
+import term_processVsOutcome from '../../content/terms/process-vs-outcome.json';
+import term_profitMargin from '../../content/terms/profit-margin.json';
+import term_putOption from '../../content/terms/put-option.json';
+import term_rMultiple from '../../content/terms/r-multiple.json';
+import term_rebalancing from '../../content/terms/rebalancing.json';
+import term_relativeStrengthIndex from '../../content/terms/relative-strength-index.json';
+import term_resistance from '../../content/terms/resistance.json';
+import term_revengeTrading from '../../content/terms/revenge-trading.json';
+import term_revenue from '../../content/terms/revenue.json';
+import term_riskOfRuin from '../../content/terms/risk-of-ruin.json';
+import term_riskRewardRatio from '../../content/terms/risk-reward-ratio.json';
+import term_secondaryMarket from '../../content/terms/secondary-market.json';
+import term_sector from '../../content/terms/sector.json';
+import term_shareBuyback from '../../content/terms/share-buyback.json';
 import term_share from '../../content/terms/share.json';
+import term_shareholder from '../../content/terms/shareholder.json';
 import term_stopLoss from '../../content/terms/stop-loss.json';
+import term_stopOrder from '../../content/terms/stop-order.json';
+import term_strikePrice from '../../content/terms/strike-price.json';
+import term_support from '../../content/terms/support.json';
+import term_taxAdvantagedAccount from '../../content/terms/tax-advantaged-account.json';
+import term_tickerSymbol from '../../content/terms/ticker-symbol.json';
+import term_timeHorizon from '../../content/terms/time-horizon.json';
+import term_tradingJournal from '../../content/terms/trading-journal.json';
+import term_trend from '../../content/terms/trend.json';
+import term_valuation from '../../content/terms/valuation.json';
+import term_valueInvesting from '../../content/terms/value-investing.json';
+import term_volatility from '../../content/terms/volatility.json';
+import term_volume from '../../content/terms/volume.json';
+import term_yield from '../../content/terms/yield.json';
 
 export const allCourses: Course[] = [
   course_gettingStarted as unknown as Course,
@@ -169,16 +243,90 @@ export const allBooks: Book[] = [
 ];
 
 export const allTerms: Term[] = [
+  term_assetAllocation as unknown as Term,
+  term_assignment as unknown as Term,
+  term_bearMarket as unknown as Term,
+  term_benchmark as unknown as Term,
   term_bidAskSpread as unknown as Term,
+  term_bond as unknown as Term,
+  term_breakout as unknown as Term,
+  term_broker as unknown as Term,
+  term_brokerageAccount as unknown as Term,
+  term_bullMarket as unknown as Term,
+  term_callOption as unknown as Term,
+  term_candlestick as unknown as Term,
+  term_capitalGain as unknown as Term,
+  term_cashFlow as unknown as Term,
+  term_chartPattern as unknown as Term,
+  term_commission as unknown as Term,
+  term_confirmationBias as unknown as Term,
+  term_correlation as unknown as Term,
   term_dilution as unknown as Term,
+  term_dispositionEffect as unknown as Term,
+  term_diversification as unknown as Term,
+  term_dividendYield as unknown as Term,
   term_dividend as unknown as Term,
   term_drawdown as unknown as Term,
+  term_earningsPerShare as unknown as Term,
+  term_earnings as unknown as Term,
   term_economicMoat as unknown as Term,
+  term_exchange as unknown as Term,
+  term_expectancy as unknown as Term,
+  term_expenseRatio as unknown as Term,
+  term_expiration as unknown as Term,
+  term_fearOfMissingOut as unknown as Term,
+  term_freeCashFlow as unknown as Term,
+  term_grossMargin as unknown as Term,
+  term_growthInvesting as unknown as Term,
+  term_headAndShoulders as unknown as Term,
+  term_initialPublicOffering as unknown as Term,
   term_limitOrder as unknown as Term,
   term_liquidity as unknown as Term,
+  term_lossAversion as unknown as Term,
+  term_macd as unknown as Term,
   term_marketCapitalisation as unknown as Term,
+  term_marketIndex as unknown as Term,
+  term_marketMaker as unknown as Term,
+  term_marketOrder as unknown as Term,
+  term_momentum as unknown as Term,
   term_movingAverage as unknown as Term,
+  term_onePercentRule as unknown as Term,
+  term_openHighLowClose as unknown as Term,
+  term_operatingMargin as unknown as Term,
+  term_optionPremium as unknown as Term,
+  term_option as unknown as Term,
+  term_portfolio as unknown as Term,
+  term_positionSizing as unknown as Term,
   term_priceEarningsRatio as unknown as Term,
+  term_primaryMarket as unknown as Term,
+  term_processVsOutcome as unknown as Term,
+  term_profitMargin as unknown as Term,
+  term_putOption as unknown as Term,
+  term_rMultiple as unknown as Term,
+  term_rebalancing as unknown as Term,
+  term_relativeStrengthIndex as unknown as Term,
+  term_resistance as unknown as Term,
+  term_revengeTrading as unknown as Term,
+  term_revenue as unknown as Term,
+  term_riskOfRuin as unknown as Term,
+  term_riskRewardRatio as unknown as Term,
+  term_secondaryMarket as unknown as Term,
+  term_sector as unknown as Term,
+  term_shareBuyback as unknown as Term,
   term_share as unknown as Term,
+  term_shareholder as unknown as Term,
   term_stopLoss as unknown as Term,
+  term_stopOrder as unknown as Term,
+  term_strikePrice as unknown as Term,
+  term_support as unknown as Term,
+  term_taxAdvantagedAccount as unknown as Term,
+  term_tickerSymbol as unknown as Term,
+  term_timeHorizon as unknown as Term,
+  term_tradingJournal as unknown as Term,
+  term_trend as unknown as Term,
+  term_valuation as unknown as Term,
+  term_valueInvesting as unknown as Term,
+  term_volatility as unknown as Term,
+  term_volume as unknown as Term,
+  term_yield as unknown as Term,
 ];

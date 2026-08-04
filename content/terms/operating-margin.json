@@ -1,0 +1,9 @@
+{
+  "id": "operating-margin",
+  "term": "Operating margin",
+  "definition": "Profit from core operations as a percentage of revenue, after production and running costs but before interest and tax.",
+  "learnMore": "lesson:reading-a-business/margins-that-matter",
+  "related": [
+    "term:gross-margin"
+  ]
+}

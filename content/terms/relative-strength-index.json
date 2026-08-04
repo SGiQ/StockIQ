@@ -1,0 +1,9 @@
+{
+  "id": "relative-strength-index",
+  "term": "Relative strength index",
+  "aliases": [
+    "RSI"
+  ],
+  "definition": "A momentum gauge from 0 to 100 that flags when a stock may be overbought (high) or oversold (low).",
+  "learnMore": "lesson:reading-a-chart/momentum-indicators"
+}

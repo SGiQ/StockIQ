@@ -1,0 +1,9 @@
+{
+  "id": "correlation",
+  "term": "Correlation",
+  "definition": "How closely two investments move together. Combining assets that do not move in lockstep is what makes diversification work.",
+  "learnMore": "lesson:risk-and-position-sizing/diversification-and-correlation",
+  "related": [
+    "term:diversification"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "ticker-symbol",
+  "term": "Ticker symbol",
+  "aliases": [
+    "ticker"
+  ],
+  "definition": "The short code that identifies a stock on an exchange, such as AAPL for Apple.",
+  "learnMore": "lesson:market-foundations/reading-a-quote"
+}

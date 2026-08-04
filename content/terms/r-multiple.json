@@ -1,0 +1,12 @@
+{
+  "id": "r-multiple",
+  "term": "R-multiple",
+  "aliases": [
+    "R"
+  ],
+  "definition": "A trade's result measured in units of what you risked. Risk $100, make $300, and that is a +3R outcome.",
+  "learnMore": "lesson:risk-and-position-sizing/thinking-in-r",
+  "related": [
+    "term:risk-reward-ratio"
+  ]
+}

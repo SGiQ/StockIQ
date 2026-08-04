@@ -1,0 +1,9 @@
+{
+  "id": "open-high-low-close",
+  "term": "Open, high, low, close",
+  "aliases": [
+    "OHLC"
+  ],
+  "definition": "The four prices that define a trading period: where it opened, its highest and lowest points, and where it closed.",
+  "learnMore": "lesson:reading-a-chart/anatomy-of-a-candle"
+}

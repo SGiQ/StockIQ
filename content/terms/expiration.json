@@ -1,0 +1,6 @@
+{
+  "id": "expiration",
+  "term": "Expiration",
+  "definition": "The deadline after which an option is void. If it is not worth exercising by then, it expires worthless.",
+  "learnMore": "lesson:market-foundations/options-basics"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "macd",
+  "term": "MACD",
+  "definition": "A momentum indicator built from two moving averages that signals shifts in a trend's direction and strength.",
+  "learnMore": "lesson:reading-a-chart/momentum-indicators",
+  "related": [
+    "term:moving-average"
+  ]
+}
