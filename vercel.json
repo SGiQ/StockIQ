@@ -6,7 +6,7 @@
   "build": {
     "env": {
       "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
-      "EXPO_PUBLIC_ASK_PROXY_URL": "",
+      "EXPO_PUBLIC_ASK_PROXY_URL": "https://stockiq-ask.sgiqbusiness.workers.dev",
       "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev"
     }
   },

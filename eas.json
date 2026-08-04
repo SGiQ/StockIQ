@@ -24,6 +24,7 @@
       },
       "env": {
         "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_ASK_PROXY_URL": "https://stockiq-ask.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
@@ -36,18 +37,19 @@
       },
       "env": {
         "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_ASK_PROXY_URL": "https://stockiq-ask.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
     },
     "production": {
       "//": [
-        "EXPO_PUBLIC_ASK_PROXY_URL is deliberately absent until the Cloudflare",
-        "Worker is deployed. Empty means ASK falls back to bring-your-own-key",
-        "rather than pointing at a URL that does not answer.",
+        "The ASK Worker is deployed and holds the Anthropic key server-side, so",
+        "the app calls the proxy rather than asking for a bring-your-own key.",
         "",
         "Only public endpoint URLs belong in these env blocks — they are inlined",
-        "into the bundle and readable by anyone with the app."
+        "into the bundle and readable by anyone with the app. The Anthropic key",
+        "is NOT here; it is a Cloudflare secret on the Worker."
       ],
       "autoIncrement": true,
       "ios": {
@@ -55,6 +57,7 @@
       },
       "env": {
         "EXPO_PUBLIC_SYNC_URL": "https://stockiq-sync-production.up.railway.app",
+        "EXPO_PUBLIC_ASK_PROXY_URL": "https://stockiq-ask.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SPEECH_URL": "https://stockiq-narration.sgiqbusiness.workers.dev",
         "EXPO_PUBLIC_SITE_URL": "https://stockiq-delta.vercel.app"
       }
