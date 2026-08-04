@@ -6,6 +6,7 @@ import { RichTextView, Screen, Text } from '@/components/primitives';
 import {
   BulletBlock,
   EntityDetail,
+  SourceCite,
   SourcedRows,
 } from '@/components/kb/EntityScaffold';
 import { RefChips, bookRefs, strategyRefs, traderRefs } from '@/components/kb/RefChips';
@@ -60,9 +61,7 @@ export default function TraderDetail() {
                 {trade.year ? `${trade.title} (${trade.year})` : trade.title}
               </Text>
               <RichTextView value={trade.story} variant="bodySm" color={palette.inkSoft} />
-              <Text variant="caption" color={palette.slateLight}>
-                {`Source: ${trade.source}`}
-              </Text>
+              <SourceCite source={trade.source} url={trade.sourceUrl} />
             </View>
           ))}
         </View>

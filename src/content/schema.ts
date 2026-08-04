@@ -565,6 +565,13 @@ export const TraderSchema = z.object({
          * defamation and accuracy risk.
          */
         source: z.string().min(1),
+        /**
+         * Optional deep link to the primary source, when one is genuinely
+         * online (an SEC filing, a shareholder letter). Left off for sources
+         * that legitimately have no canonical URL — a book, a print interview —
+         * where inventing one would be worse than the citation text alone.
+         */
+        sourceUrl: z.string().url().optional(),
       }),
     )
     .optional(),
@@ -576,6 +583,7 @@ export const TraderSchema = z.object({
         year: z.string().optional(),
         story: RichTextSchema,
         source: z.string().min(1),
+        sourceUrl: z.string().url().optional(),
       }),
     )
     .optional(),
