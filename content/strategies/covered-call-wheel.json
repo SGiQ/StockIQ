@@ -30,6 +30,7 @@
   "practicedBy": [],
   "furtherReading": ["trading-in-the-zone"],
   "prerequisiteLessons": [
+    "market-foundations/options-basics",
     "market-foundations/order-types",
     "reading-a-business/dividends-and-buybacks",
     "risk-and-position-sizing/position-sizing"
