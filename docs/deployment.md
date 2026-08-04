@@ -1,22 +1,26 @@
 # Deploying StockIQ
 
-**The sync service is deployed and live:**
+**All three backend services are deployed and live:**
 
-| | |
-|---|---|
-| URL | https://stockiq-sync-production.up.railway.app |
-| Railway project | StockIQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`) |
-| Services | `stockiq-sync` + `Postgres` |
-| Schema | migrations 0001–0004 applied |
-| Verified against it | protocol, pairing, and client-cycle suites — all passing |
+| Service | URL | Notes |
+|---|---|---|
+| Sync (Railway) | https://stockiq-sync-production.up.railway.app | `stockiq-sync` + Postgres; migrations 0001–0005 |
+| ASK proxy (Cloudflare) | https://stockiq-ask.sgiqbusiness.workers.dev | Haiku 4.5; Anthropic key as a secret; KV daily cap |
+| Narration (Cloudflare) | https://stockiq-narration.sgiqbusiness.workers.dev | Serves the R2 audio bucket over a stable origin |
 
-The ASK proxy and Resend are **not** set up; both need credentials only you
-can create. Everything below still applies to them.
+Railway project: StockIQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`). Verified
+against the sync deployment: protocol, pairing, delete, and client-cycle suites
+all pass. The ASK proxy was verified end-to-end from the live web app (a real
+question streams, the request routes to the Worker, the not-advice guardrail
+holds, and it fails closed without the key).
 
-**The app works with none of this done.** With no `EXPO_PUBLIC_SYNC_URL` the
-app is local-only, exactly as it was through Phase 5. With no
-`EXPO_PUBLIC_ASK_PROXY_URL` the tutor falls back to bring-your-own-key.
-Undeployed is a supported state, not a broken one.
+**Email sign-in (Resend)** is the one credential-gated piece whose production
+state is yours to confirm — see *Email sign-in* below. Delivery to your own
+address works; sending to arbitrary users needs a verified domain.
+
+**The app works with none of this.** With no `EXPO_PUBLIC_SYNC_URL` it is
+local-only; with no `EXPO_PUBLIC_ASK_PROXY_URL` the tutor falls back to
+bring-your-own-key. Undeployed is a supported state, not a broken one.
 
 ---
 
@@ -27,7 +31,8 @@ Undeployed is a supported state, not a broken one.
 | Postgres | Railway | Managed, persistent, and in the same project as the service that talks to it |
 | Sync service (`server/`) | Railway | Colocated with Postgres — a pooled DB connection across providers is latency and a connection-limit problem you do not need |
 | ASK proxy (`workers/ask/`) | Cloudflare Workers | Stateless, edge-close for streaming, and holds the Anthropic key as a secret |
-| Vercel | Web app, and optionally narration MP3s | Hosts the exported web app at `stockiq-delta.vercel.app`; content-addressed speech can be served from `/speech/` if the generated library is committed |
+| Narration (`workers/narration/`) | Cloudflare Workers | Serves the R2 audio bucket over a stable production origin — the raw `r2.dev` URL is rate-limited and documented by Cloudflare as dev-only |
+| Web app | Vercel | Hosts the exported web app at `stockiq-delta.vercel.app`, plus the static legal pages under `/legal/` |
 
 ---
 
@@ -90,8 +95,8 @@ unreachable — no device secret maps to it — but nothing deletes it.
 Confirmed on this deployment: after running the suites, four unreachable
 accounts and two records remained. They are harmless and tiny, but the count
 only grows. A retention job should remove accounts with no devices after some
-grace period, and that is the same job needed for the deletion path noted at
-the end of this document.
+grace period — the one server-side piece still not built (see *Deliberately not
+built*). User-initiated deletion is a separate, built path (*Account deletion*).
 
 ### Multi-device, and the security trade you are accepting
 
@@ -255,9 +260,14 @@ The proxy exists because **an API key cannot be kept secret inside a client
 app** — anyone can pull the bundle off a device and read it. This is the only
 ASK mode fit to ship publicly.
 
-**Not deployed.** Everything is prepared and the Worker builds (verified with
-`wrangler deploy --dry-run`: 4.59 KiB, bindings resolved), but it needs a
-Cloudflare login and your Anthropic key, and both are yours.
+**Deployed and live** at `https://stockiq-ask.sgiqbusiness.workers.dev`. It runs
+`claude-haiku-4-5` (Haiku, to cap cost — a short scoped answer does not need
+Opus), the KV rate-limit namespace is bound, and `ANTHROPIC_API_KEY` is set as a
+Cloudflare secret. Verified end-to-end from the live web app: a real question
+streams, the request routes to the Worker, the not-advice guardrail refuses
+buy/sell questions server-side, and it fails closed if the key is ever removed.
+
+Recorded so it can be rebuilt or moved. The steps that produced this deployment:
 
 ```bash
 cd workers/ask
@@ -284,14 +294,15 @@ The KV binding is a **cost guard**, not an optional extra: the Worker refuses
 to serve without it, because an uncapped endpoint that spends money on every
 call is a bill waiting to happen.
 
-Until step 3 is done the Worker deploys but answers `500 proxy is not
-configured` — fail-closed by design, so a half-finished deployment cannot
-quietly serve without its key.
+Without step 3 the Worker deploys but answers `500 proxy is not configured` —
+fail-closed by design, so a half-finished deployment cannot quietly serve
+without its key.
 
-Then:
+The app is already pointed at it in every build config (`vercel.json`,
+`eas.json`, `.env.example`):
 
 ```
-EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.<your-subdomain>.workers.dev
+EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.sgiqbusiness.workers.dev
 ```
 
 Adjust `DAILY_LIMIT` in `wrangler.toml` to taste — it defaults to 100
@@ -332,10 +343,21 @@ The uploader uses eight concurrent transfers, retries failures, and applies
 `audio/mpeg` plus a one-year immutable cache policy. The generated manifest is
 small and belongs in Git; `public/speech/` is intentionally ignored.
 
-Both web and native builds use the public R2 origin:
+The bucket is fronted by a small **Cloudflare Worker** (`workers/narration/`,
+deployed at `stockiq-narration.sgiqbusiness.workers.dev`) rather than served
+from the raw `r2.dev` URL. The `r2.dev` origin is rate-limited and documented by
+Cloudflare as development-only; the Worker gives a stable production origin and
+handles Range requests, conditional `304`s, and CORS. It is deployed the same
+way as the ASK Worker:
+
+```bash
+cd workers/narration && npx wrangler deploy
+```
+
+Both web and native builds fetch audio from that Worker:
 
 ```
-EXPO_PUBLIC_SPEECH_URL=https://pub-a78029218bb0482fb7f3c97f8ac97a57.r2.dev
+EXPO_PUBLIC_SPEECH_URL=https://stockiq-narration.sgiqbusiness.workers.dev
 ```
 
 This value is public and contains no credential. With no value, or when a clip
@@ -390,7 +412,7 @@ This is a supported configuration, not a degraded one:
 | Sync to the live Railway service | ✅ |
 | Device pairing by code | ✅ |
 | Email sign-in and account recovery | ✅ *(needs Resend)* |
-| ASK tutor | ✅ bring-your-own-key |
+| ASK tutor | ✅ via the deployed proxy (no key needed) |
 | Narration playback | ✅ after clips are hosted and `EXPO_PUBLIC_SPEECH_URL` is set |
 | Sign in with Apple | ❌ hidden |
 
@@ -478,24 +500,27 @@ needed, and everything else is already set.
 | Variable | Value |
 |---|---|
 | `EXPO_PUBLIC_SYNC_URL` | `https://stockiq-sync-production.up.railway.app` |
-| `EXPO_PUBLIC_ASK_PROXY_URL` | Empty until the Worker is deployed |
-| `EXPO_PUBLIC_SPEECH_URL` | Public origin containing `/speech/`; required by native narration |
+| `EXPO_PUBLIC_ASK_PROXY_URL` | `https://stockiq-ask.sgiqbusiness.workers.dev` |
+| `EXPO_PUBLIC_SPEECH_URL` | `https://stockiq-narration.sgiqbusiness.workers.dev` |
+| `EXPO_PUBLIC_SITE_URL` | `https://stockiq-delta.vercel.app` — native uses it to open the legal pages |
 
-Both are inlined into the bundle and readable by anyone with the app, so only
+All are inlined into the bundle and readable by anyone with the app, so only
 public URLs belong there.
 
 ## 4. Point the app at deployed services
 
-Put the two variables in `.env` (git-ignored) or your EAS build profile:
+Put the variables in `.env` (git-ignored) or your EAS build profile. The live
+values — already set in `vercel.json`, `eas.json`, and `.env.example`:
 
 ```
-EXPO_PUBLIC_SYNC_URL=https://<railway-service>.up.railway.app
-EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.<sub>.workers.dev
-EXPO_PUBLIC_SPEECH_URL=https://stockiq-delta.vercel.app
+EXPO_PUBLIC_SYNC_URL=https://stockiq-sync-production.up.railway.app
+EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.sgiqbusiness.workers.dev
+EXPO_PUBLIC_SPEECH_URL=https://stockiq-narration.sgiqbusiness.workers.dev
+EXPO_PUBLIC_SITE_URL=https://stockiq-delta.vercel.app
 ```
 
 `EXPO_PUBLIC_*` values are **inlined into the bundle** and are readable by
-anyone with the app. That is fine for all three — they are public endpoint
+anyone with the app. That is fine for all four — they are public endpoint
 URLs. Never put a key or token in an `EXPO_PUBLIC_` variable; that would undo
 the entire reason the proxy exists.
 
@@ -536,12 +561,28 @@ Tear down with `docker rm -f stockiq-pg`.
 **Payments.** Not until the app is proven — your call, and the right one.
 There is no RevenueCat wiring, no paywall, and no store configuration.
 
-**Accounts and device linking.** Sync is scoped to one anonymous device id, so
-today it is *backup*, not multi-device. Linking a second device needs a
-pairing flow, and that is the point at which real auth should arrive rather
-than being bolted on afterwards.
+**A scheduled orphan-account cleanup job.** *User-initiated* deletion is built —
+`DELETE /v1/account` erases a caller's records and cascades their account (see
+*Account deletion* below), and the in-app danger zone drives it. What is still
+missing is the housekeeping job that reaps accounts left with **no devices**
+after a device pairs away (see *Housekeeping this deployment still needs*
+above). Those are harmless and tiny but accumulate; a periodic
+"delete accounts with zero devices older than N days" is the remaining piece.
 
-**A retention job.** Rows are never deleted server-side. `reset()` in the app
-abandons the owner id rather than deleting remote data, so a
-`DELETE FROM records WHERE ...` job is needed before this handles anyone's
-data but your own.
+> Since the original plan: accounts, device pairing, and both sign-in providers
+> (Apple + email) are all built and deployed — sync is now genuinely
+> multi-device, not just backup. Those sections above are the live behaviour,
+> not a roadmap.
+
+## Account deletion
+
+`DELETE /v1/account` (in `server/src/accounts.ts` → `deleteAccount`, routed in
+`server/src/index.ts`) authenticates by device secret, then explicitly deletes
+the caller's `records` and deletes their `accounts` row — which cascades to
+devices, identities, Apple identities, link codes, and telemetry via
+`ON DELETE CASCADE`. The client path is `SyncingRepository.deleteAccount`
+(server first, then a full local `reset()`), reachable from the red danger zone
+in `app/settings/devices.tsx` behind a two-step confirm. Verified against real
+Postgres in `server/test/delete.test.mjs` (`npm run test:delete`): records
+erased, the linked device cascade-removed, a fresh empty account issued, and no
+resurfacing on the next sync.
