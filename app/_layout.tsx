@@ -105,6 +105,7 @@ export default function RootLayout() {
           <Stack.Screen name="settings/devices" />
           <Stack.Screen name="badges" />
           <Stack.Screen name="assessment" />
+          <Stack.Screen name="review" />
           <Stack.Screen
             name="kb/book/[bookId]/guide"
             options={{

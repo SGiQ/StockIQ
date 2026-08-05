@@ -21,6 +21,8 @@ import {
   reportId,
   savedCardId,
   type BadgeAward,
+  type ReviewState,
+  type ReviewInput,
   type CardReport,
   type CardReportInput,
   type LessonProgress,
@@ -45,6 +47,7 @@ const KEYS = {
   reports: 'stockiq:reports:v1',
   streak: 'stockiq:streak:v1',
   badges: 'stockiq:badges:v1',
+  reviews: 'stockiq:reviews:v1',
   /** Sync bookkeeping — see the note above `syncedStamps`. */
   synced: 'stockiq:synced:v1',
   meta: 'stockiq:syncmeta:v1',
@@ -55,7 +58,7 @@ const KEYS = {
  * pushed from the web build and one pushed from the phone have to land in the
  * same server-side collection, or the same lesson would sync as two records.
  */
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges';
+type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges' | 'reviews';
 
 /** Collections holding one object; the rest are id-keyed maps. */
 const SINGLETONS: Partial<Record<Collection, string>> = { profile: 'profile', streak: 'streak' };
@@ -68,6 +71,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   reports: KEYS.reports,
   streak: KEYS.streak,
   badges: KEYS.badges,
+  reviews: KEYS.reviews,
 };
 
 /** Trailing window retained for the streak row; older days are pruned. */
@@ -416,6 +420,29 @@ export class LocalRepository implements Repository {
         deletedAt: null,
       };
       await this.write(KEYS.badges, { ...all, [badgeId]: record });
+      return record;
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Reviews (spaced repetition)
+   * -------------------------------------------------------------- */
+
+  private async allReviews(): Promise<Record<string, ReviewState>> {
+    return this.read<Record<string, ReviewState>>(KEYS.reviews, () => ({}));
+  }
+
+  reviews = {
+    list: async (): Promise<ReviewState[]> => {
+      const all = await this.allReviews();
+      return Object.values(all).filter((r) => r.deletedAt === null);
+    },
+
+    upsert: async (input: ReviewInput): Promise<ReviewState> => {
+      const all = await this.allReviews();
+      const id = savedCardId(input.courseId, input.lessonId, input.cardId);
+      const record: ReviewState = { ...input, id, updatedAt: now(), deletedAt: null };
+      await this.write(KEYS.reviews, { ...all, [id]: record });
       return record;
     },
   };

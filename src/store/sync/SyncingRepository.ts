@@ -70,6 +70,9 @@ export class SyncingRepository implements Repository {
   get badges() {
     return this.local.badges;
   }
+  get reviews() {
+    return this.local.reviews;
+  }
 
   reset = (): Promise<void> => this.local.reset();
 

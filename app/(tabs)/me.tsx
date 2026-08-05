@@ -9,6 +9,7 @@ import { BadgeMedallion } from '@/components/BadgeMedallion';
 import { CardSurface, Screen, SpeakerIcon, Text } from '@/components/primitives';
 import { getLesson, listCourses, listLessonsInCourse } from '@/content/registry';
 import { BADGES } from '@/features/achievements';
+import { dueReviewCount } from '@/features/review';
 import { pairing } from '@/store';
 import { deriveDashboardMetrics } from '@/lib/dashboard';
 import { courseCompletion, selectReadiness, useAppStore } from '@/store/slices/useAppStore';
@@ -23,7 +24,9 @@ export default function DashboardTab() {
   const liked = useAppStore((s) => s.liked);
   const unlockedStrategies = useAppStore((s) => s.unlockedStrategies);
   const badges = useAppStore((s) => s.badges);
+  const reviews = useAppStore((s) => s.reviews);
   const refreshAchievements = useAppStore((s) => s.refreshAchievements);
+  const dueReviews = useMemo(() => dueReviewCount(reviews, Date.now()), [reviews]);
   const courses = listCourses();
 
   // Re-evaluate on every visit so badges earned by non-lesson actions (saving
@@ -106,6 +109,35 @@ export default function DashboardTab() {
           assessmentTaken={(profile?.assessmentAttempts ?? 0) > 0}
           onTakeCheck={() => router.push('/assessment' as never)}
         />
+
+        {dueReviews > 0 ? (
+          <Pressable
+            onPress={() => router.push('/review' as never)}
+            accessibilityRole="button"
+            accessibilityLabel={`Review, ${dueReviews} card${dueReviews === 1 ? '' : 's'} due`}
+          >
+            <CardSurface tone="forestDeep" style={styles.reviewCard}>
+              <View style={styles.reviewIcon}>
+                <Svg width={24} height={24} viewBox="0 0 24 24">
+                  <Path
+                    d="M11 5a3.5 3.5 0 00-3.5 3.5A3 3 0 006 11a3 3 0 001.8 2.8A3 3 0 0011 19V5zM13 5a3.5 3.5 0 013.5 3.5A3 3 0 0118 11a3 3 0 01-1.8 2.8A3 3 0 0113 19V5z"
+                    fill="none"
+                    stroke={palette.forestDeep}
+                    strokeWidth={1.9}
+                    strokeLinejoin="round"
+                  />
+                </Svg>
+              </View>
+              <View style={styles.reviewCopy}>
+                <Text variant="h3" color={palette.paper}>Keep it sharp</Text>
+                <Text variant="caption" color={palette.mintSoft}>
+                  {`${dueReviews} card${dueReviews === 1 ? '' : 's'} due for review`}
+                </Text>
+              </View>
+              <Text variant="h2" color={palette.mintSoft}>›</Text>
+            </CardSurface>
+          </Pressable>
+        ) : null}
 
         <View style={styles.statsGrid}>
           <StatCard value={streak?.currentStreak ?? 0} label="Day streak" accent={palette.flame} />
@@ -286,6 +318,16 @@ const styles = StyleSheet.create({
   statCard: { width: '48.5%', minHeight: 118, gap: space.xs },
   statDot: { width: 10, height: 10, borderRadius: radius.pill },
   streakCard: { gap: space.md },
+  reviewCard: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderRadius: radius.lg },
+  reviewIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.md,
+    backgroundColor: palette.mintSoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reviewCopy: { flex: 1, gap: space.xxs },
   badgesCard: { gap: space.md },
   badgesHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   badgesRow: { gap: space.md, paddingRight: space.sm },
