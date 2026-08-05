@@ -26,7 +26,12 @@ export default function LandingPage() {
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.pageContent}>
       <View style={[styles.nav, compact && styles.navCompact, compactSection]}>
-        <View style={styles.brandMark}><Text variant="h3" color={palette.paper}>S</Text></View>
+        <Image
+          source={require('../public/logo/SG.png')}
+          contentFit="contain"
+          style={styles.brandMark}
+          accessibilityLabel="StockIQ"
+        />
         <Text variant="h2" color={palette.ink}>StockIQ</Text>
         <View style={styles.navSpacer} />
         {!compact ? (
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
   pageContent: { alignItems: 'center' },
   nav: { width: '100%', maxWidth: 1180, minHeight: 82, paddingHorizontal: space.lg, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: space.sm },
   navCompact: { alignSelf: 'center' },
-  brandMark: { width: 38, height: 38, borderRadius: 12, backgroundColor: palette.forestDeep, alignItems: 'center', justifyContent: 'center' },
+  brandMark: { width: 40, height: 40, borderRadius: 10 },
   navSpacer: { flex: 1 },
   navButton: { minHeight: 44, paddingVertical: space.sm, paddingHorizontal: space.lg },
   hero: { width: '100%', maxWidth: 1180, paddingHorizontal: space.lg, paddingTop: 56, paddingBottom: 88, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: 72 },

@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { pairing } from '@/store';
@@ -116,7 +117,12 @@ export default function SignIn() {
             <Text variant="h2">‹</Text>
           </Pressable>
 
-          <View style={styles.brandMark}><Text variant="h2" color={palette.paper}>S</Text></View>
+          <Image
+            source={require('../public/logo/SG.png')}
+            contentFit="contain"
+            style={styles.brandMark}
+            accessibilityLabel="StockIQ"
+          />
 
           {step === 'email' ? (
             <>
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   shell: { flexGrow: 1, padding: space.lg, paddingBottom: space.xl, gap: space.lg },
   back: { width: 44, height: 44, borderRadius: radius.pill, backgroundColor: palette.paper, alignItems: 'center', justifyContent: 'center', ...shadow.card },
-  brandMark: { width: 48, height: 48, borderRadius: radius.md, backgroundColor: palette.forestDeep, alignItems: 'center', justifyContent: 'center', marginTop: space.sm },
+  brandMark: { width: 48, height: 48, borderRadius: radius.md, marginTop: space.sm },
   copy: { gap: space.sm },
   form: { gap: space.md },
   input: { minHeight: 58, borderWidth: 1.5, borderColor: palette.slateLight, borderRadius: radius.md, backgroundColor: palette.paper, paddingHorizontal: space.md, color: palette.ink, ...typeScale.body },
