@@ -4,7 +4,7 @@
   "author": "StockIQ",
   "category": "getting-started",
   "cover": { "kind": "glyph", "name": "seed", "bg": "butter" },
-  "blurb": "You know what stocks are — now the practical part. How to spread risk across a portfolio, and the accounts, fees, and taxes that quietly decide what you actually keep.",
+  "blurb": "You know what stocks are — now the practical part. Spreading risk across a portfolio, owning the whole market through index funds, the accounts and fees that decide what you keep, and placing your first trade.",
   "order": 6,
   "isNew": true,
   "units": [
@@ -17,9 +17,21 @@
     {
       "id": "unit-2",
       "index": 2,
+      "name": "INDEX FUNDS & ETFS",
+      "lessonIds": ["index-funds"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
       "name": "ACCOUNTS, FEES & TAXES",
       "lessonIds": ["accounts-fees-and-taxes"]
+    },
+    {
+      "id": "unit-4",
+      "index": 4,
+      "name": "YOUR FIRST TRADE",
+      "lessonIds": ["first-trade"]
     }
   ],
-  "totalXp": 40
+  "totalXp": 80
 }

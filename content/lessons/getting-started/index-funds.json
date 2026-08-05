@@ -1,0 +1,148 @@
+{
+  "id": "index-funds",
+  "courseId": "getting-started",
+  "title": "Index Funds and ETFs",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Own the market, not a guess.",
+      "body": "An **index fund** holds every company in a {{term:market-index|market index}} at once. Buy a single share and you own a sliver of hundreds of businesses — with no stock-picking required.",
+      "art": {
+        "kind": "scene",
+        "name": "index-basket",
+        "palette": "mint",
+        "alt": "A single basket holding slices of many companies, representing a whole market index."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "One purchase, instant diversification.",
+      "body": "Because the fund already spans the whole index, a single buy hands you the {{term:diversification|diversification}} that would otherwise take dozens of separate trades to assemble by hand.",
+      "art": { "kind": "glyph", "name": "pie", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "ETF or index fund — same core idea.",
+      "body": "An **ETF** — exchange-traded fund — is an index fund you can buy and sell like a stock through the trading day. Both track a basket; the ETF simply carries a live, changing price.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "The quiet cost of fees",
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "compounding",
+          "principal": 10000,
+          "rate": 0.07,
+          "years": 30,
+          "compareRate": 0.05
+        }
+      },
+      "caption": "A fund's {{term:expense-ratio|expense ratio}} is its yearly fee. Two percent sounds tiny, but compounded over decades it quietly claims a large share of your gains."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Fees compound against you.",
+      "body": "Returns compound in your favor; fees compound against it. The gap between a 0.04% index fund and a 1% active fund can grow into tens of thousands of dollars over a lifetime.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "blush" }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Two funds track the very same index. One charges 0.04% a year, the other 0.80%. Which should leave more of the market's return in your pocket?",
+      "options": [
+        { "id": "low", "label": "The 0.04% fund", "correct": true },
+        { "id": "high", "label": "The 0.80% fund — you get what you pay for", "correct": false }
+      ],
+      "explanation": "Holding the same basket, both funds earn the same gross return. The one that skims less off the top leaves more for you. For index funds, low cost **is** the edge."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Most active funds trail the index.",
+      "body": "Over long stretches, most professional stock-pickers fail to beat their benchmark — especially after fees. That is the whole case for indexing: match the market cheaply instead of paying to try to beat it.",
+      "art": {
+        "kind": "scene",
+        "name": "benchmark-race",
+        "palette": "lilac",
+        "alt": "A steady low-cost index runner pulling ahead of higher-fee active runners in a long race."
+      }
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "Three numbers tell you most of what matters about an index fund before you ever buy it.",
+      "stickers": [
+        {
+          "label": "Expense ratio",
+          "art": { "kind": "glyph", "name": "percent", "bg": "blush" },
+          "anchor": { "x": 0.3, "y": 0.2 },
+          "rotation": -5
+        },
+        {
+          "label": "Which index",
+          "art": { "kind": "glyph", "name": "target", "bg": "sky" },
+          "anchor": { "x": 0.68, "y": 0.46 },
+          "rotation": 4
+        },
+        {
+          "label": "How broad",
+          "art": { "kind": "glyph", "name": "pie", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.78 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "Since index funds just track a basket, the fee you pay — the [[1]] — is the biggest lever you control.",
+      "wordBank": ["expense ratio", "dividend yield", "share price"],
+      "answer": "expense ratio",
+      "explanation": "You can't control the market's return, but you can control what you pay to capture it. A lower expense ratio is the reliable edge."
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "summary": "An index fund buys the whole market in a single trade — broad, simple, and cheap. Keep costs low and let it compound.",
+      "bullets": [
+        "One purchase gives you a whole index's diversification.",
+        "An ETF is the same idea, traded like a stock.",
+        "The expense ratio is the fee you most control — keep it low."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": {
+        "kind": "scene",
+        "name": "index-basket",
+        "palette": "mint",
+        "alt": "A basket holding slices of many companies, standing for the whole market owned at once."
+      },
+      "insight": "You are unlikely to out-pick the market. You can almost always out-save its fees.",
+      "attribution": { "source": "Index funds and ETFs", "detail": "Getting Started" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Index Funds",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-4",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "How Fees and Expenses Affect Your Investment Portfolio",
+      "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/updated",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

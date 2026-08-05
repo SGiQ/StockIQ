@@ -1,0 +1,120 @@
+{
+  "id": "first-trade",
+  "courseId": "getting-started",
+  "title": "Placing Your First Trade",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "From deciding to owning.",
+      "body": "You've built the judgment. A trade is just the mechanical step that turns a decision into ownership — it runs through a {{term:broker|broker}} in a handful of taps.",
+      "art": {
+        "kind": "scene",
+        "name": "broker-agent",
+        "palette": "mint",
+        "alt": "A broker passing a customer's buy order along to the market on their behalf."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "First, an account to trade from.",
+      "body": "A {{term:brokerage-account|brokerage account}} is where you hold and trade investments. Opening one resembles opening a bank account: a little ID, a few minutes, and a transfer to fund it.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Find the company's ticker.",
+      "body": "Every listed stock has a {{term:ticker-symbol|ticker symbol}} — a short code like AAPL or KO. You type that ticker to pull up its order ticket.",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "The real choice: how to price it.",
+      "body": "The order ticket's key question is how you want to buy. The first two you'll meet — a **market order** and a **limit order** — trade certainty of price against certainty of getting filled.",
+      "art": {
+        "kind": "scene",
+        "name": "execution-tradeoff",
+        "palette": "lilac",
+        "alt": "A balance weighing certainty of getting filled against certainty of the exact price paid."
+      }
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Market order: fill it now.",
+      "body": "A {{term:market-order|market order}} buys straight away at the best price available. You're almost sure to get the shares, but in fast markets the exact price can shift as it fills.",
+      "art": { "kind": "glyph", "name": "check", "bg": "mint" }
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Limit order: name your price.",
+      "body": "A {{term:limit-order|limit order}} sets the most you'll pay. It fills only at your price or better — shielding you from surprises, but it may not fill at all if the price runs away.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "sky" }
+    },
+    {
+      "id": "c7",
+      "type": "binary_choice",
+      "prompt": "You want to own a stock today and don't mind a few cents of drift in the price. Which order fits best?",
+      "options": [
+        { "id": "market", "label": "Market order — prioritize getting filled", "correct": true },
+        { "id": "limit", "label": "Limit order — prioritize an exact price", "correct": false }
+      ],
+      "explanation": "A **market order** trades a little price precision for near-certain execution — right when simply owning it matters more than the last few cents. Reach for a **limit order** when the price you pay is the priority."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Read the ticket before you tap buy.",
+      "body": "Before you submit, the ticket shows a summary: ticker, number of shares, order type, and estimated cost. Read it once — most first-trade mistakes are a wrong number here, not a wrong idea.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "butter" }
+    },
+    {
+      "id": "c9",
+      "type": "fill_blank",
+      "body": "If it matters that you never pay more than a set price, you'd place a [[1]] order.",
+      "wordBank": ["limit", "market", "stop"],
+      "answer": "limit",
+      "explanation": "A **limit order** caps your price — it fills only at your number or better. A market order takes the going price; a stop order is a trigger to trade later."
+    },
+    {
+      "id": "c10",
+      "type": "main_idea",
+      "summary": "A first trade is a short, calm checklist — not a leap. Fund an account, find the ticker, pick your order type, review, submit.",
+      "bullets": [
+        "Open and fund a brokerage account.",
+        "Look up the ticker to open the order ticket.",
+        "Choose market or limit, review the summary, then submit."
+      ]
+    },
+    {
+      "id": "c11",
+      "type": "key_insight",
+      "art": {
+        "kind": "scene",
+        "name": "order-route",
+        "palette": "mint",
+        "alt": "An order travelling from a phone through the broker to the exchange, where it is matched."
+      },
+      "insight": "The hard part of investing is the thinking. The trade itself is a few taps and one careful second look.",
+      "attribution": { "source": "Placing your first trade", "detail": "Getting Started" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Types of Orders",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Executing an Order",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/executing-order",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}
