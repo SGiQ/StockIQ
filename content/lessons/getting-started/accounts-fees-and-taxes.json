@@ -50,6 +50,7 @@
       "title": "What a 1% fee costs",
       "art": {
         "kind": "chart",
+        "motion": "draw",
         "spec": {
           "type": "compounding",
           "principal": 10000,

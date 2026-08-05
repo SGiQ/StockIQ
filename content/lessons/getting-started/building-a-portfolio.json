@@ -25,6 +25,7 @@
       "title": "A sample allocation",
       "art": {
         "kind": "chart",
+        "motion": "build",
         "spec": {
           "type": "bars",
           "values": [60, 30, 10],
