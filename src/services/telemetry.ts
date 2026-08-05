@@ -28,7 +28,7 @@ export async function trackTelemetry(
       headers: {
         'content-type': 'application/json',
         'x-device-id': await getDeviceId(),
-        'x-device-label': `${Platform.OS} · telemetry`,
+        'x-device-label': `${Platform.OS} telemetry`,
       },
       body: JSON.stringify({ event, route, detail, value }),
     });
