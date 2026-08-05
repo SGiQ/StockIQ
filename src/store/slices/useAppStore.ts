@@ -21,6 +21,7 @@ import {
   type BadgeDef,
   type MarketReadiness,
 } from '@/features/achievements';
+import { advance as advanceReview, seed as seedReview } from '@/features/review';
 import { repository } from '../index';
 import {
   progressId,
@@ -33,6 +34,7 @@ import {
   type LikedItem,
   type CardReport,
   type ReportReason,
+  type ReviewState,
   type SavedCard,
   type StreakState,
   type UserProfile,
@@ -61,6 +63,7 @@ interface AppState {
   reports: CardReport[];
   unlockedStrategies: StrategyId[];
   badges: BadgeAward[];
+  reviews: ReviewState[];
 
   hydrate: () => Promise<void>;
 
@@ -88,6 +91,14 @@ interface AppState {
     lessonId: LessonId,
     cardId: CardId,
     reason: ReportReason,
+  ) => Promise<void>;
+
+  /** Records a spaced-repetition answer and reschedules the card. */
+  recordReview: (
+    courseId: CourseId,
+    lessonId: LessonId,
+    cardId: CardId,
+    correct: boolean,
   ) => Promise<void>;
 
   /** Recompute badge criteria and award any newly earned. Returns the new ones. */
@@ -118,9 +129,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   reports: [],
   unlockedStrategies: [],
   badges: [],
+  reviews: [],
 
   hydrate: async () => {
-    const [profile, streak, progressList, saved, liked, reports, unlockedStrategies, badges] =
+    const [profile, streak, progressList, saved, liked, reports, unlockedStrategies, badges, reviews] =
       await Promise.all([
         repository.profile.get(),
         repository.streak.get(),
@@ -130,6 +142,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         repository.reports.list(),
         repository.unlocks.listUnlockedStrategies(),
         repository.badges.list(),
+        repository.reviews.list(),
       ]);
 
     set({
@@ -142,6 +155,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       reports,
       unlockedStrategies,
       badges,
+      reviews,
     });
 
     // Backfill: award any badges the learner already qualifies for but never
@@ -250,6 +264,31 @@ export const useAppStore = create<AppState>((set, get) => ({
       unlockedStrategies,
     }));
 
+    // Enrol this lesson's interactive cards into spaced review, seeded from how
+    // they went. Only new cards are added — a replay must not reset the spacing
+    // on cards already scheduled, or review would never let anything mature.
+    const seenReviewIds = new Set(get().reviews.map((r) => r.id));
+    const reviewNow = Date.now();
+    let seededReview = false;
+    for (const card of completionCards) {
+      if (card.type !== 'binary_choice' && card.type !== 'fill_blank') continue;
+      if (seenReviewIds.has(savedCardId(courseId, lessonId, card.id))) continue;
+      const attempt = attempts.find((a) => a.cardId === card.id);
+      if (!attempt) continue;
+      const { box, dueAt } = seedReview(attempt.correct, reviewNow);
+      await repository.reviews.upsert({
+        courseId,
+        lessonId,
+        cardId: card.id,
+        box,
+        dueAt,
+        lastReviewedAt: reviewNow,
+        lastCorrect: attempt.correct,
+      });
+      seededReview = true;
+    }
+    if (seededReview) set({ reviews: await repository.reviews.list() });
+
     // Evaluated after the state above lands, so the snapshot sees this
     // completion (its XP, star, streak bump, and any freshly unlocked strategy).
     const newBadges = await get().refreshAchievements();
@@ -289,6 +328,23 @@ export const useAppStore = create<AppState>((set, get) => ({
   reportCard: async (courseId, lessonId, cardId, reason) => {
     await repository.reports.add({ courseId, lessonId, cardId, reason });
     set({ reports: await repository.reports.list() });
+  },
+
+  recordReview: async (courseId, lessonId, cardId, correct) => {
+    const id = savedCardId(courseId, lessonId, cardId);
+    const current = get().reviews.find((r) => r.id === id);
+    const at = Date.now();
+    const { box, dueAt } = advanceReview(current?.box ?? 0, correct, at);
+    await repository.reviews.upsert({
+      courseId,
+      lessonId,
+      cardId,
+      box,
+      dueAt,
+      lastReviewedAt: at,
+      lastCorrect: correct,
+    });
+    set({ reviews: await repository.reviews.list() });
   },
 
   refreshAchievements: async () => {

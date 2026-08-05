@@ -23,6 +23,8 @@ import {
   reportId,
   savedCardId,
   type BadgeAward,
+  type ReviewState,
+  type ReviewInput,
   type CardReport,
   type CardReportInput,
   type LessonProgress,
@@ -41,7 +43,7 @@ import {
 
 const DB_NAME = 'stockiq.db';
 
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges';
+type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges' | 'reviews';
 
 /**
  * Legacy AsyncStorage keys, read once during the one-time migration. Partial
@@ -470,6 +472,22 @@ export class SqliteRepository implements Repository {
         deletedAt: null,
       });
     },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Reviews (spaced repetition)
+   * -------------------------------------------------------------- */
+
+  reviews = {
+    list: async (): Promise<ReviewState[]> => this.all<ReviewState>('reviews'),
+
+    upsert: async (input: ReviewInput): Promise<ReviewState> =>
+      this.save('reviews', {
+        ...input,
+        id: savedCardId(input.courseId, input.lessonId, input.cardId),
+        updatedAt: now(),
+        deletedAt: null,
+      }),
   };
 
   /* -------------------------------------------------------------- *

@@ -153,9 +153,28 @@ export interface BadgeAward extends Syncable {
   unlockedAt: number;
 }
 
+/**
+ * Spaced-repetition state for one interactive card the learner has answered.
+ * Leitner-style: `box` sets the interval and `dueAt` is when the card next
+ * resurfaces for review. The record id is the card's coordinate key
+ * (courseId/lessonId#cardId), so review state and the saved card share a key.
+ */
+export interface ReviewState extends Syncable {
+  courseId: CourseId;
+  lessonId: LessonId;
+  cardId: CardId;
+  /** Leitner box 0..N; higher means a longer interval. */
+  box: number;
+  /** Epoch ms when this card is next due for review. */
+  dueAt: number;
+  lastReviewedAt: number;
+  lastCorrect: boolean;
+}
+
 export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
 export type ProgressInput = Omit<LessonProgress, keyof Syncable> & { id?: string };
 export type SavedCardInput = Omit<SavedCard, keyof Syncable | 'savedAt'>;
+export type ReviewInput = Omit<ReviewState, keyof Syncable>;
 
 export interface SyncStatus {
   lastSyncedAt: number | null;
@@ -208,6 +227,12 @@ export interface Repository {
     list(): Promise<BadgeAward[]>;
     /** Idempotent: awarding an already-earned badge keeps the original date. */
     award(badgeId: string): Promise<BadgeAward>;
+  };
+
+  reviews: {
+    list(): Promise<ReviewState[]>;
+    /** Creates or replaces the spaced-repetition state for one card. */
+    upsert(input: ReviewInput): Promise<ReviewState>;
   };
 
   /**
