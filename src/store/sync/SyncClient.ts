@@ -190,5 +190,12 @@ export class SyncClient implements SyncTransport {
  */
 function deviceLabel(): string {
   const os = Platform.OS === 'ios' ? 'iPhone' : Platform.OS === 'android' ? 'Android' : 'Web';
-  return `${os} · ${Platform.Version ?? ''}`.trim();
+  const label = `${os} ${Platform.Version ?? ''}`.trim();
+  // This value is sent as an HTTP header. Header values must be Latin-1, and
+  // WebKit (Safari and every iOS browser) is stricter still: a non-ASCII byte
+  // makes `fetch` throw "Load failed" *before the request is sent* — which
+  // silently broke sign-in for every Safari/iPhone user. Keep it printable
+  // ASCII so the header is always valid. (An earlier "Web · <version>" label
+  // used a middle-dot, U+00B7, which is exactly what tripped this.)
+  return label.replace(/[^\x20-\x7E]/g, '').replace(/\s+/g, ' ').trim() || os;
 }
