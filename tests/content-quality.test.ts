@@ -22,7 +22,9 @@ import type { Card } from '../src/content/types';
 const LESSONS_AWAITING_ART = new Set<string>([
   'market-foundations/options-basics',
   'getting-started/building-a-portfolio',
+  'getting-started/index-funds',
   'getting-started/accounts-fees-and-taxes',
+  'getting-started/first-trade',
 ]);
 
 const lessonKey = (lesson: { courseId: string; id: string }): string =>
