@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Image } from 'expo-image';
 import { useFocusEffect, useRouter } from 'expo-router';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { ArtView } from '@/components/art/ArtView';
@@ -80,9 +81,12 @@ export default function DashboardTab() {
 
         <CardSurface tone="forestDeep" style={styles.hero}>
           <View style={styles.heroTop}>
-            <View style={styles.avatar}>
-              <Text variant="h2" color={palette.forestDeep}>SIQ</Text>
-            </View>
+            <Image
+              source={require('../../public/logo/SG.png')}
+              contentFit="contain"
+              style={styles.avatar}
+              accessibilityLabel="StockIQ"
+            />
             <View style={styles.heroCopy}>
               <Text variant="label" color={palette.mintSoft} uppercase>Learning portfolio</Text>
               <Text variant="display" color={palette.paper}>{`${profile?.totalXp ?? 0} XP`}</Text>
@@ -278,7 +282,7 @@ const styles = StyleSheet.create({
   settingsButton: { width: 46, height: 46, borderRadius: radius.pill, backgroundColor: palette.paper, alignItems: 'center', justifyContent: 'center' },
   hero: { padding: space.lg, gap: space.md },
   heroTop: { flexDirection: 'row', alignItems: 'center', gap: space.md },
-  avatar: { width: 62, height: 62, borderRadius: radius.pill, backgroundColor: palette.mintSoft, alignItems: 'center', justifyContent: 'center' },
+  avatar: { width: 62, height: 62, borderRadius: radius.md, backgroundColor: palette.paper },
   heroCopy: { flex: 1, gap: space.xxs },
   heroTrack: { height: 8, borderRadius: radius.pill, backgroundColor: 'rgba(255,255,255,0.18)', overflow: 'hidden' },
   heroFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint },
