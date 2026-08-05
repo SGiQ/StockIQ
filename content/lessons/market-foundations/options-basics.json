@@ -33,6 +33,7 @@
       "title": "A call buyer's payoff",
       "art": {
         "kind": "chart",
+        "motion": "focus",
         "spec": {
           "type": "payoff",
           "legs": [{ "kind": "call", "side": "long", "strike": 100, "premium": 5 }],
