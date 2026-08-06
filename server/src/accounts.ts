@@ -98,12 +98,29 @@ export async function resolveAccount(
   // it impossible to tell a device secret from an account reference later.
   const accountId = `acct_${randomBytes(12).toString('hex')}`;
   await client.query('INSERT INTO accounts (id, created_at) VALUES ($1, $2)', [accountId, now]);
-  await client.query(
+
+  // The SELECT above and this INSERT are not atomic: two syncs from the same
+  // fresh device can both miss the SELECT and both arrive here. Without
+  // ON CONFLICT the second crashes on devices_pkey (the production bug), and
+  // one of the two callers' requests dies. Making the insert idempotent lets
+  // both succeed. On conflict we keep the row that already exists and return
+  // ITS account via RETURNING, so the racers agree on one account.
+  const claimed = await client.query<{ account_id: string }>(
     `INSERT INTO devices (id, account_id, label, created_at, last_seen_at)
-     VALUES ($1, $2, $3, $4, $4)`,
+     VALUES ($1, $2, $3, $4, $4)
+     ON CONFLICT (id) DO UPDATE SET last_seen_at = EXCLUDED.last_seen_at
+     RETURNING account_id`,
     [deviceId, accountId, label, now],
   );
-  return accountId;
+
+  const resolved = claimed.rows[0]!.account_id;
+  if (resolved !== accountId) {
+    // We lost the race: the device already maps to an account, so the one we
+    // optimistically created is unused. Delete it rather than leaking an
+    // orphan account with no devices. It is brand new, so nothing cascades.
+    await client.query('DELETE FROM accounts WHERE id = $1', [accountId]);
+  }
+  return resolved;
 }
 
 export async function createLinkCode(

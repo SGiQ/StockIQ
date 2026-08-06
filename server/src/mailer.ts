@@ -24,6 +24,25 @@ export interface SentMessage {
   text: string;
 }
 
+/**
+ * RFC 2606 / 6761 reserved documentation and testing domains. No provider will
+ * ever deliver to these, and Resend rejects them outright with a validation
+ * error — so an address like `test@example.com` turns one sign-in request into
+ * a crashed handler. Catching them lets the caller answer cleanly instead.
+ */
+const RESERVED_EMAIL_DOMAINS = new Set(['example.com', 'example.net', 'example.org']);
+const RESERVED_EMAIL_SUFFIXES = ['.example', '.invalid', '.test', '.localhost'];
+
+/** True for an address no mail provider can deliver to (reserved/placeholder). */
+export function isUndeliverableRecipient(email: string): boolean {
+  const at = email.lastIndexOf('@');
+  if (at < 0) return true;
+  const host = email.slice(at + 1).toLowerCase().trim();
+  if (!host || /\s/.test(host)) return true;
+  if (RESERVED_EMAIL_DOMAINS.has(host)) return true;
+  return RESERVED_EMAIL_SUFFIXES.some((s) => host === s.slice(1) || host.endsWith(s));
+}
+
 export class MailNotConfiguredError extends Error {}
 
 /** Distinguishes the failures worth acting on differently. */
@@ -76,6 +95,16 @@ class ResendMailer implements Mailer {
   constructor(private readonly apiKey: string) {}
 
   async send(message: SentMessage): Promise<void> {
+    // Fail fast on addresses Resend will reject anyway. Defence in depth —
+    // normaliseEmail already refuses these at the front door — so no reserved
+    // address can reach the network and crash the request handler.
+    if (isUndeliverableRecipient(message.to)) {
+      throw new MailDeliveryError(
+        `refusing to send to an undeliverable address: ${message.to}`,
+        'rejected',
+      );
+    }
+
     let response: Response;
     try {
       response = await fetch('https://api.resend.com/emails', {

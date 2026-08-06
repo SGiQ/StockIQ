@@ -1,5 +1,6 @@
 import { createHash, randomInt, timingSafeEqual } from 'node:crypto';
 import type { PoolClient } from 'pg';
+import { isUndeliverableRecipient } from './mailer.ts';
 import { ProtocolError } from './protocol.ts';
 
 /**
@@ -49,6 +50,12 @@ export function normaliseEmail(raw: unknown): string {
   // the caller is that they receive the code. Elaborate regexes reject valid
   // addresses far more often than they catch anything useful.
   if (value.length < 3 || value.length > 254 || !/^[^\s@]+@[^\s@.]+\.[^\s@]+$/.test(value)) {
+    throw new ProtocolError('that email address is not valid');
+  }
+  // Syntactically valid but undeliverable: reserved documentation/testing
+  // domains (example.com, *.test, ...). These pass the regex but no provider
+  // will ever accept them, so reject here rather than failing at send time.
+  if (isUndeliverableRecipient(value)) {
     throw new ProtocolError('that email address is not valid');
   }
   return value;
