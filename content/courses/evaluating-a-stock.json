@@ -1,0 +1,37 @@
+{
+  "id": "evaluating-a-stock",
+  "title": "Evaluating a Stock: Business vs. Price",
+  "author": "StockIQ",
+  "category": "analysis",
+  "cover": { "kind": "glyph", "name": "scale", "bg": "sky" },
+  "blurb": "Behind every ticker sit two separate questions: is this a strong business, and is the price fair for it? Learn the numbers that answer them — size, debt, returns on capital, valuation and the red flags.",
+  "order": 7,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "SIZE & STRUCTURE",
+      "lessonIds": ["size-and-structure", "growth-that-counts"]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "CAN IT SURVIVE",
+      "lessonIds": ["financial-strength", "return-on-capital"]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "WHAT YOU PAY",
+      "lessonIds": ["valuation-multiples", "cash-flow-valuation"]
+    },
+    {
+      "id": "unit-4",
+      "index": 4,
+      "name": "THE VERDICT",
+      "lessonIds": ["reading-the-red-flags", "the-evaluation-checklist"]
+    }
+  ],
+  "totalXp": 160
+}

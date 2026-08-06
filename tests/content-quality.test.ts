@@ -25,6 +25,14 @@ const LESSONS_AWAITING_ART = new Set<string>([
   'getting-started/index-funds',
   'getting-started/accounts-fees-and-taxes',
   'getting-started/first-trade',
+  'evaluating-a-stock/size-and-structure',
+  'evaluating-a-stock/growth-that-counts',
+  'evaluating-a-stock/financial-strength',
+  'evaluating-a-stock/return-on-capital',
+  'evaluating-a-stock/valuation-multiples',
+  'evaluating-a-stock/cash-flow-valuation',
+  'evaluating-a-stock/reading-the-red-flags',
+  'evaluating-a-stock/the-evaluation-checklist',
 ]);
 
 const lessonKey = (lesson: { courseId: string; id: string }): string =>

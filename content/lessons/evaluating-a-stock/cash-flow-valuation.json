@@ -1,0 +1,141 @@
+{
+  "id": "cash-flow-valuation",
+  "courseId": "evaluating-a-stock",
+  "title": "Paying for Cash, Not Accounting",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Cash is harder to fake.",
+      "body": "Accounting profit bends to judgment calls — depreciation, write-downs, timing. Free cash flow is what actually lands in the bank after running and reinvesting in the business. Valuing a company against its cash, not its reported earnings, sidesteps a lot of the games.",
+      "art": {
+        "kind": "scene",
+        "name": "free-cash-flow",
+        "palette": "mint",
+        "alt": "Cash from operations, minus capital spending, leaving free cash flow available to the owners."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Price to free cash flow.",
+      "body": "**Price-to-free-cash-flow** is market cap divided by annual free cash flow — how many dollars you pay for each dollar of real cash the business throws off. It shines when big non-cash charges have dented reported net income.",
+      "art": { "kind": "glyph", "name": "coins-stack", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Flip it into a yield.",
+      "body": "Turn the ratio upside down and you get a **yield**. Free-cash-flow yield is FCF divided by market cap: **$500M** on a **$10B** company is **5%**. Earnings yield does the same with profit — the inverse of P/E — so a P/E of 20 is a 5% earnings yield.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "butter" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Higher yield, cheaper price?",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [3, 5, 7],
+          "labels": ["Pricey Co", "Fair Co", "Cheap Co"],
+          "highlightIndex": 2,
+          "yLabel": "FCF yield %"
+        }
+      },
+      "caption": "A higher yield can mean a cheaper price — but only if that cash flow is durable, not a one-year spike."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A stock's free-cash-flow yield is a fat 9%. Automatically a bargain?",
+      "options": [
+        { "id": "yes", "label": "Yes — 9% is high", "correct": false },
+        { "id": "no", "label": "Only if the cash flow lasts", "correct": true }
+      ],
+      "explanation": "A high yield built on a one-off asset sale or a peak year evaporates. Check that the cash flow is repeatable before treating the yield as cheap."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Can the dividend survive?",
+      "body": "Dividends are paid in cash, so measure them against cash. The **free-cash-flow payout ratio** — dividends divided by FCF — shows the true strain. A dividend swallowing nearly all free cash, or funded by new debt, is a cut waiting to happen.",
+      "art": {
+        "kind": "scene",
+        "name": "payout-pressure",
+        "palette": "blush",
+        "alt": "A dividend payment consuming most of a company's free cash flow, leaving little room to spare."
+      }
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Because dividends are paid in cash, the [[1]] payout ratio judges their safety better than one based on accounting profit.",
+      "wordBank": ["free-cash-flow", "earnings", "revenue"],
+      "answer": "free-cash-flow",
+      "explanation": "Earnings can show a profit while cash is tight. Since dividends must be paid with real cash, comparing them to free cash flow reveals whether they're truly affordable."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "A big yield is a question, not an answer. Ask what's behind it before trusting it.",
+      "stickers": [
+        {
+          "label": "Is the cash flow durable?",
+          "art": { "kind": "glyph", "name": "anchor", "bg": "sky" },
+          "anchor": { "x": 0.28, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "A one-off gain inflating it?",
+          "art": { "kind": "glyph", "name": "warning", "bg": "blush" },
+          "anchor": { "x": 0.71, "y": 0.45 },
+          "rotation": 5
+        },
+        {
+          "label": "Dividend funded by debt?",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.77 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Valuing a company against its cash cuts through accounting noise.",
+      "bullets": [
+        "P/FCF and FCF yield price the real cash a business makes.",
+        "A high yield only counts if the cash flow is durable.",
+        "Judge dividend safety by the free-cash-flow payout ratio."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "scene",
+        "name": "yield-trap",
+        "palette": "ink",
+        "alt": "An attractively high yield luring an investor toward a payout the company cannot sustain."
+      },
+      "insight": "A yield is only as safe as the cash behind it. Chase the number without the cash and you inherit the cut.",
+      "attribution": { "source": "Day 6", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

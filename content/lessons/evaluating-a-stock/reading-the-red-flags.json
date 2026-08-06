@@ -1,0 +1,137 @@
+{
+  "id": "reading-the-red-flags",
+  "courseId": "evaluating-a-stock",
+  "title": "Reading the Red Flags",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The numbers can whisper trouble.",
+      "body": "A collapse rarely arrives without warning. It shows up first as small contradictions in the statements — profit that never becomes cash, inventory piling up, \"one-time\" charges that arrive every year. Learning to read those tells is half of protecting your money.",
+      "art": { "kind": "glyph", "name": "eye", "bg": "blush" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Profit up, cash down.",
+      "body": "The loudest red flag: reported earnings climbing while operating cash flow falls. Real profit eventually turns into cash. When the two pull apart for long, the profit may be an accounting story — often revenue booked faster than customers actually pay.",
+      "art": {
+        "kind": "scene",
+        "name": "cash-vs-profit",
+        "palette": "butter",
+        "alt": "A rising profit line diverging from a falling cash line, warning that earnings are not turning into cash."
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Receivables outrunning sales",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [12, 38],
+          "labels": ["Revenue growth", "Receivables growth"],
+          "highlightIndex": 1,
+          "yLabel": "Growth %"
+        }
+      },
+      "caption": "When receivables or inventory sprint ahead of sales, customers may be paying slower — or the goods just aren't selling."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Sales rose 12% but accounts receivable jumped 38%. Reassuring, or a closer look?",
+      "options": [
+        { "id": "ok", "label": "Reassuring — sales are growing", "correct": false },
+        { "id": "look", "label": "Worth a closer look", "correct": true }
+      ],
+      "explanation": "Receivables outrunning sales means revenue is booked but not yet collected — from customers paying slower, or aggressive terms propping up the top line. Dig into why."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "\"One-time\" every single year.",
+      "body": "A charge is only extraordinary if it happens once. When \"non-recurring\" costs recur annually, they are just costs in a costume. Watch, too, for buybacks funded with borrowed money and dividends larger than free cash flow — returns paid from the balance sheet, not the business.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Some warnings sit outside the ratios — in who keeps the books and how insiders behave.",
+      "stickers": [
+        {
+          "label": "Auditor or CFO keeps changing",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "blush" },
+          "anchor": { "x": 0.26, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "Guidance missed again and again",
+          "art": { "kind": "glyph", "name": "target", "bg": "butter" },
+          "anchor": { "x": 0.72, "y": 0.34 },
+          "rotation": 5
+        },
+        {
+          "label": "Pay climbs as results fall",
+          "art": { "kind": "glyph", "name": "chart-down", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Big related-party deals",
+          "art": { "kind": "glyph", "name": "people", "bg": "mint" },
+          "anchor": { "x": 0.7, "y": 0.8 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "When a company's \"one-time\" charges appear year after year, they are not exceptional — they are recurring [[1]] in disguise.",
+      "wordBank": ["costs", "profits", "dividends"],
+      "answer": "costs",
+      "explanation": "A genuinely one-off charge happens once. Repeated 'non-recurring' items are ordinary operating costs management would rather you excluded from the picture."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "The truth hides in the footnotes.",
+      "body": "Headlines get the polish; the footnotes get the facts. Accounting methods, stock-based compensation, lawsuits, pension gaps and debt covenants often live only there. A company burying bad news does it in small print — which is exactly why you read it.",
+      "art": { "kind": "glyph", "name": "newspaper", "bg": "lilac" }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Red flags are contradictions between the story and the cash.",
+      "bullets": [
+        "Profit rising while cash falls is the loudest warning.",
+        "Receivables or inventory outpacing sales needs explaining.",
+        "Recurring 'one-time' charges and footnotes hide the truth."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "ink" },
+      "insight": "Failures leave fingerprints in the statements long before the headlines. Your job is to read them early.",
+      "attribution": { "source": "Day 7", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

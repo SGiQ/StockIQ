@@ -1,0 +1,132 @@
+{
+  "id": "financial-strength",
+  "courseId": "evaluating-a-stock",
+  "title": "Can It Survive a Bad Year?",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Debt cuts both ways.",
+      "body": "Borrowed money can lift returns when business is good and sink the company when it is not. A firm can look healthy for years, then fail the season its revenue dips and a big loan comes due. Strength is about surviving the bad year.",
+      "art": { "kind": "glyph", "name": "shield", "bg": "mint" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Net debt, not just debt.",
+      "body": "Total debt alone overstates the burden — cash can pay some of it off. **Net debt** is total debt minus cash. A firm with **$2B** of debt and **$3B** of cash has **negative** net debt: it holds more cash than it owes.",
+      "art": { "kind": "glyph", "name": "scale", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Covering the interest",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [8, 2],
+          "labels": ["Sturdy Co", "Fragile Co"],
+          "highlightIndex": 1,
+          "yLabel": "Interest coverage (x)"
+        }
+      },
+      "caption": "Operating profit divided by interest owed. Sturdy covers it 8 times over; Fragile only twice, and one bad quarter could break it."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Two firms carry identical debt. One holds far more cash. Equally leveraged?",
+      "options": [
+        { "id": "yes", "label": "Yes — the debt is the same", "correct": false },
+        { "id": "no", "label": "No — net debt differs", "correct": true }
+      ],
+      "explanation": "Cash offsets debt. The cash-rich firm has lower net debt and can repay on its own terms. Judge leverage after netting out cash — and check when the debt matures."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Can it pay this year's bills?",
+      "body": "The **current ratio** is current assets over current liabilities — can near-term assets cover what's due within a year. The **quick ratio** is stricter, excluding inventory that may not sell. Below 1 warrants a look, though some efficient firms run there by design.",
+      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "A single debt figure hides the risk. Four things turn it from a number into a judgment.",
+      "stickers": [
+        {
+          "label": "How much, net of cash",
+          "art": { "kind": "glyph", "name": "scale", "bg": "sky" },
+          "anchor": { "x": 0.25, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "When it comes due",
+          "art": { "kind": "glyph", "name": "calendar", "bg": "butter" },
+          "anchor": { "x": 0.72, "y": 0.35 },
+          "rotation": 5
+        },
+        {
+          "label": "Can profit cover interest",
+          "art": { "kind": "glyph", "name": "shield", "bg": "mint" },
+          "anchor": { "x": 0.3, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Fixed or floating rate",
+          "art": { "kind": "glyph", "name": "percent", "bg": "blush" },
+          "anchor": { "x": 0.68, "y": 0.8 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "A company can look sound today yet stumble when a large loan reaches its [[1]] date and must be refinanced.",
+      "wordBank": ["maturity", "dividend", "earnings"],
+      "answer": "maturity",
+      "explanation": "Maturity is when the debt must be repaid or rolled over. If rates have risen or credit has tightened, refinancing can turn a healthy firm fragile overnight."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Safe levels are relative.",
+      "body": "**Net debt to EBITDA** sizes debt against operating earnings; lower is generally safer. But acceptable levels vary widely — utilities, telecoms and property firms carry far more than a software company ever should. Always compare a firm's leverage to its own industry.",
+      "art": { "kind": "glyph", "name": "building", "bg": "sky" }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Financial strength is surviving a bad year without forced selling.",
+      "bullets": [
+        "Judge debt net of cash, and by when it's due.",
+        "Interest coverage shows if profit can service the debt.",
+        "Compare leverage within the same industry."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "ink" },
+      "insight": "Leverage flatters returns in good years and writes the ending in bad ones. Read the balance sheet before the income statement.",
+      "attribution": { "source": "Day 3", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

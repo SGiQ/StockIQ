@@ -1,0 +1,126 @@
+{
+  "id": "valuation-multiples",
+  "courseId": "evaluating-a-stock",
+  "title": "What You Pay: Beyond the P/E",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "P/E isn't always available.",
+      "body": "The price-to-earnings ratio needs earnings — and plenty of real companies have none yet, or profits distorted by one-off charges. When P/E goes quiet, three other multiples still answer the only question that matters: what am I paying for what I get?",
+      "art": { "kind": "glyph", "name": "magnifier", "bg": "sky" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Price to sales.",
+      "body": "**Price-to-sales** is market cap divided by annual revenue — usable even when a company loses money. Its flaw is blunt: revenue is not profit. A firm can post enormous sales while losing money on every unit, so a low P/S can still be dear.",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "mint" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Price to book.",
+      "body": "**Price-to-book** compares market value to the equity on the balance sheet. It earns its keep for banks, insurers and property firms, whose worth is largely assets. It says little about software or brand-driven firms, whose value never lands in book value.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "lilac" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Same P/E, different once debt counts",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [9, 14],
+          "labels": ["Low-debt Co", "High-debt Co"],
+          "highlightIndex": 1,
+          "yLabel": "EV/EBITDA (x)"
+        }
+      },
+      "caption": "Two firms can share a P/E of 20 yet look very different once debt and cash fold into enterprise value."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Enterprise value to EBITDA.",
+      "body": "**EV/EBITDA** prices the whole business — debt included — against operating earnings, so it compares firms with different capital structures fairly. Its blind spot: EBITDA ignores the capital spending some firms must pour in just to stay in business.",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "butter" }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Two rivals both trade at a P/E of 20, but one carries heavy debt. Equally priced?",
+      "options": [
+        { "id": "yes", "label": "Yes — same P/E", "correct": false },
+        { "id": "no", "label": "No — EV/EBITDA would differ", "correct": true }
+      ],
+      "explanation": "P/E ignores the balance sheet. Once you add debt and subtract cash to reach enterprise value, the leveraged firm is usually paying more for the same earnings."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "For a company with no profits yet, price-to-[[1]] can still gauge valuation — though sales are not earnings.",
+      "wordBank": ["sales", "earnings", "book"],
+      "answer": "sales",
+      "explanation": "Price-to-sales works without profits because it uses revenue. Just remember revenue can be unprofitable, so a cheap-looking P/S isn't automatically cheap."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "No single multiple fits every company. Match the tool to the business.",
+      "stickers": [
+        {
+          "label": "No profit yet: P/S",
+          "art": { "kind": "glyph", "name": "seed", "bg": "mint" },
+          "anchor": { "x": 0.27, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "Asset-heavy: P/B",
+          "art": { "kind": "glyph", "name": "bank", "bg": "sky" },
+          "anchor": { "x": 0.71, "y": 0.44 },
+          "rotation": 5
+        },
+        {
+          "label": "Different debt loads: EV/EBITDA",
+          "art": { "kind": "glyph", "name": "scale", "bg": "butter" },
+          "anchor": { "x": 0.33, "y": 0.77 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "When P/E falls short, other multiples price what it can't.",
+      "bullets": [
+        "P/S values unprofitable firms, but revenue isn't profit.",
+        "P/B suits banks, insurers and asset-heavy firms.",
+        "EV/EBITDA compares firms with different debt fairly."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "ink" },
+      "insight": "Every valuation multiple is a lens with a blind spot. Pick the one that fits the business, then check another.",
+      "attribution": { "source": "Day 5", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

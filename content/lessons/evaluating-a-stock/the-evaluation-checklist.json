@@ -1,0 +1,137 @@
+{
+  "id": "the-evaluation-checklist",
+  "courseId": "evaluating-a-stock",
+  "title": "Putting It All Together",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Two grades, not one.",
+      "body": "You now have the pieces. Assembling them means giving a company two separate grades: a **business grade** — growth, profitability, balance sheet, moat, management — and a **price grade** — what its valuation asks versus history and peers. A great business at a terrible price still fails.",
+      "art": {
+        "kind": "scene",
+        "name": "price-vs-value",
+        "palette": "sky",
+        "alt": "A business-quality grade weighed on one side of a scale against the price paid on the other."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "If you can't explain it, stop.",
+      "body": "Step one is not a ratio. Can you say, in two or three plain sentences, what the company sells, who buys it, and why they don't switch away? If not, no spreadsheet will save you. Understanding the business precedes valuing it.",
+      "art": { "kind": "glyph", "name": "lightbulb", "bg": "butter" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "One quarter is noise.",
+      "body": "Pull five years and watch the direction of revenue, operating margin, EPS, free cash flow, debt and share count. A single quarter can be dressed up; a multi-year trend is far harder to disguise. Direction matters more than any one dot.",
+      "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Five years beats one quarter",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [40, 52, 61, 78, 95],
+          "labels": ["Y1", "Y2", "Y3", "Y4", "Y5"],
+          "highlightIndex": 4,
+          "yLabel": "Free cash flow ($M)"
+        }
+      },
+      "caption": "Five years of rising free cash flow tells a story one quarter never could. Trends are the real evidence."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A wonderful company trades at a sky-high valuation. An automatic buy?",
+      "options": [
+        { "id": "yes", "label": "Yes — quality wins", "correct": false },
+        { "id": "no", "label": "No — the price decides the return", "correct": true }
+      ],
+      "explanation": "Business quality and price are separate grades. Overpay for a great company and it can still be a poor investment. Both grades have to pass before you act."
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "A repeatable order keeps you honest and stops you starting from the price you're hoping for.",
+      "stickers": [
+        {
+          "label": "Understand the business",
+          "art": { "kind": "glyph", "name": "lightbulb", "bg": "butter" },
+          "anchor": { "x": 0.26, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "Read five years of trends",
+          "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" },
+          "anchor": { "x": 0.72, "y": 0.34 },
+          "rotation": 5
+        },
+        {
+          "label": "Compare with rivals",
+          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
+          "anchor": { "x": 0.3, "y": 0.62 },
+          "rotation": -4
+        },
+        {
+          "label": "Write the risks down first",
+          "art": { "kind": "glyph", "name": "flag", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.8 },
+          "rotation": 4
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Record what would prove your thesis wrong before you buy — so a falling price meets a written [[1]], not a fresh excuse.",
+      "wordBank": ["risk", "target", "forecast"],
+      "answer": "risk",
+      "explanation": "Writing your risks down in advance is the antidote to rationalizing. When the stock drops, you check it against your own list instead of inventing reasons to hold on."
+    },
+    {
+      "id": "c8",
+      "type": "concept",
+      "headline": "Fifteen questions, not fifty.",
+      "body": "You don't need every ratio. Is it growing? Does growth reach shareholders? Does profit become cash? Is the balance sheet safe? Can it cover interest? What are you paying for earnings and cash? Can the dividend hold? What could go wrong? Answer those first.",
+      "art": { "kind": "glyph", "name": "check", "bg": "lilac" }
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Grade the business and the price separately, from trends, not one number.",
+      "bullets": [
+        "Explain the business before you value it.",
+        "Judge five-year trends against at least three rivals.",
+        "Write your risks down before you buy."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "ink" },
+      "insight": "Never decide from a single number. A low P/E can be a bargain or a trap; only the whole picture tells you which.",
+      "attribution": { "source": "Day 8", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

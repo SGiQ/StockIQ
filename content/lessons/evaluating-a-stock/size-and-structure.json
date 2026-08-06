@@ -1,0 +1,145 @@
+{
+  "id": "size-and-structure",
+  "courseId": "evaluating-a-stock",
+  "title": "How Big Is It, Really?",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Price tags lie about size.",
+      "body": "One company's shares cost **$8**. Another's cost **$600**. Which business is bigger? You cannot tell from the price. A share price only reflects how many slices the company cut its ownership into — not how large the company is.",
+      "art": { "kind": "glyph", "name": "dollar", "bg": "butter" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Size has one formula.",
+      "body": "**Market capitalization** is every share added together: share price times shares outstanding. Northwind trades at **$20** with **50 million** shares, so its market cap is **$1 billion**. That is what the market says the company's equity is worth today.",
+      "art": {
+        "kind": "scene",
+        "name": "market-cap-equation",
+        "palette": "sky",
+        "alt": "A share price multiplied by the number of shares outstanding equals a company's market capitalization."
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "The size ladder",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [0.2, 2, 10, 120, 1500],
+          "labels": ["Micro", "Small", "Mid", "Large", "Mega"],
+          "yLabel": "Market cap ($B)"
+        }
+      },
+      "caption": "The same word covers wildly different companies. Smaller names can grow faster but swing harder and trade thinly."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "Harbor trades at $600 a share, Cedar at $8. Which company is larger?",
+      "options": [
+        { "id": "harbor", "label": "Harbor — its shares cost far more", "correct": false },
+        { "id": "unknown", "label": "You cannot tell without the share count", "correct": true }
+      ],
+      "explanation": "Price per share depends on how many shares exist. A $600 stock with few shares can be smaller than an $8 stock with billions. Multiply price by share count before judging size."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Buying the whole business.",
+      "body": "Market cap prices the equity — but a buyer also inherits the company's debts and pockets its cash. **Enterprise value** captures that: market cap plus total debt minus cash. It is the price of the entire operating business, not just its shares.",
+      "art": { "kind": "glyph", "name": "bank", "bg": "mint" }
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Picture buying a $500,000 house that carries a $300,000 mortgage and has $50,000 in a safe. Enterprise value is what you truly take on.",
+      "stickers": [
+        {
+          "label": "Market cap: the sticker price",
+          "art": { "kind": "glyph", "name": "pie", "bg": "sky" },
+          "anchor": { "x": 0.28, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "Add the debt you inherit",
+          "art": { "kind": "glyph", "name": "anchor", "bg": "blush" },
+          "anchor": { "x": 0.7, "y": 0.46 },
+          "rotation": 5
+        },
+        {
+          "label": "Subtract the cash on hand",
+          "art": { "kind": "glyph", "name": "coins-stack", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.77 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Enterprise value starts from market cap, adds the company's [[1]], then subtracts its cash.",
+      "wordBank": ["debt", "revenue", "dividends"],
+      "answer": "debt",
+      "explanation": "Debt is money the new owner must repay, so it adds to the true price; cash offsets it. Revenue and dividends never enter the calculation."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "When the pie is cut into more slices",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [100, 105, 111, 118, 126],
+          "labels": ["Y1", "Y2", "Y3", "Y4", "Y5"],
+          "highlightIndex": 4,
+          "yLabel": "Shares outstanding (M)"
+        }
+      },
+      "caption": "Total profit can rise while each owner's slice shrinks. A climbing share count — often from stock-based pay — dilutes existing holders."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Size, debt and share count frame every other number you will judge.",
+      "bullets": [
+        "Market cap is share price times shares outstanding.",
+        "Enterprise value adds debt and subtracts cash.",
+        "A rising share count quietly dilutes owners."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "scene",
+        "name": "price-vs-value",
+        "palette": "ink",
+        "alt": "A company's market price sits on one side of a scale and its underlying business value on the other."
+      },
+      "insight": "Market cap is what the shares cost. Enterprise value is what the business costs. Always know which one you are asking about.",
+      "attribution": { "source": "Day 1", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

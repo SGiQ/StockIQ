@@ -1,0 +1,126 @@
+{
+  "id": "return-on-capital",
+  "courseId": "evaluating-a-stock",
+  "title": "How Well Does It Use Money?",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Profit is only half the story.",
+      "body": "Two firms each earn **$10M**. One used **$50M** of capital to do it, the other **$500M**. The first is the far better business — it turns money into profit ten times as efficiently. Returns on capital measure exactly that skill.",
+      "art": { "kind": "glyph", "name": "target", "bg": "butter" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Return on equity and assets.",
+      "body": "**ROE** is net income divided by shareholders' equity — profit per dollar owners put in. **ROA** divides by total assets instead, showing how well the whole asset base is used. ROA is especially telling for banks and other asset-heavy businesses.",
+      "art": { "kind": "glyph", "name": "percent", "bg": "mint" }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "A high ROE can deceive.",
+      "body": "Equity sits on the bottom of the ROE fraction — so debt and buybacks, which shrink equity, can lift ROE without the business improving at all. A soaring ROE beside soaring debt is a warning, not a triumph. Always read the two together.",
+      "art": { "kind": "glyph", "name": "warning", "bg": "blush" }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A company's ROE doubled while it piled on debt and bought back stock. Better business?",
+      "options": [
+        { "id": "yes", "label": "Yes — ROE doubled", "correct": false },
+        { "id": "no", "label": "Not necessarily — equity just shrank", "correct": true }
+      ],
+      "explanation": "Buybacks and debt reduce equity, the denominator, lifting ROE mechanically. The profit engine may be unchanged. ROIC, which counts all invested capital, is far harder to game."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "The number hardest to fake.",
+      "body": "**ROIC** — after-tax operating profit over all invested capital, debt and equity together — asks how well management turns **every** dollar into operating profit. It ignores the financing tricks that flatter ROE, which is why it is the cleanest test of quality.",
+      "art": { "kind": "glyph", "name": "key", "bg": "lilac" }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "Reinvesting at a high return compounds",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [100, 118, 139, 164, 193],
+          "labels": ["Y1", "Y2", "Y3", "Y4", "Y5"],
+          "highlightIndex": 4,
+          "yLabel": "Invested capital ($M)"
+        }
+      },
+      "caption": "A firm that reinvests at a high ROIC compounds its own value year after year — the engine behind long-term winners."
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "Because it counts debt and equity together, [[1]] resists the flattery that buybacks lend to return on equity.",
+      "wordBank": ["ROIC", "ROE", "EPS"],
+      "answer": "ROIC",
+      "explanation": "ROIC measures return on all invested capital, so shrinking equity through buybacks doesn't inflate it the way it inflates ROE."
+    },
+    {
+      "id": "c8",
+      "type": "sticker_reveal",
+      "body": "Three ratios, three questions — read them together, never one alone.",
+      "stickers": [
+        {
+          "label": "ROE: return to owners",
+          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
+          "anchor": { "x": 0.28, "y": 0.22 },
+          "rotation": -6
+        },
+        {
+          "label": "ROA: use of assets",
+          "art": { "kind": "glyph", "name": "building", "bg": "butter" },
+          "anchor": { "x": 0.7, "y": 0.45 },
+          "rotation": 5
+        },
+        {
+          "label": "ROIC: quality, hard to fake",
+          "art": { "kind": "glyph", "name": "key", "bg": "mint" },
+          "anchor": { "x": 0.34, "y": 0.77 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Returns on capital reveal how efficiently a business turns money into profit.",
+      "bullets": [
+        "ROE is profit per dollar of equity; ROA per dollar of assets.",
+        "Debt and buybacks can inflate ROE without real improvement.",
+        "ROIC is the cleanest, hardest-to-game quality test."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "forest" },
+      "insight": "A great business reinvests at high returns and compounds. A weak one burns capital just to stand still.",
+      "attribution": { "source": "Day 4", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

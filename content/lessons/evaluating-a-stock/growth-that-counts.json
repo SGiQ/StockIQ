@@ -1,0 +1,136 @@
+{
+  "id": "growth-that-counts",
+  "courseId": "evaluating-a-stock",
+  "title": "Growth That Actually Counts",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Growth is not one thing.",
+      "body": "\"Sales grew 20%\" sounds decisive. But grew over what — last quarter, or last year? From the core business, or one it bought? Paid by thousands of customers, or one? The headline number hides the answers that decide whether the growth lasts.",
+      "art": { "kind": "glyph", "name": "chart-up", "bg": "mint" }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Measure it year over year.",
+      "body": "Growth rate is this period's revenue minus last period's, divided by last period's: **$100M** to **$110M** is **10%**. Compare the same quarter a year apart, not back-to-back quarters — most businesses are seasonal, and a toy maker always booms in December.",
+      "art": { "kind": "glyph", "name": "calendar", "bg": "sky" }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Reported vs. organic",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [20, 6],
+          "labels": ["Reported", "Organic"],
+          "highlightIndex": 1,
+          "yLabel": "Revenue growth %"
+        }
+      },
+      "caption": "Strip out acquisitions and currency and the real, repeatable growth often shrinks. That leftover is what compounds."
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A firm's revenue jumped 30% the year it bought a rival. Strong organic growth?",
+      "options": [
+        { "id": "yes", "label": "Yes — 30% is 30%", "correct": false },
+        { "id": "no", "label": "No — the acquisition inflates it", "correct": true }
+      ],
+      "explanation": "Buying revenue is not the same as earning more of your own. Organic growth — excluding acquisitions and currency — shows whether the core business is actually winning customers."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Some revenue comes back.",
+      "body": "Revenue you must re-win with every sale is fragile. Revenue under subscriptions or contracts returns on its own — more predictable, easier to forecast. For those firms, watch **churn** (customers lost) and **net revenue retention** (whether the ones who stay spend more).",
+      "art": { "kind": "glyph", "name": "exchange", "bg": "lilac" }
+    },
+    {
+      "id": "c6",
+      "type": "sticker_reveal",
+      "body": "Before trusting a growth number, ask where it came from. Three signals separate durable growth from a one-off.",
+      "stickers": [
+        {
+          "label": "Organic, not acquired",
+          "art": { "kind": "glyph", "name": "seed", "bg": "mint" },
+          "anchor": { "x": 0.28, "y": 0.2 },
+          "rotation": -6
+        },
+        {
+          "label": "Recurring, not one-off",
+          "art": { "kind": "glyph", "name": "exchange", "bg": "sky" },
+          "anchor": { "x": 0.7, "y": 0.45 },
+          "rotation": 5
+        },
+        {
+          "label": "Many customers, not one",
+          "art": { "kind": "glyph", "name": "people", "bg": "butter" },
+          "anchor": { "x": 0.34, "y": 0.77 },
+          "rotation": -3
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "fill_blank",
+      "body": "When one client provides 40% of sales, the company carries heavy customer [[1]] — losing them would gut revenue.",
+      "wordBank": ["concentration", "retention", "churn"],
+      "answer": "concentration",
+      "explanation": "Concentration is dependence on a few buyers. Retention and churn describe whether customers stay — related, but not the risk of a single client walking out."
+    },
+    {
+      "id": "c8",
+      "type": "diagram",
+      "title": "One customer, most of the revenue",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [40, 15, 12, 10, 8],
+          "labels": ["Client A", "B", "C", "D", "Others"],
+          "highlightIndex": 0,
+          "yLabel": "% of revenue"
+        }
+      },
+      "caption": "One customer at 40% is a single point of failure. Revenue spread across many accounts survives any one leaving."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Durable growth is organic, recurring, and spread across many customers.",
+      "bullets": [
+        "Compare revenue year over year, not quarter to quarter.",
+        "Strip out acquisitions to see organic growth.",
+        "Recurring revenue and many customers make growth last."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": { "kind": "palette", "preset": "forest" },
+      "insight": "Ask not just how fast a company grew, but whether that growth will still be there next year.",
+      "attribution": { "source": "Day 2", "detail": "Evaluating a Stock" }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Beginner's Guide to Financial Statements",
+      "url": "https://www.sec.gov/about/reports-publications/investor-publications/beginners-guide-financial-statements",
+      "publisher": "U.S. Securities and Exchange Commission"
+    },
+    {
+      "title": "Research Before You Invest",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/investing-your-own",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

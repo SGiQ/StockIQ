@@ -8,12 +8,21 @@
 /* eslint-disable */
 import type { Book, Course, Lesson, Strategy, Term, Trader } from './schema';
 
+import course_evaluatingAStock from '../../content/courses/evaluating-a-stock.json';
 import course_gettingStarted from '../../content/courses/getting-started.json';
 import course_marketFoundations from '../../content/courses/market-foundations.json';
 import course_readingABusiness from '../../content/courses/reading-a-business.json';
 import course_readingAChart from '../../content/courses/reading-a-chart.json';
 import course_riskAndPositionSizing from '../../content/courses/risk-and-position-sizing.json';
 import course_tradingPsychology from '../../content/courses/trading-psychology.json';
+import lesson_evaluatingAStock_cashFlowValuation from '../../content/lessons/evaluating-a-stock/cash-flow-valuation.json';
+import lesson_evaluatingAStock_financialStrength from '../../content/lessons/evaluating-a-stock/financial-strength.json';
+import lesson_evaluatingAStock_growthThatCounts from '../../content/lessons/evaluating-a-stock/growth-that-counts.json';
+import lesson_evaluatingAStock_readingTheRedFlags from '../../content/lessons/evaluating-a-stock/reading-the-red-flags.json';
+import lesson_evaluatingAStock_returnOnCapital from '../../content/lessons/evaluating-a-stock/return-on-capital.json';
+import lesson_evaluatingAStock_sizeAndStructure from '../../content/lessons/evaluating-a-stock/size-and-structure.json';
+import lesson_evaluatingAStock_theEvaluationChecklist from '../../content/lessons/evaluating-a-stock/the-evaluation-checklist.json';
+import lesson_evaluatingAStock_valuationMultiples from '../../content/lessons/evaluating-a-stock/valuation-multiples.json';
 import lesson_gettingStarted_accountsFeesAndTaxes from '../../content/lessons/getting-started/accounts-fees-and-taxes.json';
 import lesson_gettingStarted_buildingAPortfolio from '../../content/lessons/getting-started/building-a-portfolio.json';
 import lesson_gettingStarted_firstTrade from '../../content/lessons/getting-started/first-trade.json';
@@ -164,6 +173,7 @@ import term_volume from '../../content/terms/volume.json';
 import term_yield from '../../content/terms/yield.json';
 
 export const allCourses: Course[] = [
+  course_evaluatingAStock as unknown as Course,
   course_gettingStarted as unknown as Course,
   course_marketFoundations as unknown as Course,
   course_readingABusiness as unknown as Course,
@@ -173,6 +183,14 @@ export const allCourses: Course[] = [
 ];
 
 export const allLessons: Lesson[] = [
+  lesson_evaluatingAStock_cashFlowValuation as unknown as Lesson,
+  lesson_evaluatingAStock_financialStrength as unknown as Lesson,
+  lesson_evaluatingAStock_growthThatCounts as unknown as Lesson,
+  lesson_evaluatingAStock_readingTheRedFlags as unknown as Lesson,
+  lesson_evaluatingAStock_returnOnCapital as unknown as Lesson,
+  lesson_evaluatingAStock_sizeAndStructure as unknown as Lesson,
+  lesson_evaluatingAStock_theEvaluationChecklist as unknown as Lesson,
+  lesson_evaluatingAStock_valuationMultiples as unknown as Lesson,
   lesson_gettingStarted_accountsFeesAndTaxes as unknown as Lesson,
   lesson_gettingStarted_buildingAPortfolio as unknown as Lesson,
   lesson_gettingStarted_firstTrade as unknown as Lesson,
