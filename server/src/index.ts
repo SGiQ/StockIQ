@@ -55,18 +55,39 @@ const PORT = Number(process.env.PORT ?? 8080);
 /** Requests larger than this are refused before being buffered. */
 const MAX_BODY_BYTES = 4 * 1024 * 1024;
 
+// The web build calls this cross-origin. CORS is not a security control here —
+// the capability token is — but without it the browser refuses the call.
+const CORS_HEADERS = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-headers': 'content-type, x-device-id, x-device-label',
+  'access-control-allow-methods': 'GET, POST, DELETE, OPTIONS',
+} as const;
+
 function send(res: ServerResponse, status: number, body: unknown): void {
   const json = JSON.stringify(body);
   res.writeHead(status, {
     'content-type': 'application/json; charset=utf-8',
     'content-length': Buffer.byteLength(json),
-    // The web build calls this cross-origin. CORS is not a security control
-    // here — the capability token is — but without it the browser refuses.
-    'access-control-allow-origin': '*',
-    'access-control-allow-headers': 'content-type, x-device-id, x-device-label',
-    'access-control-allow-methods': 'GET, POST, DELETE, OPTIONS',
+    ...CORS_HEADERS,
   });
   res.end(json);
+}
+
+/**
+ * The preflight reply: CORS headers and NOTHING else.
+ *
+ * It must be a bare 204 — no body, and therefore no content-length or
+ * content-type. A 204 carrying `content-length: 2` and a `{}` body (which is
+ * what `send(res, 204, {})` produced) is an HTTP/2 framing violation. curl and
+ * Chrome tolerate it, but WebKit — Safari and every browser on iOS — rejects
+ * the malformed frame and drops the connection with "The network connection
+ * was lost". Because every real request is a cross-origin POST, its preflight
+ * died first, so sign-in and telemetry failed on Safari (surfaced as "Load
+ * failed") while Chrome and curl worked. A body-less 204 is the whole fix.
+ */
+function sendPreflight(res: ServerResponse): void {
+  res.writeHead(204, CORS_HEADERS);
+  res.end();
 }
 
 async function readBody(req: IncomingMessage): Promise<unknown> {
@@ -88,7 +109,7 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
 const server = createServer((req, res) => {
   void (async () => {
     try {
-      if (req.method === 'OPTIONS') return send(res, 204, {});
+      if (req.method === 'OPTIONS') return sendPreflight(res);
 
       if (req.method === 'GET' && req.url === '/health') {
         await pool.query('SELECT 1');
