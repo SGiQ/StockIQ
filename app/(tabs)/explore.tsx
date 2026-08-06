@@ -156,20 +156,32 @@ function CourseTile({ course }: { course: Course }) {
     >
       <View style={styles.tileCover}>
         <ArtView spec={course.cover} aspectRatio={1} rounded={false} glyphSize={56} />
-        {course.isNew && (
+        {/* The corner badge reflects the learner's state, not just a content
+            flag: a finished course reads as finished, never "New". */}
+        {progress >= 1 ? (
+          <View style={styles.doneBadge}>
+            <Text variant="label" color={palette.paper} uppercase>
+              Done
+            </Text>
+          </View>
+        ) : course.isNew && progress === 0 ? (
           <View style={styles.newBadge}>
             <Text variant="label" color={palette.paper} uppercase>
               New
             </Text>
           </View>
-        )}
+        ) : null}
       </View>
 
       <Text variant="bodySm" color={palette.ink} numberOfLines={2} style={styles.tileTitle}>
         {course.title}
       </Text>
-      <Text variant="caption" color={palette.slate}>
-        {progress > 0 ? `${Math.round(progress * 100)}% complete` : course.author}
+      <Text variant="caption" color={progress >= 1 ? palette.forestDeep : palette.slate}>
+        {progress >= 1
+          ? 'Complete'
+          : progress > 0
+            ? `${Math.round(progress * 100)}% complete`
+            : course.author}
       </Text>
     </Pressable>
   );
@@ -234,6 +246,15 @@ const styles = StyleSheet.create({
     top: space.sm,
     right: space.sm,
     backgroundColor: palette.ink,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xxs + 1,
+  },
+  doneBadge: {
+    position: 'absolute',
+    top: space.sm,
+    right: space.sm,
+    backgroundColor: palette.success,
     borderRadius: radius.pill,
     paddingHorizontal: space.sm,
     paddingVertical: space.xxs + 1,

@@ -128,8 +128,10 @@ function CourseCard({ courseId }: { courseId: string }) {
           <Text variant="h3" color={palette.ink} numberOfLines={2}>
             {course.title}
           </Text>
-          <Text variant="caption" color={palette.slate}>
-            {`${earnedXp} / ${course.totalXp} XP · ${Math.round(progress * 100)}%`}
+          <Text variant="caption" color={done ? palette.forestDeep : palette.slate}>
+            {done
+              ? `Complete · ${earnedXp} / ${course.totalXp} XP`
+              : `${earnedXp} / ${course.totalXp} XP · ${Math.round(progress * 100)}%`}
           </Text>
         </View>
       </View>
