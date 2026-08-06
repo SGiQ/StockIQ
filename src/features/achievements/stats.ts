@@ -63,6 +63,9 @@ export function computeAchievementStats(input: AchievementStatsInput): Achieveme
   // them across lessons gives one data point per question the learner faced.
   let quizCorrect = 0;
   let quizTotal = 0;
+  // Derived from the progress rows, never read from a stored counter — see
+  // totalEarnedXp for why the counter drifts to 0 across a sign-in.
+  let totalXp = 0;
 
   for (const course of courses) {
     const lessons = listLessonsInCourse(course.id);
@@ -75,6 +78,7 @@ export function computeAchievementStats(input: AchievementStatsInput): Achieveme
 
       completedInCourse += 1;
       lessonsCompleted += 1;
+      totalXp += record.xpAwarded ?? 0;
       if (record.starred) perfectLessons += 1;
       for (const attempt of record.attempts) {
         quizTotal += 1;
@@ -101,7 +105,7 @@ export function computeAchievementStats(input: AchievementStatsInput): Achieveme
     quizAccuracy: quizTotal > 0 ? quizCorrect / quizTotal : 0,
     currentStreak: streak?.currentStreak ?? 0,
     longestStreak: streak?.longestStreak ?? 0,
-    totalXp: profile?.totalXp ?? 0,
+    totalXp,
     strategiesUnlocked: unlockedStrategies.length,
     totalStrategies: listStrategies().length,
     savedCount: saved.filter((c) => c.deletedAt === null).length,
