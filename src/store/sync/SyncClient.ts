@@ -75,6 +75,26 @@ export interface AccountSession {
 /** Requests are bounded so a stalled network cannot wedge a sync forever. */
 const TIMEOUT_MS = 20_000;
 
+/**
+ * How many times a *connection-level* failure is retried on a fresh socket.
+ *
+ * WebKit (Safari, and every browser on iOS) pools HTTP/2 connections and will
+ * dispatch a request onto one the server has already closed. The request never
+ * reaches the server and `fetch` rejects with "The network connection was
+ * lost" — surfaced to the person as "Load failed". WebKit silently re-sends an
+ * idempotent GET on a new connection but never a POST, so the first sign-in
+ * after an idle period fails on Safari while the identical call from curl or
+ * Chrome succeeds. Retrying opens a fresh connection, which is the documented
+ * workaround; three attempts covers a stale pool without hammering a genuinely
+ * dead network.
+ */
+const MAX_FETCH_ATTEMPTS = 3;
+
+/** Grows per attempt so the dead pooled connection is discarded before retry. */
+const RETRY_BACKOFF_MS = 300;
+
+const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+
 export class SyncClient implements SyncTransport {
   constructor(private readonly baseUrl: string) {}
 
@@ -88,31 +108,15 @@ export class SyncClient implements SyncTransport {
       throw new SyncError('No sync URL configured', 'unconfigured');
     }
 
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+    const url = `${this.baseUrl.replace(/\/$/, '')}${path}`;
+    const headers = {
+      'content-type': 'application/json',
+      'x-device-id': await getDeviceId(),
+      'x-device-label': deviceLabel(),
+    };
+    const payload = body === undefined ? undefined : JSON.stringify(body);
 
-    let response: Response;
-    try {
-      response = await fetch(`${this.baseUrl.replace(/\/$/, '')}${path}`, {
-        method,
-        headers: {
-          'content-type': 'application/json',
-          'x-device-id': await getDeviceId(),
-          'x-device-label': deviceLabel(),
-        },
-        body: body === undefined ? undefined : JSON.stringify(body),
-        signal: controller.signal,
-      });
-    } catch (error) {
-      // A dropped connection is the normal case on a phone, not an error
-      // worth surfacing — the caller retries on the next cycle.
-      throw new SyncError(
-        error instanceof Error ? error.message : 'network request failed',
-        'offline',
-      );
-    } finally {
-      clearTimeout(timer);
-    }
+    const response = await this.fetchWithRetry(url, method, headers, payload);
 
     if (!response.ok) {
       // The server's own message is preferred wherever it sends one, because
@@ -135,6 +139,53 @@ export class SyncClient implements SyncTransport {
     }
 
     return (await response.json()) as T;
+  }
+
+  /**
+   * Sends the request, retrying only a *thrown* fetch — a connection that never
+   * delivered the request — on a fresh socket. See MAX_FETCH_ATTEMPTS for why
+   * this is needed at all.
+   *
+   * A completed HTTP response is returned untouched, including an error status:
+   * the caller decides what a 400 or 503 means, and replaying a request the
+   * server already acted on could, for the auth routes, consume a code-guess
+   * attempt or a rate-limit slot. Only "the bytes never landed" is safe to
+   * repeat, and that is exactly the case where `fetch` rejects.
+   *
+   * Our own timeout is excluded: an aborted attempt means the network is slow
+   * or absent, not that a pooled connection went stale, so retrying it just
+   * multiplies a 20-second wait.
+   */
+  private async fetchWithRetry(
+    url: string,
+    method: string,
+    headers: Record<string, string>,
+    body: string | undefined,
+  ): Promise<Response> {
+    let lastError: unknown;
+
+    for (let attempt = 0; attempt < MAX_FETCH_ATTEMPTS; attempt++) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+      try {
+        return await fetch(url, { method, headers, body, signal: controller.signal });
+      } catch (error) {
+        lastError = error;
+        // A timeout is a real slow/absent network, not a stale connection.
+        if (controller.signal.aborted) break;
+        // Let the pool drop the dead connection before we open a new one.
+        if (attempt < MAX_FETCH_ATTEMPTS - 1) await delay(RETRY_BACKOFF_MS * (attempt + 1));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    // A dropped connection is the normal case on a phone, not an error worth
+    // surfacing — the caller retries on the next cycle.
+    throw new SyncError(
+      lastError instanceof Error ? lastError.message : 'network request failed',
+      'offline',
+    );
   }
 
   sync(since: number, changes: LocalRecord[]): Promise<SyncResponse> {
