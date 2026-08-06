@@ -11,7 +11,7 @@
  * no component ever imports AsyncStorage.
  */
 import { create } from 'zustand';
-import { getLesson, lessonPath, listLessonsInCourse } from '@/content/registry';
+import { getLesson, lessonPath, listCourses, listLessonsInCourse } from '@/content/registry';
 import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { toDayISO } from '@/lib/dates';
 import {
@@ -486,6 +486,21 @@ export function courseEarnedXp(progress: ProgressMap, courseId: CourseId): numbe
     (sum, l) => sum + (progress[progressId(courseId, l.id)]?.xpAwarded ?? 0),
     0,
   );
+}
+
+/**
+ * Total XP banked across every course, derived from the progress rows.
+ *
+ * XP is NOT read from a stored counter. The per-lesson `xpAwarded` on the
+ * (synced) progress rows is the source of truth; a running total on the profile
+ * would be an accumulator on a singleton row under last-write-wins sync, so
+ * signing in on a second device could let a newer-but-emptier profile clobber
+ * it to 0 while the progress rows themselves survived — which is exactly what
+ * happened. Deriving keeps this number in step with the course headers and the
+ * lessons-completed count by construction, and self-heals any drifted account.
+ */
+export function totalEarnedXp(progress: ProgressMap): number {
+  return listCourses().reduce((sum, c) => sum + courseEarnedXp(progress, c.id), 0);
 }
 
 /**

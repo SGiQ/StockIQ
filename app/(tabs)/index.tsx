@@ -16,6 +16,7 @@ import {
   courseCompletion,
   courseEarnedXp,
   nextLessonId,
+  totalEarnedXp,
   useAppStore,
 } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
@@ -23,7 +24,7 @@ import { palette, radius, space } from '@/theme/tokens';
 export default function LearnTab() {
   const router = useRouter();
   const courses = listCourses();
-  const totalXp = useAppStore((s) => s.profile?.totalXp ?? 0);
+  const totalXp = useAppStore((s) => totalEarnedXp(s.progress));
   const streak = useAppStore((s) => s.streak);
   const selectedCourseId = useAppStore((s) => s.profile?.selectedCourseId ?? null);
   const narrationEnabled = useAppStore(

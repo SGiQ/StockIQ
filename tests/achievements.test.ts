@@ -80,6 +80,21 @@ test('completing the first lesson earns exactly First steps (and a perfect run)'
   assert.ok(!earned.includes('curriculum'));
 });
 
+test('total XP is derived from progress, not a clobbered profile counter', () => {
+  const { lesson, progress } = firstLessonState();
+
+  // The progress row carries the XP; the stored profile counter is stale at 0,
+  // which is what a sign-in can do to the singleton profile row under
+  // last-write-wins while the per-lesson rows survive. The stat must follow the
+  // progress, not the counter — else the header, portfolio, and the 500-XP
+  // badge all read 0 despite completed lessons.
+  const clobberedProfile = { totalXp: 0 } as unknown as UserProfile;
+  const stats = computeAchievementStats({ ...EMPTY_STATE, progress, profile: clobberedProfile });
+
+  assert.equal(stats.totalXp, lesson.xp);
+  assert.ok(stats.totalXp > 0, 'derived XP should be non-zero for a completed lesson');
+});
+
 test('already-earned badges are not re-emitted', () => {
   const { progress } = firstLessonState();
   const stats = computeAchievementStats({ ...EMPTY_STATE, progress });

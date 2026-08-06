@@ -13,7 +13,7 @@ import { BADGES } from '@/features/achievements';
 import { dueReviewCount } from '@/features/review';
 import { pairing } from '@/store';
 import { deriveDashboardMetrics } from '@/lib/dashboard';
-import { courseCompletion, selectReadiness, useAppStore } from '@/store/slices/useAppStore';
+import { courseCompletion, selectReadiness, totalEarnedXp, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 
 export default function DashboardTab() {
@@ -92,7 +92,7 @@ export default function DashboardTab() {
             />
             <View style={styles.heroCopy}>
               <Text variant="label" color={palette.mintSoft} uppercase>Learning portfolio</Text>
-              <Text variant="display" color={palette.paper}>{`${profile?.totalXp ?? 0} XP`}</Text>
+              <Text variant="display" color={palette.paper}>{`${totalEarnedXp(progress)} XP`}</Text>
               <Text variant="caption" color={palette.paper}>
                 {`${metrics.completedCount} of ${totalLessons} lessons complete`}
               </Text>
