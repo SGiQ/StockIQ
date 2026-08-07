@@ -8,6 +8,246 @@
 export type NarrationVoice = 'male' | 'female';
 
 export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
+  "lesson:getting-started/accounts-fees-and-taxes#c1": {
+    "male": "914261f0657fdd6a",
+    "female": "20767620a2593e7f"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c2": {
+    "male": "b0d10e5d70c13fd6",
+    "female": "8267087fa4a72bb2"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c3": {
+    "male": "60d69c9c6d8fc072",
+    "female": "149a8460717811ab"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c4": {
+    "male": "4109d48e7b7fbea9",
+    "female": "bcd0b7a10dbce870"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c5": {
+    "male": "acaf816a6e6934b9",
+    "female": "6c797c9db2b6e07f"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c6": {
+    "male": "59e7943c8f726f00",
+    "female": "0ba9886153b4d62a"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c6:feedback-correct": {
+    "male": "9fe7c7732280d6f1",
+    "female": "ca2c284c388909f6"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c6:feedback-incorrect": {
+    "male": "d33e7dec38ba9b13",
+    "female": "ea3adb102b632975"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c7": {
+    "male": "0b369687ccc0e9d2",
+    "female": "52ab480dae318c86"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c8": {
+    "male": "e623165e4df0fa51",
+    "female": "dd6e391dace12d39"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c8:feedback-correct": {
+    "male": "4ac3defa25ea8739",
+    "female": "3065d92c2a81383e"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c8:feedback-incorrect": {
+    "male": "8b296ac2ce2bbea1",
+    "female": "54e83eb721d6f8c3"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c9": {
+    "male": "b9696ef81e1b0804",
+    "female": "1b5505773b384334"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c10": {
+    "male": "bdcf22ec76500e36",
+    "female": "551f53e392012688"
+  },
+  "lesson:getting-started/accounts-fees-and-taxes#c11": {
+    "male": "40b8eb58b797663c",
+    "female": "686d2378b15ab436"
+  },
+  "lesson:getting-started/building-a-portfolio#c1": {
+    "male": "d7b5ee4f2b1947df",
+    "female": "c86a17b3bfc8b3dc"
+  },
+  "lesson:getting-started/building-a-portfolio#c2": {
+    "male": "fddce5ab639d8566",
+    "female": "f3c159e45821af81"
+  },
+  "lesson:getting-started/building-a-portfolio#c3": {
+    "male": "218e0d76dc718f82",
+    "female": "423164e17ed90c37"
+  },
+  "lesson:getting-started/building-a-portfolio#c4": {
+    "male": "b3181e2815d0ec23",
+    "female": "e1d144266bc82c35"
+  },
+  "lesson:getting-started/building-a-portfolio#c5": {
+    "male": "7723b9658e385999",
+    "female": "3632b52ce9ed7a18"
+  },
+  "lesson:getting-started/building-a-portfolio#c6": {
+    "male": "37028ce26590fb41",
+    "female": "248afe2bf63e3740"
+  },
+  "lesson:getting-started/building-a-portfolio#c6:feedback-correct": {
+    "male": "6354d3afefc48ea7",
+    "female": "19e3580d77aac793"
+  },
+  "lesson:getting-started/building-a-portfolio#c6:feedback-incorrect": {
+    "male": "04f1baf455c82b25",
+    "female": "5e0719ee05394dbd"
+  },
+  "lesson:getting-started/building-a-portfolio#c7": {
+    "male": "9d9c6759379832e4",
+    "female": "a598d523b3598c4f"
+  },
+  "lesson:getting-started/building-a-portfolio#c8": {
+    "male": "74343bb7e2dc3d8e",
+    "female": "27e62bf5446a7d90"
+  },
+  "lesson:getting-started/building-a-portfolio#c8:feedback-correct": {
+    "male": "0f0f12de79545ab4",
+    "female": "ee86045868953904"
+  },
+  "lesson:getting-started/building-a-portfolio#c8:feedback-incorrect": {
+    "male": "1ef73b45c7872245",
+    "female": "36c48fa34bbb4d5f"
+  },
+  "lesson:getting-started/building-a-portfolio#c9": {
+    "male": "b85abb3ff8da884a",
+    "female": "8acde02ea765a144"
+  },
+  "lesson:getting-started/building-a-portfolio#c10": {
+    "male": "1c9b1d73a9be6bbe",
+    "female": "b9f9ce9452d28ef8"
+  },
+  "lesson:getting-started/building-a-portfolio#c11": {
+    "male": "84e57739957edc15",
+    "female": "bb9f152129837de0"
+  },
+  "lesson:getting-started/first-trade#c1": {
+    "male": "69a12a3c621c95c4",
+    "female": "647f885acf6dfa60"
+  },
+  "lesson:getting-started/first-trade#c2": {
+    "male": "7755626b61c1e8a9",
+    "female": "5dc9a72b76f15245"
+  },
+  "lesson:getting-started/first-trade#c3": {
+    "male": "ea7cd394b96d32e2",
+    "female": "74f06dce71ba5806"
+  },
+  "lesson:getting-started/first-trade#c4": {
+    "male": "b8813a90342b9db7",
+    "female": "2717ab7d699ee6cb"
+  },
+  "lesson:getting-started/first-trade#c5": {
+    "male": "8ae93870f3ff7fe8",
+    "female": "5fb2d51b81376350"
+  },
+  "lesson:getting-started/first-trade#c6": {
+    "male": "4d89746c4f20bb2d",
+    "female": "45bb26ef71713b0f"
+  },
+  "lesson:getting-started/first-trade#c7": {
+    "male": "8ea4b50a198623ea",
+    "female": "662c7bf48958abfc"
+  },
+  "lesson:getting-started/first-trade#c7:feedback-correct": {
+    "male": "ea8c7d458a0d8e5c",
+    "female": "307e4cc6a415f6db"
+  },
+  "lesson:getting-started/first-trade#c7:feedback-incorrect": {
+    "male": "2739970af489d491",
+    "female": "ec7a58e0c3a24a17"
+  },
+  "lesson:getting-started/first-trade#c8": {
+    "male": "c5147168322eeb9f",
+    "female": "d5c5091660bd904c"
+  },
+  "lesson:getting-started/first-trade#c9": {
+    "male": "5931ab5a03112014",
+    "female": "116836b811c7518b"
+  },
+  "lesson:getting-started/first-trade#c9:feedback-correct": {
+    "male": "96e0565dc691074a",
+    "female": "3c96d4e9c1a78883"
+  },
+  "lesson:getting-started/first-trade#c9:feedback-incorrect": {
+    "male": "267ea687f8894d67",
+    "female": "0e3837bac398e0d5"
+  },
+  "lesson:getting-started/first-trade#c10": {
+    "male": "42726b1be28cd009",
+    "female": "60f2243ef4b5fe4e"
+  },
+  "lesson:getting-started/first-trade#c11": {
+    "male": "bec9c95ac5b77f0c",
+    "female": "11e9d79725dc0b26"
+  },
+  "lesson:getting-started/index-funds#c1": {
+    "male": "97efd6276c19efd8",
+    "female": "0146041f2373627b"
+  },
+  "lesson:getting-started/index-funds#c2": {
+    "male": "69c5640aec308461",
+    "female": "41cd4eceb35a66ef"
+  },
+  "lesson:getting-started/index-funds#c3": {
+    "male": "41c63c47fdf16d1c",
+    "female": "16a67f7df947ea58"
+  },
+  "lesson:getting-started/index-funds#c4": {
+    "male": "c12d16c846289fa0",
+    "female": "ddd2a55ede27f740"
+  },
+  "lesson:getting-started/index-funds#c5": {
+    "male": "0cf5bef330bdb9ee",
+    "female": "1dbe401941dfda4a"
+  },
+  "lesson:getting-started/index-funds#c6": {
+    "male": "7c5ba07ac7098330",
+    "female": "92463509deb3cb1d"
+  },
+  "lesson:getting-started/index-funds#c6:feedback-correct": {
+    "male": "22efee25cd62f663",
+    "female": "afc09f9a35e74a10"
+  },
+  "lesson:getting-started/index-funds#c6:feedback-incorrect": {
+    "male": "40e931b43f93a20c",
+    "female": "245c3b912105087b"
+  },
+  "lesson:getting-started/index-funds#c7": {
+    "male": "37ea987715aaa5ab",
+    "female": "1cc73715bce769b6"
+  },
+  "lesson:getting-started/index-funds#c8": {
+    "male": "c8cd8574ccfdb27d",
+    "female": "05bcfc8aea15c962"
+  },
+  "lesson:getting-started/index-funds#c9": {
+    "male": "ee35ed751bd44eef",
+    "female": "8b7f6139530c8ee2"
+  },
+  "lesson:getting-started/index-funds#c9:feedback-correct": {
+    "male": "7b29663710bf7378",
+    "female": "53e23c22ed1f24bf"
+  },
+  "lesson:getting-started/index-funds#c9:feedback-incorrect": {
+    "male": "ba28a7c2b5467ff9",
+    "female": "68a79a7b33642d07"
+  },
+  "lesson:getting-started/index-funds#c10": {
+    "male": "d8cc99167e565b0e",
+    "female": "32a1e7db2ec5a484"
+  },
+  "lesson:getting-started/index-funds#c11": {
+    "male": "6a9d9ee36a395ca6",
+    "female": "16498e23040b2a9a"
+  },
   "lesson:market-foundations/bid-ask-and-spread#c1": {
     "male": "fc3fe8ba6c5b0c17",
     "female": "611d98c8a84f421e"
@@ -231,6 +471,66 @@ export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
   "lesson:market-foundations/market-cap#c10": {
     "male": "ba3a19aacaffa3a4",
     "female": "2fc43ae313074e0f"
+  },
+  "lesson:market-foundations/options-basics#c1": {
+    "male": "b8ea1b33020f8bd4",
+    "female": "81967990b001035a"
+  },
+  "lesson:market-foundations/options-basics#c2": {
+    "male": "52d2420799db52ec",
+    "female": "726042c921ae80d7"
+  },
+  "lesson:market-foundations/options-basics#c3": {
+    "male": "d7b5f4f2204115e0",
+    "female": "e8d1e8f2f547715b"
+  },
+  "lesson:market-foundations/options-basics#c4": {
+    "male": "3bd30a2e111d092e",
+    "female": "e410be00d8385dc5"
+  },
+  "lesson:market-foundations/options-basics#c5": {
+    "male": "0b77f6ee372d9a31",
+    "female": "cb2d8e80c6f41100"
+  },
+  "lesson:market-foundations/options-basics#c6": {
+    "male": "9c7a3c31e20b0d00",
+    "female": "f8e1448c6de1d395"
+  },
+  "lesson:market-foundations/options-basics#c6:feedback-correct": {
+    "male": "72acd07bab71fa6b",
+    "female": "a247fd9bb1242c18"
+  },
+  "lesson:market-foundations/options-basics#c6:feedback-incorrect": {
+    "male": "af0923a90ddd294c",
+    "female": "070300089767db4c"
+  },
+  "lesson:market-foundations/options-basics#c7": {
+    "male": "a4a6e6b44aebdd82",
+    "female": "8681d268610cc37e"
+  },
+  "lesson:market-foundations/options-basics#c8": {
+    "male": "d199049817f9b722",
+    "female": "1b61be6931187f76"
+  },
+  "lesson:market-foundations/options-basics#c8:feedback-correct": {
+    "male": "93e207c2a3347cfa",
+    "female": "491c9967af2097ac"
+  },
+  "lesson:market-foundations/options-basics#c8:feedback-incorrect": {
+    "male": "52c314a7b3f2b6e6",
+    "female": "1722b9ae3e8a6a80"
+  },
+  "lesson:market-foundations/options-basics#c9": {
+    "male": "8cc83e17dd69eb0d",
+    "female": "59ee603c2b8d31e8"
+  },
+  "lesson:market-foundations/options-basics#c10": {
+    "male": "3a890b4768950284",
+    "female": "3f2a42faf7b5f576"
+  },
+  "lesson:market-foundations/options-basics#c11": {
+    "male": "4a2a62027495c284",
+    "female": "a442f75643d6a16f"
   },
   "lesson:market-foundations/order-types#c1": {
     "male": "fcc15eb894a1a4c6",
