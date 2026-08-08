@@ -7,6 +7,8 @@
  * files and makes the dependency direction obvious.
  */
 export type {
+  ArtLabel,
+  ArtLabelTone,
   ArtSpec,
   Book,
   BookId,

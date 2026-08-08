@@ -16,6 +16,7 @@ import {
   allTerms,
   allTraders,
 } from './index.generated';
+import { applyArtLabels } from './lessonArtLabels';
 import { applyLessonArtwork } from './lessonArtwork';
 import type {
   Book,
@@ -39,7 +40,7 @@ import type {
 export const lessonPath = (courseId: CourseId, lessonId: LessonId): LessonPath =>
   `${courseId}/${lessonId}`;
 
-const allLessons = rawLessons.map(applyLessonArtwork);
+const allLessons = rawLessons.map(applyLessonArtwork).map(applyArtLabels);
 const coursesById = new Map<CourseId, Course>(allCourses.map((c) => [c.id, c]));
 const lessonsByPath = new Map<LessonPath, Lesson>(
   allLessons.map((l) => [lessonPath(l.courseId, l.id), l]),
