@@ -78,7 +78,7 @@ export function ArtView({
         <View style={container}>
           <IllustrationArt source={spec.source} alt={spec.alt} active={active} />
           {spec.labels?.map((label, i) => (
-            <ArtLabel key={`${label.text}-${i}`} label={label} active={active} />
+            <ArtLabel key={`${label.text}-${i}`} label={label} active={active} index={i} />
           ))}
         </View>
       );

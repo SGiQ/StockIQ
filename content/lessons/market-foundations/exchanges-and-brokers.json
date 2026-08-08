@@ -90,9 +90,8 @@
       "headline": "The order book is the queue.",
       "body": "Every venue keeps a live list of resting buy and sell orders — the order book. The highest bid and the lowest offer set the current quote. **Market makers** post quotes on both sides all day and earn the small gap between them.",
       "art": {
-        "kind": "scene",
-        "name": "order-book",
-        "palette": "butter",
+        "kind": "illustration",
+        "source": "/lesson-art/order-book.jpg",
         "alt": "A live order book with stacked bids on one side and asks on the other."
       }
     },

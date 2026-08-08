@@ -116,7 +116,7 @@ in the existing paper-craft style. Leave their files untouched:
 | `order-book.jpg` | A central ledger board with two rising columns of stacked tiles — a green buy column on the left, a rust sell column on the right — tallest where the two sides nearly meet in the middle. |
 | `weighting-tower.jpg` | A tiered tower of blocks: a few very wide green and ochre blocks at the base narrowing to many small blocks at the top — the biggest companies taking the widest tiers. |
 | `price-weighted.jpg` | A balance scale tipping toward a single tall narrow green share block that outweighs several shorter, broader rust blocks on the other pan — height winning over true size. |
-| `benchmark-race.jpg` | Two flat runner figures on parallel lanes — an ochre benchmark pace-setter slightly ahead of a green runner chasing it — striding toward a cream finish ribbon (most funds trail the index). |
+| `benchmark-race.jpg` | Two flat runner figures on parallel lanes — a green runner just ahead of an ochre pace-setter — striding toward a cream finish ribbon. |
 | `market-cap-equation.jpg` | A tall price banner on the left and a wide fan of many small ownership tiles on the right, joined by a multiplication cross, combining into one large company block. |
 | `price-vs-value.jpg` | A small modest price tag in the foreground and, rising behind it, a much larger company building many times its size — a tiny sticker price hiding a bigger business. |
 | `size-spectrum.jpg` | Three company buildings in a row on stepped platforms, each clearly larger than the last — a small green shopfront, a mid rust building, a tall ochre tower. |

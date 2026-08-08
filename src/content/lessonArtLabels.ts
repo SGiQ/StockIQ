@@ -31,15 +31,17 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
     ],
   },
   'market-foundations/indices-and-benchmarks': {
-    // price-weighted — a $400 stock moves the Dow more than a $40 stock
+    // price-weighted — a $400 stock (tall green bar) moves the Dow more than a
+    // $40 stock (broad rust cubes)
     c4: [
-      { text: '$400', x: 0.62, y: 0.42, tone: 'green' },
-      { text: '$40', x: 0.3, y: 0.52, tone: 'rust' },
+      { text: '$400', x: 0.8, y: 0.6, tone: 'green' },
+      { text: '$40', x: 0.25, y: 0.47, tone: 'rust' },
     ],
-    // benchmark-race — up 9% while the index returned 14% (the index leads)
+    // benchmark-race — the leading runner is the index at +14%, the trailing
+    // fund at +9%
     c8: [
-      { text: '+9%', x: 0.4, y: 0.46, tone: 'green' },
-      { text: '+14%', x: 0.66, y: 0.4, tone: 'ochre' },
+      { text: '+14%', x: 0.56, y: 0.24, tone: 'green' },
+      { text: '+9%', x: 0.28, y: 0.28, tone: 'ochre' },
     ],
   },
   'market-foundations/market-cap': {
@@ -48,32 +50,27 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
       { text: '$5', x: 0.17, y: 0.42, tone: 'green' },
       { text: '$60B', x: 0.82, y: 0.5, tone: 'green' },
     ],
-    // price-vs-value — a $3 sticker on a $300 business
-    c5: [
-      { text: '$3', x: 0.34, y: 0.64, tone: 'slate' },
-      { text: '$300', x: 0.6, y: 0.34, tone: 'green' },
-    ],
+    // price-vs-value — a tiny $3 sticker price on the blank tag under a big building
+    c5: [{ text: '$3', x: 0.5, y: 0.855, tone: 'slate' }],
   },
   'market-foundations/order-types': {
-    // execution-tradeoff (limit) — a limit to buy at $20.00 never pays $20.01
-    c3: [{ text: '$20.00', x: 0.28, y: 0.5, tone: 'green' }],
-    // stop-trigger — own at $52, sell stop at $50
+    // execution-tradeoff (limit) — a limit to buy at $20.00 on the locked green door
+    c3: [{ text: '$20.00', x: 0.3, y: 0.4, tone: 'cream' }],
+    // stop-trigger — own at $52 (top step), sell stop at $50 (trigger step)
     c5: [
-      { text: '$52', x: 0.24, y: 0.28, tone: 'slate' },
-      { text: '$50', x: 0.56, y: 0.6, tone: 'rust' },
+      { text: '$52', x: 0.22, y: 0.2, tone: 'slate' },
+      { text: '$50', x: 0.5, y: 0.34, tone: 'rust' },
     ],
-    // execution-tradeoff (stop-limit) — stop $50, limit floor $48
-    c8: [
-      { text: '$50', x: 0.3, y: 0.4, tone: 'rust' },
-      { text: '$48', x: 0.3, y: 0.62, tone: 'green' },
-    ],
+    // execution-tradeoff (stop-limit) — limit floor $48 on the locked green door
+    c8: [{ text: '$48', x: 0.3, y: 0.42, tone: 'cream' }],
   },
   'market-foundations/reading-a-quote': {
-    // price-change — last $48.20 (+7.11%) vs previous close $45.00
+    // price-change — previous close $45.00 (rust pin, lower-left), last $48.20
+    // (green pin, upper-right), +7.11% on the ascending steps
     c2: [
-      { text: '$45.00', x: 0.26, y: 0.62, tone: 'slate' },
-      { text: '$48.20', x: 0.72, y: 0.3, tone: 'green' },
-      { text: '+7.11%', x: 0.5, y: 0.48, tone: 'green' },
+      { text: '$45.00', x: 0.2, y: 0.68, tone: 'slate' },
+      { text: '$48.20', x: 0.66, y: 0.2, tone: 'green' },
+      { text: '+7.11%', x: 0.5, y: 0.5, tone: 'green' },
     ],
     // event-gap — closed $45.00, opened $46.50 across the gap
     c4: [

@@ -22,9 +22,8 @@
       "headline": "A market order guarantees a fill, not a price.",
       "body": "Send it and it executes almost immediately against whatever offers exist. That is the whole promise: you will be done. The number you end up paying is set by the order book at that instant, not by the quote you tapped.",
       "art": {
-        "kind": "scene",
-        "name": "order-book",
-        "palette": "sky",
+        "kind": "illustration",
+        "source": "/lesson-art/order-book.jpg",
         "alt": "A market order moving through available asks in the order book."
       }
     },
@@ -34,9 +33,8 @@
       "headline": "A limit order guarantees a price, not a fill.",
       "body": "Set a limit to buy at $20.00 and you will never pay $20.01. If the stock never trades down to $20.00, you simply do not own it. The order sits there while the price walks away. Price certainty, bought with execution uncertainty.",
       "art": {
-        "kind": "scene",
-        "name": "execution-tradeoff",
-        "palette": "butter",
+        "kind": "illustration",
+        "source": "/lesson-art/execution-tradeoff.jpg",
         "alt": "A limit order favoring price control while accepting the risk of no fill."
       }
     },
@@ -64,9 +62,8 @@
       "headline": "A stop order is a trigger, not a price.",
       "body": "You own a stock at $52 and set a sell stop at $50. Nothing happens while it holds above. The moment $50 trades, your stop turns into a plain market order and sells at whatever price is available next.",
       "art": {
-        "kind": "scene",
-        "name": "stop-trigger",
-        "palette": "blush",
+        "kind": "illustration",
+        "source": "/lesson-art/stop-trigger.jpg",
         "alt": "A falling price crossing a stop trigger and turning into a market order."
       }
     },
@@ -149,9 +146,8 @@
       "headline": "A stop-limit adds a floor, and a new risk.",
       "body": "Stop at $50, limit at $48: you will never sell below $48. But if the stock gaps to $44 and keeps sliding, nothing fills. You still own it, all the way down. The floor that protected your price also trapped you.",
       "art": {
-        "kind": "scene",
-        "name": "execution-tradeoff",
-        "palette": "mint",
+        "kind": "illustration",
+        "source": "/lesson-art/execution-tradeoff.jpg",
         "alt": "A stop-limit defending a minimum price while leaving execution uncertain."
       }
     },
