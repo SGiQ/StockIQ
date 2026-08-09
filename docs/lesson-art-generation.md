@@ -154,7 +154,7 @@ in the existing paper-craft style. Leave their files untouched:
 | `coffee-register.jpg` | A coffee-shop counter under a striped awning with a big overflowing till drawer of coins — a full day's sales taken in, before any costs are paid. |
 | `coffee-profit-journey.jpg` | A single large coin travelling along a winding path past four toll gates, trimmed smaller at each gate, arriving as a tiny coin at the end — revenue shrinking to net income. |
 | `coffee-gross-profit.jpg` | A coffee-shop pile of coins with three small items lifted out and set aside — a coffee bean, a milk carton, a paper cup — leaving a smaller retained pile of coins. |
-| `coffee-operating-costs.jpg` | A coin pile with three labelled cut-outs pulled from it — a little apron (staff), a small house (rent), a tiny megaphone (marketing) — leaving a modest remaining stack. |
+| `coffee-operating-costs.jpg` | A coin pile with three small cut-out symbols pulled from it — a little apron for staff, a small house for rent, a tiny megaphone for marketing — leaving a modest remaining stack. |
 | `coffee-expansion-risk.jpg` | A row of new coffee shops growing taller left to right, but beneath them an earnings line sinking and dipping below a marked baseline into a dark trough — growth that loses money. |
 | `income-waterfall.jpg` | A waterfall of coins pouring from a tall top ledge, splitting off into side channels at each drop (costs), the final thin stream collecting in a small basin at the bottom (earnings). |
 | `pe-equation.jpg` | A tall price banner above a single small earnings coin, joined by a division bar, producing a row of stacked year-tiles beside them — how many years of earnings the price equals. |

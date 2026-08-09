@@ -146,24 +146,24 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
     ],
   },
   'reading-a-business/revenue-vs-earnings': {
-    // coffee-register — $100m of sales taken in
-    c2: [{ text: '$100M', x: 0.5, y: 0.55, tone: 'green' }],
-    // coffee-profit-journey — $100m in, $3m survives
+    // coffee-register — $100m on the overflowing till drawer
+    c2: [{ text: '$100M', x: 0.5, y: 0.63, tone: 'green' }],
+    // coffee-profit-journey — $100m big coin (start), $3m tiny coin (end)
     c3: [
-      { text: '$100M', x: 0.14, y: 0.4, tone: 'green' },
-      { text: '$3M', x: 0.86, y: 0.6, tone: 'rust' },
+      { text: '$100M', x: 0.12, y: 0.32, tone: 'green' },
+      { text: '$3M', x: 0.9, y: 0.66, tone: 'rust' },
     ],
-    // coffee-gross-profit — $100m less product cost leaves $38m
+    // coffee-gross-profit — $100m tall stack (left), $38m retained stack (right)
     c4: [
-      { text: '$100M', x: 0.26, y: 0.4, tone: 'slate' },
-      { text: '$38M', x: 0.72, y: 0.55, tone: 'green' },
+      { text: '$100M', x: 0.25, y: 0.32, tone: 'slate' },
+      { text: '$38M', x: 0.85, y: 0.56, tone: 'green' },
     ],
-    // coffee-operating-costs — $30m of staff, rent and marketing
-    c5: [{ text: '−$30M', x: 0.42, y: 0.4, tone: 'rust' }],
-    // coffee-expansion-risk — record $130m revenue, but ends at −$3m
+    // coffee-operating-costs — $30m pulled out to staff, rent and marketing
+    c5: [{ text: '−$30M', x: 0.62, y: 0.45, tone: 'rust' }],
+    // coffee-expansion-risk — record $130m revenue (tall shop), −$3m in the trough
     c7: [
-      { text: '$130M', x: 0.3, y: 0.24, tone: 'green' },
-      { text: '−$3M', x: 0.74, y: 0.8, tone: 'rust' },
+      { text: '$130M', x: 0.82, y: 0.13, tone: 'green' },
+      { text: '−$3M', x: 0.7, y: 0.9, tone: 'rust' },
     ],
   },
   'reading-a-business/the-price-earnings-ratio': {
