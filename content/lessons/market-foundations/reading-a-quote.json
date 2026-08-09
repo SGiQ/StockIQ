@@ -88,9 +88,8 @@
       "headline": "The gap is where the news happened.",
       "body": "Regular hours run 9:30 to 4:00 Eastern. Earnings, deals and headlines often land outside them, and pre-market trading reprices the stock before the opening bell. Northwind closed at $45.00 and opened at $46.50 — that $1.50 moved while the main session was shut.",
       "art": {
-        "kind": "scene",
-        "name": "event-gap",
-        "palette": "lilac",
+        "kind": "illustration",
+        "source": "/lesson-art/event-gap.jpg",
         "alt": "A price chart jumping across an overnight news gap between sessions."
       }
     },

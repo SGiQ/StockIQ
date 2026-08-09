@@ -72,10 +72,10 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
       { text: '$48.20', x: 0.66, y: 0.2, tone: 'green' },
       { text: '+7.11%', x: 0.5, y: 0.5, tone: 'green' },
     ],
-    // event-gap — closed $45.00, opened $46.50 across the gap
+    // event-gap — closed $45.00 (lower segment), opened $46.50 (jumped-up segment)
     c4: [
-      { text: '$45.00', x: 0.22, y: 0.64, tone: 'slate' },
-      { text: '$46.50', x: 0.78, y: 0.32, tone: 'green' },
+      { text: '$45.00', x: 0.25, y: 0.72, tone: 'slate' },
+      { text: '$46.50', x: 0.72, y: 0.36, tone: 'green' },
     ],
   },
   'market-foundations/what-is-a-stock': {
@@ -92,21 +92,21 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
     ],
   },
   'reading-a-business/cash-flow-is-king': {
-    // accrual-timing — $10m booked now, cash 90 days later
+    // accrual-timing — $10m booked on the invoice now, cash 90 days later (on the arrow)
     c2: [
-      { text: '$10M', x: 0.24, y: 0.42, tone: 'green' },
-      { text: '90 days', x: 0.76, y: 0.6, tone: 'slate' },
+      { text: '$10M', x: 0.2, y: 0.28, tone: 'green' },
+      { text: '90 days', x: 0.56, y: 0.44, tone: 'slate' },
     ],
-    // noncash-charge — $30m depreciation, no cash moves
+    // noncash-charge — $30m of shavings into the expense tray, the purse stays at $0
     c3: [
-      { text: '$30M', x: 0.4, y: 0.5, tone: 'rust' },
-      { text: '$0 cash', x: 0.74, y: 0.6, tone: 'slate' },
+      { text: '$30M', x: 0.67, y: 0.8, tone: 'rust' },
+      { text: '$0 cash', x: 0.17, y: 0.48, tone: 'slate' },
     ],
-    // free-cash-flow — $40m operating, $25m capex, $15m free
+    // free-cash-flow — $40m in (left), $25m diverts to equipment (centre), $15m free (right tray)
     c6: [
-      { text: '$40M', x: 0.16, y: 0.4, tone: 'green' },
-      { text: '−$25M', x: 0.5, y: 0.62, tone: 'rust' },
-      { text: '$15M', x: 0.83, y: 0.55, tone: 'green' },
+      { text: '$40M', x: 0.13, y: 0.35, tone: 'green' },
+      { text: '−$25M', x: 0.52, y: 0.62, tone: 'rust' },
+      { text: '$15M', x: 0.88, y: 0.47, tone: 'green' },
     ],
   },
   'reading-a-business/dividends-and-buybacks': {
