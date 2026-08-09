@@ -166,8 +166,18 @@ export interface UserProfile extends Syncable {
   disclaimerAcknowledgedAt: number | null;
   /** Self-reported starting point, captured in onboarding. Null until answered. */
   experienceLevel: ExperienceLevel | null;
-  /** Self-reported goal, captured in onboarding. Null until answered. */
+  /**
+   * The first of the selected goals, kept for anything that wants a single
+   * primary. Null until answered. `learningGoals` holds the full multi-select.
+   */
   primaryGoal: LearningGoal | null;
+  /** Every goal the learner picked in onboarding (multi-select). */
+  learningGoals: LearningGoal[];
+  /**
+   * Chosen daily-time commitment in minutes; null until answered. Front-loads
+   * commitment and feeds the streak and future reminders.
+   */
+  dailyGoalMinutes: number | null;
   /**
    * Best Market Readiness assessment result, 0..1. Null until first taken.
    * "Best of", not "latest", so a shaky retake never lowers a proven score.
@@ -349,6 +359,8 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     ...profile,
     experienceLevel: profile.experienceLevel ?? null,
     primaryGoal: profile.primaryGoal ?? null,
+    learningGoals: profile.learningGoals ?? (profile.primaryGoal ? [profile.primaryGoal] : []),
+    dailyGoalMinutes: profile.dailyGoalMinutes ?? null,
     assessmentBestScore: profile.assessmentBestScore ?? null,
     assessmentLastTakenAt: profile.assessmentLastTakenAt ?? null,
     assessmentAttempts: profile.assessmentAttempts ?? 0,

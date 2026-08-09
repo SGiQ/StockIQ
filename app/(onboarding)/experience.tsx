@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import Svg, { Path } from 'react-native-svg';
 import { PillButton, Screen, Text } from '@/components/primitives';
+import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { CourseId } from '@/content/types';
 import type { ExperienceLevel, LearningGoal } from '@/store/repository';
@@ -10,10 +12,10 @@ import { palette, radius, shadow, space } from '@/theme/tokens';
 /**
  * The personalisation step.
  *
- * Two quick taps — where you're starting from and what you're here for — so the
- * next screen can pre-select a sensible course and the app can pitch itself at
- * the right level. It's a nudge, not a gate: nothing here is required reading
- * and the learner can change the course on the very next screen.
+ * Where you're starting from (one answer) and what you're here for (any number),
+ * so the next screens can pre-select a sensible course and pitch the app at the
+ * right level. It's a nudge, not a gate: nothing here is required reading and
+ * the learner can change the course a couple of screens later.
  */
 
 const LEVELS: { value: ExperienceLevel; label: string; hint: string }[] = [
@@ -28,11 +30,11 @@ const GOALS: { value: LearningGoal; label: string; hint: string }[] = [
   { value: 'understand', label: 'Just understand the market', hint: 'Make the headlines make sense' },
 ];
 
-/** A gentle course nudge from the two answers. Everyone can override it next. */
-function recommendCourse(level: ExperienceLevel, goal: LearningGoal): CourseId {
+/** A gentle course nudge from the answers. Everyone can override it later. */
+function recommendCourse(level: ExperienceLevel, goals: LearningGoal[]): CourseId {
   if (level === 'new') return 'market-foundations';
-  if (goal === 'trade') return 'reading-a-chart';
-  if (goal === 'invest') return 'reading-a-business';
+  if (goals.includes('trade')) return 'reading-a-chart';
+  if (goals.includes('invest')) return 'reading-a-business';
   return 'market-foundations';
 }
 
@@ -42,18 +44,25 @@ export default function Experience() {
   const selectCourse = useAppStore((s) => s.selectCourse);
 
   const [level, setLevel] = useState<ExperienceLevel | null>(null);
-  const [goal, setGoal] = useState<LearningGoal | null>(null);
-  const ready = level !== null && goal !== null;
+  const [goals, setGoals] = useState<LearningGoal[]>([]);
+  const ready = level !== null && goals.length > 0;
+
+  const toggleGoal = (value: LearningGoal) =>
+    setGoals((prev) =>
+      prev.includes(value) ? prev.filter((g) => g !== value) : [...prev, value],
+    );
 
   return (
     <Screen tone="forest">
       <View style={styles.content}>
+        <OnboardingProgress step={1} total={4} />
+
         <View style={styles.header}>
           <Text variant="display" color={palette.paper}>
             Let's tune it to you.
           </Text>
           <Text variant="body" color={palette.mintSoft}>
-            Two quick taps. You can change everything later.
+            A few quick taps — you can change anything later.
           </Text>
         </View>
 
@@ -64,20 +73,22 @@ export default function Experience() {
                 key={option.value}
                 label={option.label}
                 hint={option.hint}
+                mode="radio"
                 selected={level === option.value}
                 onPress={() => setLevel(option.value)}
               />
             ))}
           </Group>
 
-          <Group title="What brings you here?">
+          <Group title="What brings you here?" hint="Pick all that apply">
             {GOALS.map((option) => (
               <Option
                 key={option.value}
                 label={option.label}
                 hint={option.hint}
-                selected={goal === option.value}
-                onPress={() => setGoal(option.value)}
+                mode="check"
+                selected={goals.includes(option.value)}
+                onPress={() => toggleGoal(option.value)}
               />
             ))}
           </Group>
@@ -88,10 +99,10 @@ export default function Experience() {
           variant="light"
           disabled={!ready}
           onPress={async () => {
-            if (!level || !goal) return;
-            await setExperience(level, goal);
-            await selectCourse(recommendCourse(level, goal));
-            router.push('/(onboarding)/choose-course');
+            if (!level || goals.length === 0) return;
+            await setExperience(level, goals);
+            await selectCourse(recommendCourse(level, goals));
+            router.push('/(onboarding)/daily-goal');
           }}
         />
       </View>
@@ -99,12 +110,19 @@ export default function Experience() {
   );
 }
 
-function Group({ title, children }: { title: string; children: React.ReactNode }) {
+function Group({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <View style={styles.group}>
-      <Text variant="label" color={palette.mintSoft} uppercase>
-        {title}
-      </Text>
+      <View style={styles.groupHead}>
+        <Text variant="label" color={palette.mintSoft} uppercase>
+          {title}
+        </Text>
+        {hint ? (
+          <Text variant="caption" color={palette.mint}>
+            {hint}
+          </Text>
+        ) : null}
+      </View>
       <View style={styles.options}>{children}</View>
     </View>
   );
@@ -114,18 +132,21 @@ function Option({
   label,
   hint,
   selected,
+  mode,
   onPress,
 }: {
   label: string;
   hint: string;
   selected: boolean;
+  /** `radio` for the single-choice level; `check` for the multi-select goals. */
+  mode: 'radio' | 'check';
   onPress: () => void;
 }) {
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ selected }}
+      accessibilityRole={mode === 'check' ? 'checkbox' : 'radio'}
+      accessibilityState={{ selected, checked: selected }}
       style={[styles.option, selected && styles.optionSelected]}
     >
       <View style={styles.optionCopy}>
@@ -136,9 +157,26 @@ function Option({
           {hint}
         </Text>
       </View>
-      <View style={[styles.radio, selected && styles.radioOn]}>
-        {selected ? <View style={styles.radioDot} /> : null}
-      </View>
+      {mode === 'check' ? (
+        <View style={[styles.check, selected && styles.checkOn]}>
+          {selected ? (
+            <Svg width={14} height={14} viewBox="0 0 24 24">
+              <Path
+                d="M5 13l4 4L19 7"
+                fill="none"
+                stroke={palette.paper}
+                strokeWidth={3}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Svg>
+          ) : null}
+        </View>
+      ) : (
+        <View style={[styles.radio, selected && styles.radioOn]}>
+          {selected ? <View style={styles.radioDot} /> : null}
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -152,7 +190,7 @@ const styles = StyleSheet.create({
   },
   header: {
     gap: space.sm,
-    marginTop: space.md,
+    marginTop: space.sm,
   },
   groups: {
     gap: space.lg,
@@ -160,6 +198,11 @@ const styles = StyleSheet.create({
   },
   group: {
     gap: space.sm,
+  },
+  groupHead: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
   },
   options: {
     gap: space.sm,
@@ -198,6 +241,19 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: radius.pill,
+    backgroundColor: palette.forestDeep,
+  },
+  check: {
+    width: 24,
+    height: 24,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: palette.hairline,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkOn: {
+    borderColor: palette.forestDeep,
     backgroundColor: palette.forestDeep,
   },
 });

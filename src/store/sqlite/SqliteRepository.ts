@@ -109,6 +109,8 @@ function defaultProfile(): UserProfile {
     disclaimerAcknowledgedAt: null,
     experienceLevel: null,
     primaryGoal: null,
+    learningGoals: [],
+    dailyGoalMinutes: null,
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,
