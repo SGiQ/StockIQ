@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { listCourses } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
 import { PillButton, Screen, Text } from '@/components/primitives';
+import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 
@@ -20,6 +21,8 @@ export default function ChooseCourse() {
   return (
     <Screen tone="forest">
       <View style={styles.content}>
+        <OnboardingProgress step={3} total={4} />
+
         <View style={styles.header}>
           <Text variant="display" color={palette.paper}>
             Choose your course.

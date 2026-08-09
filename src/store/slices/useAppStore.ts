@@ -129,7 +129,8 @@ interface AppState {
   refreshAchievements: () => Promise<BadgeDef[]>;
   /** Records an assessment result (best-of) and re-evaluates badges. */
   recordAssessment: (score: number) => Promise<BadgeDef[]>;
-  setExperience: (level: ExperienceLevel, goal: LearningGoal) => Promise<void>;
+  setExperience: (level: ExperienceLevel, goals: LearningGoal[]) => Promise<void>;
+  setDailyGoal: (minutes: number) => Promise<void>;
 
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
@@ -435,8 +436,19 @@ export const useAppStore = create<AppState>((set, get) => ({
     return get().refreshAchievements();
   },
 
-  setExperience: async (level, goal) => {
-    set({ profile: await repository.profile.update({ experienceLevel: level, primaryGoal: goal }) });
+  setExperience: async (level, goals) => {
+    set({
+      profile: await repository.profile.update({
+        experienceLevel: level,
+        learningGoals: goals,
+        // Keep the single primary in step for anything that wants just one.
+        primaryGoal: goals[0] ?? null,
+      }),
+    });
+  },
+
+  setDailyGoal: async (minutes) => {
+    set({ profile: await repository.profile.update({ dailyGoalMinutes: minutes }) });
   },
 
   acknowledgeDisclaimer: async () => {

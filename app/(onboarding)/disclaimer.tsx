@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Screen, Text } from '@/components/primitives';
+import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 
@@ -27,6 +28,8 @@ export default function Disclaimer() {
   return (
     <Screen tone="forest">
       <View style={styles.content}>
+        <OnboardingProgress step={4} total={4} />
+
         <View style={styles.header}>
           <View style={styles.badge}>
             <Glyph name="scale" size={30} color={palette.forestDeep} />
