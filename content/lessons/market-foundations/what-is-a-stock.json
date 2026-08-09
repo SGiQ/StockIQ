@@ -10,20 +10,32 @@
       "type": "concept",
       "headline": "You can own a piece of a company.",
       "body": "A stock is a unit of ownership in a real business. Buy one share of a company and you own a tiny slice of everything it owns and everything it earns. Not a lottery ticket. A claim.",
-      "art": { "kind": "illustration", "source": "/lesson-art/ownership.jpg", "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/ownership.jpg",
+        "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices."
+      }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Ownership is measured in shares.",
       "body": "A company divides itself into shares. If it has issued 1,000 shares and you hold 10, you own **one percent** of the business — today, tomorrow, and every day until you sell.",
-      "art": { "kind": "illustration", "source": "/lesson-art/shares-ledger-paper.jpg", "alt": "Equal paper ownership pieces move from a company into the matching slots of a physical shareholder ledger." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/shares-ledger-paper.jpg",
+        "alt": "Equal paper ownership pieces move from a company into the matching slots of a physical shareholder ledger."
+      }
     },
     {
       "id": "c3",
       "type": "diagram",
       "title": "Who owns a company",
-      "art": { "kind": "illustration", "source": "/lesson-art/ownership-breakdown-paper.jpg", "alt": "Three paper ownership groups hold interlocking sections that assemble into one complete company ownership wheel." },
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/ownership-breakdown-paper.jpg",
+        "alt": "Three paper ownership groups hold interlocking sections that assemble into one complete company ownership wheel."
+      },
       "caption": "In this example, founders hold **45%**, funds hold **34%**, and the public holds **21%**. Together, every shareholder owns exactly 100% of the company."
     },
     {
@@ -33,20 +45,41 @@
       "stickers": [
         {
           "label": "A claim on profits",
-          "art": { "kind": "glyph", "name": "coin", "bg": "butter" },
-          "anchor": { "x": 0.3, "y": 0.16 },
+          "art": {
+            "kind": "glyph",
+            "name": "coin",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.3,
+            "y": 0.16
+          },
           "rotation": -6
         },
         {
           "label": "A vote",
-          "art": { "kind": "glyph", "name": "people", "bg": "sky" },
-          "anchor": { "x": 0.7, "y": 0.48 },
+          "art": {
+            "kind": "glyph",
+            "name": "people",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.7,
+            "y": 0.48
+          },
           "rotation": 5
         },
         {
           "label": "A share of growth",
-          "art": { "kind": "glyph", "name": "tree", "bg": "mint" },
-          "anchor": { "x": 0.36, "y": 0.8 },
+          "art": {
+            "kind": "glyph",
+            "name": "tree",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.8
+          },
           "rotation": -3
         }
       ]
@@ -56,8 +89,16 @@
       "type": "binary_choice",
       "prompt": "A company's share price doubles overnight. What happens to the percentage of the company you own?",
       "options": [
-        { "id": "up", "label": "It doubles too", "correct": false },
-        { "id": "same", "label": "It stays the same", "correct": true }
+        {
+          "id": "up",
+          "label": "It doubles too",
+          "correct": false
+        },
+        {
+          "id": "same",
+          "label": "It stays the same",
+          "correct": true
+        }
       ],
       "explanation": "Price changes what your slice is **worth**, not how big it is. Your ownership percentage only moves if the company issues new shares or buys some back."
     },
@@ -66,13 +107,21 @@
       "type": "concept",
       "headline": "Owners are not lenders.",
       "body": "Lend a company money and you are a bondholder: you get fixed interest, then your money back. Own a share and you get whatever is left after everyone else is paid. More risk. More upside.",
-      "art": { "kind": "illustration", "source": "/lesson-art/owner-vs-lender-paper.jpg", "alt": "A paper-craft owner holds a piece of the business beside branching upside and downside paths, while a lender holds a fixed note and a straight repayment path." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/owner-vs-lender-paper.jpg",
+        "alt": "A paper-craft owner holds a piece of the business beside branching upside and downside paths, while a lender holds a fixed note and a straight repayment path."
+      }
     },
     {
       "id": "c7",
       "type": "fill_blank",
       "body": "Shareholders get paid last — after employees, suppliers, and [[1]] have all been paid.",
-      "wordBank": ["lenders", "customers", "regulators"],
+      "wordBank": [
+        "lenders",
+        "customers",
+        "regulators"
+      ],
       "answer": "lenders",
       "explanation": "That last-in-line position is exactly why shares carry more risk than bonds — and why they can be worth so much more when a business does well."
     },
@@ -81,7 +130,11 @@
       "type": "concept",
       "headline": "So why buy a slice at all?",
       "body": "Two reasons, and only two. The business grows, so each slice becomes worth more. Or the business hands cash back to owners as a dividend. Everything else in investing is detail stacked on top.",
-      "art": { "kind": "scene", "name": "owner-outcomes", "palette": "butter", "alt": "Three owner outcomes: business growth, cash dividends, or loss." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/owner-outcomes.jpg",
+        "alt": "Three owner outcomes: business growth, cash dividends, or loss."
+      }
     },
     {
       "id": "c9",
@@ -96,9 +149,16 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "illustration", "source": "/lesson-art/ownership.jpg", "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices." },
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/ownership.jpg",
+        "alt": "An investor holds one glowing ownership tile from a neighborhood bakery divided into real business slices."
+      },
       "insight": "You are not buying a price. You are buying a fraction of a business, and the price is only today's opinion of what that fraction is worth.",
-      "attribution": { "source": "Day 1", "detail": "Market Foundations" }
+      "attribution": {
+        "source": "Day 1",
+        "detail": "Market Foundations"
+      }
     }
   ],
   "sources": [

@@ -10,14 +10,22 @@
       "type": "concept",
       "headline": "A price is just the last trade someone agreed to.",
       "body": "Nobody sets a stock's price. A buyer and a seller met at $84.20, agreed, and that number became the price. The next trade may happen at $84.19 or at $85. The tape is a running record of agreements, not a verdict on the company.",
-      "art": { "kind": "illustration", "source": "/lesson-art/price-surprise.jpg", "alt": "A market audience compares the performance it imagined with the different result revealed on stage." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/price-surprise.jpg",
+        "alt": "A market audience compares the performance it imagined with the different result revealed on stage."
+      }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Supply and demand for the shares.",
       "body": "A price moves when more money wants in than wants out, or the reverse. What gets bid on is the **shares** — a limited number of them. A fine company with no buyers today still falls today.",
-      "art": { "kind": "scene", "name": "supply-demand", "palette": "sky", "alt": "Supply and demand curves crossing at the market price." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/supply-demand.jpg",
+        "alt": "Supply and demand curves crossing at the market price."
+      }
     },
     {
       "id": "c3",
@@ -28,8 +36,16 @@
         "motion": "build",
         "spec": {
           "type": "bars",
-          "values": [1.1, 1.45, 1.3],
-          "labels": ["Last year", "Expected", "Delivered"],
+          "values": [
+            1.1,
+            1.45,
+            1.3
+          ],
+          "labels": [
+            "Last year",
+            "Expected",
+            "Delivered"
+          ],
           "highlightIndex": 2,
           "yLabel": "Earnings per share ($)"
         }
@@ -41,15 +57,27 @@
       "type": "concept",
       "headline": "The price already contains what everyone expects.",
       "body": "If the whole market expects $1.45, buyers have already paid up for $1.45. Delivering exactly $1.45 changes nothing. Only the gap between what was expected and what arrived is new information — and only new information moves a price.",
-      "art": { "kind": "scene", "name": "expectations-gap", "palette": "butter", "alt": "A reported result compared with the market expectation, with the difference marked as surprise." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/expectations-gap.jpg",
+        "alt": "A reported result compared with the market expectation, with the difference marked as surprise."
+      }
     },
     {
       "id": "c5",
       "type": "binary_choice",
       "prompt": "Harbor Foods reports the highest profit in its 40-year history. Analysts had expected slightly more. What is the most likely reaction in the stock that morning?",
       "options": [
-        { "id": "up", "label": "It rises — record profit is good news", "correct": false },
-        { "id": "down", "label": "It falls — the result missed forecasts", "correct": true }
+        {
+          "id": "up",
+          "label": "It rises — record profit is good news",
+          "correct": false
+        },
+        {
+          "id": "down",
+          "label": "It falls — the result missed forecasts",
+          "correct": true
+        }
       ],
       "explanation": "Good news is not the same as **better than expected** news. The record profit was already paid for; the shortfall against forecasts was the only new fact. Reactions are never guaranteed, but the surprise is what gets traded."
     },
@@ -62,10 +90,34 @@
         "motion": "draw",
         "spec": {
           "type": "line",
-          "series": [81.0, 82.4, 83.1, 84.0, 85.2, 77.6, 78.4, 78.1],
-          "xLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Mon", "Tue", "Wed"],
+          "series": [
+            81,
+            82.4,
+            83.1,
+            84,
+            85.2,
+            77.6,
+            78.4,
+            78.1
+          ],
+          "xLabels": [
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Mon",
+            "Tue",
+            "Wed"
+          ],
           "yLabel": "Share price ($)",
-          "markers": [{ "at": 5, "label": "Earnings reaction", "emphasis": true }]
+          "markers": [
+            {
+              "at": 5,
+              "label": "Earnings reaction",
+              "emphasis": true
+            }
+          ]
         }
       },
       "caption": "The price drifted up all week as buyers positioned for a strong quarter. The quarter was strong. It just was not strong enough, and the gap closed in one session."
@@ -77,26 +129,54 @@
       "stickers": [
         {
           "label": "Earnings versus forecast",
-          "art": { "kind": "glyph", "name": "target", "bg": "butter" },
-          "anchor": { "x": 0.32, "y": 0.12 },
+          "art": {
+            "kind": "glyph",
+            "name": "target",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.12
+          },
           "rotation": -6
         },
         {
           "label": "Guidance for next quarter",
-          "art": { "kind": "glyph", "name": "compass", "bg": "sky" },
-          "anchor": { "x": 0.68, "y": 0.38 },
+          "art": {
+            "kind": "glyph",
+            "name": "compass",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.38
+          },
           "rotation": 5
         },
         {
           "label": "Interest rates",
-          "art": { "kind": "glyph", "name": "percent", "bg": "mint" },
-          "anchor": { "x": 0.34, "y": 0.62 },
+          "art": {
+            "kind": "glyph",
+            "name": "percent",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.34,
+            "y": 0.62
+          },
           "rotation": -4
         },
         {
           "label": "Sentiment and positioning",
-          "art": { "kind": "glyph", "name": "brain", "bg": "blush" },
-          "anchor": { "x": 0.66, "y": 0.86 },
+          "art": {
+            "kind": "glyph",
+            "name": "brain",
+            "bg": "blush"
+          },
+          "anchor": {
+            "x": 0.66,
+            "y": 0.86
+          },
           "rotation": 6
         }
       ]
@@ -105,7 +185,12 @@
       "id": "c8",
       "type": "fill_blank",
       "body": "A stock does not move on good news or bad news. It moves on the gap between what happened and what the market already [[1]].",
-      "wordBank": ["expected", "reported", "announced", "measured"],
+      "wordBank": [
+        "expected",
+        "reported",
+        "announced",
+        "measured"
+      ],
       "answer": "expected",
       "explanation": "Analysts publish estimates, and those estimates are already sitting inside today's price. The surprise, in either direction, is the only part that has to be repriced."
     },
@@ -123,9 +208,16 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "illustration", "source": "/lesson-art/price-surprise.jpg", "alt": "A market audience compares the performance it imagined with the different result revealed on stage." },
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/price-surprise.jpg",
+        "alt": "A market audience compares the performance it imagined with the different result revealed on stage."
+      },
       "insight": "The market does not pay for good news. It pays for news that is better than the news it already believed.",
-      "attribution": { "source": "Day 2", "detail": "Market Foundations" }
+      "attribution": {
+        "source": "Day 2",
+        "detail": "Market Foundations"
+      }
     }
   ],
   "sources": [

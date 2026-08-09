@@ -325,6 +325,23 @@ export type ChartSpec = z.infer<typeof ChartSpecSchema>;
 export const ChartMotionSchema = z.enum(['draw', 'build', 'sequence', 'focus']);
 export type ChartMotion = z.infer<typeof ChartMotionSchema>;
 
+/**
+ * A small value shown over an illustration — the number the narration says,
+ * kept out of the generated image (image models garble digits) and rendered
+ * as crisp, data-driven app text instead. `x`/`y` place the chip's centre as
+ * a fraction of the image box, so it tracks any size.
+ */
+export const ArtLabelToneSchema = z.enum(['green', 'rust', 'ochre', 'slate', 'cream']);
+export type ArtLabelTone = z.infer<typeof ArtLabelToneSchema>;
+
+export const ArtLabelSchema = z.object({
+  text: z.string().min(1).max(12),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  tone: ArtLabelToneSchema.optional(),
+});
+export type ArtLabel = z.infer<typeof ArtLabelSchema>;
+
 export const ArtSpecSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('palette'), preset: PalettePresetSchema }),
   z.object({
@@ -351,6 +368,8 @@ export const ArtSpecSchema = z.discriminatedUnion('kind', [
     source: z.string().regex(/^\/lesson-art\/[a-z0-9-]+\.(?:jpg|png)$/),
     alt: z.string().min(1).max(200),
     focalY: z.number().min(0).max(1).optional(),
+    /** Numbers from the narration, overlaid as app text (never baked in). */
+    labels: z.array(ArtLabelSchema).max(6).optional(),
   }),
   /**
    * Bitmaps are permitted ONLY for course/book covers, where N is small and

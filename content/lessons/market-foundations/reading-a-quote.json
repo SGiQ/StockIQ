@@ -22,9 +22,8 @@
       "headline": "Last price, change, previous close.",
       "body": "Northwind Robotics last traded at $48.20, up $3.20 or **7.11%**. Change is always measured from yesterday's closing price — $45.00 here. The percentage matters more than the dollars: $3.20 is loud on a $45 stock and noise on a $450 one.",
       "art": {
-        "kind": "scene",
-        "name": "price-change",
-        "palette": "mint",
+        "kind": "illustration",
+        "source": "/lesson-art/price-change.jpg",
         "alt": "A previous close of ninety-six dollars compared with a last price of one hundred dollars."
       }
     },
@@ -89,9 +88,8 @@
       "headline": "The gap is where the news happened.",
       "body": "Regular hours run 9:30 to 4:00 Eastern. Earnings, deals and headlines often land outside them, and pre-market trading reprices the stock before the opening bell. Northwind closed at $45.00 and opened at $46.50 — that $1.50 moved while the main session was shut.",
       "art": {
-        "kind": "scene",
-        "name": "event-gap",
-        "palette": "lilac",
+        "kind": "illustration",
+        "source": "/lesson-art/event-gap.jpg",
         "alt": "A price chart jumping across an overnight news gap between sessions."
       }
     },

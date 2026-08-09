@@ -3,6 +3,7 @@ import type { ArtSpec, PalettePreset } from '@/content/types';
 import { artPalettes, radius } from '@/theme/tokens';
 import { ChartView, type ChartTheme } from './charts';
 import { AnimatedChartView } from './charts/AnimatedChartView';
+import { ArtLabel } from './ArtLabel';
 import { Glyph } from './Glyph';
 import { SceneArt } from './SceneArt';
 import { IllustrationArt } from './IllustrationArt';
@@ -76,6 +77,9 @@ export function ArtView({
       return (
         <View style={container}>
           <IllustrationArt source={spec.source} alt={spec.alt} active={active} />
+          {spec.labels?.map((label, i) => (
+            <ArtLabel key={`${label.text}-${i}`} label={label} active={active} index={i} />
+          ))}
         </View>
       );
 

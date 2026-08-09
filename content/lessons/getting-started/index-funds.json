@@ -22,14 +22,22 @@
       "type": "concept",
       "headline": "One purchase, instant diversification.",
       "body": "Because the fund already spans the whole index, a single buy hands you the {{term:diversification|diversification}} that would otherwise take dozens of separate trades to assemble by hand.",
-      "art": { "kind": "glyph", "name": "pie", "bg": "sky" }
+      "art": {
+        "kind": "glyph",
+        "name": "pie",
+        "bg": "sky"
+      }
     },
     {
       "id": "c3",
       "type": "concept",
       "headline": "ETF or index fund — same core idea.",
       "body": "An **ETF** — exchange-traded fund — is an index fund you can buy and sell like a stock through the trading day. Both track a basket; the ETF simply carries a live, changing price.",
-      "art": { "kind": "glyph", "name": "exchange", "bg": "butter" }
+      "art": {
+        "kind": "glyph",
+        "name": "exchange",
+        "bg": "butter"
+      }
     },
     {
       "id": "c4",
@@ -53,15 +61,27 @@
       "type": "concept",
       "headline": "Fees compound against you.",
       "body": "Returns compound in your favor; fees compound against it. The gap between a 0.04% index fund and a 1% active fund can grow into tens of thousands of dollars over a lifetime.",
-      "art": { "kind": "glyph", "name": "percent", "bg": "blush" }
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "blush"
+      }
     },
     {
       "id": "c6",
       "type": "binary_choice",
       "prompt": "Two funds track the very same index. One charges 0.04% a year, the other 0.80%. Which should leave more of the market's return in your pocket?",
       "options": [
-        { "id": "low", "label": "The 0.04% fund", "correct": true },
-        { "id": "high", "label": "The 0.80% fund — you get what you pay for", "correct": false }
+        {
+          "id": "low",
+          "label": "The 0.04% fund",
+          "correct": true
+        },
+        {
+          "id": "high",
+          "label": "The 0.80% fund — you get what you pay for",
+          "correct": false
+        }
       ],
       "explanation": "Holding the same basket, both funds earn the same gross return. The one that skims less off the top leaves more for you. For index funds, low cost **is** the edge."
     },
@@ -71,9 +91,8 @@
       "headline": "Most active funds trail the index.",
       "body": "Over long stretches, most professional stock-pickers fail to beat their benchmark — especially after fees. That is the whole case for indexing: match the market cheaply instead of paying to try to beat it.",
       "art": {
-        "kind": "scene",
-        "name": "benchmark-race",
-        "palette": "lilac",
+        "kind": "illustration",
+        "source": "/lesson-art/benchmark-race.jpg",
         "alt": "A steady low-cost index runner pulling ahead of higher-fee active runners in a long race."
       }
     },
@@ -84,20 +103,41 @@
       "stickers": [
         {
           "label": "Expense ratio",
-          "art": { "kind": "glyph", "name": "percent", "bg": "blush" },
-          "anchor": { "x": 0.3, "y": 0.2 },
+          "art": {
+            "kind": "glyph",
+            "name": "percent",
+            "bg": "blush"
+          },
+          "anchor": {
+            "x": 0.3,
+            "y": 0.2
+          },
           "rotation": -5
         },
         {
           "label": "Which index",
-          "art": { "kind": "glyph", "name": "target", "bg": "sky" },
-          "anchor": { "x": 0.68, "y": 0.46 },
+          "art": {
+            "kind": "glyph",
+            "name": "target",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.46
+          },
           "rotation": 4
         },
         {
           "label": "How broad",
-          "art": { "kind": "glyph", "name": "pie", "bg": "mint" },
-          "anchor": { "x": 0.34, "y": 0.78 },
+          "art": {
+            "kind": "glyph",
+            "name": "pie",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.34,
+            "y": 0.78
+          },
           "rotation": -3
         }
       ]
@@ -106,7 +146,11 @@
       "id": "c9",
       "type": "fill_blank",
       "body": "Since index funds just track a basket, the fee you pay — the [[1]] — is the biggest lever you control.",
-      "wordBank": ["expense ratio", "dividend yield", "share price"],
+      "wordBank": [
+        "expense ratio",
+        "dividend yield",
+        "share price"
+      ],
       "answer": "expense ratio",
       "explanation": "You can't control the market's return, but you can control what you pay to capture it. A lower expense ratio is the reliable edge."
     },
@@ -130,7 +174,10 @@
         "alt": "A basket holding slices of many companies, standing for the whole market owned at once."
       },
       "insight": "You are unlikely to out-pick the market. You can almost always out-save its fees.",
-      "attribution": { "source": "Index funds and ETFs", "detail": "Getting Started" }
+      "attribution": {
+        "source": "Index funds and ETFs",
+        "detail": "Getting Started"
+      }
     }
   ],
   "sources": [

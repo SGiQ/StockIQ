@@ -26,9 +26,8 @@
       "headline": "A moat is a structural defence.",
       "body": "Picture a castle. The walls are the profitable business; the moat is the ditch that makes attacking expensive. In a company the ditch is not effort or talent. It is a feature a rival cannot copy just by spending more.",
       "art": {
-        "kind": "scene",
-        "name": "moat-defense",
-        "palette": "forest",
+        "kind": "illustration",
+        "source": "/lesson-art/moat-defense.jpg",
         "alt": "A profitable business is protected by a deep structural barrier that rivals struggle to cross."
       }
     },
@@ -97,9 +96,8 @@
       "headline": "Two of them work on the customer.",
       "body": "Switching costs: moving your payroll system to a rival means retraining every manager, so you stay even when a cheaper option appears. Network effects: a payment network is worth joining because everyone else already joined, and each new member makes leaving worse.",
       "art": {
-        "kind": "scene",
-        "name": "customer-moat",
-        "palette": "blush",
+        "kind": "illustration",
+        "source": "/lesson-art/customer-moat.jpg",
         "alt": "Customers remain inside a strong business barrier because switching away is costly."
       }
     },
@@ -184,9 +182,8 @@
       "headline": "Moats get filled in.",
       "body": "A patent expires. A regulator opens the market. New technology makes an old switching cost irrelevant. So the question is never only whether a moat exists. It is how fast it is being worn down, and by what.",
       "art": {
-        "kind": "scene",
-        "name": "moat-erosion",
-        "palette": "blush",
+        "kind": "illustration",
+        "source": "/lesson-art/moat-erosion.jpg",
         "alt": "A once-wide competitive barrier narrows and develops a break as its protection erodes."
       }
     },
@@ -205,9 +202,8 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "scene",
-        "name": "moat-defense",
-        "palette": "ink",
+        "kind": "illustration",
+        "source": "/lesson-art/moat-defense.jpg",
         "alt": "A durable structural barrier protects a profitable business from competitors."
       },
       "insight": "Anyone can earn high profits for a year. The question worth asking is what stops someone else from taking them next year.",

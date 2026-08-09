@@ -10,14 +10,22 @@
       "type": "concept",
       "headline": "A $500 stock is not expensive.",
       "body": "Price per share tells you what one slice costs. It tells you nothing about the size of the pie. To know how big a company is, you need a second number: how many slices exist.",
-      "art": { "kind": "illustration", "source": "/lesson-art/market-cap.jpg", "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/market-cap.jpg",
+        "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows."
+      }
     },
     {
       "id": "c2",
       "type": "concept",
       "headline": "Market cap is price times share count.",
       "body": "Nimbus trades at $5 with 12 billion shares outstanding: that is a **$60 billion** company. Cobalt trades at $500 with 30 million shares: **$15 billion**. The five-dollar stock is the business four times bigger.",
-      "art": { "kind": "scene", "name": "market-cap-equation", "palette": "lilac", "alt": "Share price multiplied by shares outstanding equals market capitalization." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/market-cap-equation.jpg",
+        "alt": "Share price multiplied by shares outstanding equals market capitalization."
+      }
     },
     {
       "id": "c3",
@@ -28,8 +36,14 @@
         "motion": "build",
         "spec": {
           "type": "bars",
-          "values": [60, 15],
-          "labels": ["Nimbus $5", "Cobalt $500"],
+          "values": [
+            60,
+            15
+          ],
+          "labels": [
+            "Nimbus $5",
+            "Cobalt $500"
+          ],
           "highlightIndex": 0,
           "yLabel": "Market cap ($B)"
         }
@@ -41,8 +55,16 @@
       "type": "binary_choice",
       "prompt": "One stock trades at $8. Another trades at $900. Which company is worth more?",
       "options": [
-        { "id": "expensive", "label": "The $900 stock", "correct": false },
-        { "id": "unknown", "label": "You cannot tell from price alone", "correct": true }
+        {
+          "id": "expensive",
+          "label": "The $900 stock",
+          "correct": false
+        },
+        {
+          "id": "unknown",
+          "label": "You cannot tell from price alone",
+          "correct": true
+        }
       ],
       "explanation": "Price is one of two factors. Without the share count you know only what a single slice costs. Multiply price by shares outstanding, then compare."
     },
@@ -51,7 +73,11 @@
       "type": "concept",
       "headline": "Cheap-looking is not cheap.",
       "body": "A $3 stock feels like more upside than a $300 stock because you can buy a hundred of them. But $300 buys $300 of the business either way. How many slices a company cut itself into is arbitrary.",
-      "art": { "kind": "scene", "name": "price-vs-value", "palette": "blush", "alt": "A low-looking share price contrasted with the value of the whole business." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/price-vs-value.jpg",
+        "alt": "A low-looking share price contrasted with the value of the whole business."
+      }
     },
     {
       "id": "c6",
@@ -60,20 +86,41 @@
       "stickers": [
         {
           "label": "Large cap: $10B and up",
-          "art": { "kind": "glyph", "name": "building", "bg": "sky" },
-          "anchor": { "x": 0.32, "y": 0.16 },
+          "art": {
+            "kind": "glyph",
+            "name": "building",
+            "bg": "sky"
+          },
+          "anchor": {
+            "x": 0.32,
+            "y": 0.16
+          },
           "rotation": -6
         },
         {
           "label": "Mid cap: $2B to $10B",
-          "art": { "kind": "glyph", "name": "briefcase", "bg": "butter" },
-          "anchor": { "x": 0.68, "y": 0.48 },
+          "art": {
+            "kind": "glyph",
+            "name": "briefcase",
+            "bg": "butter"
+          },
+          "anchor": {
+            "x": 0.68,
+            "y": 0.48
+          },
           "rotation": 5
         },
         {
           "label": "Small cap: $300M to $2B",
-          "art": { "kind": "glyph", "name": "seed", "bg": "mint" },
-          "anchor": { "x": 0.36, "y": 0.8 },
+          "art": {
+            "kind": "glyph",
+            "name": "seed",
+            "bg": "mint"
+          },
+          "anchor": {
+            "x": 0.36,
+            "y": 0.8
+          },
           "rotation": -3
         }
       ]
@@ -83,13 +130,21 @@
       "type": "concept",
       "headline": "The bands are conventions, not rules.",
       "body": "No regulator defines large cap. Index providers and fund managers each draw the lines differently, and the lines drift upward as markets grow. Treat the buckets as shorthand for size, not as an official category.",
-      "art": { "kind": "scene", "name": "size-spectrum", "palette": "butter", "alt": "Small-, mid-, and large-cap company bands arranged as an increasing size spectrum." }
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/size-spectrum.jpg",
+        "alt": "Small-, mid-, and large-cap company bands arranged as an increasing size spectrum."
+      }
     },
     {
       "id": "c8",
       "type": "fill_blank",
       "body": "A 10-for-1 stock split hands you ten times as many shares at one tenth the price. The company's market cap is [[1]].",
-      "wordBank": ["unchanged", "ten times larger", "one tenth as large"],
+      "wordBank": [
+        "unchanged",
+        "ten times larger",
+        "one tenth as large"
+      ],
       "answer": "unchanged",
       "explanation": "A split re-slices the pie without changing its size. Nothing about the business moved, so nothing about its value did either. A reverse split works the same way, backwards."
     },
@@ -107,9 +162,16 @@
     {
       "id": "c10",
       "type": "key_insight",
-      "art": { "kind": "illustration", "source": "/lesson-art/market-cap.jpg", "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows." },
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/market-cap.jpg",
+        "alt": "Investors compare a small company with an expensive-looking entrance against a vast company made of many ownership windows."
+      },
       "insight": "Price tells you what one slice costs. Only market cap tells you how big the pie is.",
-      "attribution": { "source": "Reading the Numbers", "detail": "Market Foundations" }
+      "attribution": {
+        "source": "Reading the Numbers",
+        "detail": "Market Foundations"
+      }
     }
   ],
   "sources": [
