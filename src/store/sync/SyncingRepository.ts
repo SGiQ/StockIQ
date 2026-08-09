@@ -64,6 +64,12 @@ export class SyncingRepository implements Repository {
   get streak() {
     return this.local.streak;
   }
+  get hearts() {
+    return this.local.hearts;
+  }
+  get entitlement() {
+    return this.local.entitlement;
+  }
   get unlocks() {
     return this.local.unlocks;
   }

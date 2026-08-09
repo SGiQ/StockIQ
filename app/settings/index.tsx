@@ -4,7 +4,8 @@ import Svg, { Path } from 'react-native-svg';
 import { CardSurface, Screen, SpeakerIcon, Text } from '@/components/primitives';
 import { pairing } from '@/store';
 import { openLegal } from '@/lib/legal';
-import { useAppStore } from '@/store/slices/useAppStore';
+import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
+import { PLAN_CYCLE, PLAN_LABEL } from '@/features/entitlement';
 import { palette, radius, space } from '@/theme/tokens';
 
 export default function SettingsScreen() {
@@ -12,6 +13,9 @@ export default function SettingsScreen() {
   const enabled = useAppStore((s) => s.profile?.narrationEnabled ?? false);
   const voice = useAppStore((s) => s.profile?.narrationVoice ?? 'female');
   const speed = useAppStore((s) => s.profile?.narrationSpeed ?? 1);
+  const entitlement = useEntitlement();
+  const setEntitlementOverride = useAppStore((s) => s.setEntitlementOverride);
+  const nextPlan = PLAN_CYCLE[(PLAN_CYCLE.indexOf(entitlement.plan) + 1) % PLAN_CYCLE.length];
 
   return (
     <Screen tone="warm">
@@ -56,6 +60,20 @@ export default function SettingsScreen() {
           Sign in by email to keep progress available across your devices. No password required.
         </Text>
 
+        {__DEV__ && (
+          <>
+            <Text variant="label" color={palette.slate} uppercase>Developer</Text>
+            <SettingsRow
+              title={`Simulate plan · ${PLAN_LABEL[entitlement.plan]}`}
+              subtitle="Dev only — tap to cycle Free → Pro → Elite. Never synced."
+              icon={<PlanIcon />}
+              onPress={() =>
+                void setEntitlementOverride(nextPlan === 'free' ? null : nextPlan)
+              }
+            />
+          </>
+        )}
+
         <Text variant="label" color={palette.slate} uppercase>Legal</Text>
         <SettingsRow
           title="Privacy Policy"
@@ -98,6 +116,20 @@ function AccountIcon() {
   return (
     <Svg width={25} height={25} viewBox="0 0 24 24">
       <Path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4.5 21a7.5 7.5 0 0115 0" fill="none" stroke={palette.forestDeep} strokeWidth={2} strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+function PlanIcon() {
+  return (
+    <Svg width={24} height={24} viewBox="0 0 24 24">
+      <Path
+        d="M12 3l2.5 5.2 5.5.8-4 3.9 1 5.6L12 16l-5 2.5 1-5.6-4-3.9 5.5-.8z"
+        fill="none"
+        stroke={palette.forestDeep}
+        strokeWidth={2}
+        strokeLinejoin="round"
+      />
     </Svg>
   );
 }
