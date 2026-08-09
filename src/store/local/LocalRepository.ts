@@ -13,6 +13,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy } from '@/content/registry';
+import { MAX_HEARTS } from '@/features/hearts/constants';
 import type { LocalRecord } from '../sqlite/SqliteRepository';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { isConsecutive, type DayISO } from '@/lib/dates';
@@ -21,6 +22,10 @@ import {
   reportId,
   savedCardId,
   type BadgeAward,
+  type EntitlementState,
+  type HeartsState,
+  type HeartsValue,
+  type PlanId,
   type ReviewState,
   type ReviewInput,
   type CardReport,
@@ -46,8 +51,16 @@ const KEYS = {
   liked: 'stockiq:liked:v1',
   reports: 'stockiq:reports:v1',
   streak: 'stockiq:streak:v1',
+  hearts: 'stockiq:hearts:v1',
+  entitlement: 'stockiq:entitlement:v1',
   badges: 'stockiq:badges:v1',
   reviews: 'stockiq:reviews:v1',
+  /**
+   * Local-only dev override for the paid plan. Deliberately NOT a member of
+   * COLLECTION_KEYS, so it is invisible to `allRecords` and therefore never
+   * syncs — a testing affordance must never masquerade as a real entitlement.
+   */
+  entitlementOverride: 'stockiq:entitlement-override:v1',
   /** Sync bookkeeping — see the note above `syncedStamps`. */
   synced: 'stockiq:synced:v1',
   meta: 'stockiq:syncmeta:v1',
@@ -58,10 +71,25 @@ const KEYS = {
  * pushed from the web build and one pushed from the phone have to land in the
  * same server-side collection, or the same lesson would sync as two records.
  */
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges' | 'reviews';
+type Collection =
+  | 'profile'
+  | 'progress'
+  | 'saved'
+  | 'liked'
+  | 'reports'
+  | 'streak'
+  | 'hearts'
+  | 'entitlement'
+  | 'badges'
+  | 'reviews';
 
 /** Collections holding one object; the rest are id-keyed maps. */
-const SINGLETONS: Partial<Record<Collection, string>> = { profile: 'profile', streak: 'streak' };
+const SINGLETONS: Partial<Record<Collection, string>> = {
+  profile: 'profile',
+  streak: 'streak',
+  hearts: 'hearts',
+  entitlement: 'entitlement',
+};
 
 const COLLECTION_KEYS: Record<Collection, string> = {
   profile: KEYS.profile,
@@ -70,6 +98,8 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   liked: KEYS.liked,
   reports: KEYS.reports,
   streak: KEYS.streak,
+  hearts: KEYS.hearts,
+  entitlement: KEYS.entitlement,
   badges: KEYS.badges,
   reviews: KEYS.reviews,
 };
@@ -109,6 +139,28 @@ function defaultStreak(): StreakState {
     longestStreak: 0,
     lastActiveDay: null,
     activeDays: [],
+  };
+}
+
+function defaultHearts(): HeartsState {
+  // A new learner starts full. The default is not written until a heart is
+  // actually spent, so — exactly like the streak — an untouched account
+  // contributes no hearts row to sync and never clobbers a server copy.
+  return { id: 'hearts', updatedAt: now(), deletedAt: null, hearts: MAX_HEARTS, since: now() };
+}
+
+function defaultEntitlement(): EntitlementState {
+  // Free, and never written by the client — so an account with no server-issued
+  // entitlement contributes no row to sync. The Stripe webhook is the only
+  // writer once billing lands.
+  return {
+    id: 'entitlement',
+    updatedAt: now(),
+    deletedAt: null,
+    plan: 'free',
+    status: 'none',
+    currentPeriodEnd: null,
+    source: 'none',
   };
 }
 
@@ -358,6 +410,40 @@ export class LocalRepository implements Repository {
         activeDays,
         updatedAt: now(),
       });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Hearts
+   * -------------------------------------------------------------- */
+
+  hearts = {
+    get: async (): Promise<HeartsState> => this.read(KEYS.hearts, defaultHearts),
+
+    set: async (value: HeartsValue): Promise<HeartsState> => {
+      const current = await this.read(KEYS.hearts, defaultHearts);
+      return this.write(KEYS.hearts, {
+        ...current,
+        hearts: value.hearts,
+        since: value.since,
+        updatedAt: now(),
+        deletedAt: null,
+      });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Entitlement (read-only; written by the server via applyRemote)
+   * -------------------------------------------------------------- */
+
+  entitlement = {
+    get: async (): Promise<EntitlementState> => this.read(KEYS.entitlement, defaultEntitlement),
+
+    getDevOverride: async (): Promise<PlanId | null> =>
+      this.read<PlanId | null>(KEYS.entitlementOverride, () => null),
+
+    setDevOverride: async (plan: PlanId | null): Promise<void> => {
+      await this.write(KEYS.entitlementOverride, plan);
     },
   };
 

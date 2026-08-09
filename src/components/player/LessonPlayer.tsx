@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as haptics from '@/lib/haptics';
 import type { Card, CardId } from '@/content/types';
 import type { ReportReason } from '@/store/repository';
-import { useAppStore } from '@/store/slices/useAppStore';
+import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { CardRenderer } from '@/components/cards/CardRenderer';
 import {
   narrationUrlFor,
@@ -29,9 +29,13 @@ import {
   type CardStateMap,
   type CardUiState,
 } from './cardState';
+import { snapshot } from '@/features/hearts';
 import { ActionPill, CardCounter, ExitButton, ProgressBar } from './PlayerChrome';
 import { AskSheet } from './AskSheet';
 import { ReportSheet } from './ReportSheet';
+import { HeartPips } from './HeartPips';
+import { OutOfHeartsOverlay } from './OutOfHeartsOverlay';
+import { UnlimitedUpsellSheet } from './UnlimitedUpsellSheet';
 import { TapZones, TapZoneTutorial } from './TapZones';
 import { useUnscrollableStage } from './useUnscrollableStage';
 
@@ -53,6 +57,12 @@ export interface LessonPlayerProps {
   narrationDeckId?: NarrationDeckId;
   showTutorial?: boolean;
   onTutorialDismissed?: () => void;
+  /**
+   * Enables the hearts gate: a wrong answer costs a heart, and running out
+   * blocks the deck until one regenerates. Off for book and strategy guides —
+   * only real course lessons put hearts on the line.
+   */
+  enforceHearts?: boolean;
 }
 
 /** How far a swipe must travel (or how fast) to commit to the next card. */
@@ -87,6 +97,7 @@ export function LessonPlayer({
   narrationDeckId,
   showTutorial = false,
   onTutorialDismissed,
+  enforceHearts = false,
 }: LessonPlayerProps) {
   const insets = useSafeAreaInsets();
 
@@ -112,6 +123,35 @@ export function LessonPlayer({
   const [tutorialVisible, setTutorialVisible] = useState(showTutorial);
   const [askOpen, setAskOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const [upsellOpen, setUpsellOpen] = useState(false);
+
+  /* ---------------------------------------------------------------- *
+   * Hearts gate (course lessons only, and only for free learners)
+   * ---------------------------------------------------------------- */
+  const heartsState = useAppStore((s) => s.hearts);
+  const loseHeart = useAppStore((s) => s.loseHeart);
+  const entitlement = useEntitlement();
+  // Pro/Elite get unlimited hearts, so the gate is entirely off for them — no
+  // pips, no charge, no overlay. This is the whole entitlement payoff: one flag.
+  const heartsGateActive = enforceHearts && !entitlement.unlimitedHearts;
+  // One charge per card per session: navigating back to a missed card, or a
+  // re-render, must not deduct a second heart for the same mistake.
+  const chargedRef = useRef<Set<CardId>>(new Set());
+  // Bumped when the overlay reports a heart has regenerated, to re-evaluate the
+  // gate below with a fresh clock and let play resume.
+  const [, setResumeNonce] = useState(0);
+
+  const heartsSnap = heartsGateActive && heartsState ? snapshot(heartsState, Date.now()) : null;
+  const outOfHearts = heartsSnap?.empty ?? false;
+
+  const openUpsell = useCallback(() => {
+    setUpsellOpen(true);
+    void trackTelemetry('hearts_upsell_viewed', narrationDeckId);
+  }, [narrationDeckId]);
+
+  useEffect(() => {
+    if (outOfHearts) void trackTelemetry('out_of_hearts', narrationDeckId);
+  }, [outOfHearts, narrationDeckId]);
 
   /**
    * Deck position is split in two, deliberately.
@@ -393,7 +433,11 @@ export function LessonPlayer({
       <View style={[styles.header, { paddingTop: insets.top + space.sm }]}>
         <ExitButton onPress={exit} />
         <ProgressBar current={index} total={cards.length} />
-        <CardCounter current={index} total={cards.length} />
+        {heartsGateActive ? (
+          <HeartPips state={heartsState} now={Date.now()} onPress={openUpsell} />
+        ) : (
+          <CardCounter current={index} total={cards.length} />
+        )}
       </View>
 
       <GestureDetector gesture={pan}>
@@ -437,7 +481,15 @@ export function LessonPlayer({
                     card={windowCard}
                     state={states[windowCard.id] ?? initialStateFor(windowCard)}
                     onStateChange={(next) => setCardState(windowCard.id, next)}
-                    onAnswered={(correct) => onAnswered?.(windowCard.id, correct)}
+                    onAnswered={(correct) => {
+                      onAnswered?.(windowCard.id, correct);
+                      // A wrong answer costs a heart — once per card per session.
+                      if (heartsGateActive && !correct && !chargedRef.current.has(windowCard.id)) {
+                        chargedRef.current.add(windowCard.id);
+                        void loseHeart();
+                        void trackTelemetry('heart_lost', narrationDeckId);
+                      }
+                    }}
                     onAdvance={goForward}
                     shakeStyle={isCurrent ? shakeStyle : undefined}
                     active={isCurrent}
@@ -500,6 +552,24 @@ export function LessonPlayer({
           setReportOpen(false);
         }}
       />
+
+      {heartsGateActive && (
+        <UnlimitedUpsellSheet visible={upsellOpen} onClose={() => setUpsellOpen(false)} />
+      )}
+
+      {/*
+        Last child, so its absolute fill covers the header, deck, and footer.
+        Rendered only while empty; it owns its own countdown clock and asks the
+        player to re-evaluate the gate once a heart has regenerated.
+      */}
+      {outOfHearts && heartsState && (
+        <OutOfHeartsOverlay
+          state={heartsState}
+          onGoUnlimited={openUpsell}
+          onExit={exit}
+          onRegenerated={() => setResumeNonce((n) => n + 1)}
+        />
+      )}
     </View>
   );
 }

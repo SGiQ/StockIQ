@@ -16,6 +16,7 @@
 import * as SQLite from 'expo-sqlite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy, listStrategies } from '@/content/registry';
+import { MAX_HEARTS } from '@/features/hearts/constants';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { isConsecutive, type DayISO } from '@/lib/dates';
 import {
@@ -23,6 +24,10 @@ import {
   reportId,
   savedCardId,
   type BadgeAward,
+  type EntitlementState,
+  type HeartsState,
+  type HeartsValue,
+  type PlanId,
   type ReviewState,
   type ReviewInput,
   type CardReport,
@@ -43,7 +48,17 @@ import {
 
 const DB_NAME = 'stockiq.db';
 
-type Collection = 'profile' | 'progress' | 'saved' | 'liked' | 'reports' | 'streak' | 'badges' | 'reviews';
+type Collection =
+  | 'profile'
+  | 'progress'
+  | 'saved'
+  | 'liked'
+  | 'reports'
+  | 'streak'
+  | 'hearts'
+  | 'entitlement'
+  | 'badges'
+  | 'reviews';
 
 /**
  * Legacy AsyncStorage keys, read once during the one-time migration. Partial
@@ -113,6 +128,26 @@ function defaultStreak(): StreakState {
     longestStreak: 0,
     lastActiveDay: null,
     activeDays: [],
+  };
+}
+
+function defaultHearts(): HeartsState {
+  // Full to start. Not persisted until a heart is spent, so an untouched
+  // account has no hearts row to push — the streak's behaviour exactly.
+  return { id: 'hearts', updatedAt: now(), deletedAt: null, hearts: MAX_HEARTS, since: now() };
+}
+
+function defaultEntitlement(): EntitlementState {
+  // Free, and never persisted by the client — only the server (Stripe) writes
+  // a real entitlement, which arrives through applyRemote.
+  return {
+    id: 'entitlement',
+    updatedAt: now(),
+    deletedAt: null,
+    plan: 'free',
+    status: 'none',
+    currentPeriodEnd: null,
+    source: 'none',
   };
 }
 
@@ -421,6 +456,47 @@ export class SqliteRepository implements Repository {
         activeDays: [...new Set([...current.activeDays, dayISO])].sort().slice(-ACTIVE_DAYS_WINDOW),
         updatedAt: now(),
       });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Hearts
+   * -------------------------------------------------------------- */
+
+  hearts = {
+    get: async (): Promise<HeartsState> =>
+      (await this.one<HeartsState>('hearts', 'hearts')) ?? defaultHearts(),
+
+    set: async (value: HeartsValue): Promise<HeartsState> => {
+      const current = await this.hearts.get();
+      return this.save('hearts', {
+        ...current,
+        hearts: value.hearts,
+        since: value.since,
+        updatedAt: now(),
+        deletedAt: null,
+      });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Entitlement (read-only; written by the server via applyRemote)
+   * -------------------------------------------------------------- */
+
+  entitlement = {
+    get: async (): Promise<EntitlementState> =>
+      (await this.one<EntitlementState>('entitlement', 'entitlement')) ?? defaultEntitlement(),
+
+    // The dev override lives in sync_meta, which is local-only and never leaves
+    // the device — so a testing override can never be mistaken for a real
+    // server-issued entitlement.
+    getDevOverride: async (): Promise<PlanId | null> => {
+      const v = await this.getMeta('entitlementOverride');
+      return v === 'pro' || v === 'elite' || v === 'free' ? (v as PlanId) : null;
+    },
+
+    setDevOverride: async (plan: PlanId | null): Promise<void> => {
+      await this.setMeta('entitlementOverride', plan ?? 'free');
     },
   };
 

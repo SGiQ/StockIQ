@@ -108,6 +108,7 @@ export default function LessonScreen() {
       }}
       showTutorial={showTutorial}
       onTutorialDismissed={() => void markTutorialSeen()}
+      enforceHearts
     />
   );
 }

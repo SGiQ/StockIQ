@@ -10,6 +10,7 @@
  * only then updates memory. No component ever awaits storage directly, and
  * no component ever imports AsyncStorage.
  */
+import { useMemo } from 'react';
 import { create } from 'zustand';
 import { getLesson, lessonPath, listCourses, listLessonsInCourse } from '@/content/registry';
 import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
@@ -22,17 +23,22 @@ import {
   type MarketReadiness,
 } from '@/features/achievements';
 import { advance as advanceReview, seed as seedReview } from '@/features/review';
+import { spendOne } from '@/features/hearts';
+import { resolveEntitlement, type Entitlement } from '@/features/entitlement';
 import { repository } from '../index';
 import {
   progressId,
   savedCardId,
   type BadgeAward,
   type CardAttempt,
+  type EntitlementState,
   type ExperienceLevel,
+  type HeartsState,
   type LearningGoal,
   type LessonProgress,
   type LikedItem,
   type CardReport,
+  type PlanId,
   type ReportReason,
   type ReviewState,
   type SavedCard,
@@ -56,6 +62,11 @@ interface AppState {
 
   profile: UserProfile | null;
   streak: StreakState | null;
+  hearts: HeartsState | null;
+  /** Server-authored subscription entitlement; free until Stripe writes it. */
+  entitlement: EntitlementState | null;
+  /** __DEV__-only local plan override; never synced. Null in production use. */
+  entitlementOverride: PlanId | null;
   /** Keyed by "courseId/lessonId". */
   progress: Record<string, LessonProgress>;
   saved: SavedCard[];
@@ -66,6 +77,19 @@ interface AppState {
   reviews: ReviewState[];
 
   hydrate: () => Promise<void>;
+
+  /**
+   * Spends one heart on a wrong answer. Regeneration is settled first, so a
+   * heart earned back by waiting is credited before this deducts. A no-op when
+   * already empty. Returns the count remaining after the spend.
+   */
+  loseHeart: () => Promise<number>;
+
+  /**
+   * __DEV__-only: overrides the effective plan locally for testing paid gates
+   * before billing exists. Pass null (or 'free') to clear. Never synced.
+   */
+  setEntitlementOverride: (plan: PlanId | null) => Promise<void>;
 
   startLesson: (courseId: CourseId, lessonId: LessonId) => Promise<void>;
   recordCardIndex: (courseId: CourseId, lessonId: LessonId, index: number) => Promise<void>;
@@ -123,6 +147,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   hydrated: false,
   profile: null,
   streak: null,
+  hearts: null,
+  entitlement: null,
+  entitlementOverride: null,
   progress: {},
   saved: [],
   liked: [],
@@ -132,23 +159,41 @@ export const useAppStore = create<AppState>((set, get) => ({
   reviews: [],
 
   hydrate: async () => {
-    const [profile, streak, progressList, saved, liked, reports, unlockedStrategies, badges, reviews] =
-      await Promise.all([
-        repository.profile.get(),
-        repository.streak.get(),
-        repository.progress.listAll(),
-        repository.saved.list(),
-        repository.liked.list(),
-        repository.reports.list(),
-        repository.unlocks.listUnlockedStrategies(),
-        repository.badges.list(),
-        repository.reviews.list(),
-      ]);
+    const [
+      profile,
+      streak,
+      hearts,
+      entitlement,
+      entitlementOverride,
+      progressList,
+      saved,
+      liked,
+      reports,
+      unlockedStrategies,
+      badges,
+      reviews,
+    ] = await Promise.all([
+      repository.profile.get(),
+      repository.streak.get(),
+      repository.hearts.get(),
+      repository.entitlement.get(),
+      repository.entitlement.getDevOverride(),
+      repository.progress.listAll(),
+      repository.saved.list(),
+      repository.liked.list(),
+      repository.reports.list(),
+      repository.unlocks.listUnlockedStrategies(),
+      repository.badges.list(),
+      repository.reviews.list(),
+    ]);
 
     set({
       hydrated: true,
       profile,
       streak,
+      hearts,
+      entitlement,
+      entitlementOverride,
       progress: Object.fromEntries(progressList.map((p) => [p.id, p])),
       saved,
       liked,
@@ -162,6 +207,24 @@ export const useAppStore = create<AppState>((set, get) => ({
     // received (e.g. badges added in an update, or earned before this system
     // shipped). Cheap, and it means the shelf is correct on first open.
     await get().refreshAchievements();
+  },
+
+  loseHeart: async () => {
+    const current = get().hearts ?? (await repository.hearts.get());
+    const { value, spent } = spendOne(current, Date.now());
+    if (!spent) {
+      // Already empty. Keep the settled value in memory so the gate reads 0.
+      set({ hearts: { ...current, ...value } });
+      return 0;
+    }
+    const saved = await repository.hearts.set(value);
+    set({ hearts: saved });
+    return saved.hearts;
+  },
+
+  setEntitlementOverride: async (plan) => {
+    await repository.entitlement.setDevOverride(plan);
+    set({ entitlementOverride: plan });
   },
 
   startLesson: async (courseId, lessonId) => {
@@ -524,6 +587,25 @@ export function selectReadiness(state: {
       unlockedStrategies: state.unlockedStrategies,
       profile: state.profile,
     }),
+  );
+}
+
+/**
+ * The learner's effective entitlement, resolved from the synced row and the
+ * dev override.
+ *
+ * A hook rather than a plain selector because it derives a fresh object: it
+ * subscribes to the two STABLE slices (the entitlement row and the override
+ * string) and memoises the resolution, so it never trips Zustand's identity
+ * check the way a selector returning `resolveEntitlement(...)` inline would.
+ * Every gate reads this — hearts today, ASK and the Knowledge Base next.
+ */
+export function useEntitlement(): Entitlement {
+  const entitlement = useAppStore((s) => s.entitlement);
+  const override = useAppStore((s) => s.entitlementOverride);
+  return useMemo(
+    () => resolveEntitlement(entitlement, override, Date.now()),
+    [entitlement, override],
   );
 }
 

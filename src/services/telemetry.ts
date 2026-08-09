@@ -7,6 +7,9 @@ export type TelemetryEvent =
   | 'lesson_completed'
   | 'quiz_answered'
   | 'narration_played'
+  | 'heart_lost'
+  | 'out_of_hearts'
+  | 'hearts_upsell_viewed'
   | 'client_error'
   | 'page_view'
   | 'web_vital';

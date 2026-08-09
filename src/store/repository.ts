@@ -108,6 +108,51 @@ export interface StreakState extends Syncable {
   activeDays: string[];
 }
 
+/**
+ * Hearts — the free-tier friction lever.
+ *
+ * A singleton row like the streak. Only the count and the timestamp it was
+ * accurate as of are stored; how many have since regenerated is DERIVED (see
+ * `src/features/hearts`), so there is no timer to persist. Like the streak this
+ * is a genuinely stateful counter — it cannot be re-derived from per-item rows,
+ * so it lives on its own row rather than on the profile, keeping it clear of
+ * the last-write-wins clobbering that a total on the profile singleton invites.
+ */
+export interface HeartsState extends Syncable {
+  /** Hearts remaining as of `since`; regeneration since then is computed. */
+  hearts: number;
+  /** Epoch ms the stored `hearts` count is accurate as of; the regen anchor. */
+  since: number;
+}
+
+/** The mutable half of a hearts record; the store hands this to the repo. */
+export type HeartsValue = Pick<HeartsState, 'hearts' | 'since'>;
+
+/** Subscription tiers. `free` is the default; the paid tiers unlock capabilities. */
+export type PlanId = 'free' | 'pro' | 'elite';
+export type EntitlementStatus = 'none' | 'trialing' | 'active' | 'expired';
+
+/**
+ * The account's subscription entitlement.
+ *
+ * SERVER-AUTHORED, client-read-only. When billing lands, a Stripe webhook
+ * writes this row on the account and it arrives on every device through the
+ * ordinary sync pull. The client never writes it, so it is never marked dirty,
+ * never pushed, and can never last-write-wins-clobber the server's copy — the
+ * failure mode [[profile-singleton-lww-sync]] warns about, avoided by keeping
+ * the writer on one side. Until Stripe exists this row simply never appears and
+ * `get()` returns the free default (which is likewise never persisted, so it
+ * contributes nothing to sync).
+ */
+export interface EntitlementState extends Syncable {
+  plan: PlanId;
+  status: EntitlementStatus;
+  /** Epoch ms the paid period ends; null for none or an open-ended trial. */
+  currentPeriodEnd: number | null;
+  /** Who granted it. `stripe` once billing is wired; `trial` for a reverse trial. */
+  source: 'none' | 'stripe' | 'trial';
+}
+
 /** Where the learner places themselves in onboarding; personalises the start. */
 export type ExperienceLevel = 'new' | 'some' | 'active';
 /** What the learner is here to do; personalises tone and the recommended course. */
@@ -216,6 +261,24 @@ export interface Repository {
     get(): Promise<StreakState>;
     /** Idempotent per day — calling twice on the same date is a no-op. */
     recordActivity(dayISO: string): Promise<StreakState>;
+  };
+
+  hearts: {
+    get(): Promise<HeartsState>;
+    /** Persists a settled count + regen anchor. Logic lives in the store. */
+    set(value: HeartsValue): Promise<HeartsState>;
+  };
+
+  entitlement: {
+    /** Server-authored (Stripe) and pulled via sync; the client only reads it. */
+    get(): Promise<EntitlementState>;
+    /**
+     * A __DEV__-only local override for exercising paid gates before billing
+     * exists. Stored off to the side of sync (local meta), so it never travels
+     * to the server and never collides with a real entitlement.
+     */
+    getDevOverride(): Promise<PlanId | null>;
+    setDevOverride(plan: PlanId | null): Promise<void>;
   };
 
   unlocks: {
