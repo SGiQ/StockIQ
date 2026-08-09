@@ -110,39 +110,39 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
     ],
   },
   'reading-a-business/dividends-and-buybacks': {
-    // dividend-per-share — $1.20 paid per share, a 3% yield
+    // dividend-per-share — $1.20 on the centre per-share pile, a 3% yield
     c2: [
-      { text: '$1.20', x: 0.42, y: 0.55, tone: 'green' },
-      { text: '3%', x: 0.68, y: 0.7, tone: 'ochre' },
+      { text: '$1.20', x: 0.5, y: 0.6, tone: 'green' },
+      { text: '3%', x: 0.85, y: 0.58, tone: 'ochre' },
     ],
-    // payout-pressure — 60% paid out, 40% kept
+    // payout-pressure — 60% fed out to the crowd, 40% stays in the machine
     c3: [
-      { text: '60%', x: 0.42, y: 0.45, tone: 'rust' },
-      { text: '40%', x: 0.72, y: 0.62, tone: 'green' },
+      { text: '60%', x: 0.6, y: 0.56, tone: 'rust' },
+      { text: '40%', x: 0.19, y: 0.5, tone: 'cream' },
     ],
-    // buyback-slices — $2.00 per share across more slices, $2.50 across fewer
+    // buyback-slices — $2.00 under the 4-slice pie, $2.50 under the 3-slice pie
     c5: [
-      { text: '$2.00', x: 0.28, y: 0.6, tone: 'slate' },
-      { text: '$2.50', x: 0.72, y: 0.58, tone: 'green' },
+      { text: '$2.00', x: 0.22, y: 0.86, tone: 'slate' },
+      { text: '$2.50', x: 0.55, y: 0.86, tone: 'green' },
     ],
-    // yield-trap — price fell to $15, so the payout now reads 8%
+    // yield-trap — 8% on the tempting coin, $15 at the bottom of the sinking funnel
     c8: [
-      { text: '8%', x: 0.5, y: 0.3, tone: 'rust' },
-      { text: '$15', x: 0.5, y: 0.78, tone: 'slate' },
+      { text: '8%', x: 0.53, y: 0.27, tone: 'rust' },
+      { text: '$15', x: 0.48, y: 0.82, tone: 'slate' },
     ],
   },
   'reading-a-business/margins-that-matter': {
-    // gross-margin — $100 revenue, $60 cost, 40% kept
+    // gross-margin — $100 on the tall revenue column, −$60 costs block, 40% kept
     c2: [
-      { text: '$100', x: 0.24, y: 0.28, tone: 'slate' },
-      { text: '−$60', x: 0.5, y: 0.55, tone: 'rust' },
-      { text: '40%', x: 0.76, y: 0.5, tone: 'green' },
+      { text: '$100', x: 0.4, y: 0.55, tone: 'cream' },
+      { text: '−$60', x: 0.64, y: 0.32, tone: 'rust' },
+      { text: '40%', x: 0.72, y: 0.6, tone: 'green' },
     ],
-    // operating-margin — $40 down to $15 after $25 of costs, 15%
+    // operating-margin — $40 on the tall step, −$25 removed cost blocks, 15% final step
     c3: [
-      { text: '$40', x: 0.22, y: 0.3, tone: 'slate' },
-      { text: '−$25', x: 0.5, y: 0.55, tone: 'rust' },
-      { text: '15%', x: 0.78, y: 0.6, tone: 'green' },
+      { text: '$40', x: 0.27, y: 0.5, tone: 'cream' },
+      { text: '−$25', x: 0.6, y: 0.36, tone: 'rust' },
+      { text: '15%', x: 0.8, y: 0.72, tone: 'green' },
     ],
   },
   'reading-a-business/revenue-vs-earnings': {
@@ -167,18 +167,18 @@ export const lessonArtLabels: Record<string, Record<string, ArtLabel[]>> = {
     ],
   },
   'reading-a-business/the-price-earnings-ratio': {
-    // pe-equation — $60 price over $3 earnings is a P/E of 20
+    // pe-equation — $60 above the price banner, $3 by the earnings coin, 20× over the tiles
     c2: [
-      { text: '$60', x: 0.24, y: 0.3, tone: 'slate' },
-      { text: '$3', x: 0.24, y: 0.62, tone: 'green' },
-      { text: '20×', x: 0.74, y: 0.5, tone: 'ochre' },
+      { text: '$60', x: 0.2, y: 0.16, tone: 'slate' },
+      { text: '$3', x: 0.31, y: 0.72, tone: 'green' },
+      { text: '20×', x: 0.78, y: 0.18, tone: 'ochre' },
     ],
-    // pe-payback — a P/E of 20 is 20 years of earnings
-    c3: [{ text: '20 years', x: 0.5, y: 0.3, tone: 'ochre' }],
-    // value-trap — cheap at 9× becomes 18× when earnings halve
+    // pe-payback — 20 years, in the clear space above the walked tiles
+    c3: [{ text: '20 years', x: 0.72, y: 0.16, tone: 'ochre' }],
+    // value-trap — 9× cheap at the top of the slope, 18× down by the pit
     c7: [
-      { text: '9×', x: 0.32, y: 0.3, tone: 'green' },
-      { text: '18×', x: 0.7, y: 0.7, tone: 'rust' },
+      { text: '9×', x: 0.24, y: 0.42, tone: 'green' },
+      { text: '18×', x: 0.72, y: 0.68, tone: 'rust' },
     ],
   },
 };
