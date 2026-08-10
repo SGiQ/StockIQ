@@ -67,6 +67,9 @@ export class SyncingRepository implements Repository {
   get hearts() {
     return this.local.hearts;
   }
+  get gems() {
+    return this.local.gems;
+  }
   get entitlement() {
     return this.local.entitlement;
   }
