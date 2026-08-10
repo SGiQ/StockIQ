@@ -107,6 +107,7 @@ export default function RootLayout() {
           <Stack.Screen name="assessment" />
           <Stack.Screen name="review" />
           <Stack.Screen name="streak" />
+          <Stack.Screen name="ask" />
           <Stack.Screen name="this-week/index" />
           <Stack.Screen
             name="this-week/[noteId]"

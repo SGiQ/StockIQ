@@ -211,6 +211,10 @@ export interface UserProfile extends Syncable {
    * "new" badge: a note newer than this is unseen. Null until they open the feed.
    */
   lastSeenWeeklyNoteDate: string | null;
+  /** 'YYYY-MM-DD' the advisor day-counter is for; null until first ask. */
+  askDay: string | null;
+  /** Advisor questions asked on `askDay`; resets when the day rolls over. */
+  askCount: number;
   /**
    * Best Market Readiness assessment result, 0..1. Null until first taken.
    * "Best of", not "latest", so a shaky retake never lowers a proven score.
@@ -263,6 +267,18 @@ export type ProfilePatch = Partial<Omit<UserProfile, keyof Syncable>>;
 export type ProgressInput = Omit<LessonProgress, keyof Syncable> & { id?: string };
 export type SavedCardInput = Omit<SavedCard, keyof Syncable | 'savedAt'>;
 export type ReviewInput = Omit<ReviewState, keyof Syncable>;
+
+/**
+ * One AI Advisor exchange — a saved question and its answer. Client-authored
+ * and synced like the rest, so the learner's ask history follows them across
+ * devices. A running log, newest-first when listed.
+ */
+export interface AskThread extends Syncable {
+  question: string;
+  answer: string;
+  at: number;
+}
+export type AskThreadInput = Omit<AskThread, keyof Syncable | 'at'>;
 
 export interface SyncStatus {
   lastSyncedAt: number | null;
@@ -352,6 +368,12 @@ export interface Repository {
     upsert(input: ReviewInput): Promise<ReviewState>;
   };
 
+  advisor: {
+    /** Saved AI Advisor exchanges, newest first. */
+    list(): Promise<AskThread[]>;
+    add(input: AskThreadInput): Promise<AskThread>;
+  };
+
   /**
    * No-ops in v1. Present so that callers are written against the final
    * shape from the start rather than being retrofitted later.
@@ -431,6 +453,8 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     dailyGoalMinutes: profile.dailyGoalMinutes ?? null,
     questClaims: profile.questClaims ?? [],
     lastSeenWeeklyNoteDate: profile.lastSeenWeeklyNoteDate ?? null,
+    askDay: profile.askDay ?? null,
+    askCount: profile.askCount ?? 0,
     assessmentBestScore: profile.assessmentBestScore ?? null,
     assessmentLastTakenAt: profile.assessmentLastTakenAt ?? null,
     assessmentAttempts: profile.assessmentAttempts ?? 0,

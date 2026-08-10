@@ -82,6 +82,9 @@ export class SyncingRepository implements Repository {
   get reviews() {
     return this.local.reviews;
   }
+  get advisor() {
+    return this.local.advisor;
+  }
 
   reset = (): Promise<void> => this.local.reset();
 

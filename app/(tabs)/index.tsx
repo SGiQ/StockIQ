@@ -51,6 +51,24 @@ export default function LearnTab() {
           </Text>
           <View style={styles.headerActions}>
             <Pressable
+              onPress={() => router.push('/ask' as never)}
+              accessibilityRole="button"
+              accessibilityLabel="Ask StockIQ"
+              style={styles.narrationSettings}
+              hitSlop={8}
+            >
+              <Svg width={22} height={22} viewBox="0 0 24 24">
+                <Path
+                  d="M4 5h16v11H9l-4 3v-3H4z"
+                  fill="none"
+                  stroke={palette.forestDeep}
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                />
+                <Path d="M8.5 10h7M8.5 12.5h4.5" stroke={palette.forestDeep} strokeWidth={2} strokeLinecap="round" />
+              </Svg>
+            </Pressable>
+            <Pressable
               onPress={() => router.push('/settings/narration' as never)}
               accessibilityRole="button"
               accessibilityLabel="Narration settings"
