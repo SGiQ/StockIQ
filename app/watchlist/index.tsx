@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
@@ -9,7 +9,7 @@ import {
   formatChange,
   formatPrice,
   isMarketLive,
-  marketService,
+  quotesWithBackfill,
   type Quote,
 } from '@/services/market';
 import { useAppStore } from '@/store/slices/useAppStore';
@@ -27,6 +27,7 @@ export default function WatchlistScreen() {
   const [quotes, setQuotes] = useState<Record<string, Quote>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const runId = useRef(0);
   const [draft, setDraft] = useState('');
 
   const symbols = useMemo(() => watchlist.map((w) => w.symbol), [watchlist]);
@@ -37,17 +38,25 @@ export default function WatchlistScreen() {
       setQuotes({});
       return;
     }
+    // A run id invalidates an in-flight backfill when the watchlist changes, so
+    // a slow retry can't overwrite fresher state.
+    const myRun = (runId.current += 1);
     setLoading(true);
     setError(null);
     try {
-      const qs = await marketService.quotes(symbols);
-      const map: Record<string, Quote> = {};
-      for (const q of qs) map[q.symbol] = q;
-      setQuotes(map);
+      await quotesWithBackfill(
+        symbols,
+        (bySymbol) => {
+          if (runId.current === myRun) setQuotes(bySymbol);
+        },
+        () => runId.current !== myRun,
+      );
     } catch (e) {
-      setError(e instanceof MarketError ? e.message : 'Market data is unavailable.');
+      if (runId.current === myRun) {
+        setError(e instanceof MarketError ? e.message : 'Market data is unavailable.');
+      }
     } finally {
-      setLoading(false);
+      if (runId.current === myRun) setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [symbolsKey]);

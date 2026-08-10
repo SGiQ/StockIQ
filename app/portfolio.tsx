@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
-import { formatPrice, marketService, type Quote } from '@/services/market';
+import { formatPrice, marketService, quotesWithBackfill, type Quote } from '@/services/market';
 import { AskError, askService, type AskContext } from '@/services/ask';
 import {
   STARTING_CASH,
@@ -56,31 +56,40 @@ export default function PortfolioScreen() {
   const [coachText, setCoachText] = useState('');
   const [coaching, setCoaching] = useState(false);
   const [upsellOpen, setUpsellOpen] = useState(false);
+  const runId = useRef(0);
 
   const unlimited = entitlement.unlimitedAsk;
   const remaining = asksRemaining(profile, toDayISO(), unlimited);
 
   const held = useMemo(() => portfolio.positions.map((p) => p.symbol), [portfolio.positions]);
+  const heldKey = held.join(',');
   const sym = tradeSymbol.trim().toUpperCase();
-  const wanted = useMemo(() => [...new Set([...held, sym].filter(Boolean))], [held, sym]);
-  const wantedKey = wanted.join(',');
 
+  // Held positions fill in progressively (rate-limited free tier), guarded so a
+  // slow retry can't clobber a newer holdings set.
   useEffect(() => {
-    if (wanted.length === 0) return;
-    let cancelled = false;
-    marketService.quotes(wanted).then((qs) => {
-      if (cancelled) return;
-      setQuotes((prev) => {
-        const next = { ...prev };
-        for (const q of qs) next[q.symbol] = q;
-        return next;
-      });
-    });
-    return () => {
-      cancelled = true;
-    };
+    if (held.length === 0) return;
+    const myRun = (runId.current += 1);
+    void quotesWithBackfill(
+      held,
+      (bySymbol) => {
+        if (runId.current === myRun) setQuotes((prev) => ({ ...prev, ...bySymbol }));
+      },
+      () => runId.current !== myRun,
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wantedKey]);
+  }, [heldKey]);
+
+  // The trade symbol is a single quote, fetched once typing settles.
+  useEffect(() => {
+    if (!sym) return;
+    const t = setTimeout(() => {
+      void marketService.quotes([sym]).then((qs) => {
+        setQuotes((prev) => ({ ...prev, ...Object.fromEntries(qs.map((q) => [q.symbol, q])) }));
+      }).catch(() => {});
+    }, 450);
+    return () => clearTimeout(t);
+  }, [sym]);
 
   const priceOf = useCallback((s: string) => (quotes[s]?.valid ? quotes[s]!.price : undefined), [quotes]);
 
