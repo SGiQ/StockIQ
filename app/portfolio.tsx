@@ -3,17 +3,34 @@ import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
-import { changeTone, formatPrice, marketService, type Quote } from '@/services/market';
+import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
+import { formatPrice, marketService, type Quote } from '@/services/market';
+import { AskError, askService, type AskContext } from '@/services/ask';
 import {
   STARTING_CASH,
+  portfolioCoachPrompt,
   positionPnL,
   positionPnLPercent,
   positionValue,
   totalReturn,
   totalValue,
 } from '@/features/paper';
-import { useAppStore } from '@/store/slices/useAppStore';
+import { ASK_FREE_DAILY, asksRemaining, canAsk } from '@/features/advisor';
+import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
+import { toDayISO } from '@/lib/dates';
+import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
+
+const COACH_CONTEXT: AskContext = {
+  card: {
+    id: 'coach',
+    type: 'concept',
+    headline: 'Portfolio coaching',
+    body: 'A learner wants educational feedback on a practice portfolio.',
+  } as Card,
+  lessonTitle: 'Practice',
+  courseTitle: 'Market',
+};
 
 const toneColor = (n: number) =>
   n > 0 ? palette.emeraldDeep : n < 0 ? palette.danger : palette.slate;
@@ -27,11 +44,21 @@ export default function PortfolioScreen() {
   const sellShares = useAppStore((s) => s.sellShares);
   const resetPortfolio = useAppStore((s) => s.resetPortfolio);
 
+  const recordAsk = useAppStore((s) => s.recordAsk);
+  const profile = useAppStore((s) => s.profile);
+  const entitlement = useEntitlement();
+
   const [quotes, setQuotes] = useState<Record<string, Quote>>({});
   const [tradeSymbol, setTradeSymbol] = useState('');
   const [tradeShares, setTradeShares] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [coachText, setCoachText] = useState('');
+  const [coaching, setCoaching] = useState(false);
+  const [upsellOpen, setUpsellOpen] = useState(false);
+
+  const unlimited = entitlement.unlimitedAsk;
+  const remaining = asksRemaining(profile, toDayISO(), unlimited);
 
   const held = useMemo(() => portfolio.positions.map((p) => p.symbol), [portfolio.positions]);
   const sym = tradeSymbol.trim().toUpperCase();
@@ -60,6 +87,31 @@ export default function PortfolioScreen() {
   const value = totalValue(portfolio, priceOf);
   const ret = totalReturn(portfolio, priceOf);
   const tradeQuote = sym ? quotes[sym] : undefined;
+
+  const coach = useCallback(async () => {
+    if (coaching) return;
+    if (!canAsk(profile, toDayISO(), unlimited)) {
+      setUpsellOpen(true);
+      return;
+    }
+    setCoaching(true);
+    setCoachText('');
+    setError(null);
+    let full = '';
+    try {
+      full = await askService.ask(
+        portfolioCoachPrompt(portfolio, priceOf),
+        COACH_CONTEXT,
+        (delta) => setCoachText((prev) => prev + delta),
+      );
+    } catch (e) {
+      setError(e instanceof AskError ? e.message : 'Could not coach right now.');
+      setCoaching(false);
+      return;
+    }
+    setCoaching(false);
+    if (full.trim()) await recordAsk('Coach my practice portfolio', full);
+  }, [coaching, portfolio, priceOf, profile, recordAsk, unlimited]);
 
   const trade = useCallback(
     async (side: 'buy' | 'sell') => {
@@ -201,6 +253,31 @@ export default function PortfolioScreen() {
           </View>
         )}
 
+        {portfolio.positions.length > 0 ? (
+          coachText || coaching ? (
+            <CardSurface style={styles.coachCard}>
+              <Text variant="label" color={palette.violetInk} uppercase>
+                Coach's read
+              </Text>
+              <Text variant="body" color={palette.ink}>
+                {coachText || 'Thinking…'}
+              </Text>
+              {!coaching ? (
+                <PillButton label="Coach again" variant="ghost" onPress={() => void coach()} />
+              ) : null}
+            </CardSurface>
+          ) : (
+            <>
+              <PillButton label="✦  Coach my portfolio" variant="primary" onPress={() => void coach()} />
+              {!unlimited ? (
+                <Text variant="caption" color={palette.slateLight} align="center">
+                  {`${remaining} of ${ASK_FREE_DAILY} free coaching + questions left today`}
+                </Text>
+              ) : null}
+            </>
+          )
+        ) : null}
+
         <Pressable
           onPress={() => void resetPortfolio()}
           accessibilityRole="button"
@@ -216,6 +293,8 @@ export default function PortfolioScreen() {
           A practice sandbox with delayed prices and simulated money. Not real trading, not advice.
         </Text>
       </ScrollView>
+
+      <UnlimitedUpsellSheet visible={upsellOpen} onClose={() => setUpsellOpen(false)} />
     </Screen>
   );
 }
@@ -234,6 +313,7 @@ const styles = StyleSheet.create({
   body: { padding: space.lg, gap: space.md, paddingBottom: space.xxl },
   summary: { alignItems: 'center', gap: space.xxs, paddingVertical: space.lg },
   tradeCard: { gap: space.sm },
+  coachCard: { gap: space.sm },
   tradeInputs: { flexDirection: 'row', gap: space.sm },
   input: {
     backgroundColor: palette.paper,

@@ -102,3 +102,32 @@ export function totalReturn(p: Portfolio, priceOf: PriceOf): { abs: number; pct:
   const tv = totalValue(p, priceOf);
   return { abs: round2(tv - STARTING_CASH), pct: round2(((tv - STARTING_CASH) / STARTING_CASH) * 100) };
 }
+
+/** Each position's share of total portfolio value, plus the cash weight. */
+export function positionWeights(
+  p: Portfolio,
+  priceOf: PriceOf,
+): { symbol: string; weight: number }[] {
+  const total = totalValue(p, priceOf);
+  if (total <= 0) return [];
+  return p.positions.map((pos) => ({
+    symbol: pos.symbol,
+    weight: round2((pos.shares * (priceOf(pos.symbol) ?? pos.avgCost) * 100) / total),
+  }));
+}
+
+/**
+ * The question the advisor answers to coach a practice portfolio. It hands the
+ * tutor the actual composition (each holding's weight, the cash weight) and asks
+ * for an educational read on position sizing and diversification — with an
+ * explicit no-advice clause, so the guardrail holds before the server prompt.
+ */
+export function portfolioCoachPrompt(p: Portfolio, priceOf: PriceOf): string {
+  const total = totalValue(p, priceOf);
+  const weights = positionWeights(p, priceOf);
+  const holdings = weights.length
+    ? weights.map((w) => `${w.symbol} about ${Math.round(w.weight)}%`).join(', ')
+    : 'no holdings yet';
+  const cashWeight = total > 0 ? round2((p.cash * 100) / total) : 100;
+  return `This is a practice (paper) portfolio worth about $${Math.round(total)}. Holdings by weight: ${holdings}. Cash is about ${Math.round(cashWeight)}%. In plain, educational terms, what would position sizing and diversification say about how this portfolio is built? Point out any concentration and what a beginner would weigh. Do not recommend buying, selling, or holding any specific security, and do not predict prices.`;
+}
