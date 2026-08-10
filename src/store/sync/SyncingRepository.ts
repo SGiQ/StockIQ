@@ -85,6 +85,9 @@ export class SyncingRepository implements Repository {
   get advisor() {
     return this.local.advisor;
   }
+  get watchlist() {
+    return this.local.watchlist;
+  }
 
   reset = (): Promise<void> => this.local.reset();
 

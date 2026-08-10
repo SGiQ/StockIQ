@@ -23,6 +23,9 @@ export const SYNC_URL = trim(process.env.EXPO_PUBLIC_SYNC_URL);
 /** Cloudflare Worker ASK proxy, e.g. https://stockiq-ask.<sub>.workers.dev */
 export const ASK_PROXY_URL = trim(process.env.EXPO_PUBLIC_ASK_PROXY_URL);
 
+/** Cloudflare Worker market-data proxy, e.g. https://stockiq-market.<sub>.workers.dev */
+export const MARKET_URL = trim(process.env.EXPO_PUBLIC_MARKET_URL);
+
 /**
  * Public origin serving generated narration, without a trailing slash.
  * Web uses its own origin; native needs this because `public/` belongs to the
@@ -40,3 +43,4 @@ export const SITE_URL = trim(process.env.EXPO_PUBLIC_SITE_URL) || 'https://stock
 
 export const isSyncConfigured = (): boolean => SYNC_URL.length > 0;
 export const isAskProxyConfigured = (): boolean => ASK_PROXY_URL.length > 0;
+export const isMarketConfigured = (): boolean => MARKET_URL.length > 0;
