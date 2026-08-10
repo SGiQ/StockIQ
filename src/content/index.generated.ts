@@ -162,7 +162,11 @@ import term_valueInvesting from '../../content/terms/value-investing.json';
 import term_volatility from '../../content/terms/volatility.json';
 import term_volume from '../../content/terms/volume.json';
 import term_yield from '../../content/terms/yield.json';
+import note_202607IndexVsEconomy from '../../content/weekly-notes/2026-07-index-vs-economy.json';
+import note_202607LossAversion from '../../content/weekly-notes/2026-07-loss-aversion.json';
+import note_202607ValueTrap from '../../content/weekly-notes/2026-07-value-trap.json';
 import note_202608PricedIn from '../../content/weekly-notes/2026-08-priced-in.json';
+import note_202608VolumeIsTheTell from '../../content/weekly-notes/2026-08-volume-is-the-tell.json';
 
 export const allCourses: Course[] = [
   course_gettingStarted as unknown as Course,
@@ -337,5 +341,9 @@ export const allTerms: Term[] = [
 ];
 
 export const allWeeklyNotes: WeeklyNote[] = [
+  note_202607IndexVsEconomy as unknown as WeeklyNote,
+  note_202607LossAversion as unknown as WeeklyNote,
+  note_202607ValueTrap as unknown as WeeklyNote,
   note_202608PricedIn as unknown as WeeklyNote,
+  note_202608VolumeIsTheTell as unknown as WeeklyNote,
 ];

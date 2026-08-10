@@ -1,0 +1,35 @@
+{
+  "id": "volume-is-the-tell",
+  "publishedOn": "2026-08-03",
+  "title": "Volume is the tell",
+  "summary": "A big move on thin volume and a big move on heavy volume mean very different things.",
+  "relatedLessonPath": "reading-a-chart/volume-confirms",
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Volume is the tell",
+      "body": "A price move on heavy volume means many people acted on it. The same move on light volume is a few traders and a thin tape. Volume doesn't predict direction; it measures conviction. A breakout almost nobody trades rarely holds."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Conviction, not direction",
+      "body": "Rising price on rising volume shows buyers are committed. Rising price on falling volume can be a move running out of fuel. You aren't reading where price goes next. You're reading how much the crowd believes the move so far."
+    },
+    {
+      "id": "c3",
+      "type": "main_idea",
+      "title": "The takeaway",
+      "summary": "Volume measures the conviction behind a move, not its direction.",
+      "bullets": [
+        "Big move, big volume: the crowd is committed.",
+        "Big move, thin volume: fewer believers, weaker signal.",
+        "Read volume beside price, never on its own."
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Volume", "url": "https://www.investopedia.com/terms/v/volume.asp", "publisher": "Investopedia" }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "value-trap",
+  "publishedOn": "2026-07-20",
+  "title": "Cheap for a reason",
+  "summary": "A low P/E can be a bargain — or a business the market expects to shrink. How to tell them apart.",
+  "relatedLessonPath": "reading-a-business/the-price-earnings-ratio",
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Cheap for a reason",
+      "body": "A low P/E can mean a bargain, or a business the market expects to shrink. The price is low relative to earnings because those earnings may be falling. A low multiple is a question, not an answer: why is it cheap?"
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "The value trap",
+      "body": "A value trap looks cheap and stays cheap because the business keeps deteriorating. The multiple never re-rates. The point isn't to avoid low P/Es; it's to ask what that low number is saying about the years ahead."
+    },
+    {
+      "id": "c3",
+      "type": "main_idea",
+      "title": "The takeaway",
+      "summary": "A low P/E is a question about the future, not proof of a bargain.",
+      "bullets": [
+        "Low P/E can mean falling expected earnings.",
+        "A value trap stays cheap for a reason.",
+        "Ask why it's cheap before calling it cheap."
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Value Trap", "url": "https://www.investopedia.com/terms/v/valuetrap.asp", "publisher": "Investopedia" }
+  ]
+}

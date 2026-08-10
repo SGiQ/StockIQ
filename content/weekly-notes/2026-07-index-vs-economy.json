@@ -1,0 +1,35 @@
+{
+  "id": "index-vs-economy",
+  "publishedOn": "2026-07-27",
+  "title": "The index isn't the economy",
+  "summary": "The market can rise while things feel weak. A few giant companies can carry the whole index.",
+  "relatedLessonPath": "market-foundations/indices-and-benchmarks",
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Index isn't the economy",
+      "body": "A stock index tracks a basket of companies, weighted mostly by size. It can rise while the economy feels weak, because a few giant firms can carry it. The index measures those companies' prices, not jobs, wages, or growth on the ground."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Weighted by size",
+      "body": "Cap-weighted indexes give the biggest companies the most sway. When a handful of large firms rally, the whole index can look healthy even if most of its members are flat or falling. \"The market is up\" can hide a lot underneath."
+    },
+    {
+      "id": "c3",
+      "type": "main_idea",
+      "title": "The takeaway",
+      "summary": "An index reflects its members' prices, weighted by size, not the broader economy.",
+      "bullets": [
+        "A few giants can move a cap-weighted index.",
+        "A green index with mixed members is common.",
+        "\"The economy\" and \"the market\" are different gauges."
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Index", "url": "https://www.investopedia.com/terms/i/index.asp", "publisher": "Investopedia" }
+  ]
+}

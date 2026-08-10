@@ -1,0 +1,35 @@
+{
+  "id": "loss-aversion",
+  "publishedOn": "2026-07-13",
+  "title": "Why the loss stings more",
+  "summary": "Losing $100 hurts more than gaining $100 feels good — and it quietly warps decisions.",
+  "relatedLessonPath": "risk-and-position-sizing/why-losses-hurt-more",
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The loss stings more",
+      "body": "Losing money feels worse than making the same amount feels good. That's loss aversion, and it pushes people to sell winners early and hold losers too long, hoping to get back to even. The feeling is real; letting it drive decisions is the trap."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Back to even",
+      "body": "The urge to avoid booking a loss keeps people in sinking positions. But the market doesn't know or care what you paid. Your cost basis is a fact about your past, not a reason for the position to recover from here."
+    },
+    {
+      "id": "c3",
+      "type": "main_idea",
+      "title": "The takeaway",
+      "summary": "Loss aversion makes losses feel bigger than equal gains, and that distorts decisions.",
+      "bullets": [
+        "Losses feel worse than equal gains feel good.",
+        "It drives selling winners and holding losers.",
+        "Your cost basis isn't a reason to hold."
+      ]
+    }
+  ],
+  "sources": [
+    { "title": "Loss Psychology", "url": "https://www.investopedia.com/terms/l/loss-psychology.asp", "publisher": "Investopedia" }
+  ]
+}
