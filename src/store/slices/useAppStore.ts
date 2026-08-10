@@ -50,6 +50,7 @@ import { repository } from '../index';
 import {
   progressId,
   savedCardId,
+  type AskThread,
   type BadgeAward,
   type CardAttempt,
   type EntitlementState,
@@ -102,6 +103,7 @@ interface AppState {
   unlockedStrategies: StrategyId[];
   badges: BadgeAward[];
   reviews: ReviewState[];
+  askThreads: AskThread[];
 
   hydrate: () => Promise<void>;
 
@@ -183,6 +185,13 @@ interface AppState {
   /** Marks the This Week feed as seen up to the newest note (clears the badge). */
   markWeeklyNotesSeen: () => Promise<void>;
 
+  /**
+   * Records a completed advisor exchange: bumps today's ask count (resetting on
+   * a new day) and saves the Q&A to history. The daily cap is enforced at the
+   * call site via the entitlement + `asksRemaining`, not here.
+   */
+  recordAsk: (question: string, answer: string) => Promise<void>;
+
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
   selectCourse: (courseId: CourseId) => Promise<void>;
@@ -210,6 +219,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   unlockedStrategies: [],
   badges: [],
   reviews: [],
+  askThreads: [],
 
   hydrate: async () => {
     const [
@@ -226,6 +236,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       unlockedStrategies,
       badges,
       reviews,
+      askThreads,
     ] = await Promise.all([
       repository.profile.get(),
       repository.streak.get(),
@@ -240,6 +251,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       repository.unlocks.listUnlockedStrategies(),
       repository.badges.list(),
       repository.reviews.list(),
+      repository.advisor.list(),
     ]);
 
     set({
@@ -257,6 +269,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       unlockedStrategies,
       badges,
       reviews,
+      askThreads,
     });
 
     // Backfill: award any badges the learner already qualifies for but never
@@ -596,6 +609,17 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setDailyGoal: async (minutes) => {
     set({ profile: await repository.profile.update({ dailyGoalMinutes: minutes }) });
+  },
+
+  recordAsk: async (question, answer) => {
+    const today = toDayISO();
+    const profile = get().profile;
+    const used = profile?.askDay === today ? profile.askCount : 0;
+    const [updated, thread] = await Promise.all([
+      repository.profile.update({ askDay: today, askCount: used + 1 }),
+      repository.advisor.add({ question, answer }),
+    ]);
+    set({ profile: updated, askThreads: [thread, ...get().askThreads] });
   },
 
   markWeeklyNotesSeen: async () => {

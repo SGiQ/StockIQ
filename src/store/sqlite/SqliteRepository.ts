@@ -24,6 +24,8 @@ import {
   progressId,
   reportId,
   savedCardId,
+  type AskThread,
+  type AskThreadInput,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -62,6 +64,7 @@ type Collection =
   | 'gems'
   | 'entitlement'
   | 'badges'
+  | 'advisor'
   | 'reviews';
 
 /**
@@ -117,6 +120,8 @@ function defaultProfile(): UserProfile {
     dailyGoalMinutes: null,
     questClaims: [],
     lastSeenWeeklyNoteDate: null,
+    askDay: null,
+    askCount: 0,
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,
@@ -597,6 +602,21 @@ export class SqliteRepository implements Repository {
         updatedAt: now(),
         deletedAt: null,
       }),
+  };
+
+  /* -------------------------------------------------------------- *
+   * AI Advisor history
+   * -------------------------------------------------------------- */
+
+  advisor = {
+    list: async (): Promise<AskThread[]> =>
+      (await this.all<AskThread>('advisor')).sort((a, b) => b.at - a.at),
+
+    add: async (input: AskThreadInput): Promise<AskThread> => {
+      const at = now();
+      const id = `ask#${at}#${Math.floor(Math.random() * 1e6)}`;
+      return this.save('advisor', { ...input, id, at, updatedAt: at, deletedAt: null });
+    },
   };
 
   /* -------------------------------------------------------------- *

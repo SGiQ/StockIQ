@@ -22,6 +22,8 @@ import {
   progressId,
   reportId,
   savedCardId,
+  type AskThread,
+  type AskThreadInput,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -59,6 +61,7 @@ const KEYS = {
   entitlement: 'stockiq:entitlement:v1',
   badges: 'stockiq:badges:v1',
   reviews: 'stockiq:reviews:v1',
+  advisor: 'stockiq:advisor:v1',
   /**
    * Local-only dev override for the paid plan. Deliberately NOT a member of
    * COLLECTION_KEYS, so it is invisible to `allRecords` and therefore never
@@ -86,6 +89,7 @@ type Collection =
   | 'gems'
   | 'entitlement'
   | 'badges'
+  | 'advisor'
   | 'reviews';
 
 /** Collections holding one object; the rest are id-keyed maps. */
@@ -109,6 +113,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   entitlement: KEYS.entitlement,
   badges: KEYS.badges,
   reviews: KEYS.reviews,
+  advisor: KEYS.advisor,
 };
 
 /** Trailing window retained for the streak row; older days are pruned. */
@@ -131,6 +136,8 @@ function defaultProfile(): UserProfile {
     dailyGoalMinutes: null,
     questClaims: [],
     lastSeenWeeklyNoteDate: null,
+    askDay: null,
+    askCount: 0,
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,
@@ -576,6 +583,32 @@ export class LocalRepository implements Repository {
       const id = savedCardId(input.courseId, input.lessonId, input.cardId);
       const record: ReviewState = { ...input, id, updatedAt: now(), deletedAt: null };
       await this.write(KEYS.reviews, { ...all, [id]: record });
+      return record;
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * AI Advisor history
+   * -------------------------------------------------------------- */
+
+  private async allAdvisor(): Promise<Record<string, AskThread>> {
+    return this.read<Record<string, AskThread>>(KEYS.advisor, () => ({}));
+  }
+
+  advisor = {
+    list: async (): Promise<AskThread[]> => {
+      const all = await this.allAdvisor();
+      return Object.values(all)
+        .filter((t) => t.deletedAt === null)
+        .sort((a, b) => b.at - a.at);
+    },
+
+    add: async (input: AskThreadInput): Promise<AskThread> => {
+      const all = await this.allAdvisor();
+      const at = now();
+      const id = `ask#${at}#${Math.floor(Math.random() * 1e6)}`;
+      const record: AskThread = { ...input, id, at, updatedAt: at, deletedAt: null };
+      await this.write(KEYS.advisor, { ...all, [id]: record });
       return record;
     },
   };
