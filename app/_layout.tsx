@@ -111,6 +111,7 @@ export default function RootLayout() {
           <Stack.Screen name="watchlist/index" />
           <Stack.Screen name="watchlist/[symbol]" />
           <Stack.Screen name="portfolio" />
+          <Stack.Screen name="leagues" />
           <Stack.Screen name="this-week/index" />
           <Stack.Screen
             name="this-week/[noteId]"
