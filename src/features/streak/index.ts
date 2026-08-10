@@ -12,6 +12,14 @@ export const STREAK_MILESTONES = [3, 7, 14, 30, 50, 100, 200, 365] as const;
 export const MAX_FREEZES = 2;
 
 /**
+ * The freeze count after banking one more, or null when already at the cap.
+ * Keeps the "you can hold at most MAX_FREEZES" rule in one tested place.
+ */
+export function grantFreeze(current: number): number | null {
+  return current >= MAX_FREEZES ? null : current + 1;
+}
+
+/**
  * The milestone a streak has just crossed going from `prev` to `next`, or null.
  * Returns the highest crossed, so a freeze-bridged jump still celebrates once.
  */
