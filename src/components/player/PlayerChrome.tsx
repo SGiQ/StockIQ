@@ -1,30 +1,27 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  withSpring,
-} from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '@/components/primitives';
 import { SpeakerIcon } from '@/components/primitives/SpeakerIcon';
 import { Sparkle } from './AskSheet';
-import { motion, palette, radius, shadow, space } from '@/theme/tokens';
+import { palette, radius, shadow, space } from '@/theme/tokens';
 
 /** Thin mint progress bar pinned to the top of the player. */
 export function ProgressBar({ current, total }: { current: number; total: number }) {
-  const target = useDerivedValue(
-    () => Math.max(0.02, Math.min(1, (current + 1) / Math.max(1, total))),
-    [current, total],
-  );
-
-  const fill = useAnimatedStyle(() => ({
-    width: `${withSpring(target.value * 100, motion.spring)}%`,
-  }));
+  // A plain width derived straight from the card index. This used to animate
+  // with a reanimated spring, which silently stopped re-driving in the
+  // production web build — the bar froze near the start and never advanced.
+  // The bar reports progress the learner relies on, so correctness wins over
+  // the animation; the review screen's bar has always been a plain width too.
+  const pct = Math.max(2, Math.min(100, ((current + 1) / Math.max(1, total)) * 100));
 
   return (
-    <View style={styles.track} accessibilityRole="progressbar">
-      <Animated.View style={[styles.fill, fill]} />
+    <View
+      style={styles.track}
+      accessibilityRole="progressbar"
+      accessibilityValue={{ min: 0, max: total, now: current + 1 }}
+    >
+      <View style={[styles.fill, { width: `${pct}%` }]} />
     </View>
   );
 }
