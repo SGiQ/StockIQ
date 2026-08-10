@@ -52,6 +52,24 @@ export default function LearnTab() {
           </Text>
           <View style={styles.headerActions}>
             <Pressable
+              onPress={() => router.push('/portfolio' as never)}
+              accessibilityRole="button"
+              accessibilityLabel="Practice portfolio"
+              style={styles.narrationSettings}
+              hitSlop={8}
+            >
+              <Svg width={22} height={22} viewBox="0 0 24 24">
+                <Path
+                  d="M4 8h16v11H4zM8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"
+                  fill="none"
+                  stroke={palette.forestDeep}
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
+            </Pressable>
+            <Pressable
               onPress={() => router.push('/watchlist' as never)}
               accessibilityRole="button"
               accessibilityLabel="Watchlist"

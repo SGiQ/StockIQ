@@ -14,6 +14,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy } from '@/content/registry';
 import { MAX_HEARTS } from '@/features/hearts/constants';
+import { STARTING_CASH } from '@/features/paper';
 import type { LocalRecord } from '../sqlite/SqliteRepository';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { type DayISO } from '@/lib/dates';
@@ -25,6 +26,8 @@ import {
   type AskThread,
   type AskThreadInput,
   type WatchlistItem,
+  type PaperPortfolioState,
+  type PaperPortfolioValue,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -64,6 +67,7 @@ const KEYS = {
   reviews: 'stockiq:reviews:v1',
   advisor: 'stockiq:advisor:v1',
   watchlist: 'stockiq:watchlist:v1',
+  paper: 'stockiq:paper:v1',
   /**
    * Local-only dev override for the paid plan. Deliberately NOT a member of
    * COLLECTION_KEYS, so it is invisible to `allRecords` and therefore never
@@ -93,6 +97,7 @@ type Collection =
   | 'badges'
   | 'advisor'
   | 'watchlist'
+  | 'paper'
   | 'reviews';
 
 /** Collections holding one object; the rest are id-keyed maps. */
@@ -118,6 +123,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   reviews: KEYS.reviews,
   advisor: KEYS.advisor,
   watchlist: KEYS.watchlist,
+  paper: KEYS.paper,
 };
 
 /** Trailing window retained for the streak row; older days are pruned. */
@@ -169,6 +175,10 @@ function defaultGems(): GemsState {
   // Never written until gems are earned, so an untouched account pushes no gems
   // row — same as the streak and hearts.
   return { id: 'gems', updatedAt: now(), deletedAt: null, balance: 0 };
+}
+
+function defaultPaper(): PaperPortfolioState {
+  return { id: 'paper', updatedAt: now(), deletedAt: null, cash: STARTING_CASH, positions: [] };
 }
 
 function defaultHearts(): HeartsState {
@@ -465,6 +475,21 @@ export class LocalRepository implements Repository {
       return this.write(KEYS.gems, {
         ...current,
         balance: value.balance,
+        updatedAt: now(),
+        deletedAt: null,
+      });
+    },
+  };
+
+  paper = {
+    get: async (): Promise<PaperPortfolioState> => this.read(KEYS.paper, defaultPaper),
+
+    set: async (value: PaperPortfolioValue): Promise<PaperPortfolioState> => {
+      const current = await this.read(KEYS.paper, defaultPaper);
+      return this.write(KEYS.paper, {
+        ...current,
+        cash: value.cash,
+        positions: value.positions,
         updatedAt: now(),
         deletedAt: null,
       });

@@ -88,6 +88,9 @@ export class SyncingRepository implements Repository {
   get watchlist() {
     return this.local.watchlist;
   }
+  get paper() {
+    return this.local.paper;
+  }
 
   reset = (): Promise<void> => this.local.reset();
 

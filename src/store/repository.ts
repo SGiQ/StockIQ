@@ -290,6 +290,17 @@ export interface WatchlistItem extends Syncable {
   addedAt: number;
 }
 
+/**
+ * The paper-trading portfolio — simulated cash and holdings. A singleton row
+ * (like gems/hearts), not on the profile, so a sign-in can't clobber it. Prices
+ * are never stored; P&L is derived from live quotes at render time.
+ */
+export interface PaperPortfolioState extends Syncable {
+  cash: number;
+  positions: { symbol: string; shares: number; avgCost: number }[];
+}
+export type PaperPortfolioValue = Pick<PaperPortfolioState, 'cash' | 'positions'>;
+
 export interface SyncStatus {
   lastSyncedAt: number | null;
   pending: number;
@@ -390,6 +401,11 @@ export interface Repository {
     /** Adds a symbol (idempotent — re-adding revives a removed one). */
     add(symbol: string): Promise<WatchlistItem>;
     remove(symbol: string): Promise<void>;
+  };
+
+  paper: {
+    get(): Promise<PaperPortfolioState>;
+    set(value: PaperPortfolioValue): Promise<PaperPortfolioState>;
   };
 
   /**

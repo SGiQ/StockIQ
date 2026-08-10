@@ -1,0 +1,258 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import Svg, { Path } from 'react-native-svg';
+import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import { changeTone, formatPrice, marketService, type Quote } from '@/services/market';
+import {
+  STARTING_CASH,
+  positionPnL,
+  positionPnLPercent,
+  positionValue,
+  totalReturn,
+  totalValue,
+} from '@/features/paper';
+import { useAppStore } from '@/store/slices/useAppStore';
+import { palette, radius, space } from '@/theme/tokens';
+
+const toneColor = (n: number) =>
+  n > 0 ? palette.emeraldDeep : n < 0 ? palette.danger : palette.slate;
+
+const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '-' : ''}${formatPrice(Math.abs(n)).slice(1)}`;
+
+export default function PortfolioScreen() {
+  const router = useRouter();
+  const portfolio = useAppStore((s) => s.portfolio);
+  const buyShares = useAppStore((s) => s.buyShares);
+  const sellShares = useAppStore((s) => s.sellShares);
+  const resetPortfolio = useAppStore((s) => s.resetPortfolio);
+
+  const [quotes, setQuotes] = useState<Record<string, Quote>>({});
+  const [tradeSymbol, setTradeSymbol] = useState('');
+  const [tradeShares, setTradeShares] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const held = useMemo(() => portfolio.positions.map((p) => p.symbol), [portfolio.positions]);
+  const sym = tradeSymbol.trim().toUpperCase();
+  const wanted = useMemo(() => [...new Set([...held, sym].filter(Boolean))], [held, sym]);
+  const wantedKey = wanted.join(',');
+
+  useEffect(() => {
+    if (wanted.length === 0) return;
+    let cancelled = false;
+    marketService.quotes(wanted).then((qs) => {
+      if (cancelled) return;
+      setQuotes((prev) => {
+        const next = { ...prev };
+        for (const q of qs) next[q.symbol] = q;
+        return next;
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wantedKey]);
+
+  const priceOf = useCallback((s: string) => (quotes[s]?.valid ? quotes[s]!.price : undefined), [quotes]);
+
+  const value = totalValue(portfolio, priceOf);
+  const ret = totalReturn(portfolio, priceOf);
+  const tradeQuote = sym ? quotes[sym] : undefined;
+
+  const trade = useCallback(
+    async (side: 'buy' | 'sell') => {
+      setError(null);
+      const shares = Number(tradeShares);
+      if (!sym) return setError('Enter a symbol.');
+      if (!Number.isFinite(shares) || shares <= 0) return setError('Enter how many shares.');
+      setBusy(true);
+      try {
+        let q = quotes[sym];
+        if (!q) {
+          const [fetched] = await marketService.quotes([sym]);
+          if (fetched) setQuotes((prev) => ({ ...prev, [sym]: fetched }));
+          q = fetched;
+        }
+        if (!q || !q.valid) return setError(`No live price for ${sym}.`);
+        const res = side === 'buy'
+          ? await buyShares(sym, q.price, shares)
+          : await sellShares(sym, q.price, shares);
+        if (!res.ok) setError(res.reason);
+        else setTradeShares('');
+      } finally {
+        setBusy(false);
+      }
+    },
+    [buyShares, sellShares, quotes, sym, tradeShares],
+  );
+
+  return (
+    <Screen tone="warm" edges={['top']}>
+      <View style={styles.header}>
+        <Pressable
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))}
+          hitSlop={12}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
+          <Svg width={24} height={24} viewBox="0 0 24 24">
+            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </Svg>
+        </Pressable>
+        <Text variant="h2" color={palette.ink}>
+          Practice
+        </Text>
+      </View>
+
+      <View style={styles.banner}>
+        <Text variant="label" color={palette.violetInk} uppercase>
+          Paper trading — simulated money, not real
+        </Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <CardSurface tone="forestDeep" style={styles.summary}>
+          <Text variant="label" color={palette.mintSoft} uppercase>
+            Portfolio value
+          </Text>
+          <Text variant="display" color={palette.paper}>
+            {formatPrice(value)}
+          </Text>
+          <Text variant="h3" color={ret.abs > 0 ? palette.mint : ret.abs < 0 ? palette.flame : palette.mintSoft}>
+            {`${signed(ret.abs)} (${ret.pct > 0 ? '+' : ''}${ret.pct.toFixed(2)}%)`}
+          </Text>
+          <Text variant="caption" color={palette.mintSoft}>
+            {`${formatPrice(portfolio.cash)} cash · started at ${formatPrice(STARTING_CASH)}`}
+          </Text>
+        </CardSurface>
+
+        <CardSurface style={styles.tradeCard}>
+          <View style={styles.tradeInputs}>
+            <TextInput
+              value={tradeSymbol}
+              onChangeText={(t) => setTradeSymbol(t.toUpperCase())}
+              placeholder="Symbol"
+              placeholderTextColor={palette.slateLight}
+              autoCapitalize="characters"
+              autoCorrect={false}
+              style={[styles.input, styles.symInput]}
+            />
+            <TextInput
+              value={tradeShares}
+              onChangeText={setTradeShares}
+              placeholder="Shares"
+              placeholderTextColor={palette.slateLight}
+              keyboardType="number-pad"
+              style={[styles.input, styles.sharesInput]}
+            />
+          </View>
+          {tradeQuote && tradeQuote.valid ? (
+            <Text variant="caption" color={palette.slate}>
+              {`${sym} at ${formatPrice(tradeQuote.price)}${tradeShares ? ` · ${formatPrice(tradeQuote.price * Number(tradeShares || 0))} total` : ''}`}
+            </Text>
+          ) : null}
+          <View style={styles.tradeButtons}>
+            <PillButton label="Buy" variant="primary" onPress={() => void trade('buy')} disabled={busy} />
+            <PillButton label="Sell" variant="ghost" onPress={() => void trade('sell')} disabled={busy} />
+          </View>
+          {error ? (
+            <Text variant="caption" color={palette.danger}>
+              {error}
+            </Text>
+          ) : null}
+        </CardSurface>
+
+        {portfolio.positions.length === 0 ? (
+          <Text variant="body" color={palette.slate} align="center" style={styles.empty}>
+            No holdings yet. Buy a few shares to practice — with simulated cash.
+          </Text>
+        ) : (
+          <View style={styles.positions}>
+            <Text variant="label" color={palette.slate} uppercase>
+              Holdings
+            </Text>
+            {portfolio.positions.map((pos) => {
+              const price = priceOf(pos.symbol);
+              const pnl = price !== undefined ? positionPnL(pos, price) : 0;
+              const pnlPct = price !== undefined ? positionPnLPercent(pos, price) : 0;
+              return (
+                <CardSurface key={pos.symbol} style={styles.posRow}>
+                  <View style={styles.posLeft}>
+                    <Text variant="h3" color={palette.ink}>
+                      {pos.symbol}
+                    </Text>
+                    <Text variant="caption" color={palette.slate}>
+                      {`${pos.shares} @ ${formatPrice(pos.avgCost)}`}
+                    </Text>
+                  </View>
+                  <View style={styles.posRight}>
+                    <Text variant="bodyEm" color={palette.ink}>
+                      {price !== undefined ? formatPrice(positionValue(pos, price)) : '—'}
+                    </Text>
+                    <Text variant="caption" color={toneColor(pnl)}>
+                      {price !== undefined ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : ' '}
+                    </Text>
+                  </View>
+                </CardSurface>
+              );
+            })}
+          </View>
+        )}
+
+        <Pressable
+          onPress={() => void resetPortfolio()}
+          accessibilityRole="button"
+          accessibilityLabel="Reset portfolio"
+          style={styles.resetRow}
+        >
+          <Text variant="bodySm" color={palette.slate}>
+            Reset to {formatPrice(STARTING_CASH)}
+          </Text>
+        </Pressable>
+
+        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+          A practice sandbox with delayed prices and simulated money. Not real trading, not advice.
+        </Text>
+      </ScrollView>
+    </Screen>
+  );
+}
+
+const styles = StyleSheet.create({
+  header: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingHorizontal: space.lg, paddingTop: space.sm },
+  banner: {
+    marginHorizontal: space.lg,
+    marginTop: space.sm,
+    backgroundColor: palette.violetSoft,
+    borderRadius: radius.md,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+    alignItems: 'center',
+  },
+  body: { padding: space.lg, gap: space.md, paddingBottom: space.xxl },
+  summary: { alignItems: 'center', gap: space.xxs, paddingVertical: space.lg },
+  tradeCard: { gap: space.sm },
+  tradeInputs: { flexDirection: 'row', gap: space.sm },
+  input: {
+    backgroundColor: palette.paper,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.lg,
+    paddingVertical: space.sm + 2,
+    color: palette.ink,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: palette.hairline,
+  },
+  symInput: { flex: 1 },
+  sharesInput: { width: 110 },
+  tradeButtons: { flexDirection: 'row', gap: space.sm },
+  empty: { marginTop: space.md },
+  positions: { gap: space.sm },
+  posRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  posLeft: { gap: 2 },
+  posRight: { alignItems: 'flex-end', gap: 2 },
+  resetRow: { alignItems: 'center', paddingVertical: space.md },
+  disclaimer: { marginTop: space.xs },
+});

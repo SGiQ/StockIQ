@@ -39,6 +39,7 @@ import {
   deductGems,
 } from '@/features/gems';
 import { crossedMilestone, grantFreeze } from '@/features/streak';
+import { buy as paperBuy, sell as paperSell, emptyPortfolio, type Portfolio, type TradeResult } from '@/features/paper';
 import {
   dailyStats,
   questClaimKey,
@@ -107,6 +108,7 @@ interface AppState {
   reviews: ReviewState[];
   askThreads: AskThread[];
   watchlist: WatchlistItem[];
+  portfolio: Portfolio;
 
   hydrate: () => Promise<void>;
 
@@ -199,6 +201,12 @@ interface AppState {
   addToWatchlist: (symbol: string) => Promise<void>;
   removeFromWatchlist: (symbol: string) => Promise<void>;
 
+  /** Simulated buy/sell at `price`. Returns the result so the UI can show why one failed. */
+  buyShares: (symbol: string, price: number, shares: number) => Promise<TradeResult>;
+  sellShares: (symbol: string, price: number, shares: number) => Promise<TradeResult>;
+  /** Wipes the paper portfolio back to the starting cash. */
+  resetPortfolio: () => Promise<void>;
+
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
   selectCourse: (courseId: CourseId) => Promise<void>;
@@ -228,6 +236,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   reviews: [],
   askThreads: [],
   watchlist: [],
+  portfolio: emptyPortfolio(),
 
   hydrate: async () => {
     const [
@@ -246,6 +255,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       reviews,
       askThreads,
       watchlist,
+      paper,
     ] = await Promise.all([
       repository.profile.get(),
       repository.streak.get(),
@@ -262,6 +272,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       repository.reviews.list(),
       repository.advisor.list(),
       repository.watchlist.list(),
+      repository.paper.get(),
     ]);
 
     set({
@@ -281,6 +292,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       reviews,
       askThreads,
       watchlist,
+      portfolio: { cash: paper.cash, positions: paper.positions },
     });
 
     // Backfill: award any badges the learner already qualifies for but never
@@ -645,6 +657,29 @@ export const useAppStore = create<AppState>((set, get) => ({
     const id = symbol.trim().toUpperCase();
     await repository.watchlist.remove(id);
     set({ watchlist: get().watchlist.filter((w) => w.id !== id) });
+  },
+
+  buyShares: async (symbol, price, shares) => {
+    const res = paperBuy(get().portfolio, symbol.trim().toUpperCase(), price, shares);
+    if (res.ok) {
+      const saved = await repository.paper.set(res.portfolio);
+      set({ portfolio: { cash: saved.cash, positions: saved.positions } });
+    }
+    return res;
+  },
+
+  sellShares: async (symbol, price, shares) => {
+    const res = paperSell(get().portfolio, symbol.trim().toUpperCase(), price, shares);
+    if (res.ok) {
+      const saved = await repository.paper.set(res.portfolio);
+      set({ portfolio: { cash: saved.cash, positions: saved.positions } });
+    }
+    return res;
+  },
+
+  resetPortfolio: async () => {
+    const saved = await repository.paper.set(emptyPortfolio());
+    set({ portfolio: { cash: saved.cash, positions: saved.positions } });
   },
 
   markWeeklyNotesSeen: async () => {

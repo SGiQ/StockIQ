@@ -17,6 +17,7 @@ import * as SQLite from 'expo-sqlite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy, listStrategies } from '@/content/registry';
 import { MAX_HEARTS } from '@/features/hearts/constants';
+import { STARTING_CASH } from '@/features/paper';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { type DayISO } from '@/lib/dates';
 import {
@@ -27,6 +28,8 @@ import {
   type AskThread,
   type AskThreadInput,
   type WatchlistItem,
+  type PaperPortfolioState,
+  type PaperPortfolioValue,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -67,6 +70,7 @@ type Collection =
   | 'badges'
   | 'advisor'
   | 'watchlist'
+  | 'paper'
   | 'reviews';
 
 /**
@@ -149,6 +153,10 @@ function defaultStreak(): StreakState {
 
 function defaultGems(): GemsState {
   return { id: 'gems', updatedAt: now(), deletedAt: null, balance: 0 };
+}
+
+function defaultPaper(): PaperPortfolioState {
+  return { id: 'paper', updatedAt: now(), deletedAt: null, cash: STARTING_CASH, positions: [] };
 }
 
 function defaultHearts(): HeartsState {
@@ -496,6 +504,22 @@ export class SqliteRepository implements Repository {
     set: async (value: GemsValue): Promise<GemsState> => {
       const current = await this.gems.get();
       return this.save('gems', { ...current, balance: value.balance, updatedAt: now(), deletedAt: null });
+    },
+  };
+
+  paper = {
+    get: async (): Promise<PaperPortfolioState> =>
+      (await this.one<PaperPortfolioState>('paper', 'paper')) ?? defaultPaper(),
+
+    set: async (value: PaperPortfolioValue): Promise<PaperPortfolioState> => {
+      const current = await this.paper.get();
+      return this.save('paper', {
+        ...current,
+        cash: value.cash,
+        positions: value.positions,
+        updatedAt: now(),
+        deletedAt: null,
+      });
     },
   };
 
