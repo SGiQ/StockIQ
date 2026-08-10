@@ -8,7 +8,15 @@ import {
   computeReadiness,
   evaluateNewBadges,
 } from '../src/features/achievements';
-import type { LessonProgress, StreakState, UserProfile } from '../src/store/repository';
+import type { LessonProgress, ReviewState, StreakState, UserProfile } from '../src/store/repository';
+
+const NOW = 1_800_000_000_000;
+const review = (over: Partial<ReviewState>): ReviewState => ({
+  id: 'c/l#x', updatedAt: 1, deletedAt: null,
+  courseId: 'c', lessonId: 'l', cardId: 'x',
+  box: 1, dueAt: NOW + 1_000_000, lastReviewedAt: NOW, lastCorrect: true,
+  ...over,
+});
 
 /** A completed-lesson progress record for the first lesson of the first course. */
 function firstLessonState() {
@@ -140,4 +148,47 @@ test('the assessment is drawn from real binary-choice questions', () => {
     assert.equal(q.options.filter((o) => o.correct).length, 1, 'exactly one correct option');
     assert.ok(q.prompt.length > 0);
   }
+});
+
+/* ── Maintained Readiness: the retention component ─────────────────── */
+
+test('retention is 0 when nothing is scheduled — a fresh learner earns no credit', () => {
+  const stats = computeAchievementStats({ ...EMPTY_STATE, reviews: [], now: NOW });
+  assert.equal(stats.retention, 0);
+  assert.equal(stats.totalReviews, 0);
+});
+
+test('retention is 1 when caught up (cards scheduled, none due)', () => {
+  const reviews = [review({ id: 'a', dueAt: NOW + 1 }), review({ id: 'b', dueAt: NOW + 999 })];
+  const stats = computeAchievementStats({ ...EMPTY_STATE, reviews, now: NOW });
+  assert.equal(stats.totalReviews, 2);
+  assert.equal(stats.dueReviews, 0);
+  assert.equal(stats.retention, 1);
+});
+
+test('retention decays with the overdue backlog and ignores soft-deleted rows', () => {
+  const reviews = [
+    review({ id: 'a', dueAt: NOW - 1 }), // due
+    review({ id: 'b', dueAt: NOW - 1 }), // due
+    review({ id: 'c', dueAt: NOW + 999 }), // not due
+    review({ id: 'd', dueAt: NOW + 999 }), // not due
+    review({ id: 'e', dueAt: NOW - 1, deletedAt: NOW }), // deleted → ignored
+  ];
+  const stats = computeAchievementStats({ ...EMPTY_STATE, reviews, now: NOW });
+  assert.equal(stats.totalReviews, 4);
+  assert.equal(stats.dueReviews, 2);
+  assert.equal(stats.retention, 0.5);
+});
+
+test('the readiness score is lower when reviews go overdue (it is maintained)', () => {
+  const base = { ...EMPTY_STATE, streak: streak(7) };
+  const caughtUp = computeReadiness(
+    computeAchievementStats({ ...base, reviews: [review({ id: 'a', dueAt: NOW + 1 })], now: NOW }),
+  ).score;
+  const overdue = computeReadiness(
+    computeAchievementStats({ ...base, reviews: [review({ id: 'a', dueAt: NOW - 1 })], now: NOW }),
+  ).score;
+  assert.ok(caughtUp > overdue, `caught-up (${caughtUp}) should beat overdue (${overdue})`);
+  // The 0.10 retention weight is the whole difference: 10 points on a full swing.
+  assert.equal(caughtUp - overdue, 10);
 });

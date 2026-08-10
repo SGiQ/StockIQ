@@ -39,8 +39,8 @@ export default function DashboardTab() {
   );
 
   const readiness = useMemo(
-    () => selectReadiness({ progress, streak, saved, unlockedStrategies, profile }),
-    [progress, streak, saved, unlockedStrategies, profile],
+    () => selectReadiness({ progress, streak, saved, unlockedStrategies, profile, reviews }),
+    [progress, streak, saved, unlockedStrategies, profile, reviews],
   );
 
   const earnedBadgeIds = useMemo(() => new Set(badges.map((b) => b.id)), [badges]);

@@ -7,6 +7,7 @@ import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
 import { GemCounter } from '@/components/Currency';
 import { TodayCard } from '@/components/TodayCard';
+import { KeepSharpCard } from '@/components/KeepSharpCard';
 import { ThisWeekCard } from '@/components/ThisWeekCard';
 import {
   CardSurface,
@@ -132,6 +133,8 @@ export default function LearnTab() {
             <StreakRow activeDays={streak?.activeDays ?? []} />
           </CardSurface>
         </Pressable>
+
+        <KeepSharpCard />
 
         <TodayCard />
 

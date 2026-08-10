@@ -14,7 +14,7 @@
 import { listCourses, listLessonsInCourse, listStrategies } from '@/content/registry';
 import { progressId } from '@/store/repository';
 import type { CourseId } from '@/content/types';
-import type { LessonProgress, SavedCard, StreakState, UserProfile } from '@/store/repository';
+import type { LessonProgress, ReviewState, SavedCard, StreakState, UserProfile } from '@/store/repository';
 
 export interface AchievementStatsInput {
   progress: Record<string, LessonProgress>;
@@ -22,6 +22,10 @@ export interface AchievementStatsInput {
   saved: SavedCard[];
   unlockedStrategies: string[];
   profile: UserProfile | null;
+  /** Spaced-review rows; drives the retention (keep-sharp) signal. */
+  reviews?: ReviewState[];
+  /** Clock for the due-review calculation; defaults to now. */
+  now?: number;
 }
 
 export interface AchievementStats {
@@ -48,11 +52,26 @@ export interface AchievementStats {
   /** Best assessment result 0..1, 0 when never taken. */
   assessmentBestScore: number;
   assessmentTaken: boolean;
+  /** Review cards scheduled (live rows). */
+  totalReviews: number;
+  /** Of those, how many are due now — the "keep sharp" backlog. */
+  dueReviews: number;
+  /**
+   * Review freshness 0..1: 1 when caught up, drifting toward 0 as cards fall
+   * due, back to 1 when cleared. 0 when nothing is scheduled yet — a fresh
+   * learner has nothing to keep sharp and earns no credit here.
+   */
+  retention: number;
 }
 
 export function computeAchievementStats(input: AchievementStatsInput): AchievementStats {
-  const { progress, streak, saved, unlockedStrategies, profile } = input;
+  const { progress, streak, saved, unlockedStrategies, profile, reviews = [], now = Date.now() } = input;
   const courses = listCourses();
+
+  const liveReviews = reviews.filter((r) => r.deletedAt === null);
+  const totalReviews = liveReviews.length;
+  const dueReviews = liveReviews.filter((r) => r.dueAt <= now).length;
+  const retention = totalReviews === 0 ? 0 : Math.max(0, Math.min(1, 1 - dueReviews / totalReviews));
 
   let totalLessons = 0;
   let lessonsCompleted = 0;
@@ -111,5 +130,8 @@ export function computeAchievementStats(input: AchievementStatsInput): Achieveme
     savedCount: saved.filter((c) => c.deletedAt === null).length,
     assessmentBestScore: profile?.assessmentBestScore ?? 0,
     assessmentTaken: (profile?.assessmentAttempts ?? 0) > 0,
+    totalReviews,
+    dueReviews,
+    retention,
   };
 }
