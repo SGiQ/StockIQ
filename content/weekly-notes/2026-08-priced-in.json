@@ -1,0 +1,39 @@
+{
+  "id": "priced-in-earnings",
+  "publishedOn": "2026-08-10",
+  "title": "Good news, red day",
+  "summary": "A company beats earnings and the stock falls anyway. Here's the concept that explains it.",
+  "relatedLessonPath": "market-foundations/what-moves-a-price",
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Good news, red day",
+      "body": "A company can beat earnings and still fall. Price moves on the gap between results and expectations, not results alone. If the market already priced in a great quarter, merely great isn't enough. The surprise is what moves the stock."
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "It's about the surprise",
+      "body": "\"Priced in\" means today's price already reflects what everyone expects. Clear a low bar and the stock can jump; miss a high one and it drops. That's why the reaction, not the headline number, is the part worth reading."
+    },
+    {
+      "id": "c3",
+      "type": "main_idea",
+      "title": "The takeaway",
+      "summary": "A stock reacts to the surprise versus expectations, not to good or bad news by itself.",
+      "bullets": [
+        "Expectations are the bar; results are the jump over it.",
+        "A beat everyone expected can still disappoint.",
+        "Read the reaction to learn what was already priced in."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Priced In",
+      "url": "https://www.investopedia.com/terms/p/pricedin.asp",
+      "publisher": "Investopedia"
+    }
+  ]
+}

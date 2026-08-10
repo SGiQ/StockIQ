@@ -207,6 +207,11 @@ export interface UserProfile extends Syncable {
    */
   questClaims: string[];
   /**
+   * `publishedOn` of the newest This Week note the learner has seen. Drives the
+   * "new" badge: a note newer than this is unseen. Null until they open the feed.
+   */
+  lastSeenWeeklyNoteDate: string | null;
+  /**
    * Best Market Readiness assessment result, 0..1. Null until first taken.
    * "Best of", not "latest", so a shaky retake never lowers a proven score.
    */
@@ -425,6 +430,7 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     learningGoals: profile.learningGoals ?? (profile.primaryGoal ? [profile.primaryGoal] : []),
     dailyGoalMinutes: profile.dailyGoalMinutes ?? null,
     questClaims: profile.questClaims ?? [],
+    lastSeenWeeklyNoteDate: profile.lastSeenWeeklyNoteDate ?? null,
     assessmentBestScore: profile.assessmentBestScore ?? null,
     assessmentLastTakenAt: profile.assessmentLastTakenAt ?? null,
     assessmentAttempts: profile.assessmentAttempts ?? 0,

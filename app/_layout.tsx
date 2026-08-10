@@ -107,6 +107,15 @@ export default function RootLayout() {
           <Stack.Screen name="assessment" />
           <Stack.Screen name="review" />
           <Stack.Screen name="streak" />
+          <Stack.Screen name="this-week/index" />
+          <Stack.Screen
+            name="this-week/[noteId]"
+            options={{
+              presentation: 'fullScreenModal',
+              animation: 'slide_from_bottom',
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen
             name="kb/book/[bookId]/guide"
             options={{

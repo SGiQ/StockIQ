@@ -12,7 +12,13 @@
  */
 import { useMemo } from 'react';
 import { create } from 'zustand';
-import { getLesson, lessonPath, listCourses, listLessonsInCourse } from '@/content/registry';
+import {
+  getLesson,
+  lessonPath,
+  listCourses,
+  listLessonsInCourse,
+  listWeeklyNotes,
+} from '@/content/registry';
 import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { toDayISO } from '@/lib/dates';
 import {
@@ -174,6 +180,8 @@ interface AppState {
   recordAssessment: (score: number) => Promise<BadgeDef[]>;
   setExperience: (level: ExperienceLevel, goals: LearningGoal[]) => Promise<void>;
   setDailyGoal: (minutes: number) => Promise<void>;
+  /** Marks the This Week feed as seen up to the newest note (clears the badge). */
+  markWeeklyNotesSeen: () => Promise<void>;
 
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
@@ -590,6 +598,13 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ profile: await repository.profile.update({ dailyGoalMinutes: minutes }) });
   },
 
+  markWeeklyNotesSeen: async () => {
+    const newest = listWeeklyNotes()[0]?.publishedOn;
+    if (!newest) return;
+    if ((get().profile?.lastSeenWeeklyNoteDate ?? '') >= newest) return;
+    set({ profile: await repository.profile.update({ lastSeenWeeklyNoteDate: newest }) });
+  },
+
   acknowledgeDisclaimer: async () => {
     set({ profile: await repository.profile.update({ disclaimerAcknowledgedAt: Date.now() }) });
   },
@@ -758,6 +773,15 @@ export function useEntitlement(): Entitlement {
     () => resolveEntitlement(entitlement, override, Date.now()),
     [entitlement, override],
   );
+}
+
+/**
+ * How many This Week notes are newer than the learner has seen — drives the
+ * "new" badge. Pure over the profile + the (static) note list.
+ */
+export function unseenWeeklyNoteCount(profile: UserProfile | null): number {
+  const seen = profile?.lastSeenWeeklyNoteDate ?? '';
+  return listWeeklyNotes().filter((n) => n.publishedOn > seen).length;
 }
 
 export { lessonPath };

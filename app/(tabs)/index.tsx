@@ -7,6 +7,7 @@ import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
 import { GemCounter } from '@/components/Currency';
 import { TodayCard } from '@/components/TodayCard';
+import { ThisWeekCard } from '@/components/ThisWeekCard';
 import {
   CardSurface,
   PillButton,
@@ -115,6 +116,8 @@ export default function LearnTab() {
         </Pressable>
 
         <TodayCard />
+
+        <ThisWeekCard />
 
         {ordered.map((course) => (
           <CourseCard key={course.id} courseId={course.id} />

@@ -116,6 +116,7 @@ function defaultProfile(): UserProfile {
     learningGoals: [],
     dailyGoalMinutes: null,
     questClaims: [],
+    lastSeenWeeklyNoteDate: null,
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,

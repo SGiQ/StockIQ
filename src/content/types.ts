@@ -49,6 +49,7 @@ export type {
   TraderId,
   Unit,
   UnitId,
+  WeeklyNote,
 } from './schema';
 
 export {
