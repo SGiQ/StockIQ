@@ -23,8 +23,18 @@ interface Env {
 
 const DEFAULT_DAILY_LIMIT = 2000;
 const MAX_SYMBOLS = 25;
-/** Edge-cache each upstream quote briefly so a refreshing client can't hammer Finnhub. */
-const QUOTE_TTL_SECONDS = 15;
+/**
+ * Edge-cache each upstream quote so a refreshing client rarely re-hits Finnhub.
+ * 60s is plenty for delayed, educational quotes and keeps well under the free
+ * tier's per-minute budget.
+ */
+const QUOTE_TTL_SECONDS = 60;
+/**
+ * Delay between upstream calls. Finnhub's free tier throttles bursts hard — five
+ * simultaneous calls returns roughly one — so symbols are fetched one at a time,
+ * spaced out. With the 60s cache a watchlist only pays this on a cold load.
+ */
+const STAGGER_MS = 500;
 
 const CORS = {
   'access-control-allow-origin': '*',
@@ -88,6 +98,20 @@ async function fetchQuote(symbol: string, key: string): Promise<Quote> {
   };
 }
 
+/** Fetch quotes one at a time, spaced by STAGGER_MS, so a batch never bursts. */
+async function fetchStaggered(symbols: string[], key: string): Promise<PromiseSettledResult<Quote>[]> {
+  const out: PromiseSettledResult<Quote>[] = [];
+  for (let i = 0; i < symbols.length; i += 1) {
+    if (i > 0) await new Promise((r) => setTimeout(r, STAGGER_MS));
+    try {
+      out.push({ status: 'fulfilled', value: await fetchQuote(symbols[i]!, key) });
+    } catch (reason) {
+      out.push({ status: 'rejected', reason });
+    }
+  }
+  return out;
+}
+
 async function withinLimit(env: Env, deviceId: string): Promise<boolean> {
   if (!env.RATE_LIMIT) return true; // fail open — see the file header
   const limit = Number(env.DAILY_LIMIT ?? DEFAULT_DAILY_LIMIT);
@@ -127,7 +151,7 @@ export default {
     // transient error must not blank the whole watchlist. Settle each, return
     // what succeeded, and only fail the request when EVERY symbol failed (a
     // real problem — bad key, or a full outage) so that case stays diagnosable.
-    const settled = await Promise.allSettled(symbols.map((s) => fetchQuote(s, env.FINNHUB_API_KEY)));
+    const settled = await fetchStaggered(symbols, env.FINNHUB_API_KEY);
     const quotes = settled.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
 
     if (quotes.length === 0) {
