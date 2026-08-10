@@ -9,6 +9,7 @@ import { GemCounter } from '@/components/Currency';
 import { TodayCard } from '@/components/TodayCard';
 import { KeepSharpCard } from '@/components/KeepSharpCard';
 import { ThisWeekCard } from '@/components/ThisWeekCard';
+import { LEAGUES_ENABLED } from '@/features/leagues';
 import {
   CardSurface,
   PillButton,
@@ -51,24 +52,26 @@ export default function LearnTab() {
             Keep going.
           </Text>
           <View style={styles.headerActions}>
-            <Pressable
-              onPress={() => router.push('/leagues' as never)}
-              accessibilityRole="button"
-              accessibilityLabel="League"
-              style={styles.narrationSettings}
-              hitSlop={8}
-            >
-              <Svg width={22} height={22} viewBox="0 0 24 24">
-                <Path
-                  d="M7 4h10v3a5 5 0 01-10 0zM7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M9 14h6l-1 3h-4zM8 20h8"
-                  fill="none"
-                  stroke={palette.forestDeep}
-                  strokeWidth={1.8}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </Svg>
-            </Pressable>
+            {LEAGUES_ENABLED ? (
+              <Pressable
+                onPress={() => router.push('/leagues' as never)}
+                accessibilityRole="button"
+                accessibilityLabel="League"
+                style={styles.narrationSettings}
+                hitSlop={8}
+              >
+                <Svg width={22} height={22} viewBox="0 0 24 24">
+                  <Path
+                    d="M7 4h10v3a5 5 0 01-10 0zM7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M9 14h6l-1 3h-4zM8 20h8"
+                    fill="none"
+                    stroke={palette.forestDeep}
+                    strokeWidth={1.8}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </Svg>
+              </Pressable>
+            ) : null}
             <Pressable
               onPress={() => router.push('/portfolio' as never)}
               accessibilityRole="button"
