@@ -23,7 +23,22 @@ import {
   type MarketReadiness,
 } from '@/features/achievements';
 import { advance as advanceReview, seed as seedReview } from '@/features/review';
-import { spendOne } from '@/features/hearts';
+import { MAX_HEARTS, refill, settle, spendOne } from '@/features/hearts';
+import {
+  GEMS_DAILY_QUEST,
+  GEMS_PER_REVIEW,
+  HEART_REFILL_COST,
+  STREAK_FREEZE_COST,
+  lessonGemReward,
+} from '@/features/gems';
+import { MAX_FREEZES, crossedMilestone } from '@/features/streak';
+import {
+  dailyStats,
+  questClaimKey,
+  questDone,
+  questsForDay,
+  type QuestDef,
+} from '@/features/daily';
 import { resolveEntitlement, type Entitlement } from '@/features/entitlement';
 import { repository } from '../index';
 import {
@@ -33,6 +48,7 @@ import {
   type CardAttempt,
   type EntitlementState,
   type ExperienceLevel,
+  type GemsState,
   type HeartsState,
   type LearningGoal,
   type LessonProgress,
@@ -55,6 +71,10 @@ export interface LessonCompletion {
   unlockedStrategies: StrategyId[];
   /** Badges earned by this completion, surfaced on the completion screen. */
   newBadges: BadgeDef[];
+  /** Gems minted by this completion (0 on a replay). */
+  gemsAwarded: number;
+  /** The streak milestone this completion crossed, if any (7, 30, …). */
+  streakMilestone: number | null;
 }
 
 interface AppState {
@@ -63,6 +83,7 @@ interface AppState {
   profile: UserProfile | null;
   streak: StreakState | null;
   hearts: HeartsState | null;
+  gems: GemsState | null;
   /** Server-authored subscription entitlement; free until Stripe writes it. */
   entitlement: EntitlementState | null;
   /** __DEV__-only local plan override; never synced. Null in production use. */
@@ -84,6 +105,28 @@ interface AppState {
    * already empty. Returns the count remaining after the spend.
    */
   loseHeart: () => Promise<number>;
+
+  /** Adds gems to the balance. Returns the new balance. */
+  awardGems: (amount: number) => Promise<number>;
+  /** Spends gems if affordable. Returns true on success, false if too poor. */
+  spendGems: (amount: number) => Promise<boolean>;
+  /** Buys a full heart refill with gems. Returns false if unaffordable. */
+  refillHeartsWithGems: () => Promise<boolean>;
+  /** Buys one streak freeze with gems (capped). Returns false if unaffordable or at cap. */
+  buyStreakFreeze: () => Promise<boolean>;
+  /**
+   * Closes a review session: awards review gems and, if hearts are below full,
+   * gives one back — the "practice to earn a heart" loop. Returns what happened
+   * so the review summary can show it.
+   */
+  finishReviewSession: () => Promise<{ gemsAwarded: number; heartRefilled: boolean }>;
+
+  /**
+   * Pays out gems for any of today's quests now complete but unclaimed. Called
+   * after a completion so the reward lands the moment the quest is met. Returns
+   * the quests newly completed, for a celebration.
+   */
+  evaluateDailyQuests: () => Promise<QuestDef[]>;
 
   /**
    * __DEV__-only: overrides the effective plan locally for testing paid gates
@@ -129,7 +172,8 @@ interface AppState {
   refreshAchievements: () => Promise<BadgeDef[]>;
   /** Records an assessment result (best-of) and re-evaluates badges. */
   recordAssessment: (score: number) => Promise<BadgeDef[]>;
-  setExperience: (level: ExperienceLevel, goal: LearningGoal) => Promise<void>;
+  setExperience: (level: ExperienceLevel, goals: LearningGoal[]) => Promise<void>;
+  setDailyGoal: (minutes: number) => Promise<void>;
 
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
@@ -148,6 +192,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   profile: null,
   streak: null,
   hearts: null,
+  gems: null,
   entitlement: null,
   entitlementOverride: null,
   progress: {},
@@ -163,6 +208,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       profile,
       streak,
       hearts,
+      gems,
       entitlement,
       entitlementOverride,
       progressList,
@@ -176,6 +222,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       repository.profile.get(),
       repository.streak.get(),
       repository.hearts.get(),
+      repository.gems.get(),
       repository.entitlement.get(),
       repository.entitlement.getDevOverride(),
       repository.progress.listAll(),
@@ -192,6 +239,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       profile,
       streak,
       hearts,
+      gems,
       entitlement,
       entitlementOverride,
       progress: Object.fromEntries(progressList.map((p) => [p.id, p])),
@@ -220,6 +268,80 @@ export const useAppStore = create<AppState>((set, get) => ({
     const saved = await repository.hearts.set(value);
     set({ hearts: saved });
     return saved.hearts;
+  },
+
+  awardGems: async (amount) => {
+    if (amount <= 0) return get().gems?.balance ?? 0;
+    const current = get().gems ?? (await repository.gems.get());
+    const saved = await repository.gems.set({ balance: current.balance + amount });
+    set({ gems: saved });
+    return saved.balance;
+  },
+
+  spendGems: async (amount) => {
+    const current = get().gems ?? (await repository.gems.get());
+    if (current.balance < amount) return false;
+    const saved = await repository.gems.set({ balance: current.balance - amount });
+    set({ gems: saved });
+    return true;
+  },
+
+  refillHeartsWithGems: async () => {
+    if (!(await get().spendGems(HEART_REFILL_COST))) return false;
+    const saved = await repository.hearts.set(refill(Date.now()));
+    set({ hearts: saved });
+    return true;
+  },
+
+  buyStreakFreeze: async () => {
+    const streak = get().streak ?? (await repository.streak.get());
+    if ((streak.freezes ?? 0) >= MAX_FREEZES) return false;
+    if (!(await get().spendGems(STREAK_FREEZE_COST))) return false;
+    const saved = await repository.streak.addFreezes(1);
+    set({ streak: saved });
+    return true;
+  },
+
+  finishReviewSession: async () => {
+    await get().awardGems(GEMS_PER_REVIEW);
+
+    // Practice earns a heart back — but only when there's room for one.
+    const current = get().hearts ?? (await repository.hearts.get());
+    const settled = settle(current, Date.now());
+    let heartRefilled = false;
+    if (settled.hearts < MAX_HEARTS) {
+      const saved = await repository.hearts.set({
+        hearts: settled.hearts + 1,
+        since: settled.since,
+      });
+      set({ hearts: saved });
+      heartRefilled = true;
+    }
+    return { gemsAwarded: GEMS_PER_REVIEW, heartRefilled };
+  },
+
+  evaluateDailyQuests: async () => {
+    const today = toDayISO();
+    const quests = questsForDay(today);
+    const stats = dailyStats(get().progress, today);
+    const claimed = new Set(get().profile?.questClaims ?? []);
+
+    const newlyDone: QuestDef[] = [];
+    for (const quest of quests) {
+      const key = questClaimKey(today, quest.id);
+      if (questDone(quest, stats) && !claimed.has(key)) {
+        claimed.add(key);
+        newlyDone.push(quest);
+      }
+    }
+    if (newlyDone.length === 0) return [];
+
+    await get().awardGems(GEMS_DAILY_QUEST * newlyDone.length);
+    // Only today's claims matter; yesterday's quests are a different set and are
+    // never re-evaluated, so drop them and keep the stored list tiny.
+    const kept = [...claimed].filter((k) => k.startsWith(`${today}#`));
+    set({ profile: await repository.profile.update({ questClaims: kept }) });
+    return newlyDone;
   },
 
   setEntitlementOverride: async (plan) => {
@@ -352,6 +474,22 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
     if (seededReview) set({ reviews: await repository.reviews.list() });
 
+    // Gems are minted alongside XP — once per lesson, with a perfect-run bonus.
+    const gemsAwarded = xpDelta > 0 ? lessonGemReward(starred) : 0;
+    if (gemsAwarded > 0) {
+      const currentGems = get().gems ?? (await repository.gems.get());
+      set({ gems: await repository.gems.set({ balance: currentGems.balance + gemsAwarded }) });
+    }
+
+    // A milestone only counts when the streak actually advanced today.
+    const streakMilestone = crossedMilestone(
+      previousStreak?.currentStreak ?? 0,
+      streak.currentStreak,
+    );
+
+    // Today's quests can be met by this very completion — pay out now.
+    await get().evaluateDailyQuests();
+
     // Evaluated after the state above lands, so the snapshot sees this
     // completion (its XP, star, streak bump, and any freshly unlocked strategy).
     const newBadges = await get().refreshAchievements();
@@ -363,6 +501,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       streakExtended,
       unlockedStrategies: newlyUnlocked,
       newBadges,
+      gemsAwarded,
+      streakMilestone,
     };
   },
 
@@ -435,8 +575,19 @@ export const useAppStore = create<AppState>((set, get) => ({
     return get().refreshAchievements();
   },
 
-  setExperience: async (level, goal) => {
-    set({ profile: await repository.profile.update({ experienceLevel: level, primaryGoal: goal }) });
+  setExperience: async (level, goals) => {
+    set({
+      profile: await repository.profile.update({
+        experienceLevel: level,
+        learningGoals: goals,
+        // Keep the single primary in step for anything that wants just one.
+        primaryGoal: goals[0] ?? null,
+      }),
+    });
+  },
+
+  setDailyGoal: async (minutes) => {
+    set({ profile: await repository.profile.update({ dailyGoalMinutes: minutes }) });
   },
 
   acknowledgeDisclaimer: async () => {

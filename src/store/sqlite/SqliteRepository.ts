@@ -18,13 +18,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getStrategy, listStrategies } from '@/content/registry';
 import { MAX_HEARTS } from '@/features/hearts/constants';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
-import { isConsecutive, type DayISO } from '@/lib/dates';
+import { type DayISO } from '@/lib/dates';
 import {
+  applyStreakDay,
   progressId,
   reportId,
   savedCardId,
   type BadgeAward,
   type EntitlementState,
+  type GemsState,
+  type GemsValue,
   type HeartsState,
   type HeartsValue,
   type PlanId,
@@ -56,6 +59,7 @@ type Collection =
   | 'reports'
   | 'streak'
   | 'hearts'
+  | 'gems'
   | 'entitlement'
   | 'badges'
   | 'reviews';
@@ -109,6 +113,9 @@ function defaultProfile(): UserProfile {
     disclaimerAcknowledgedAt: null,
     experienceLevel: null,
     primaryGoal: null,
+    learningGoals: [],
+    dailyGoalMinutes: null,
+    questClaims: [],
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,
@@ -128,7 +135,12 @@ function defaultStreak(): StreakState {
     longestStreak: 0,
     lastActiveDay: null,
     activeDays: [],
+    freezes: 0,
   };
+}
+
+function defaultGems(): GemsState {
+  return { id: 'gems', updatedAt: now(), deletedAt: null, balance: 0 };
 }
 
 function defaultHearts(): HeartsState {
@@ -435,18 +447,18 @@ export class SqliteRepository implements Repository {
    * -------------------------------------------------------------- */
 
   streak = {
-    get: async (): Promise<StreakState> =>
-      (await this.one<StreakState>('streak', 'streak')) ?? defaultStreak(),
+    // Backfill `freezes` for rows written before it existed.
+    get: async (): Promise<StreakState> => {
+      const stored = (await this.one<StreakState>('streak', 'streak')) ?? defaultStreak();
+      return { ...stored, freezes: stored.freezes ?? 0 };
+    },
 
     recordActivity: async (dayISO: DayISO): Promise<StreakState> => {
       const current = await this.streak.get();
       // Idempotent per day: a second lesson today must not extend the streak.
       if (current.lastActiveDay === dayISO) return current;
 
-      const continued = current.lastActiveDay
-        ? isConsecutive(current.lastActiveDay, dayISO)
-        : false;
-      const currentStreak = continued ? current.currentStreak + 1 : 1;
+      const { currentStreak, freezes } = applyStreakDay(current, dayISO);
 
       return this.save('streak', {
         ...current,
@@ -454,8 +466,28 @@ export class SqliteRepository implements Repository {
         longestStreak: Math.max(current.longestStreak, currentStreak),
         lastActiveDay: dayISO,
         activeDays: [...new Set([...current.activeDays, dayISO])].sort().slice(-ACTIVE_DAYS_WINDOW),
+        freezes,
         updatedAt: now(),
       });
+    },
+
+    addFreezes: async (count: number): Promise<StreakState> => {
+      const current = await this.streak.get();
+      return this.save('streak', { ...current, freezes: current.freezes + count, updatedAt: now() });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Gems
+   * -------------------------------------------------------------- */
+
+  gems = {
+    get: async (): Promise<GemsState> =>
+      (await this.one<GemsState>('gems', 'gems')) ?? defaultGems(),
+
+    set: async (value: GemsValue): Promise<GemsState> => {
+      const current = await this.gems.get();
+      return this.save('gems', { ...current, balance: value.balance, updatedAt: now(), deletedAt: null });
     },
   };
 

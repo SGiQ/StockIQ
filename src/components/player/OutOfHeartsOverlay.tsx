@@ -4,6 +4,9 @@ import Svg, { Path } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PillButton, Text } from '@/components/primitives';
 import { formatCountdown, snapshot } from '@/features/hearts';
+import { HEART_REFILL_COST } from '@/features/gems';
+import { useAppStore } from '@/store/slices/useAppStore';
+import { GemIcon } from '@/components/Currency';
 import type { HeartsValue } from '@/store/repository';
 import { palette, radius, space } from '@/theme/tokens';
 import { HEART_PATH } from './HeartPips';
@@ -57,6 +60,10 @@ export function OutOfHeartsOverlay({
   const [now, setNow] = useState(() => Date.now());
   const regenNotified = useRef(false);
 
+  const gemBalance = useAppStore((s) => s.gems?.balance ?? 0);
+  const refillWithGems = useAppStore((s) => s.refillHeartsWithGems);
+  const canAffordRefill = gemBalance >= HEART_REFILL_COST;
+
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
@@ -94,9 +101,25 @@ export function OutOfHeartsOverlay({
             {`Next heart in ${formatCountdown(snap.nextInMs)}`}
           </Text>
         </View>
+
+        <View style={styles.gemRow}>
+          <GemIcon size={15} />
+          <Text variant="caption" color={palette.slate}>
+            {canAffordRefill
+              ? `You have ${gemBalance} gems`
+              : `${gemBalance} / ${HEART_REFILL_COST} gems — earn more in lessons and review`}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.actions}>
+        {canAffordRefill ? (
+          <PillButton
+            label={`Refill hearts · ${HEART_REFILL_COST} gems`}
+            variant="dark"
+            onPress={() => void refillWithGems()}
+          />
+        ) : null}
         <PillButton label="Go Unlimited" variant="primary" onPress={onGoUnlimited} />
         <PillButton label="Leave lesson" variant="ghost" onPress={onExit} />
       </View>
@@ -130,6 +153,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
     paddingVertical: space.sm,
     marginTop: space.sm,
+  },
+  gemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.xs,
+    marginTop: space.xs,
   },
   actions: {
     alignSelf: 'stretch',

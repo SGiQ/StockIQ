@@ -5,6 +5,8 @@ import Svg, { Circle, Path } from 'react-native-svg';
 import { getLesson, listCourses } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
 import { StreakRow } from '@/components/StreakRow';
+import { GemCounter } from '@/components/Currency';
+import { TodayCard } from '@/components/TodayCard';
 import {
   CardSurface,
   PillButton,
@@ -26,6 +28,7 @@ export default function LearnTab() {
   const courses = listCourses();
   const totalXp = useAppStore((s) => totalEarnedXp(s.progress));
   const streak = useAppStore((s) => s.streak);
+  const gemBalance = useAppStore((s) => s.gems?.balance ?? 0);
   const selectedCourseId = useAppStore((s) => s.profile?.selectedCourseId ?? null);
   const narrationEnabled = useAppStore(
     (s) => s.profile?.narrationEnabled ?? false,
@@ -71,6 +74,7 @@ export default function LearnTab() {
                 <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={palette.ink} strokeWidth={2} strokeLinecap="round" />
               </Svg>
             </Pressable>
+            <GemCounter balance={gemBalance} />
             <View style={styles.xp}>
               <Text variant="label" color={palette.forestDeep} uppercase>
                 {`${totalXp} XP`}
@@ -79,21 +83,38 @@ export default function LearnTab() {
           </View>
         </View>
 
-        <CardSurface style={styles.streakCard}>
-          <View style={styles.streakHeading}>
-            <Text variant="h3" color={palette.ink}>
-              {streak && streak.currentStreak > 0
-                ? `${streak.currentStreak}-day streak`
-                : 'Start a streak'}
-            </Text>
-            <Text variant="caption" color={palette.slate}>
-              {streak && streak.currentStreak > 0
-                ? `Longest: ${streak.longestStreak}`
-                : 'Finish a lesson today'}
-            </Text>
-          </View>
-          <StreakRow activeDays={streak?.activeDays ?? []} />
-        </CardSurface>
+        <Pressable
+          onPress={() => router.push('/streak' as never)}
+          accessibilityRole="button"
+          accessibilityLabel="Streak details"
+        >
+          <CardSurface style={styles.streakCard}>
+            <View style={styles.streakTop}>
+              <View style={styles.streakHeading}>
+                <Text variant="h3" color={palette.ink}>
+                  {streak && streak.currentStreak > 0
+                    ? `${streak.currentStreak}-day streak`
+                    : 'Start a streak'}
+                </Text>
+                <Text variant="caption" color={palette.slate}>
+                  {streak && streak.currentStreak > 0
+                    ? `Longest: ${streak.longestStreak}`
+                    : 'Finish a lesson today'}
+                </Text>
+              </View>
+              {streak && streak.freezes > 0 ? (
+                <View style={styles.freezePill}>
+                  <Text variant="label" color={palette.azure} uppercase>
+                    {`❄︎ ${streak.freezes}`}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+            <StreakRow activeDays={streak?.activeDays ?? []} />
+          </CardSurface>
+        </Pressable>
+
+        <TodayCard />
 
         {ordered.map((course) => (
           <CourseCard key={course.id} courseId={course.id} />
@@ -199,8 +220,20 @@ const styles = StyleSheet.create({
   streakCard: {
     gap: space.md,
   },
+  streakTop: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
   streakHeading: {
     gap: space.xxs,
+    flex: 1,
+  },
+  freezePill: {
+    backgroundColor: palette.azureSoft,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xxs + 1,
   },
   card: {
     gap: space.md,

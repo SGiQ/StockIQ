@@ -5,7 +5,7 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { palette, radius, space } from '@/theme/tokens';
 
 const PROMISES = [
-  { glyph: 'clock', text: 'Finish a chapter in two minutes' },
+  { glyph: 'clock', text: 'Bite-size lessons, zero jargon' },
   { glyph: 'chart-up', text: 'Every idea drawn as a real chart' },
   { glyph: 'brain', text: 'Quizzes that make it stick' },
 ] as const;

@@ -43,6 +43,7 @@ const streak = (n: number): StreakState => ({
   longestStreak: n,
   lastActiveDay: '2026-08-04',
   activeDays: [],
+  freezes: 0,
 });
 
 const EMPTY_STATE = {
