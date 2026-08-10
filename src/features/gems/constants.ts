@@ -25,3 +25,12 @@ export const STREAK_FREEZE_COST = 100;
 export function lessonGemReward(perfect: boolean): number {
   return GEMS_PER_LESSON + (perfect ? GEMS_PERFECT_BONUS : 0);
 }
+
+/**
+ * The balance left after spending `cost`, or null when it can't be afforded.
+ * The single rule behind every gem purchase — the store just persists the
+ * result — so "you can't overspend" is enforced (and tested) in one place.
+ */
+export function deductGems(balance: number, cost: number): number | null {
+  return balance >= cost ? balance - cost : null;
+}

@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { lessonGemReward } from '../src/features/gems';
-import { crossedMilestone, STREAK_MILESTONES } from '../src/features/streak';
+import {
+  lessonGemReward,
+  deductGems,
+  HEART_REFILL_COST,
+  STREAK_FREEZE_COST,
+} from '../src/features/gems';
+import { crossedMilestone, grantFreeze, MAX_FREEZES, STREAK_MILESTONES } from '../src/features/streak';
 import { applyStreakDay, type StreakState, type LessonProgress } from '../src/store/repository';
 import {
   dailyStats,
@@ -13,6 +18,28 @@ import {
 } from '../src/features/daily';
 
 /* ── gems ─────────────────────────────────────────────────────────── */
+
+test('deductGems: spends when affordable, refuses when short', () => {
+  assert.equal(deductGems(100, 40), 60);
+  assert.equal(deductGems(40, 40), 0); // exact balance is affordable
+  assert.equal(deductGems(39, 40), null); // one gem short
+  assert.equal(deductGems(0, 1), null);
+  assert.equal(deductGems(10, 0), 10); // a free action never fails
+});
+
+test('gem prices and rewards stay coherent', () => {
+  assert.ok(HEART_REFILL_COST > 0 && STREAK_FREEZE_COST > 0, 'prices are positive');
+  assert.ok(lessonGemReward(true) > lessonGemReward(false), 'a perfect run pays more');
+  // A streak freeze is the scarcer, pricier perk than a heart refill.
+  assert.ok(STREAK_FREEZE_COST > HEART_REFILL_COST, 'a freeze costs more than a refill');
+});
+
+test('grantFreeze: banks up to the cap, then refuses', () => {
+  assert.equal(grantFreeze(0), 1);
+  assert.equal(grantFreeze(MAX_FREEZES - 1), MAX_FREEZES);
+  assert.equal(grantFreeze(MAX_FREEZES), null); // already at the cap
+  assert.equal(grantFreeze(MAX_FREEZES + 1), null); // never exceeds it
+});
 
 test('lessonGemReward: perfect adds the bonus', () => {
   assert.equal(lessonGemReward(false), 10);

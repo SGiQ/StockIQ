@@ -6,4 +6,5 @@ export {
   HEART_REFILL_COST,
   STREAK_FREEZE_COST,
   lessonGemReward,
+  deductGems,
 } from './constants';

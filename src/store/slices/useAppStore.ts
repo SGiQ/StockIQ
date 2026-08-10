@@ -36,8 +36,9 @@ import {
   HEART_REFILL_COST,
   STREAK_FREEZE_COST,
   lessonGemReward,
+  deductGems,
 } from '@/features/gems';
-import { MAX_FREEZES, crossedMilestone } from '@/features/streak';
+import { crossedMilestone, grantFreeze } from '@/features/streak';
 import {
   dailyStats,
   questClaimKey,
@@ -301,8 +302,9 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   spendGems: async (amount) => {
     const current = get().gems ?? (await repository.gems.get());
-    if (current.balance < amount) return false;
-    const saved = await repository.gems.set({ balance: current.balance - amount });
+    const remaining = deductGems(current.balance, amount);
+    if (remaining === null) return false;
+    const saved = await repository.gems.set({ balance: remaining });
     set({ gems: saved });
     return true;
   },
@@ -316,7 +318,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   buyStreakFreeze: async () => {
     const streak = get().streak ?? (await repository.streak.get());
-    if ((streak.freezes ?? 0) >= MAX_FREEZES) return false;
+    if (grantFreeze(streak.freezes ?? 0) === null) return false;
     if (!(await get().spendGems(STREAK_FREEZE_COST))) return false;
     const saved = await repository.streak.addFreezes(1);
     set({ streak: saved });
