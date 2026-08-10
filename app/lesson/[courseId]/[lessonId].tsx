@@ -8,6 +8,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { BadgeMedallion } from '@/components/BadgeMedallion';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
+import { GemIcon } from '@/components/Currency';
 import { SourceLinks } from '@/components/kb/SourceLinks';
 import { reportId, savedCardId } from '@/store';
 import { useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
@@ -151,10 +152,20 @@ function CompletionScreen({
         </Text>
 
         {completion.xpAwarded > 0 ? (
-          <View style={styles.xpPill}>
-            <Text variant="label" color={palette.forestDeep} uppercase>
-              {`+${completion.xpAwarded} XP`}
-            </Text>
+          <View style={styles.rewardRow}>
+            <View style={styles.xpPill}>
+              <Text variant="label" color={palette.forestDeep} uppercase>
+                {`+${completion.xpAwarded} XP`}
+              </Text>
+            </View>
+            {completion.gemsAwarded > 0 ? (
+              <View style={styles.gemPill}>
+                <GemIcon size={15} />
+                <Text variant="label" color={palette.azure} uppercase>
+                  {`+${completion.gemsAwarded}`}
+                </Text>
+              </View>
+            ) : null}
           </View>
         ) : (
           <Text variant="caption" color={palette.slate} align="center">
@@ -168,11 +179,22 @@ function CompletionScreen({
           <StreakRow activeDays={completion.streak.activeDays} />
         </View>
 
-        <Text variant="body" color={palette.slate} align="center">
-          {completion.streak.currentStreak === 1
-            ? 'Streak started. Come back tomorrow to keep it.'
-            : `You're on a ${completion.streak.currentStreak}-day streak.`}
-        </Text>
+        {completion.streakMilestone ? (
+          <View style={styles.milestone}>
+            <Text variant="label" color={palette.flame} uppercase>
+              {`${completion.streakMilestone}-day streak!`}
+            </Text>
+            <Text variant="caption" color={palette.slate} align="center">
+              A milestone. Keep the chain alive.
+            </Text>
+          </View>
+        ) : (
+          <Text variant="body" color={palette.slate} align="center">
+            {completion.streak.currentStreak === 1
+              ? 'Streak started. Come back tomorrow to keep it.'
+              : `You're on a ${completion.streak.currentStreak}-day streak.`}
+          </Text>
+        )}
 
         {completion.newBadges.length > 0 ? (
           <View style={styles.badgesUnlocked}>
@@ -234,9 +256,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  rewardRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+  },
   xpPill: {
     backgroundColor: palette.mint,
     borderRadius: radius.pill,
+    paddingHorizontal: space.lg,
+    paddingVertical: space.sm,
+  },
+  gemPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.xxs + 1,
+    backgroundColor: palette.azureSoft,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+  },
+  milestone: {
+    alignItems: 'center',
+    gap: space.xxs,
+    backgroundColor: palette.flameSoft,
+    borderRadius: radius.md,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm,
   },

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
@@ -6,6 +6,8 @@ import { BinaryChoiceCardView } from '@/components/cards/BinaryChoiceCardView';
 import { FillBlankCardView } from '@/components/cards/FillBlankCardView';
 import { Glyph } from '@/components/art/Glyph';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import { GemIcon } from '@/components/Currency';
+import { HeartIcon } from '@/components/player/HeartPips';
 import { initialStateFor, type CardUiState } from '@/components/player/cardState';
 import { buildReviewQueue } from '@/features/review';
 import { useAppStore } from '@/store/slices/useAppStore';
@@ -23,6 +25,7 @@ export default function ReviewScreen() {
   const router = useRouter();
   const reviews = useAppStore((s) => s.reviews);
   const recordReview = useAppStore((s) => s.recordReview);
+  const finishReviewSession = useAppStore((s) => s.finishReviewSession);
 
   // Freeze the queue for the session so answering doesn't reshuffle it underfoot.
   const [queue] = useState(() => buildReviewQueue(reviews, Date.now()));
@@ -35,8 +38,19 @@ export default function ReviewScreen() {
   const [answered, setAnswered] = useState(false);
   const [remembered, setRemembered] = useState(0);
   const [done, setDone] = useState(total === 0);
+  const [reward, setReward] = useState<{ gemsAwarded: number; heartRefilled: boolean } | null>(null);
 
   const current = queue[index];
+
+  // Finishing a real session (not an empty "all caught up") pays out gems and
+  // practices a heart back. Runs exactly once, when the session ends.
+  const rewardedRef = useRef(false);
+  useEffect(() => {
+    if (done && total > 0 && !rewardedRef.current) {
+      rewardedRef.current = true;
+      void finishReviewSession().then(setReward);
+    }
+  }, [done, total, finishReviewSession]);
 
   const onAnswered = useCallback(
     (correct: boolean) => {
@@ -87,7 +101,7 @@ export default function ReviewScreen() {
       ) : null}
 
       {done ? (
-        <Summary total={total} remembered={remembered} onDone={exit} />
+        <Summary total={total} remembered={remembered} reward={reward} onDone={exit} />
       ) : current ? (
         <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
           {current.card.type === 'binary_choice' ? (
@@ -109,7 +123,17 @@ export default function ReviewScreen() {
   );
 }
 
-function Summary({ total, remembered, onDone }: { total: number; remembered: number; onDone: () => void }) {
+function Summary({
+  total,
+  remembered,
+  reward,
+  onDone,
+}: {
+  total: number;
+  remembered: number;
+  reward: { gemsAwarded: number; heartRefilled: boolean } | null;
+  onDone: () => void;
+}) {
   const allCaughtUp = total === 0;
   return (
     <ScrollView contentContainerStyle={styles.summary} showsVerticalScrollIndicator={false}>
@@ -124,6 +148,26 @@ function Summary({ total, remembered, onDone }: { total: number; remembered: num
           ? 'Nothing is due right now. Finish a lesson, or come back tomorrow — cards resurface on a spacing schedule so they actually stick.'
           : `You remembered ${remembered} of ${total}. The ones you missed will come back sooner; the rest, later. That spacing is what makes it durable.`}
       </Text>
+
+      {reward ? (
+        <View style={styles.rewardRow}>
+          <View style={styles.rewardChip}>
+            <GemIcon size={16} />
+            <Text variant="label" color={palette.azure} uppercase>
+              {`+${reward.gemsAwarded}`}
+            </Text>
+          </View>
+          {reward.heartRefilled ? (
+            <View style={styles.rewardChipHeart}>
+              <HeartIcon size={16} color={palette.danger} />
+              <Text variant="label" color={palette.danger} uppercase>
+                +1
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      ) : null}
+
       <View style={styles.summaryActions}>
         <PillButton label="Done" variant="dark" onPress={onDone} />
       </View>
@@ -160,4 +204,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   summaryActions: { alignSelf: 'stretch', gap: space.sm, marginTop: space.md },
+  rewardRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  rewardChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.xxs + 1,
+    backgroundColor: palette.azureSoft,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: space.xs,
+  },
+  rewardChipHeart: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.xxs + 1,
+    backgroundColor: palette.dangerSoft,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: space.xs,
+  },
 });

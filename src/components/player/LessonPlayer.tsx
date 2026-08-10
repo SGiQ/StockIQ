@@ -20,7 +20,8 @@ import {
   type NarrationDeckId,
 } from '@/services/narration/speech';
 import { useNarration } from '@/services/narration/useNarration';
-import { motion, palette, space } from '@/theme/tokens';
+import { Text } from '@/components/primitives';
+import { motion, palette, radius, space } from '@/theme/tokens';
 import { trackTelemetry } from '@/services/telemetry';
 import {
   canAdvance,
@@ -124,6 +125,11 @@ export function LessonPlayer({
   const [askOpen, setAskOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [upsellOpen, setUpsellOpen] = useState(false);
+
+  // Consecutive correct answers, for the combo flourish. Reset by a miss.
+  const [combo, setCombo] = useState(0);
+  // One score per card per session, so a re-render never double-counts a combo.
+  const scoredRef = useRef<Set<CardId>>(new Set());
 
   /* ---------------------------------------------------------------- *
    * Hearts gate (course lessons only, and only for free learners)
@@ -440,6 +446,16 @@ export function LessonPlayer({
         )}
       </View>
 
+      {combo >= 2 && (
+        <View style={styles.comboWrap} pointerEvents="none">
+          <View style={styles.comboPill}>
+            <Text variant="label" color={palette.paper} uppercase>
+              {`${combo} in a row`}
+            </Text>
+          </View>
+        </View>
+      )}
+
       <GestureDetector gesture={pan}>
         {/*
           `pinnedScroll` is undefined on native. On web it holds this box at
@@ -483,6 +499,17 @@ export function LessonPlayer({
                     onStateChange={(next) => setCardState(windowCard.id, next)}
                     onAnswered={(correct) => {
                       onAnswered?.(windowCard.id, correct);
+                      // Combo + haptics, scored once per card.
+                      if (!scoredRef.current.has(windowCard.id)) {
+                        scoredRef.current.add(windowCard.id);
+                        if (correct) {
+                          setCombo((c) => c + 1);
+                          haptics.tap();
+                        } else {
+                          setCombo(0);
+                          haptics.warn();
+                        }
+                      }
                       // A wrong answer costs a heart — once per card per session.
                       if (heartsGateActive && !correct && !chargedRef.current.has(windowCard.id)) {
                         chargedRef.current.add(windowCard.id);
@@ -589,6 +616,20 @@ const styles = StyleSheet.create({
     gap: space.md,
     paddingHorizontal: space.lg,
     paddingBottom: space.sm,
+  },
+  comboWrap: {
+    position: 'absolute',
+    top: 96,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 5,
+  },
+  comboPill: {
+    backgroundColor: palette.flame,
+    borderRadius: radius.pill,
+    paddingHorizontal: space.md,
+    paddingVertical: space.xs,
   },
   stage: {
     flex: 1,

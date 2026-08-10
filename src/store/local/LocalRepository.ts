@@ -16,13 +16,16 @@ import { getStrategy } from '@/content/registry';
 import { MAX_HEARTS } from '@/features/hearts/constants';
 import type { LocalRecord } from '../sqlite/SqliteRepository';
 import type { CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
-import { isConsecutive, type DayISO } from '@/lib/dates';
+import { type DayISO } from '@/lib/dates';
 import {
+  applyStreakDay,
   progressId,
   reportId,
   savedCardId,
   type BadgeAward,
   type EntitlementState,
+  type GemsState,
+  type GemsValue,
   type HeartsState,
   type HeartsValue,
   type PlanId,
@@ -52,6 +55,7 @@ const KEYS = {
   reports: 'stockiq:reports:v1',
   streak: 'stockiq:streak:v1',
   hearts: 'stockiq:hearts:v1',
+  gems: 'stockiq:gems:v1',
   entitlement: 'stockiq:entitlement:v1',
   badges: 'stockiq:badges:v1',
   reviews: 'stockiq:reviews:v1',
@@ -79,6 +83,7 @@ type Collection =
   | 'reports'
   | 'streak'
   | 'hearts'
+  | 'gems'
   | 'entitlement'
   | 'badges'
   | 'reviews';
@@ -88,6 +93,7 @@ const SINGLETONS: Partial<Record<Collection, string>> = {
   profile: 'profile',
   streak: 'streak',
   hearts: 'hearts',
+  gems: 'gems',
   entitlement: 'entitlement',
 };
 
@@ -99,6 +105,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   reports: KEYS.reports,
   streak: KEYS.streak,
   hearts: KEYS.hearts,
+  gems: KEYS.gems,
   entitlement: KEYS.entitlement,
   badges: KEYS.badges,
   reviews: KEYS.reviews,
@@ -122,6 +129,7 @@ function defaultProfile(): UserProfile {
     primaryGoal: null,
     learningGoals: [],
     dailyGoalMinutes: null,
+    questClaims: [],
     assessmentBestScore: null,
     assessmentLastTakenAt: null,
     assessmentAttempts: 0,
@@ -141,7 +149,14 @@ function defaultStreak(): StreakState {
     longestStreak: 0,
     lastActiveDay: null,
     activeDays: [],
+    freezes: 0,
   };
+}
+
+function defaultGems(): GemsState {
+  // Never written until gems are earned, so an untouched account pushes no gems
+  // row — same as the streak and hearts.
+  return { id: 'gems', updatedAt: now(), deletedAt: null, balance: 0 };
 }
 
 function defaultHearts(): HeartsState {
@@ -387,18 +402,19 @@ export class LocalRepository implements Repository {
    * -------------------------------------------------------------- */
 
   streak = {
-    get: async (): Promise<StreakState> => this.read(KEYS.streak, defaultStreak),
+    // `freezes` was added after the first streak rows shipped, so backfill it.
+    get: async (): Promise<StreakState> => {
+      const stored = await this.read(KEYS.streak, defaultStreak);
+      return { ...stored, freezes: stored.freezes ?? 0 };
+    },
 
     recordActivity: async (dayISO: DayISO): Promise<StreakState> => {
-      const current = await this.read(KEYS.streak, defaultStreak);
+      const current = await this.streak.get();
 
       // Idempotent: finishing a second lesson today must not extend a streak.
       if (current.lastActiveDay === dayISO) return current;
 
-      const continued = current.lastActiveDay
-        ? isConsecutive(current.lastActiveDay, dayISO)
-        : false;
-      const currentStreak = continued ? current.currentStreak + 1 : 1;
+      const { currentStreak, freezes } = applyStreakDay(current, dayISO);
 
       const activeDays = [...new Set([...current.activeDays, dayISO])]
         .sort()
@@ -410,7 +426,35 @@ export class LocalRepository implements Repository {
         longestStreak: Math.max(current.longestStreak, currentStreak),
         lastActiveDay: dayISO,
         activeDays,
+        freezes,
         updatedAt: now(),
+      });
+    },
+
+    addFreezes: async (count: number): Promise<StreakState> => {
+      const current = await this.streak.get();
+      return this.write(KEYS.streak, {
+        ...current,
+        freezes: current.freezes + count,
+        updatedAt: now(),
+      });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Gems
+   * -------------------------------------------------------------- */
+
+  gems = {
+    get: async (): Promise<GemsState> => this.read(KEYS.gems, defaultGems),
+
+    set: async (value: GemsValue): Promise<GemsState> => {
+      const current = await this.read(KEYS.gems, defaultGems);
+      return this.write(KEYS.gems, {
+        ...current,
+        balance: value.balance,
+        updatedAt: now(),
+        deletedAt: null,
       });
     },
   };

@@ -23,6 +23,7 @@
  * Unlock logic lives here rather than in the UI so a server can later
  * compute it authoritatively behind the same signature.
  */
+import { daysBetween } from '@/lib/dates';
 import type {
   CardId,
   CourseId,
@@ -106,6 +107,12 @@ export interface StreakState extends Syncable {
   lastActiveDay: string | null;
   /** Trailing active days, newest last, for the flame row. */
   activeDays: string[];
+  /**
+   * Streak freezes in hand. A missed day is bridged by one freeze rather than
+   * resetting the streak. Bought with gems; may be missing on older rows, so
+   * always read through a default of 0.
+   */
+  freezes: number;
 }
 
 /**
@@ -127,6 +134,21 @@ export interface HeartsState extends Syncable {
 
 /** The mutable half of a hearts record; the store hands this to the repo. */
 export type HeartsValue = Pick<HeartsState, 'hearts' | 'since'>;
+
+/**
+ * Gems — the earn-and-spend currency.
+ *
+ * A singleton counter like the streak: genuinely stateful (a balance that both
+ * grows and shrinks), so it cannot be re-derived from per-item rows and lives
+ * on its own row. Same last-write-wins profile as the streak and hearts; a
+ * future ledger (per-earn / per-spend rows) could make it clobber-proof, but at
+ * this scale the singleton matches the rest.
+ */
+export interface GemsState extends Syncable {
+  balance: number;
+}
+
+export type GemsValue = Pick<GemsState, 'balance'>;
 
 /** Subscription tiers. `free` is the default; the paid tiers unlock capabilities. */
 export type PlanId = 'free' | 'pro' | 'elite';
@@ -178,6 +200,12 @@ export interface UserProfile extends Syncable {
    * commitment and feeds the streak and future reminders.
    */
   dailyGoalMinutes: number | null;
+  /**
+   * Daily quests already paid out, as `YYYY-MM-DD#questId` keys. The only piece
+   * of the daily loop that must be stored — everything else is derived — so a
+   * quest reward is granted at most once. Pruned to recent days on write.
+   */
+  questClaims: string[];
   /**
    * Best Market Readiness assessment result, 0..1. Null until first taken.
    * "Best of", not "latest", so a shaky retake never lowers a proven score.
@@ -269,14 +297,25 @@ export interface Repository {
 
   streak: {
     get(): Promise<StreakState>;
-    /** Idempotent per day — calling twice on the same date is a no-op. */
+    /**
+     * Idempotent per day — calling twice on the same date is a no-op. A gap of
+     * one missed day is bridged by a held freeze rather than resetting.
+     */
     recordActivity(dayISO: string): Promise<StreakState>;
+    /** Adds freezes to the bank (bought with gems in the store). */
+    addFreezes(count: number): Promise<StreakState>;
   };
 
   hearts: {
     get(): Promise<HeartsState>;
     /** Persists a settled count + regen anchor. Logic lives in the store. */
     set(value: HeartsValue): Promise<HeartsState>;
+  };
+
+  gems: {
+    get(): Promise<GemsState>;
+    /** Persists an absolute balance. Earn/spend arithmetic lives in the store. */
+    set(value: GemsValue): Promise<GemsState>;
   };
 
   entitlement: {
@@ -338,6 +377,30 @@ export const savedCardId = (
 /** Reports share the card-coordinate key shape so one card reports once. */
 export const reportId = savedCardId;
 
+/**
+ * Advances a streak by one active day, applied identically in every repository.
+ *
+ * A one-day (or wider) gap is bridged by spending held freezes — one per missed
+ * day — instead of resetting; only when there are not enough freezes does the
+ * streak fall back to 1. A non-positive gap (same day handled by the caller, or
+ * a clock that moved backwards) leaves the count untouched.
+ */
+export function applyStreakDay(
+  current: Pick<StreakState, 'currentStreak' | 'lastActiveDay' | 'freezes'>,
+  dayISO: string,
+): { currentStreak: number; freezes: number } {
+  const freezes = current.freezes ?? 0;
+  if (!current.lastActiveDay) return { currentStreak: 1, freezes };
+
+  const gap = daysBetween(current.lastActiveDay, dayISO);
+  if (gap <= 0) return { currentStreak: current.currentStreak, freezes };
+  if (gap === 1) return { currentStreak: current.currentStreak + 1, freezes };
+
+  const missed = gap - 1;
+  if (freezes >= missed) return { currentStreak: current.currentStreak + 1, freezes: freezes - missed };
+  return { currentStreak: 1, freezes };
+}
+
 /** Stamps a record as written now. The one place updatedAt is set. */
 export function touch<T extends Syncable>(record: Omit<T, 'updatedAt'> & { updatedAt?: number }): T {
   return { ...record, updatedAt: Date.now() } as T;
@@ -361,6 +424,7 @@ export function withProfileDefaults(profile: UserProfile): UserProfile {
     primaryGoal: profile.primaryGoal ?? null,
     learningGoals: profile.learningGoals ?? (profile.primaryGoal ? [profile.primaryGoal] : []),
     dailyGoalMinutes: profile.dailyGoalMinutes ?? null,
+    questClaims: profile.questClaims ?? [],
     assessmentBestScore: profile.assessmentBestScore ?? null,
     assessmentLastTakenAt: profile.assessmentLastTakenAt ?? null,
     assessmentAttempts: profile.assessmentAttempts ?? 0,
