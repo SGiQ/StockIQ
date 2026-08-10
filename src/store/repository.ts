@@ -280,6 +280,16 @@ export interface AskThread extends Syncable {
 }
 export type AskThreadInput = Omit<AskThread, keyof Syncable | 'at'>;
 
+/**
+ * One symbol on the learner's watchlist. Client-authored and synced; the id is
+ * the upper-cased symbol so the same ticker can't be added twice. Quotes are
+ * fetched live and never stored here — this is just the set of what to follow.
+ */
+export interface WatchlistItem extends Syncable {
+  symbol: string;
+  addedAt: number;
+}
+
 export interface SyncStatus {
   lastSyncedAt: number | null;
   pending: number;
@@ -372,6 +382,14 @@ export interface Repository {
     /** Saved AI Advisor exchanges, newest first. */
     list(): Promise<AskThread[]>;
     add(input: AskThreadInput): Promise<AskThread>;
+  };
+
+  watchlist: {
+    /** Followed symbols, newest first. */
+    list(): Promise<WatchlistItem[]>;
+    /** Adds a symbol (idempotent — re-adding revives a removed one). */
+    add(symbol: string): Promise<WatchlistItem>;
+    remove(symbol: string): Promise<void>;
   };
 
   /**

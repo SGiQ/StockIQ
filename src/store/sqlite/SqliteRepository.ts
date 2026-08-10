@@ -26,6 +26,7 @@ import {
   savedCardId,
   type AskThread,
   type AskThreadInput,
+  type WatchlistItem,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -65,6 +66,7 @@ type Collection =
   | 'entitlement'
   | 'badges'
   | 'advisor'
+  | 'watchlist'
   | 'reviews';
 
 /**
@@ -616,6 +618,35 @@ export class SqliteRepository implements Repository {
       const at = now();
       const id = `ask#${at}#${Math.floor(Math.random() * 1e6)}`;
       return this.save('advisor', { ...input, id, at, updatedAt: at, deletedAt: null });
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Watchlist
+   * -------------------------------------------------------------- */
+
+  watchlist = {
+    list: async (): Promise<WatchlistItem[]> =>
+      (await this.all<WatchlistItem>('watchlist')).sort((a, b) => b.addedAt - a.addedAt),
+
+    add: async (symbol: string): Promise<WatchlistItem> => {
+      const id = symbol.trim().toUpperCase();
+      const at = now();
+      const existing = await this.one<WatchlistItem>('watchlist', id);
+      return this.save('watchlist', {
+        id,
+        symbol: id,
+        addedAt: existing?.addedAt ?? at,
+        updatedAt: at,
+        deletedAt: null,
+      });
+    },
+
+    remove: async (symbol: string): Promise<void> => {
+      const id = symbol.trim().toUpperCase();
+      const existing = await this.one<WatchlistItem>('watchlist', id);
+      if (!existing) return;
+      await this.save('watchlist', { ...existing, deletedAt: now(), updatedAt: now() });
     },
   };
 

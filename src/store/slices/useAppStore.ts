@@ -52,6 +52,7 @@ import {
   progressId,
   savedCardId,
   type AskThread,
+  type WatchlistItem,
   type BadgeAward,
   type CardAttempt,
   type EntitlementState,
@@ -105,6 +106,7 @@ interface AppState {
   badges: BadgeAward[];
   reviews: ReviewState[];
   askThreads: AskThread[];
+  watchlist: WatchlistItem[];
 
   hydrate: () => Promise<void>;
 
@@ -193,6 +195,10 @@ interface AppState {
    */
   recordAsk: (question: string, answer: string) => Promise<void>;
 
+  /** Adds a symbol to the watchlist (idempotent, upper-cased). */
+  addToWatchlist: (symbol: string) => Promise<void>;
+  removeFromWatchlist: (symbol: string) => Promise<void>;
+
   acknowledgeDisclaimer: () => Promise<void>;
   markTutorialSeen: () => Promise<void>;
   selectCourse: (courseId: CourseId) => Promise<void>;
@@ -221,6 +227,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   badges: [],
   reviews: [],
   askThreads: [],
+  watchlist: [],
 
   hydrate: async () => {
     const [
@@ -238,6 +245,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       badges,
       reviews,
       askThreads,
+      watchlist,
     ] = await Promise.all([
       repository.profile.get(),
       repository.streak.get(),
@@ -253,6 +261,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       repository.badges.list(),
       repository.reviews.list(),
       repository.advisor.list(),
+      repository.watchlist.list(),
     ]);
 
     set({
@@ -271,6 +280,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       badges,
       reviews,
       askThreads,
+      watchlist,
     });
 
     // Backfill: award any badges the learner already qualifies for but never
@@ -622,6 +632,19 @@ export const useAppStore = create<AppState>((set, get) => ({
       repository.advisor.add({ question, answer }),
     ]);
     set({ profile: updated, askThreads: [thread, ...get().askThreads] });
+  },
+
+  addToWatchlist: async (symbol) => {
+    const s = symbol.trim().toUpperCase();
+    if (!s) return;
+    const item = await repository.watchlist.add(s);
+    set({ watchlist: [item, ...get().watchlist.filter((w) => w.id !== item.id)] });
+  },
+
+  removeFromWatchlist: async (symbol) => {
+    const id = symbol.trim().toUpperCase();
+    await repository.watchlist.remove(id);
+    set({ watchlist: get().watchlist.filter((w) => w.id !== id) });
   },
 
   markWeeklyNotesSeen: async () => {

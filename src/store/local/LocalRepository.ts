@@ -24,6 +24,7 @@ import {
   savedCardId,
   type AskThread,
   type AskThreadInput,
+  type WatchlistItem,
   type BadgeAward,
   type EntitlementState,
   type GemsState,
@@ -62,6 +63,7 @@ const KEYS = {
   badges: 'stockiq:badges:v1',
   reviews: 'stockiq:reviews:v1',
   advisor: 'stockiq:advisor:v1',
+  watchlist: 'stockiq:watchlist:v1',
   /**
    * Local-only dev override for the paid plan. Deliberately NOT a member of
    * COLLECTION_KEYS, so it is invisible to `allRecords` and therefore never
@@ -90,6 +92,7 @@ type Collection =
   | 'entitlement'
   | 'badges'
   | 'advisor'
+  | 'watchlist'
   | 'reviews';
 
 /** Collections holding one object; the rest are id-keyed maps. */
@@ -114,6 +117,7 @@ const COLLECTION_KEYS: Record<Collection, string> = {
   badges: KEYS.badges,
   reviews: KEYS.reviews,
   advisor: KEYS.advisor,
+  watchlist: KEYS.watchlist,
 };
 
 /** Trailing window retained for the streak row; older days are pruned. */
@@ -610,6 +614,51 @@ export class LocalRepository implements Repository {
       const record: AskThread = { ...input, id, at, updatedAt: at, deletedAt: null };
       await this.write(KEYS.advisor, { ...all, [id]: record });
       return record;
+    },
+  };
+
+  /* -------------------------------------------------------------- *
+   * Watchlist
+   * -------------------------------------------------------------- */
+
+  private async allWatchlist(): Promise<Record<string, WatchlistItem>> {
+    return this.read<Record<string, WatchlistItem>>(KEYS.watchlist, () => ({}));
+  }
+
+  watchlist = {
+    list: async (): Promise<WatchlistItem[]> => {
+      const all = await this.allWatchlist();
+      return Object.values(all)
+        .filter((w) => w.deletedAt === null)
+        .sort((a, b) => b.addedAt - a.addedAt);
+    },
+
+    add: async (symbol: string): Promise<WatchlistItem> => {
+      const all = await this.allWatchlist();
+      const id = symbol.trim().toUpperCase();
+      const at = now();
+      // Idempotent: re-adding revives a removed row rather than duplicating.
+      const record: WatchlistItem = {
+        ...(all[id] ?? { symbol: id, addedAt: at }),
+        id,
+        symbol: id,
+        updatedAt: at,
+        deletedAt: null,
+      };
+      await this.write(KEYS.watchlist, { ...all, [id]: record });
+      return record;
+    },
+
+    remove: async (symbol: string): Promise<void> => {
+      const all = await this.allWatchlist();
+      const id = symbol.trim().toUpperCase();
+      const existing = all[id];
+      if (!existing) return;
+      // Soft-delete so the removal syncs like every other collection.
+      await this.write(KEYS.watchlist, {
+        ...all,
+        [id]: { ...existing, deletedAt: now(), updatedAt: now() },
+      });
     },
   };
 
