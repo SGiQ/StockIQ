@@ -6,7 +6,7 @@
  * listed explicitly here rather than loaded dynamically.
  */
 /* eslint-disable */
-import type { Book, Course, Lesson, Strategy, Term, Trader } from './schema';
+import type { Book, Course, Lesson, Strategy, Term, Trader, WeeklyNote } from './schema';
 
 import course_gettingStarted from '../../content/courses/getting-started.json';
 import course_marketFoundations from '../../content/courses/market-foundations.json';
@@ -162,6 +162,7 @@ import term_valueInvesting from '../../content/terms/value-investing.json';
 import term_volatility from '../../content/terms/volatility.json';
 import term_volume from '../../content/terms/volume.json';
 import term_yield from '../../content/terms/yield.json';
+import note_202608PricedIn from '../../content/weekly-notes/2026-08-priced-in.json';
 
 export const allCourses: Course[] = [
   course_gettingStarted as unknown as Course,
@@ -333,4 +334,8 @@ export const allTerms: Term[] = [
   term_volatility as unknown as Term,
   term_volume as unknown as Term,
   term_yield as unknown as Term,
+];
+
+export const allWeeklyNotes: WeeklyNote[] = [
+  note_202608PricedIn as unknown as WeeklyNote,
 ];

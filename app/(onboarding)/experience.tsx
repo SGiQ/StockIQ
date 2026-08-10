@@ -102,7 +102,7 @@ export default function Experience() {
             if (!level || goals.length === 0) return;
             await setExperience(level, goals);
             await selectCourse(recommendCourse(level, goals));
-            router.push('/(onboarding)/daily-goal');
+            router.push('/(onboarding)/daily-goal' as never);
           }}
         />
       </View>

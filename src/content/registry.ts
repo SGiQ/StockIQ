@@ -15,6 +15,7 @@ import {
   allStrategies,
   allTerms,
   allTraders,
+  allWeeklyNotes,
 } from './index.generated';
 import { applyArtLabels } from './lessonArtLabels';
 import { applyLessonArtwork } from './lessonArtwork';
@@ -35,6 +36,7 @@ import type {
   Trader,
   TraderId,
   Unit,
+  WeeklyNote,
 } from './types';
 
 export const lessonPath = (courseId: CourseId, lessonId: LessonId): LessonPath =>
@@ -49,6 +51,7 @@ const tradersById = new Map<TraderId, Trader>(allTraders.map((t) => [t.id, t]));
 const strategiesById = new Map<StrategyId, Strategy>(allStrategies.map((s) => [s.id, s]));
 const booksById = new Map<BookId, Book>(allBooks.map((b) => [b.id, b]));
 const termsById = new Map<TermId, Term>(allTerms.map((t) => [t.id, t]));
+const weeklyNotesById = new Map<string, WeeklyNote>(allWeeklyNotes.map((n) => [n.id, n]));
 
 /* ------------------------------------------------------------------ *
  * Lookups
@@ -77,6 +80,12 @@ export const listTraders = (): Trader[] =>
 
 export const listStrategies = (): Strategy[] =>
   [...allStrategies].sort((a, b) => a.name.localeCompare(b.name));
+
+export const getWeeklyNote = (id: string): WeeklyNote | undefined => weeklyNotesById.get(id);
+
+/** Weekly notes, newest first. */
+export const listWeeklyNotes = (): WeeklyNote[] =>
+  [...allWeeklyNotes].sort((a, b) => b.publishedOn.localeCompare(a.publishedOn));
 
 export const listBooks = (): Book[] => [...allBooks].sort((a, b) => a.year - b.year);
 

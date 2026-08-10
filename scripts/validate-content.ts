@@ -26,6 +26,7 @@ import {
   StrategySchema,
   TermSchema,
   TraderSchema,
+  WeeklyNoteSchema,
   type Book,
   type Card,
   type Course,
@@ -34,6 +35,7 @@ import {
   type Strategy,
   type Term,
   type Trader,
+  type WeeklyNote,
 } from '../src/content/schema';
 import { countWords, parseRichText } from '../src/content/richtext';
 
@@ -129,6 +131,7 @@ const traders = load<Trader>(join(CONTENT, 'traders'), TraderSchema, 'Trader');
 const strategies = load<Strategy>(join(CONTENT, 'strategies'), StrategySchema, 'Strategy');
 const books = load<Book>(join(CONTENT, 'books'), BookSchema, 'Book');
 const terms = load<Term>(join(CONTENT, 'terms'), TermSchema, 'Term');
+const weeklyNotes = load<WeeklyNote>(join(CONTENT, 'weekly-notes'), WeeklyNoteSchema, 'WeeklyNote');
 
 const courseById = new Map(courses.map((c) => [c.data.id, c]));
 const lessonByPath = new Map(lessons.map((l) => [`${l.data.courseId}/${l.data.id}`, l]));
@@ -412,6 +415,15 @@ for (const { file, data: strategy } of strategies) {
     checkCards(file, strategy.guideCards, `strategy "${strategy.id}"`);
   }
 }
+
+for (const { file, data: note } of weeklyNotes) {
+  checkCards(file, note.cards, `weekly note "${note.id}"`);
+  checkAdviceLanguage(file, note.cards, `weekly note "${note.id}"`);
+  if (note.relatedLessonPath && !lessonByPath.has(note.relatedLessonPath)) {
+    err(file, `relatedLessonPath "${note.relatedLessonPath}" points at no lesson`);
+  }
+}
+checkUniqueIds(weeklyNotes, 'weekly note');
 
 // Prerequisite cycles: a strategy gated behind a lesson that its own
 // prerequisite chain unlocks would be permanently unreachable.

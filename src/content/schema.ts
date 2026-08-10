@@ -562,6 +562,30 @@ export const LessonSchema = z.object({
 export type Lesson = z.infer<typeof LessonSchema>;
 
 /* ------------------------------------------------------------------ *
+ * This Week — timely, dated market notes
+ *
+ * A short, dated drop (1–6 cards) in the same card format as a lesson, tying a
+ * current market moment back to a concept. Deliberately lighter than a lesson:
+ * no XP, fewer cards, and it carries a publish date so the feed can order and
+ * badge it. Same sourcing rigor as everything else — a market claim still needs
+ * a reference.
+ * ------------------------------------------------------------------ */
+
+export const WeeklyNoteSchema = z.object({
+  id: z.string().min(1).max(60),
+  /** 'YYYY-MM-DD' publish date; drives ordering and the "new" badge. */
+  publishedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be YYYY-MM-DD'),
+  title: z.string().min(1).max(70),
+  /** One-line teaser shown on the feed card. */
+  summary: z.string().min(1).max(160),
+  cards: z.array(CardSchema).min(1).max(6),
+  /** Optional link back to the lesson whose concept this note applies. */
+  relatedLessonPath: LessonPathSchema.optional(),
+  sources: z.array(ContentSourceSchema).min(1).max(6),
+});
+export type WeeklyNote = z.infer<typeof WeeklyNoteSchema>;
+
+/* ------------------------------------------------------------------ *
  * Knowledge base
  * ------------------------------------------------------------------ */
 

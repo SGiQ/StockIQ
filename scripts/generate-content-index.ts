@@ -68,6 +68,7 @@ const COLLECTIONS: Collection[] = [
   { dir: 'strategies', prefix: 'strategy', type: 'Strategy', arrayName: 'allStrategies' },
   { dir: 'books', prefix: 'book', type: 'Book', arrayName: 'allBooks' },
   { dir: 'terms', prefix: 'term', type: 'Term', arrayName: 'allTerms' },
+  { dir: 'weekly-notes', prefix: 'note', type: 'WeeklyNote', arrayName: 'allWeeklyNotes' },
 ];
 
 const imports: string[] = [];
@@ -100,7 +101,7 @@ const banner = `/**
  * listed explicitly here rather than loaded dynamically.
  */
 /* eslint-disable */
-import type { Book, Course, Lesson, Strategy, Term, Trader } from './schema';
+import type { Book, Course, Lesson, Strategy, Term, Trader, WeeklyNote } from './schema';
 `;
 
 const output = [banner, imports.join('\n'), '', exports.join('\n\n'), ''].join('\n');
