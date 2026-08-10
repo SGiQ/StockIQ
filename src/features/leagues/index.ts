@@ -9,6 +9,13 @@
  */
 import type { LessonProgress } from '@/store/repository';
 
+/**
+ * Leagues only feel alive with a real cohort, so the entry point stays hidden
+ * until there are ~15–20 active users. Everything else — the screen, the service,
+ * the server `/v1/leagues` endpoint — is built and ready; flip this to true then.
+ */
+export const LEAGUES_ENABLED = false;
+
 /** Bronze is the entry tier; you climb toward Diamond by promoting weekly. */
 export const LEAGUE_TIERS = [
   'Bronze',
