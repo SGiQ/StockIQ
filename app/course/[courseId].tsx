@@ -5,7 +5,7 @@ import Svg, { Path } from 'react-native-svg';
 import { getCourse, getLesson } from '@/content/registry';
 import { LessonNode } from '@/components/path/LessonNode';
 import { UnitBanner } from '@/components/path/UnitBanner';
-import { Screen, Text } from '@/components/primitives';
+import { PillButton, Screen, Text } from '@/components/primitives';
 import {
   courseCompletion,
   courseEarnedXp,
@@ -57,6 +57,12 @@ export default function CourseScreen() {
       <Screen tone="warm">
         <View style={styles.missing}>
           <Text variant="h2">Course not found</Text>
+          <PillButton
+            label="Back to home"
+            variant="dark"
+            fullWidth={false}
+            onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))}
+          />
         </View>
       </Screen>
     );
@@ -66,7 +72,7 @@ export default function CourseScreen() {
     <Screen tone="warm">
       <View style={styles.header}>
         <Pressable
-          onPress={() => router.back()}
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)'))}
           hitSlop={12}
           accessibilityRole="button"
           accessibilityLabel="Back"
@@ -85,9 +91,15 @@ export default function CourseScreen() {
         <Text variant="h3" color={palette.ink} numberOfLines={2} style={styles.headerTitle}>
           {course.title}
         </Text>
-        <View style={styles.logoCrop} accessibilityLabel="StockIQ">
+        <Pressable
+          onPress={() => router.replace('/(tabs)')}
+          accessibilityRole="button"
+          accessibilityLabel="Home"
+          hitSlop={8}
+          style={styles.logoCrop}
+        >
           <Image source={require('../../public/logo/SG.png')} resizeMode="contain" style={styles.logo} />
-        </View>
+        </Pressable>
       </View>
 
       <View style={styles.progressHeader}>
@@ -173,6 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap: space.lg,
   },
   disclaimer: {
     marginTop: space.lg,
