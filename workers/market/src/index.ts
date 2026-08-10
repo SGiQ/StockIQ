@@ -123,17 +123,23 @@ export default {
       return json(429, { error: 'daily quote limit reached' });
     }
 
-    try {
-      const quotes = await Promise.all(symbols.map((s) => fetchQuote(s, env.FINNHUB_API_KEY)));
-      return json(200, { quotes });
-    } catch (error) {
-      const upstream = error instanceof UpstreamError ? error.status : 0;
-      console.error('finnhub error', upstream, String(error));
+    // Per-symbol, not all-or-nothing: one symbol hitting a rate limit or a
+    // transient error must not blank the whole watchlist. Settle each, return
+    // what succeeded, and only fail the request when EVERY symbol failed (a
+    // real problem — bad key, or a full outage) so that case stays diagnosable.
+    const settled = await Promise.allSettled(symbols.map((s) => fetchQuote(s, env.FINNHUB_API_KEY)));
+    const quotes = settled.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
+
+    if (quotes.length === 0) {
+      const firstErr = settled.find((r) => r.status === 'rejected') as PromiseRejectedResult | undefined;
+      const upstream = firstErr?.reason instanceof UpstreamError ? firstErr.reason.status : 0;
+      console.error('finnhub error', upstream, String(firstErr?.reason));
       if (upstream === 401 || upstream === 403) {
         return json(502, { error: 'market key rejected by Finnhub — check the FINNHUB_API_KEY secret', upstream });
       }
       if (upstream === 429) return json(429, { error: 'Finnhub rate limit reached', upstream });
       return json(502, { error: 'market data is unavailable', upstream: upstream || undefined });
     }
+    return json(200, { quotes });
   },
 };
