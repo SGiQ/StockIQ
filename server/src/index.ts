@@ -50,6 +50,7 @@ import {
 } from './mailer.ts';
 import { pushAndPull } from './sync.ts';
 import { recordTelemetry } from './telemetry.ts';
+import { leagueStandings } from './leagues.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
 /** Requests larger than this are refused before being buffered. */
@@ -149,6 +150,7 @@ const server = createServer((req, res) => {
         '/v1/auth/session': 'GET',
         '/v1/account': 'DELETE',
         '/v1/devices': 'GET',
+        '/v1/leagues': 'GET',
         '/v1/telemetry': 'POST',
       };
       const path = (req.url ?? '').split('?')[0] ?? '';
@@ -250,6 +252,8 @@ const server = createServer((req, res) => {
           payload = { ok: true };
         } else if (path === '/v1/auth/session') {
           payload = await getAccountSession(client, accountId);
+        } else if (path === '/v1/leagues') {
+          payload = await leagueStandings(client, accountId, Date.now());
         } else if (path === '/v1/link/claim') {
           const body = (await readBody(req)) as { code?: unknown };
           const result = await claimLinkCode(client, deviceId, label, normaliseCode(body.code));
