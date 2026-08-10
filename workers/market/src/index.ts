@@ -64,10 +64,16 @@ interface Quote {
   valid: boolean;
 }
 
+class UpstreamError extends Error {
+  constructor(readonly status: number) {
+    super(`finnhub ${status}`);
+  }
+}
+
 async function fetchQuote(symbol: string, key: string): Promise<Quote> {
   const url = `https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${key}`;
   const res = await fetch(url, { cf: { cacheTtl: QUOTE_TTL_SECONDS, cacheEverything: true } });
-  if (!res.ok) throw new Error(`finnhub ${res.status}`);
+  if (!res.ok) throw new UpstreamError(res.status);
   const q = (await res.json()) as { c?: number; d?: number; dp?: number; pc?: number };
   const price = q.c ?? 0;
   // Finnhub returns all zeros for an unknown symbol.
@@ -121,8 +127,13 @@ export default {
       const quotes = await Promise.all(symbols.map((s) => fetchQuote(s, env.FINNHUB_API_KEY)));
       return json(200, { quotes });
     } catch (error) {
-      console.error('finnhub error', String(error));
-      return json(502, { error: 'market data is unavailable' });
+      const upstream = error instanceof UpstreamError ? error.status : 0;
+      console.error('finnhub error', upstream, String(error));
+      if (upstream === 401 || upstream === 403) {
+        return json(502, { error: 'market key rejected by Finnhub — check the FINNHUB_API_KEY secret', upstream });
+      }
+      if (upstream === 429) return json(429, { error: 'Finnhub rate limit reached', upstream });
+      return json(502, { error: 'market data is unavailable', upstream: upstream || undefined });
     }
   },
 };
