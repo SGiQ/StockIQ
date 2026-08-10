@@ -9,6 +9,8 @@ import {
   positionPnLPercent,
   totalValue,
   totalReturn,
+  positionWeights,
+  portfolioCoachPrompt,
   type Portfolio,
 } from '../src/features/paper';
 
@@ -70,4 +72,25 @@ test('totalValue / totalReturn: cash plus holdings vs starting cash', () => {
   assert.deepEqual(totalReturn(p, priceOf), { abs: 500, pct: 5 });
   // a missing price falls back to cost basis (no phantom gain/loss)
   assert.equal(totalValue(p, () => undefined), STARTING_CASH);
+});
+
+/* ── coaching prompt ───────────────────────────────────────────────── */
+
+test('positionWeights: each holding as a percent of total value', () => {
+  const p = ok(buy(emptyPortfolio(), 'AAPL', 100, 10)); // $1000 held, $9000 cash
+  const w = positionWeights(p, (s) => (s === 'AAPL' ? 100 : undefined));
+  assert.deepEqual(w, [{ symbol: 'AAPL', weight: 10 }]); // 1000 / 10000
+});
+
+test('portfolioCoachPrompt: carries weights and the no-advice clause', () => {
+  const p = ok(buy(emptyPortfolio(), 'AAPL', 100, 60)); // $6000 held -> 60%
+  const prompt = portfolioCoachPrompt(p, (s) => (s === 'AAPL' ? 100 : undefined));
+  assert.match(prompt, /AAPL about 60%/);
+  assert.match(prompt, /Cash is about 40%/);
+  assert.match(prompt, /position sizing and diversification/);
+  assert.match(prompt, /Do not recommend buying, selling, or holding/);
+});
+
+test('portfolioCoachPrompt: handles an empty portfolio', () => {
+  assert.match(portfolioCoachPrompt(emptyPortfolio(), () => undefined), /no holdings yet/);
 });
