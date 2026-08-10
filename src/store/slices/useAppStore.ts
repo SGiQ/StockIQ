@@ -744,6 +744,7 @@ export function selectReadiness(state: {
   saved: SavedCard[];
   unlockedStrategies: StrategyId[];
   profile: UserProfile | null;
+  reviews: ReviewState[];
 }): MarketReadiness {
   return computeReadiness(
     computeAchievementStats({
@@ -752,6 +753,8 @@ export function selectReadiness(state: {
       saved: state.saved,
       unlockedStrategies: state.unlockedStrategies,
       profile: state.profile,
+      reviews: state.reviews,
+      now: Date.now(),
     }),
   );
 }

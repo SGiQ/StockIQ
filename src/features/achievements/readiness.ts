@@ -8,18 +8,21 @@
  * a number that implied a green light to trade would be personalized financial
  * advice — exactly what this app does not give.
  *
- * Five components, each 0..1, weighted to 100:
- *   coverage    0.40  how many lessons completed
+ * Six components, each 0..1, weighted to 100:
+ *   coverage    0.35  how many lessons completed
  *   mastery     0.25  quiz accuracy on what was attempted
  *   breadth     0.15  how many of the topics touched (rewards not siloing)
- *   assessment  0.10  the retakeable readiness check ("prove it")
- *   consistency 0.10  a week of streak maxes it (rewards the habit)
+ *   retention   0.10  review freshness — decays as cards fall due, restored by
+ *                     reviewing. This is what makes readiness *maintained*: a
+ *                     fully-covered learner who stops reviewing drifts down.
+ *   assessment  0.075 the retakeable readiness check ("prove it")
+ *   consistency 0.075 a week of streak maxes it (rewards the habit)
  */
 import { palette } from '@/theme/tokens';
 import type { AchievementStats } from './stats';
 
 export interface ReadinessComponent {
-  key: 'coverage' | 'mastery' | 'breadth' | 'assessment' | 'consistency';
+  key: 'coverage' | 'mastery' | 'breadth' | 'retention' | 'assessment' | 'consistency';
   label: string;
   /** 0..1 raw value. */
   value: number;
@@ -88,7 +91,7 @@ export function computeReadiness(stats: AchievementStats): MarketReadiness {
     {
       key: 'coverage',
       label: 'Lessons completed',
-      weight: 0.4,
+      weight: 0.35,
       value: stats.totalLessons > 0 ? clamp01(stats.lessonsCompleted / stats.totalLessons) : 0,
     },
     {
@@ -104,15 +107,21 @@ export function computeReadiness(stats: AchievementStats): MarketReadiness {
       value: stats.totalCourses > 0 ? clamp01(stats.coursesTouched / stats.totalCourses) : 0,
     },
     {
+      key: 'retention',
+      label: 'Kept sharp',
+      weight: 0.1,
+      value: clamp01(stats.retention),
+    },
+    {
       key: 'assessment',
       label: 'Readiness check',
-      weight: 0.1,
+      weight: 0.075,
       value: clamp01(stats.assessmentBestScore),
     },
     {
       key: 'consistency',
       label: 'Daily habit',
-      weight: 0.1,
+      weight: 0.075,
       value: clamp01(stats.currentStreak / 7),
     },
   ];
