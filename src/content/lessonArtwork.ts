@@ -13,6 +13,8 @@ const hero = (source: string, alt: string): Hero => ({
  * key-insight cards return to it as a deliberate bookend.
  */
 export const lessonArtwork: Record<string, Hero> = {
+  'getting-started/first-trade': hero('broker-agent', 'A broker hands a share across a bridge, turning a decision into ownership.'),
+
   'market-foundations/bid-ask-and-spread': hero('bid-ask-paper', 'Buyers and sellers face each other across the small gap between their best offers.'),
   'market-foundations/exchanges-and-brokers': hero('exchanges-and-brokers', 'An order travels through a broker into an exchange where buyers and sellers meet.'),
   'market-foundations/indices-and-benchmarks': hero('indices-and-benchmarks', 'A weighted basket of companies sits beside a benchmark running path.'),

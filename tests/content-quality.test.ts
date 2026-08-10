@@ -24,7 +24,6 @@ const LESSONS_AWAITING_ART = new Set<string>([
   'getting-started/building-a-portfolio',
   'getting-started/index-funds',
   'getting-started/accounts-fees-and-taxes',
-  'getting-started/first-trade',
 ]);
 
 const lessonKey = (lesson: { courseId: string; id: string }): string =>
@@ -121,18 +120,29 @@ test('Revenue vs. Earnings uses a unique visual story through its instructional 
   );
   assert.ok(lesson);
 
-  const expectedScenes = new Map([
-    ['c2', 'coffee-register'],
-    ['c3', 'coffee-profit-journey'],
-    ['c4', 'coffee-gross-profit'],
-    ['c5', 'coffee-operating-costs'],
-    ['c7', 'coffee-expansion-risk'],
+  // The coffee-shop story runs through the instructional middle. It was
+  // authored as bespoke scenes and later migrated to editorial illustrations
+  // (the "flat lesson art" pass) — same narrative, same images, new format — so
+  // this asserts the unique illustration per card, not the old scene kind.
+  const expectedIllustrations = new Map([
+    ['c2', '/lesson-art/coffee-register.jpg'],
+    ['c3', '/lesson-art/coffee-profit-journey.jpg'],
+    ['c4', '/lesson-art/coffee-gross-profit.jpg'],
+    ['c5', '/lesson-art/coffee-operating-costs.jpg'],
+    ['c7', '/lesson-art/coffee-expansion-risk.jpg'],
   ]);
 
-  for (const [cardId, sceneName] of expectedScenes) {
+  for (const [cardId, source] of expectedIllustrations) {
     const card: Card | undefined = lesson.cards.find((candidate) => candidate.id === cardId);
-    assert.ok(card && 'art' in card && card.art?.kind === 'scene', `${cardId}: missing story scene`);
-    assert.equal(card.art.name, sceneName, `${cardId}: fell back to a generic scene`);
+    assert.ok(
+      card && 'art' in card && card.art?.kind === 'illustration',
+      `${cardId}: missing its coffee-story illustration`,
+    );
+    assert.equal(card.art.source, source, `${cardId}: fell back to a generic illustration`);
+    assert.ok(
+      existsSync(join(process.cwd(), 'public', card.art.source)),
+      `${cardId}: missing ${card.art.source}`,
+    );
   }
 });
 
