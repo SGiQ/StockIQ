@@ -108,7 +108,8 @@ export default function RootLayout() {
           <Stack.Screen name="review" />
           <Stack.Screen name="streak" />
           <Stack.Screen name="ask" />
-          <Stack.Screen name="watchlist" />
+          <Stack.Screen name="watchlist/index" />
+          <Stack.Screen name="watchlist/[symbol]" />
           <Stack.Screen name="this-week/index" />
           <Stack.Screen
             name="this-week/[noteId]"

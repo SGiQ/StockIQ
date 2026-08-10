@@ -6,6 +6,7 @@ import {
   asksRemaining,
   canAsk,
   buildContextualQuestion,
+  moveExplanationPrompt,
   MAX_CONTEXT_TURNS,
   type AskTurn,
 } from '../src/features/advisor';
@@ -60,4 +61,17 @@ test('buildContextualQuestion: only the last MAX_CONTEXT_TURNS are included', ()
   assert.ok(!out.includes('Q0'), 'oldest turn is dropped');
   assert.ok(out.includes(`Q${MAX_CONTEXT_TURNS + 2}`), 'newest turn is kept');
   assert.equal((out.match(/Q: /g) ?? []).length, MAX_CONTEXT_TURNS);
+});
+
+/* ── explain-the-move ──────────────────────────────────────────────── */
+
+test('moveExplanationPrompt: direction, magnitude, and the no-advice clause', () => {
+  const up = moveExplanationPrompt('AAPL', 4.36);
+  assert.match(up, /AAPL is up 4\.36% today/);
+  assert.match(up, /Do not recommend buying, selling, or holding/);
+
+  const down = moveExplanationPrompt('MSFT', -2.5);
+  assert.match(down, /MSFT is down 2\.50% today/);
+
+  assert.match(moveExplanationPrompt('NVDA', 0), /roughly flat today/);
 });

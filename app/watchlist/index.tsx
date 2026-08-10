@@ -145,32 +145,39 @@ export default function WatchlistScreen() {
             const tone = q ? changeTone(q.change) : 'flat';
             return (
               <CardSurface key={w.id} style={styles.row}>
-                <View style={styles.rowLeft}>
-                  <Text variant="h3" color={palette.ink}>
-                    {w.symbol}
-                  </Text>
-                  {q && !q.valid ? (
-                    <Text variant="caption" color={palette.slateLight}>
-                      No data for this symbol
+                <Pressable
+                  style={styles.rowMain}
+                  onPress={() => router.push(`/watchlist/${w.symbol}` as never)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${w.symbol} details`}
+                >
+                  <View style={styles.rowLeft}>
+                    <Text variant="h3" color={palette.ink}>
+                      {w.symbol}
                     </Text>
-                  ) : null}
-                </View>
-                <View style={styles.rowRight}>
-                  {q && q.valid ? (
-                    <>
-                      <Text variant="bodyEm" color={palette.ink}>
-                        {formatPrice(q.price)}
+                    {q && !q.valid ? (
+                      <Text variant="caption" color={palette.slateLight}>
+                        No data for this symbol
                       </Text>
-                      <Text variant="caption" color={toneColor(tone)}>
-                        {formatChange(q.change, q.changePercent)}
+                    ) : null}
+                  </View>
+                  <View style={styles.rowRight}>
+                    {q && q.valid ? (
+                      <>
+                        <Text variant="bodyEm" color={palette.ink}>
+                          {formatPrice(q.price)}
+                        </Text>
+                        <Text variant="caption" color={toneColor(tone)}>
+                          {formatChange(q.change, q.changePercent)}
+                        </Text>
+                      </>
+                    ) : (
+                      <Text variant="caption" color={palette.slateLight}>
+                        {loading ? '…' : '—'}
                       </Text>
-                    </>
-                  ) : (
-                    <Text variant="caption" color={palette.slateLight}>
-                      {loading ? '…' : '—'}
-                    </Text>
-                  )}
-                </View>
+                    )}
+                  </View>
+                </Pressable>
                 <Pressable
                   onPress={() => void removeFromWatchlist(w.symbol)}
                   hitSlop={10}
@@ -233,6 +240,7 @@ const styles = StyleSheet.create({
   },
   empty: { gap: space.sm },
   row: { flexDirection: 'row', alignItems: 'center', gap: space.md },
+  rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.md },
   rowLeft: { flex: 1, gap: 2 },
   rowRight: { alignItems: 'flex-end', gap: 2 },
   remove: { paddingLeft: space.sm },
