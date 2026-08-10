@@ -1,17 +1,10 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, Screen, Text } from '@/components/primitives';
-import {
-  COHORT_SIZE,
-  PROMOTE_TOP,
-  RELEGATE_BOTTOM,
-  buildStandings,
-  currentWeekXp,
-  daysLeftInWeek,
-  type Outcome,
-} from '@/features/leagues';
+import { PROMOTE_TOP, RELEGATE_BOTTOM, currentWeekXp, daysLeftInWeek, type Outcome } from '@/features/leagues';
+import { fetchLeagueStandings, simulatedView, type LeagueView } from '@/services/leagues';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 
@@ -24,8 +17,22 @@ export default function LeaguesScreen() {
 
   const now = Date.now();
   const youXp = useMemo(() => currentWeekXp(progress, now), [progress, now]);
-  const { entries, yourRank } = useMemo(() => buildStandings(youXp, now), [youXp, now]);
   const daysLeft = daysLeftInWeek(now);
+
+  // Start on the instant sim, then replace with the real cohort if the server
+  // has the endpoint (otherwise the sim stands).
+  const [view, setView] = useState<LeagueView>(() => simulatedView(youXp, now));
+  useEffect(() => {
+    let cancelled = false;
+    void fetchLeagueStandings(youXp, now).then((v) => {
+      if (!cancelled) setView(v);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [youXp]);
+  const { entries, yourRank, tier } = view;
 
   return (
     <Screen tone="warm" edges={['top']}>
@@ -48,7 +55,7 @@ export default function LeaguesScreen() {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <CardSurface tone="forestDeep" style={styles.summary}>
           <Text variant="label" color={palette.mintSoft} uppercase>
-            Bronze league
+            {`${tier} league`}
           </Text>
           <Text variant="display" color={palette.paper}>
             {`#${yourRank}`}
@@ -70,8 +77,10 @@ export default function LeaguesScreen() {
         <View style={styles.list}>
           {entries.map((e, i) => (
             <View key={`${e.name}-${i}`}>
-              {i === PROMOTE_TOP ? <View style={[styles.divider, { backgroundColor: palette.emeraldDeep }]} /> : null}
-              {i === COHORT_SIZE - RELEGATE_BOTTOM ? (
+              {i === PROMOTE_TOP && entries.length > PROMOTE_TOP + RELEGATE_BOTTOM ? (
+                <View style={[styles.divider, { backgroundColor: palette.emeraldDeep }]} />
+              ) : null}
+              {i === entries.length - RELEGATE_BOTTOM && entries.length > PROMOTE_TOP + RELEGATE_BOTTOM ? (
                 <View style={[styles.divider, { backgroundColor: palette.danger }]} />
               ) : null}
               <View style={[styles.row, e.isYou && styles.youRow]}>
@@ -90,9 +99,15 @@ export default function LeaguesScreen() {
           ))}
         </View>
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.note}>
-          Preview: you're competing against a sample cohort until leagues go live. Your weekly XP is real — earn more to climb.
-        </Text>
+        {!view.live ? (
+          <Text variant="caption" color={palette.slateLight} align="center" style={styles.note}>
+            Preview: you're competing against a sample cohort until leagues go live. Your weekly XP is real — earn more to climb.
+          </Text>
+        ) : (
+          <Text variant="caption" color={palette.slateLight} align="center" style={styles.note}>
+            Top finishers promote, bottom finishers relegate when the week ends. Your weekly XP is real.
+          </Text>
+        )}
       </ScrollView>
     </Screen>
   );
