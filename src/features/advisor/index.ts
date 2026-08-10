@@ -33,6 +33,22 @@ export function canAsk(profile: UserProfile | null, today: string, unlimited: bo
   return unlimited || asksUsedToday(profile, today) < ASK_FREE_DAILY;
 }
 
+/**
+ * The question sent to the advisor to explain a watchlist move. Educational by
+ * construction — it asks for the concepts behind a move and explicitly forbids
+ * a buy/sell/hold call, so the answer stays on the right side of the guardrail
+ * even before the server system prompt does its part.
+ */
+export function moveExplanationPrompt(symbol: string, changePercent: number): string {
+  const dir =
+    changePercent > 0
+      ? `up ${changePercent.toFixed(2)}% today`
+      : changePercent < 0
+        ? `down ${Math.abs(changePercent).toFixed(2)}% today`
+        : 'roughly flat today';
+  return `${symbol} is ${dir}. In plain, educational terms, what could a move like this generally mean, and what would a beginner look at to understand it? Explain the concepts. Do not recommend buying, selling, or holding, and do not predict where it goes next.`;
+}
+
 /** One exchange in a conversation. */
 export interface AskTurn {
   question: string;

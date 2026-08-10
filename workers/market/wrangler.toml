@@ -7,13 +7,13 @@ compatibility_date = "2026-01-01"
 #   npx wrangler secret put FINNHUB_API_KEY
 
 # Optional per-caller daily cap to protect the Finnhub free-tier quota. Unlike
-# the ASK worker this fails OPEN (quotes are free/cheap, not LLM spend), so the
-# binding is optional — omit it to run uncapped. To enable it, create the
-# namespace and paste its id below:
+# the ASK worker this fails OPEN (quotes are free/cheap, not LLM spend), so it's
+# OFF by default — the Worker deploys and runs uncapped without it. To enable
+# it, create a namespace, then uncomment the block below and paste its id:
 #   npx wrangler kv namespace create RATE_LIMIT
-[[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "PASTE_KV_NAMESPACE_ID_HERE"
 
 [vars]
 DAILY_LIMIT = "2000"
