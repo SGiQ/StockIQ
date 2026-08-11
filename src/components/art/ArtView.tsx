@@ -95,8 +95,19 @@ export function ArtView({
       const preset: PalettePreset =
         spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'sky';
       const p = artPalettes[preset];
+      // A subtle card elevation lifts the chart panel off the lesson surface.
+      // Built without `styles.base` because its `overflow: 'hidden'` would clip
+      // the shadow; the SVG stays within its viewBox, so no clipping is needed.
       return (
-        <View style={[...container, styles.chart, { backgroundColor: p.bg }]}>
+        <View
+          style={[
+            styles.chartCard,
+            { aspectRatio },
+            rounded ? { borderRadius: radius.lg } : null,
+            { backgroundColor: p.bg },
+            style,
+          ]}
+        >
           {spec.motion ? (
             <AnimatedChartView
               spec={spec.spec}
@@ -141,5 +152,17 @@ const styles = StyleSheet.create({
   },
   chart: {
     padding: 8,
+  },
+  chartCard: {
+    width: '100%',
+    padding: 8,
+    // Subtle elevation (iOS shadow* / Android elevation / RN-Web boxShadow).
+    // Depth lives on the panel only — the bars stay flat so proportions read
+    // honestly.
+    shadowColor: '#16241C',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.16,
+    shadowRadius: 14,
+    elevation: 5,
   },
 });

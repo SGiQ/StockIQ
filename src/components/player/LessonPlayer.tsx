@@ -20,6 +20,7 @@ import {
   type NarrationDeckId,
 } from '@/services/narration/speech';
 import { useNarration } from '@/services/narration/useNarration';
+import { NarrationSyncContext } from '@/components/art/charts/narrationSync';
 import { Text } from '@/components/primitives';
 import { motion, palette, radius, space } from '@/theme/tokens';
 import { trackTelemetry } from '@/services/telemetry';
@@ -212,9 +213,24 @@ export function LessonPlayer({
   const {
     available: narrationAvailable,
     playing: narrationPlaying,
+    position: narrationPosition,
+    duration: narrationDuration,
     play: playNarration,
     stop: stopNarration,
   } = useNarration(narrationSource, narrationEnabled, narrationSpeed);
+
+  // The active card's chart reveals in step with the voice (0→1), or -1 when
+  // nothing is playing so it falls back to its own timed build.
+  const narrationSyncValue = useMemo(
+    () => ({
+      enabled: narrationEnabled,
+      sync:
+        narrationEnabled && narrationPlaying && narrationDuration > 0
+          ? Math.min(1, narrationPosition / narrationDuration)
+          : -1,
+    }),
+    [narrationEnabled, narrationPlaying, narrationPosition, narrationDuration],
+  );
 
   /** Render window of three: previous, current, next. */
   const visible = useMemo(
@@ -483,6 +499,7 @@ export function LessonPlayer({
               style={[StyleSheet.absoluteFill, offsetStyle]}
               pointerEvents="box-none"
             >
+            <NarrationSyncContext.Provider value={narrationSyncValue}>
             {width > 0 &&
               visible.map((i) => {
               const windowCard = cards[i];
@@ -538,6 +555,7 @@ export function LessonPlayer({
                 </View>
               );
             })}
+            </NarrationSyncContext.Provider>
             </Animated.View>
           </View>
 

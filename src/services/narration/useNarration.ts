@@ -92,6 +92,10 @@ export function useNarration(source: string | null, enabled: boolean, playbackRa
     available: source !== null,
     playing: status.playing,
     error: status.error,
+    // Playback position, so a card's art can reveal itself in step with the
+    // voice. `expo-audio` reports these in seconds and updates every 250ms.
+    position: status.currentTime ?? 0,
+    duration: status.duration ?? 0,
     play,
     stop,
   };
