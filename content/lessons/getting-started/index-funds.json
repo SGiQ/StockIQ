@@ -11,9 +11,8 @@
       "headline": "Own the market, not a guess.",
       "body": "An **index fund** holds every company in a {{term:market-index|market index}} at once. Buy a single share and you own a sliver of hundreds of businesses — with no stock-picking required.",
       "art": {
-        "kind": "scene",
-        "name": "index-basket",
-        "palette": "mint",
+        "kind": "illustration",
+        "source": "/lesson-art/index-basket.jpg",
         "alt": "A single basket holding slices of many companies, representing a whole market index."
       }
     },
@@ -168,9 +167,8 @@
       "id": "c11",
       "type": "key_insight",
       "art": {
-        "kind": "scene",
-        "name": "index-basket",
-        "palette": "mint",
+        "kind": "illustration",
+        "source": "/lesson-art/index-basket.jpg",
         "alt": "A basket holding slices of many companies, standing for the whole market owned at once."
       },
       "insight": "You are unlikely to out-pick the market. You can almost always out-save its fees.",

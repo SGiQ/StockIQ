@@ -14,9 +14,8 @@
       "headline": "Profit is a magnet for competitors.",
       "body": "A business earns fat margins. Rivals notice, copy the product, and cut prices to win the customers. Margins fall back toward average. That is the default ending for most profitable ideas — unless something is defending them.",
       "art": {
-        "kind": "scene",
-        "name": "competition-cycle",
-        "palette": "butter",
+        "kind": "illustration",
+        "source": "/lesson-art/competition-cycle.jpg",
         "alt": "High profits attract a growing group of competitors into the market."
       }
     },
