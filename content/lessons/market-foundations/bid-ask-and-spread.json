@@ -160,6 +160,7 @@
             "52 a year"
           ],
           "highlightIndex": 2,
+          "highlightTone": "negative",
           "yLabel": "% of capital paid in spread"
         }
       },

@@ -49,6 +49,8 @@ export const palette = {
 
   danger: '#DC2626',
   dangerSoft: '#FEE2E2',
+  /** Muted terracotta — the flat-art family's "down/loss/cost" colour. */
+  terracotta: '#C0634A',
   success: '#16A34A',
   successSoft: '#DCFCE7',
 

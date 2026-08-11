@@ -58,6 +58,7 @@
             "Free cash flow"
           ],
           "highlightIndex": 2,
+          "highlightTone": "positive",
           "yLabel": "$ millions"
         }
       },

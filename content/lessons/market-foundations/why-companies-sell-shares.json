@@ -74,6 +74,7 @@
             "After"
           ],
           "highlightIndex": 1,
+          "highlightTone": "negative",
           "yLabel": "% owned by founder"
         }
       },

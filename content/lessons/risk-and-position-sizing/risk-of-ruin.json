@@ -97,6 +97,7 @@
           "values": [17.8, 88.6],
           "labels": ["Risking 25%", "Risking 2%"],
           "highlightIndex": 0,
+          "highlightTone": "negative",
           "yLabel": "% of account left"
         }
       },
