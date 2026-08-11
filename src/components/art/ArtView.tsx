@@ -93,7 +93,7 @@ export function ArtView({
       // Charts carry their own palette: the profit/payoff family reads best
       // on the high-voltage green, everything else on a calm pastel.
       const preset: PalettePreset =
-        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'sky';
+        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'parchment';
       const p = artPalettes[preset];
       // A subtle card elevation lifts the chart panel off the lesson surface.
       // Built without `styles.base` because its `overflow: 'hidden'` would clip
