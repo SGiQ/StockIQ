@@ -2,10 +2,15 @@ import type { ArtSpec, Lesson } from './schema';
 
 type Hero = Extract<ArtSpec, { kind: 'illustration' }>;
 
-const hero = (source: string, alt: string): Hero => ({
+const hero = (source: string, alt: string, focalY?: number): Hero => ({
   kind: 'illustration',
   source: `/lesson-art/${source}.jpg`,
   alt,
+  // Most of these illustrations are portrait (0.75) and centre-crop cleanly in
+  // the landscape hero frame, so focalY is left unset (the renderer defaults to
+  // 0.5). It is only set where the subject sits off-centre and a centred crop
+  // would clip it — see the two entries below.
+  ...(focalY === undefined ? {} : { focalY }),
 });
 
 /**
@@ -25,12 +30,12 @@ export const lessonArtwork: Record<string, Hero> = {
   'market-foundations/what-moves-a-price': hero('what-moves-a-price', 'A company reveals results that differ from the expectations of a waiting audience.'),
   'market-foundations/why-companies-sell-shares': hero('why-companies-sell-shares', 'A crowd contributes ownership tiles that fund a workshop expansion.'),
 
-  'reading-a-business/cash-flow-is-king': hero('cash-flow-is-king', 'A real cash stream keeps company wheels turning while a dry accounting channel cannot.'),
+  'reading-a-business/cash-flow-is-king': hero('cash-flow-is-king', 'A real cash stream keeps company wheels turning while a dry accounting channel cannot.', 0.6),
   'reading-a-business/dividends-and-buybacks': hero('dividends-and-buybacks', 'A company tree distributes fruit to owners and draws ownership pieces back into itself.'),
   'reading-a-business/economic-moats': hero('economic-moats', 'A profitable company castle is protected from competitors by several durable defenses.'),
   'reading-a-business/margins-that-matter': hero('margins-that-matter', 'Two businesses process similar sales but retain very different portions after costs.'),
   'reading-a-business/revenue-vs-earnings': hero('revenue-vs-earnings', 'A large stream of sales passes through expenses and leaves a much smaller profit stack.'),
-  'reading-a-business/the-price-earnings-ratio': hero('the-price-earnings-ratio', 'A merchant compares a purchase-price stack with recurring earnings reflected in distorting mirrors.'),
+  'reading-a-business/the-price-earnings-ratio': hero('the-price-earnings-ratio', 'A merchant compares a purchase-price stack with recurring earnings reflected in distorting mirrors.', 0.4),
 
   'reading-a-chart/anatomy-of-a-candle': hero('anatomy-of-a-candle', 'A folded-paper candlestick exposes its body and upper and lower wicks.'),
   'reading-a-chart/momentum-indicators': hero('momentum-indicators', 'A market cart climbs while a speed gauge begins to lose strength.'),
@@ -58,14 +63,22 @@ export const lessonArtwork: Record<string, Hero> = {
   'trading-psychology/the-trading-journal': hero('the-trading-journal', 'A structured journal reveals patterns that a trader’s clouded memory cannot preserve.'),
 };
 
+/**
+ * Lessons whose opening card carries its own bespoke illustration, so the hero
+ * bookends only the closing card rather than covering that opening art.
+ */
+const heroClosingOnly = new Set<string>(['market-foundations/what-moves-a-price']);
+
 export const applyLessonArtwork = (lesson: Lesson): Lesson => {
-  const art = lessonArtwork[`${lesson.courseId}/${lesson.id}`];
+  const path = `${lesson.courseId}/${lesson.id}`;
+  const art = lessonArtwork[path];
   if (!art) return lesson;
 
+  const closingOnly = heroClosingOnly.has(path);
   return {
     ...lesson,
     cards: lesson.cards.map((card, index) => {
-      if (index === 0 && card.type === 'concept') return { ...card, art };
+      if (index === 0 && card.type === 'concept' && !closingOnly) return { ...card, art };
       if (index === lesson.cards.length - 1 && card.type === 'key_insight') return { ...card, art };
       return card;
     }),

@@ -447,7 +447,7 @@ export function LessonPlayer({
       </View>
 
       {combo >= 2 && (
-        <View style={styles.comboWrap} pointerEvents="none">
+        <View style={[styles.comboWrap, { top: insets.top + space.sm + 48 }]} pointerEvents="none">
           <View style={styles.comboPill}>
             <Text variant="label" color={palette.paper} uppercase>
               {`${combo} in a row`}
@@ -618,8 +618,9 @@ const styles = StyleSheet.create({
     paddingBottom: space.sm,
   },
   comboWrap: {
+    // `top` is set inline from the safe-area inset so it always clears the
+    // header (which grows with the notch) instead of overlapping the headline.
     position: 'absolute',
-    top: 96,
     left: 0,
     right: 0,
     alignItems: 'center',

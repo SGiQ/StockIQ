@@ -105,7 +105,8 @@ export function KeyInsightCardView({ card, active = true }: { card: KeyInsightCa
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: space.md,
     gap: space.md,
   },
   frame: {

@@ -11,9 +11,8 @@
       "headline": "Record revenue can hide a losing business.",
       "body": "Revenue is every dollar that came in the door. Profit is what is left after you pay for all of it. A headline about **record revenue** tells you how much money arrived. It says nothing about how much stayed.",
       "art": {
-        "kind": "scene",
-        "name": "revenue-profit-diverge",
-        "palette": "sky",
+        "kind": "illustration",
+        "source": "/lesson-art/revenue-profit-diverge.jpg",
         "alt": "Revenue rises while profit falls, showing that record sales can hide a losing business."
       }
     },
@@ -158,9 +157,8 @@
       "id": "c10",
       "type": "key_insight",
       "art": {
-        "kind": "scene",
-        "name": "income-waterfall",
-        "palette": "ink",
+        "kind": "illustration",
+        "source": "/lesson-art/income-waterfall.jpg",
         "alt": "A large revenue column steps down through costs to the smaller earnings the business retains."
       },
       "insight": "Revenue proves people want what you sell. Earnings prove the business can afford to sell it.",

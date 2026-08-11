@@ -11,9 +11,8 @@
       "headline": "A profitable company can still run out of cash.",
       "body": "Profit is an accounting result. Cash is a bank balance. They are not the same number, and the difference is where a lot of bad surprises live. A company can report record earnings and still miss payroll.",
       "art": {
-        "kind": "scene",
-        "name": "cash-vs-profit",
-        "palette": "butter",
+        "kind": "illustration",
+        "source": "/lesson-art/cash-vs-profit.jpg",
         "alt": "Accounting profit and cash shown as two different measures rather than the same thing."
       }
     },
