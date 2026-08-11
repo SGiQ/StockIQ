@@ -49,7 +49,8 @@ export function MainIdeaCardView({ card, onContinue }: MainIdeaCardViewProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: space.md,
     gap: space.md,
   },
   prose: {

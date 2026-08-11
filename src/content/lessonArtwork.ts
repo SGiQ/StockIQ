@@ -58,14 +58,22 @@ export const lessonArtwork: Record<string, Hero> = {
   'trading-psychology/the-trading-journal': hero('the-trading-journal', 'A structured journal reveals patterns that a trader’s clouded memory cannot preserve.'),
 };
 
+/**
+ * Lessons whose opening card carries its own bespoke illustration, so the hero
+ * bookends only the closing card rather than covering that opening art.
+ */
+const heroClosingOnly = new Set<string>(['market-foundations/what-moves-a-price']);
+
 export const applyLessonArtwork = (lesson: Lesson): Lesson => {
-  const art = lessonArtwork[`${lesson.courseId}/${lesson.id}`];
+  const path = `${lesson.courseId}/${lesson.id}`;
+  const art = lessonArtwork[path];
   if (!art) return lesson;
 
+  const closingOnly = heroClosingOnly.has(path);
   return {
     ...lesson,
     cards: lesson.cards.map((card, index) => {
-      if (index === 0 && card.type === 'concept') return { ...card, art };
+      if (index === 0 && card.type === 'concept' && !closingOnly) return { ...card, art };
       if (index === lesson.cards.length - 1 && card.type === 'key_insight') return { ...card, art };
       return card;
     }),
