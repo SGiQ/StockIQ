@@ -47,7 +47,8 @@
             "Delivered"
           ],
           "highlightIndex": 2,
-          "highlightTone": "negative",
+          "highlightTone": "positive",
+          "targetIndex": 1,
           "yLabel": "Earnings per share ($)"
         }
       },

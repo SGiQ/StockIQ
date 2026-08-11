@@ -310,6 +310,12 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
      * the neutral accent, for bars that only mark focus (a weight, a volume).
      */
     highlightTone: z.enum(['positive', 'negative']).optional(),
+    /**
+     * Draws this bar as a dashed "forecast/target" outline. When the
+     * highlighted bar falls short of it, a rust marker shows the shortfall —
+     * the result-vs-forecast (beat-but-missed) pattern.
+     */
+    targetIndex: z.number().int().min(0).optional(),
     yLabel: z.string().optional(),
   }),
   z.object({
