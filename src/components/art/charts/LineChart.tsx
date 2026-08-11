@@ -17,6 +17,9 @@ export interface ChartTheme {
   ink: string;
   accent: string;
   bg: string;
+  /** Semantic highlight colours: good/kept/grown vs cost/loss/risk. */
+  positive: string;
+  negative: string;
 }
 
 /**

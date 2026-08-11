@@ -304,6 +304,12 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
     values: z.array(z.number()).min(2).max(12),
     labels: z.array(z.string()).min(2).max(12),
     highlightIndex: z.number().int().min(0).optional(),
+    /**
+     * Colours the highlighted bar by meaning: `positive` (green) for a good
+     * outcome kept/grown, `negative` (rust) for a cost/loss/risk. Omitted =
+     * the neutral accent, for bars that only mark focus (a weight, a volume).
+     */
+    highlightTone: z.enum(['positive', 'negative']).optional(),
     yLabel: z.string().optional(),
   }),
   z.object({

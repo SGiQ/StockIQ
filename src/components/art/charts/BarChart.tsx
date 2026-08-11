@@ -13,7 +13,15 @@ type BarSpec = Extract<ChartSpec, { type: 'bars' }>;
  * charts honestly.
  */
 export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) {
-  const { values, labels, highlightIndex, yLabel } = spec;
+  const { values, labels, highlightIndex, highlightTone, yLabel } = spec;
+  // The highlighted bar carries meaning when a tone is set (green = good/kept,
+  // rust = cost/loss/risk); otherwise it just marks focus in the neutral accent.
+  const highlightFill =
+    highlightTone === 'positive'
+      ? theme.positive
+      : highlightTone === 'negative'
+        ? theme.negative
+        : theme.accent;
   const max = Math.max(...values, 0);
   const min = Math.min(...values, 0);
   const domain: Domain = { min, max: max === min ? max + 1 : max };
@@ -56,7 +64,7 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
               width={barWidth}
               height={height}
               rx={4}
-              fill={highlighted ? theme.accent : theme.bg}
+              fill={highlighted ? highlightFill : theme.bg}
               stroke={theme.ink}
               strokeWidth={2.5}
             />

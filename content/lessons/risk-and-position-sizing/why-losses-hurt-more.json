@@ -31,6 +31,7 @@
           "values": [11.1, 25, 42.9, 100, 400],
           "labels": ["-10%", "-20%", "-30%", "-50%", "-80%"],
           "highlightIndex": 4,
+          "highlightTone": "negative",
           "yLabel": "% gain to break even"
         }
       },

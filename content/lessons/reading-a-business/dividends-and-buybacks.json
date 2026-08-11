@@ -80,6 +80,7 @@
             "Year 5"
           ],
           "highlightIndex": 4,
+          "highlightTone": "positive",
           "yLabel": "Earnings per share ($)"
         }
       },
