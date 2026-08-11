@@ -48,9 +48,19 @@ export default function LearnTab() {
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text variant="h1" color={palette.ink}>
-            Keep going.
-          </Text>
+          <View style={styles.headerTop}>
+            <Text variant="h1" color={palette.ink}>
+              Keep going.
+            </Text>
+            <View style={styles.statusCluster}>
+              <GemCounter balance={gemBalance} />
+              <View style={styles.xp}>
+                <Text variant="label" color={palette.forestDeep} uppercase>
+                  {`${totalXp} XP`}
+                </Text>
+              </View>
+            </View>
+          </View>
           <View style={styles.headerActions}>
             {LEAGUES_ENABLED ? (
               <Pressable
@@ -152,12 +162,6 @@ export default function LearnTab() {
                 <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={palette.ink} strokeWidth={2} strokeLinecap="round" />
               </Svg>
             </Pressable>
-            <GemCounter balance={gemBalance} />
-            <View style={styles.xp}>
-              <Text variant="label" color={palette.forestDeep} uppercase>
-                {`${totalXp} XP`}
-              </Text>
-            </View>
           </View>
         </View>
 
@@ -275,10 +279,19 @@ const styles = StyleSheet.create({
     paddingBottom: space.xxl,
   },
   header: {
+    gap: space.md,
+    marginTop: space.sm,
+  },
+  headerTop: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: space.sm,
+    gap: space.sm,
+  },
+  statusCluster: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
   },
   xp: {
     backgroundColor: palette.mint,
@@ -289,7 +302,7 @@ const styles = StyleSheet.create({
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.sm,
+    justifyContent: 'space-between',
   },
   narrationSettings: {
     width: 40,
