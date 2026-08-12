@@ -41,6 +41,7 @@ import {
 import { crossedMilestone, grantFreeze } from '@/features/streak';
 import { buy as paperBuy, sell as paperSell, emptyPortfolio, type Portfolio, type TradeResult } from '@/features/paper';
 import { recordTrade, clearTrades } from '@/features/paper/tradeHistory';
+import { recordSnapshot, clearSnapshots } from '@/features/paper/valueHistory';
 import {
   dailyStats,
   questClaimKey,
@@ -667,6 +668,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
       void recordTrade(sym, 'buy', shares, price);
+      const posValue = res.portfolio.positions.reduce((s, p) => s + p.shares * (p.symbol === sym ? price : p.avgCost), 0);
+      void recordSnapshot(res.portfolio.cash + posValue);
     }
     return res;
   },
@@ -678,6 +681,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
       void recordTrade(sym, 'sell', shares, price);
+      const posValue = res.portfolio.positions.reduce((s, p) => s + p.shares * (p.symbol === sym ? price : p.avgCost), 0);
+      void recordSnapshot(res.portfolio.cash + posValue);
     }
     return res;
   },
@@ -686,6 +691,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const saved = await repository.paper.set(emptyPortfolio());
     set({ portfolio: { cash: saved.cash, positions: saved.positions } });
     void clearTrades();
+    void clearSnapshots();
   },
 
   markWeeklyNotesSeen: async () => {

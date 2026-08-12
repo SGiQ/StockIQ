@@ -16,6 +16,7 @@ import {
   totalValue,
 } from '@/features/paper';
 import { getTrades, type PaperTrade } from '@/features/paper/tradeHistory';
+import { getSnapshots, recordSnapshot, type ValueSnapshot } from '@/features/paper/valueHistory';
 import { ASK_FREE_DAILY, asksRemaining, canAsk } from '@/features/advisor';
 import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
@@ -152,6 +153,56 @@ const htStyles = StyleSheet.create({
   stepText: { flex: 1, gap: 2 },
 });
 
+const CHART_W = 280;
+const CHART_H = 80;
+const CHART_PAD = { x: 2, y: 8 };
+
+function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; current: number }) {
+  const points = snapshots.length > 0 ? snapshots : [{ t: 0, v: STARTING_CASH }];
+  const allValues = [...points.map((s) => s.v), current];
+  const min = Math.min(...allValues);
+  const max = Math.max(...allValues);
+  const range = max - min || 1;
+
+  const plotW = CHART_W - CHART_PAD.x * 2;
+  const plotH = CHART_H - CHART_PAD.y * 2;
+
+  const toX = (i: number) => CHART_PAD.x + (i / Math.max(points.length, 1)) * plotW;
+  const toY = (v: number) => CHART_PAD.y + plotH - ((v - min) / range) * plotH;
+
+  const pathParts = points.map((s, i) => `${i === 0 ? 'M' : 'L'}${toX(i)} ${toY(s.v)}`);
+  pathParts.push(`L${toX(points.length)} ${toY(current)}`);
+  const d = pathParts.join(' ');
+
+  const fillD = `${d} L${toX(points.length)} ${CHART_H} L${toX(0)} ${CHART_H} Z`;
+
+  const gain = current >= STARTING_CASH;
+  const lineColor = gain ? palette.mint : palette.flameSoft;
+  const fillColor = gain ? palette.mint : palette.flameSoft;
+
+  const startLabel = formatPrice(points[0].v);
+  const endLabel = formatPrice(current);
+
+  return (
+    <View style={chartStyles.wrap}>
+      <Svg width="100%" height={CHART_H} viewBox={`0 0 ${CHART_W} ${CHART_H}`} preserveAspectRatio="none">
+        <Path d={fillD} fill={fillColor} opacity={0.15} />
+        <Path d={d} fill="none" stroke={lineColor} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+        <Circle cx={toX(points.length)} cy={toY(current)} r={3} fill={lineColor} />
+      </Svg>
+      <View style={chartStyles.labels}>
+        <Text variant="caption" color={palette.mintSoft}>{startLabel}</Text>
+        <Text variant="caption" color={palette.mintSoft}>{endLabel}</Text>
+      </View>
+    </View>
+  );
+}
+
+const chartStyles = StyleSheet.create({
+  wrap: { marginTop: space.xs },
+  labels: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 2 },
+});
+
 const COACH_CONTEXT: AskContext = {
   card: {
     id: 'coach',
@@ -188,6 +239,8 @@ export default function PortfolioScreen() {
   const [coaching, setCoaching] = useState(false);
   const [upsellOpen, setUpsellOpen] = useState(false);
   const [trades, setTrades] = useState<PaperTrade[]>([]);
+  const [snapshots, setSnapshots] = useState<ValueSnapshot[]>([]);
+  const snapshotted = useRef(false);
   const runId = useRef(0);
 
   const unlimited = entitlement.unlimitedAsk;
@@ -195,6 +248,9 @@ export default function PortfolioScreen() {
 
   const loadTrades = useCallback(() => { void getTrades().then(setTrades); }, []);
   useEffect(loadTrades, [loadTrades]);
+
+  const loadSnapshots = useCallback(() => { void getSnapshots().then(setSnapshots); }, []);
+  useEffect(loadSnapshots, [loadSnapshots]);
 
   const held = useMemo(() => portfolio.positions.map((p) => p.symbol), [portfolio.positions]);
   const heldKey = held.join(',');
@@ -230,6 +286,14 @@ export default function PortfolioScreen() {
 
   const value = totalValue(portfolio, priceOf);
   const ret = totalReturn(portfolio, priceOf);
+
+  useEffect(() => {
+    if (snapshotted.current) return;
+    const allPriced = held.length === 0 || held.every((s) => quotes[s]?.valid);
+    if (!allPriced) return;
+    snapshotted.current = true;
+    void recordSnapshot(value).then(loadSnapshots);
+  }, [held, quotes, value, loadSnapshots]);
   const tradeQuote = sym ? quotes[sym] : undefined;
 
   const coach = useCallback(async () => {
@@ -276,12 +340,12 @@ export default function PortfolioScreen() {
           ? await buyShares(sym, q.price, shares)
           : await sellShares(sym, q.price, shares);
         if (!res.ok) setError(res.reason);
-        else { setTradeShares(''); loadTrades(); }
+        else { setTradeShares(''); loadTrades(); loadSnapshots(); }
       } finally {
         setBusy(false);
       }
     },
-    [buyShares, sellShares, loadTrades, quotes, sym, tradeShares],
+    [buyShares, sellShares, loadTrades, loadSnapshots, quotes, sym, tradeShares],
   );
 
   return (
@@ -324,6 +388,7 @@ export default function PortfolioScreen() {
           <Text variant="caption" color={palette.mintSoft}>
             {`${formatPrice(portfolio.cash)} cash · started at ${formatPrice(STARTING_CASH)}`}
           </Text>
+          {snapshots.length > 1 && <ValueChart snapshots={snapshots} current={value} />}
         </CardSurface>
 
         <CardSurface style={styles.tradeCard}>
@@ -458,7 +523,7 @@ export default function PortfolioScreen() {
         )}
 
         <Pressable
-          onPress={() => { void resetPortfolio(); setTrades([]); }}
+          onPress={() => { void resetPortfolio(); setTrades([]); setSnapshots([]); }}
           accessibilityRole="button"
           accessibilityLabel="Reset portfolio"
           style={styles.resetRow}
