@@ -10,7 +10,7 @@
       "type": "concept",
       "headline": "The worst trade is usually the next one.",
       "body": "Most accounts are not ruined by the losing trade. They are ruined by what the trader does in the ten minutes after it. The loss is already a fact. The urge to erase it is the risk.",
-      "art": { "kind": "glyph", "name": "bell", "bg": "lilac" }
+      "art": { "kind": "glyph", "name": "warning", "bg": "lilac" }
     },
     {
       "id": "c2",

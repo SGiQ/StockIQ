@@ -45,7 +45,7 @@
       "body": "To value a building, investors use the **cap rate**: yearly net operating income divided by price. A property earning **$50,000** a year, priced at **$1,000,000**, has a cap rate of **5%** — the real estate cousin of an earnings yield.",
       "art": {
         "kind": "glyph",
-        "name": "pie",
+        "name": "percent",
         "bg": "mint"
       }
     },

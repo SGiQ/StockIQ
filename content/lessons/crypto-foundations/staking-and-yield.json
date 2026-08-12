@@ -63,7 +63,7 @@
       "body": "A sustainable yield has a source you can point to: transaction fees, network issuance, lending interest. An unsustainable one is paid from new deposits and calls itself guaranteed. The test is simple — can anyone explain, precisely, who is paying you?",
       "art": {
         "kind": "glyph",
-        "name": "lightbulb",
+        "name": "magnifier",
         "bg": "sky"
       }
     },

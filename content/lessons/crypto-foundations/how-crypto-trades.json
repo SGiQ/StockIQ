@@ -88,7 +88,7 @@
       "body": "A stablecoin holds a dollar only while whoever runs it can back that claim. Some are fully backed by real reserves; others have slipped or collapsed. Steady is the goal, not a guarantee. Ask what stands behind the peg.",
       "art": {
         "kind": "glyph",
-        "name": "shield",
+        "name": "anchor",
         "bg": "ink"
       }
     },

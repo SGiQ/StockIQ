@@ -67,7 +67,7 @@
       "type": "concept",
       "headline": "Wicks are the ground price gave back.",
       "body": "Above and below the body run two thin lines. The upper one reaches the **high**, the lower one the **low**. Price went there and did not stay. A wick is territory that was taken and then lost.",
-      "art": { "kind": "glyph", "name": "flag", "bg": "blush" }
+      "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" }
     },
     {
       "id": "c6",
