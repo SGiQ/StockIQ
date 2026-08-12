@@ -1,0 +1,141 @@
+{
+  "id": "avoiding-crypto-scams",
+  "courseId": "crypto-foundations",
+  "title": "Spotting Crypto Scams",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Where beginners lose the most.",
+      "body": "Crypto's openness cuts both ways. The system that removes middlemen also removes the safety nets: no bank to reverse a payment, no regulator to call. More new money is lost here to fraud than to bad trades.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/avoiding-crypto-scams.jpg",
+        "alt": "A shadowy figure holds up a smiling mask, offering a shining coin with one hand while hiding the other behind it — a fraud wearing a trustworthy face."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "If yield has no source, you are the source.",
+      "body": "The most common scam promises a high, steady, guaranteed payout. Real yield always comes from somewhere you can name. When nobody can explain where the money is earned, what is paid out is usually other victims' deposits.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "The rug pull.",
+      "body": "A team launches a shiny new token, hypes it until buyers pile in, then sells their own huge stake all at once and disappears. The price collapses to nothing. The whole scheme can run its course in a single day.",
+      "art": {
+        "kind": "glyph",
+        "name": "chart-down",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Nobody real messages you first.",
+      "body": "Fake support staff, celebrity giveaways and help desks that contact you first are impersonation scams. A genuine service never asks for your recovery phrase or tells you to move funds to 'secure' them. Anyone who does is stealing.",
+      "art": {
+        "kind": "glyph",
+        "name": "people",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "An app offers 20% a month, 'guaranteed'. Is that an investment or a red flag?",
+      "options": [
+        {
+          "id": "flag",
+          "label": "A red flag — that's a Ponzi tell",
+          "correct": true
+        },
+        {
+          "id": "invest",
+          "label": "A strong investment to grab fast",
+          "correct": false
+        }
+      ],
+      "explanation": "20% a month compounds to over 700% a year. No real strategy pays that reliably, and 'guaranteed' alongside a high return is a contradiction. The push to grab it 'fast' is part of the trap."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Connecting a wallet can drain it.",
+      "body": "Some scams never ask for your key at all. They get you to approve a transaction that quietly grants access to your wallet, then empty it. Read what you are signing, and never approve a request you did not start.",
+      "art": {
+        "kind": "glyph",
+        "name": "lock",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Urgency is the tell.",
+      "body": "Almost every scam needs you to act before you think: a countdown, a 'limited spot', a warning that you will miss out. A real opportunity survives a night's sleep and a second opinion. Pressure is a signal to stop.",
+      "art": {
+        "kind": "glyph",
+        "name": "clock",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A return that is both high and 'guaranteed' is the classic sign of a [[1]] paying old investors with new investors' money.",
+      "wordBank": [
+        "Ponzi scheme",
+        "index fund",
+        "stablecoin"
+      ],
+      "answer": "Ponzi scheme",
+      "explanation": "A Ponzi has no real earnings — it just recycles later deposits to pay earlier ones, until new money slows and it collapses. 'Guaranteed high yield' is its oldest advertisement."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Most crypto losses come from fraud, not bad trades — and the tells are the same ones every time.",
+      "bullets": [
+        "High, steady, guaranteed yield has no honest source.",
+        "Never share a recovery phrase or approve a request you did not start.",
+        "Urgency and pressure are signals to stop, not to hurry."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/avoiding-crypto-scams.jpg",
+        "alt": "A shadowy figure holds up a smiling mask, offering a shining coin with one hand while hiding the other behind it — a fraud wearing a trustworthy face."
+      },
+      "insight": "Fraud need not pick your lock if it can talk you into opening the door. In crypto, the scam is usually you being persuaded.",
+      "attribution": {
+        "source": "Unit 2",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "What To Know About Cryptocurrency and Scams",
+      "url": "https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-and-scams",
+      "publisher": "U.S. FTC"
+    },
+    {
+      "title": "Ponzi Schemes Using Virtual Currencies",
+      "url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/ponzi",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

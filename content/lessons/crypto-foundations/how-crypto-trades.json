@@ -1,0 +1,144 @@
+{
+  "id": "how-crypto-trades",
+  "courseId": "crypto-foundations",
+  "title": "How Crypto Trades",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A market that never closes.",
+      "body": "Stock exchanges open and shut on a clock. Crypto trades every hour of every day, weekends included. There is no closing bell, so a position can move overnight while you sleep and no opening auction sets a fair price.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/how-crypto-trades.jpg",
+        "alt": "Trade tokens flow endlessly around a circular open marketplace beneath a handless clock, with no closing gate anywhere — a market that never shuts."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "No brakes on a fall.",
+      "body": "Stock markets pause trading when prices crash too fast. Most crypto has no such circuit breaker. A drop can run all the way down without a halt, which is one reason moves here are faster and deeper than in shares.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      },
+      "refs": [
+        "lesson:market-foundations/order-types"
+      ]
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Two kinds of marketplace.",
+      "body": "A centralised exchange runs an order book and holds your coins, like a broker. A decentralised exchange is software: you trade against a pool other users supplied, with no company holding the funds. Same trade, very different trust.",
+      "art": {
+        "kind": "glyph",
+        "name": "exchange",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Priced in another coin, not dollars.",
+      "body": "Stocks are quoted in your currency. Crypto is often quoted as a pair: how much of one coin buys another. A price of 0.05 of a large coin per token means you pay that much of the first to get one of the second.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A token trades at 0.05 ETH. You want three of them. How much ETH is that?",
+      "options": [
+        {
+          "id": "015",
+          "label": "0.15 ETH",
+          "correct": true
+        },
+        {
+          "id": "005",
+          "label": "0.05 ETH",
+          "correct": false
+        }
+      ],
+      "explanation": "The pair price is per token, so you multiply by the quantity: 0.05 times three is **0.15 ETH**. Reading a pair means always asking: priced in what, and per how many?"
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "The dollar on-ramp.",
+      "body": "A stablecoin is a token designed to hold a steady value, usually one dollar. Traders use it to sit in cash without leaving the crypto system, and to price other coins. It is the bridge between dollars and the market.",
+      "art": {
+        "kind": "glyph",
+        "name": "dollar",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "A peg is a promise, not a law.",
+      "body": "A stablecoin holds a dollar only while whoever runs it can back that claim. Some are fully backed by real reserves; others have slipped or collapsed. Steady is the goal, not a guarantee. Ask what stands behind the peg.",
+      "art": {
+        "kind": "glyph",
+        "name": "shield",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Because crypto never closes, a position can move sharply overnight with no [[1]] to pause a falling market.",
+      "wordBank": [
+        "circuit breaker",
+        "order book",
+        "stablecoin"
+      ],
+      "answer": "circuit breaker",
+      "explanation": "Stock exchanges halt trading after a steep enough fall to let panic cool. Crypto has no such pause, so declines can run further and faster before they slow."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Crypto trades all day, every day, priced in pairs, through exchanges that may or may not hold your coins.",
+      "bullets": [
+        "No closing bell and no circuit breakers means faster, deeper moves.",
+        "A centralised exchange holds your coins; a decentralised one does not.",
+        "Stablecoins aim to hold a dollar, but a peg can break."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/how-crypto-trades.jpg",
+        "alt": "Trade tokens flow endlessly around a circular open marketplace beneath a handless clock, with no closing gate anywhere — a market that never shuts."
+      },
+      "insight": "A market that never sleeps sounds like freedom. It also means no one rings a bell when it is time to worry.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Bitcoin and Virtual Currency Basics",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/index.htm",
+      "publisher": "U.S. CFTC"
+    }
+  ]
+}

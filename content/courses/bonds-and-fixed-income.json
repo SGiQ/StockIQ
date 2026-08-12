@@ -1,0 +1,35 @@
+{
+  "id": "bonds-and-fixed-income",
+  "title": "Bonds and Fixed Income: Lending at Interest",
+  "author": "StockIQ",
+  "category": "fixed-income",
+  "cover": {
+    "kind": "illustration",
+    "source": "/lesson-art/bonds-and-fixed-income-cover.jpg",
+    "alt": "A ribbon-tied paper parcel beside a row of equal coins marching along a timeline to a calendar — money lent out that returns steadily, with interest."
+  },
+  "blurb": "The other half of most portfolios. Learn how a loan becomes a tradable asset, why its price moves opposite to its yield, and how much a rate move can really cost you.",
+  "order": 8,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHAT A BOND IS",
+      "lessonIds": [
+        "what-is-a-bond",
+        "bond-types"
+      ]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "PRICE, YIELD AND RISK",
+      "lessonIds": [
+        "price-and-yield",
+        "duration-and-rate-risk"
+      ]
+    }
+  ],
+  "totalXp": 80
+}

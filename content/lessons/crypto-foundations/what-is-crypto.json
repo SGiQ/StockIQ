@@ -1,0 +1,159 @@
+{
+  "id": "what-is-crypto",
+  "courseId": "crypto-foundations",
+  "title": "What a Token Actually Is",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Money without a company behind it.",
+      "body": "A stock is a slice of a business. A crypto asset is different: no company, no employees, no profits. It is an entry on a shared digital ledger that a network of computers agrees to keep.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/what-is-crypto.jpg",
+        "alt": "A single coin rests on an open ledger held up by a ring of small figures, an empty pedestal beside them — value kept by the group, not one owner."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A ledger everyone can check.",
+      "body": "No head office keeps the records. Thousands of computers each hold a copy of every transaction, and they must agree before a new one is added. That shared agreement is what replaces the bank in the middle.",
+      "art": {
+        "kind": "glyph",
+        "name": "people",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Coins and tokens are not the same.",
+      "body": "A coin is native to its own blockchain and usually pays that network's fees. A token is built on top of someone else's chain. Thousands of tokens can share one chain the way many apps share one phone.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "There is nothing to analyse.",
+      "body": "Revenue, margins, the price-earnings ratio — every business tool needs a company that earns money. A crypto asset earns nothing. Its price rests on supply, demand and belief, not on profits you can measure.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "lilac"
+      },
+      "refs": [
+        "lesson:reading-a-business/the-price-earnings-ratio"
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Someone asks for a crypto coin's price-earnings ratio. What is the honest answer?",
+      "options": [
+        {
+          "id": "none",
+          "label": "It has none — there are no earnings",
+          "correct": true
+        },
+        {
+          "id": "look",
+          "label": "Look it up on the exchange",
+          "correct": false
+        }
+      ],
+      "explanation": "A price-earnings ratio divides price by earnings per share. With no company and no earnings, the bottom of that fraction is zero — the ratio does not exist. Crypto has to be judged another way entirely."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Supply is written in code.",
+      "body": "A company can issue more shares whenever its board votes to. A crypto asset's supply follows rules set in software: some are capped forever, others release new units on a fixed schedule. The rules are public and hard to change.",
+      "art": {
+        "kind": "glyph",
+        "name": "lock",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "A capped issuance schedule",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            50,
+            25,
+            12,
+            6
+          ],
+          "labels": [
+            "Yr 1",
+            "Yr 2",
+            "Yr 3",
+            "Yr 4"
+          ],
+          "yLabel": "New coins"
+        }
+      },
+      "caption": "Many coins slow their own issuance on a fixed timetable: each period adds fewer new units than the last, until a hard cap is reached."
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Unlike a company that can vote to print more shares, a capped crypto asset can never exceed the supply fixed in its [[1]].",
+      "wordBank": [
+        "code",
+        "charter",
+        "prospectus"
+      ],
+      "answer": "code",
+      "explanation": "Supply lives in the protocol's software, not in a boardroom decision. That is why a fixed cap can be trusted: changing it would mean convincing the whole network to run different code."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A crypto asset is a ledger entry with no company behind it, so none of the business-analysis tools apply.",
+      "bullets": [
+        "No company means no revenue, margins or price-earnings ratio to read.",
+        "A coin is native to a blockchain; a token is built on top of one.",
+        "Supply is set by public code, not by a board vote."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/what-is-crypto.jpg",
+        "alt": "A single coin rests on an open ledger held up by a ring of small figures, an empty pedestal beside them — value kept by the group, not one owner."
+      },
+      "insight": "A stock is a claim on a business. A crypto asset is a claim on nothing but the network's agreement that it exists.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Customer Advisory: Use Caution When Buying Digital Coins or Tokens",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CFTCBitcoinCustomerCautionAdvisory.htm",
+      "publisher": "U.S. CFTC"
+    }
+  ]
+}

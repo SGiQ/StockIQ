@@ -1,0 +1,146 @@
+{
+  "id": "staking-and-yield",
+  "courseId": "crypto-foundations",
+  "title": "Staking and Yield",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Crypto can pay you to hold.",
+      "body": "Some coins offer a yield for holding them a certain way. Done honestly it is real, but it is never free money. Every genuine yield is payment for a service you provide or a risk you agree to take on.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/staking-and-yield.jpg",
+        "alt": "Coins locked behind a small gate feed through a pipe into a modest sprouting plant bearing a few new coins — real yield earned by securing and waiting."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Staking is a job, not a gift.",
+      "body": "Many networks let holders lock coins to help run and secure the chain. In return the protocol pays them newly issued coins. That reward is a wage for real work — validating transactions — not interest conjured from nowhere.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Locked up, and at risk.",
+      "body": "Staking has real costs. Coins are often locked for a period, so you cannot sell during a crash. And 'slashing' can dock part of your stake if the software you rely on misbehaves. The yield pays you for exactly these risks.",
+      "art": {
+        "kind": "glyph",
+        "name": "lock",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "binary_choice",
+      "prompt": "A protocol pays 5% for staking. Where does that reward actually come from?",
+      "options": [
+        {
+          "id": "issuance",
+          "label": "Newly issued coins for securing the chain",
+          "correct": true
+        },
+        {
+          "id": "nowhere",
+          "label": "Free interest, like a savings account",
+          "correct": false
+        }
+      ],
+      "explanation": "Staking rewards are new coins the network mints to pay validators for their work. It is a real, explainable source — which is exactly what separates it from a scam that cannot say where the yield comes from."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Ask where the money is made.",
+      "body": "A sustainable yield has a source you can point to: transaction fees, network issuance, lending interest. An unsustainable one is paid from new deposits and calls itself guaranteed. The test is simple — can anyone explain, precisely, who is paying you?",
+      "art": {
+        "kind": "glyph",
+        "name": "lightbulb",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "diagram",
+      "title": "What a real yield looks like",
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "compounding",
+          "principal": 1000,
+          "rate": 0.05,
+          "years": 10
+        }
+      },
+      "caption": "A believable 5% yield compounds steadily — real but modest. If a rate is many times this, treat the extra as a warning, not a bonus."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "High yield is a question, not an answer.",
+      "body": "Rank yields by suspicion, not attraction. A few percent from staking a major network is plausible. A promise of double digits a month is a flare. The bigger the number, the harder its source should have to justify it.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A real staking reward is payment for helping [[1]] the network, which is why it comes with lock-ups and slashing risk.",
+      "wordBank": [
+        "secure",
+        "own",
+        "trade"
+      ],
+      "answer": "secure",
+      "explanation": "Stakers lock coins to validate transactions and keep the chain honest. The reward is a wage for that work — and the lock-up and slashing are the strings attached to it."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Real crypto yield pays you for a service and a risk; yield with no explainable source is a warning.",
+      "bullets": [
+        "Staking pays new coins for helping secure the chain.",
+        "Lock-ups and slashing are the real costs behind the yield.",
+        "The higher the promised yield, the harder the source must justify it."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/staking-and-yield.jpg",
+        "alt": "Coins locked behind a small gate feed through a pipe into a modest sprouting plant bearing a few new coins — real yield earned by securing and waiting."
+      },
+      "insight": "Honest yield always has an address you can visit. When no one can tell you who is paying, assume it is the next person in line.",
+      "attribution": {
+        "source": "Unit 3",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Customer Advisory: Use Caution When Buying Digital Coins or Tokens",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CFTCBitcoinCustomerCautionAdvisory.htm",
+      "publisher": "U.S. CFTC"
+    }
+  ]
+}

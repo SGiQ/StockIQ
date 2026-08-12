@@ -1,0 +1,153 @@
+{
+  "id": "commodities-basics",
+  "courseId": "alternative-assets",
+  "title": "Commodities and Futures",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Real things, traded on paper.",
+      "body": "Commodities are physical goods: oil, gold, wheat, copper. Most people never touch the barrel or the bushel — they trade contracts that track its price. The stuff is real; the exposure is a piece of paper that settles in cash.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/commodities-basics.jpg",
+        "alt": "An oil barrel and a gold bar sit on a large crate marked with a date as a figure strains to lift it with a lever — real goods traded in fixed-size, dated contracts."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Two prices: now and later.",
+      "body": "The **spot** price is what the goods cost for delivery today. A **futures** price is agreed now for delivery on a set future date. Most trading happens in futures, because they let buyers and sellers lock in a price ahead of time.",
+      "art": {
+        "kind": "glyph",
+        "name": "calendar",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Contracts come in fixed sizes.",
+      "body": "A futures contract is a standardised block. One crude oil contract is **1,000 barrels**; one gold contract is **100 ounces**. You do not buy 'some oil' — you buy whole contracts, and the size decides how much each price move is worth.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Dollars per one-dollar move",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            1000,
+            100
+          ],
+          "labels": [
+            "Crude 1,000 bbl",
+            "Gold 100 oz"
+          ],
+          "highlightIndex": 0,
+          "yLabel": "$ per $1 move"
+        }
+      },
+      "caption": "A one-dollar price move is worth **$1,000** on a crude contract and **$100** on a gold one. The contract size, not the headline price, sets your exposure."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Crude oil rises $2 and you hold one 1,000-barrel contract. What is that move worth?",
+      "options": [
+        {
+          "id": "2000",
+          "label": "$2,000",
+          "correct": true
+        },
+        {
+          "id": "2",
+          "label": "$2",
+          "correct": false
+        }
+      ],
+      "explanation": "Each contract is 1,000 barrels, so a $2 move is 2 times 1,000 — **$2,000**. The dollar figure on the screen is per barrel; your gain or loss is that move times the whole contract size."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "The futures curve leans.",
+      "body": "When futures cost more than spot, the market is in **contango**; when less, **backwardation**. It matters because funds rolling expiring contracts forward keep buying pricier ones in contango — a quiet drag that makes some commodity funds lag the spot price.",
+      "art": {
+        "kind": "glyph",
+        "name": "chart-up",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Futures are leveraged by design.",
+      "body": "You do not pay a contract's full value — only a margin deposit, often a single-digit percentage of it. So small price moves swing your account hard, the same magnifying effect as forex leverage. Great when right, ruinous when wrong.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Because a futures contract is a fixed size, a $2 move on a 1,000-barrel oil contract is worth [[1]].",
+      "wordBank": [
+        "$2,000",
+        "$2",
+        "$200"
+      ],
+      "answer": "$2,000",
+      "explanation": "Multiply the price move by the contract size: $2 times 1,000 barrels is $2,000. The standardised size is what turns a small per-unit move into a large dollar swing."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Commodities trade as fixed-size futures contracts, where standard sizes and margin magnify every price move.",
+      "bullets": [
+        "Spot is the price now; futures is a price for later.",
+        "Crude is 1,000 barrels; gold is 100 ounces per contract.",
+        "Margin makes futures leveraged, so moves swing hard."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/commodities-basics.jpg",
+        "alt": "An oil barrel and a gold bar sit on a large crate marked with a date as a figure strains to lift it with a lever — real goods traded in fixed-size, dated contracts."
+      },
+      "insight": "In commodities the headline price is per barrel or ounce. Your real exposure is that price times a contract size you must never forget.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Alternative Assets"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Futures Market Basics",
+      "url": "https://www.cftc.gov/LearnAndProtect/EducationCenter/FuturesMarketBasics/index.htm",
+      "publisher": "U.S. CFTC"
+    },
+    {
+      "title": "Crude Oil Futures Contract Specifications",
+      "url": "https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html",
+      "publisher": "CME Group"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "crypto-foundations",
+  "title": "Crypto Foundations: Different Rules",
+  "author": "StockIQ",
+  "category": "crypto",
+  "cover": {
+    "kind": "illustration",
+    "source": "/lesson-art/crypto-foundations-cover.jpg",
+    "alt": "A crowd of cut-paper figures holds up an open ledger bearing a single coin, an empty pedestal beside them — a currency kept by a network of people, not a company."
+  },
+  "blurb": "Digital assets don't play by stock-market rules. Learn what a token really is, who holds the keys, why the business-analysis math doesn't apply, and how not to get burned.",
+  "order": 7,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "WHAT IT IS",
+      "lessonIds": [
+        "what-is-crypto",
+        "how-crypto-trades"
+      ]
+    },
+    {
+      "id": "unit-2",
+      "index": 2,
+      "name": "HOLDING IT SAFELY",
+      "lessonIds": [
+        "wallets-and-custody",
+        "avoiding-crypto-scams"
+      ]
+    },
+    {
+      "id": "unit-3",
+      "index": 3,
+      "name": "VALUING AND SURVIVING IT",
+      "lessonIds": [
+        "crypto-valuation",
+        "crypto-risk-profile",
+        "staking-and-yield"
+      ]
+    }
+  ],
+  "totalXp": 140
+}

@@ -61,6 +61,23 @@ export const lessonArtwork: Record<string, Hero> = {
   'trading-psychology/process-vs-outcome': hero('process-vs-outcome', 'A judge compares a careful unlucky shot with a reckless lucky one.'),
   'trading-psychology/revenge-trading': hero('revenge-trading', 'An angry trader lunges from one fallen block toward a much larger dangerous lever.'),
   'trading-psychology/the-trading-journal': hero('the-trading-journal', 'A structured journal reveals patterns that a trader’s clouded memory cannot preserve.'),
+
+  'crypto-foundations/what-is-crypto': hero('what-is-crypto', 'A single coin rests on an open ledger held up by a ring of small figures, an empty pedestal beside them — value kept by the group, not one owner.'),
+  'crypto-foundations/how-crypto-trades': hero('how-crypto-trades', 'Trade tokens flow endlessly around a circular open marketplace beneath a handless clock, with no closing gate anywhere — a market that never shuts.'),
+  'crypto-foundations/wallets-and-custody': hero('wallets-and-custody', 'The same key appears twice: held in an open hand on one side, sealed inside a tall vault on the other — ownership held by you, or by an exchange.'),
+  'crypto-foundations/avoiding-crypto-scams': hero('avoiding-crypto-scams', 'A shadowy figure holds up a smiling mask, offering a shining coin with one hand while hiding the other behind it — a fraud wearing a trustworthy face.'),
+  'crypto-foundations/crypto-valuation': hero('crypto-valuation', 'One small coin with a tall price banner is dwarfed by a vast mound of many tiny coins — a single coin price versus the true size of all coins together.'),
+  'crypto-foundations/crypto-risk-profile': hero('crypto-risk-profile', 'A jagged ridge plunges into a deep narrow chasm, a small ladder reaching only partway up the far wall — a fast, deep fall that needs a giant climb to undo.'),
+  'crypto-foundations/staking-and-yield': hero('staking-and-yield', 'Coins locked behind a small gate feed through a pipe into a modest sprouting plant bearing a few new coins — real yield earned by securing and waiting.'),
+
+  'bonds-and-fixed-income/what-is-a-bond': hero('what-is-a-bond', 'A lender hands coins to a company building and receives a folded note with a calendar marker — a loan that comes back with interest on a set date.'),
+  'bonds-and-fixed-income/bond-types': hero('bond-types', 'Three lenders notes rise on steps — a solid vault with a short flag, a firm building taller, a cracked building with the tallest — more reward as the borrower looks shakier.'),
+  'bonds-and-fixed-income/price-and-yield': hero('price-and-yield', 'A seesaw pivots on a fixed coin at its centre: a price block rides high on one end while a yield block sits low on the other — when one rises, the other falls.'),
+  'bonds-and-fixed-income/duration-and-rate-risk': hero('duration-and-rate-risk', 'Two planks pinned at one end under the same tip weight — a short one barely dips while a much longer one swings steeply down — the longer the bond, the harder a rate nudge moves it.'),
+
+  'alternative-assets/forex-basics': hero('forex-basics', 'Two national coins balance on a small scale while a large lever beneath tips the whole platform far from a tiny nudge — small currency moves magnified by leverage.'),
+  'alternative-assets/commodities-basics': hero('commodities-basics', 'An oil barrel and a gold bar sit on a large crate marked with a date as a figure strains to lift it with a lever — real goods traded in fixed-size, dated contracts.'),
+  'alternative-assets/real-estate-and-reits': hero('real-estate-and-reits', 'An apartment building split into equal ownership tiles drips rent coins into waiting hands while a large dial with an up-arrow tugs behind it — shares of property, swayed by rates.'),
 };
 
 /**

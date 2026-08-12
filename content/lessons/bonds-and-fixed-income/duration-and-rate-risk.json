@@ -1,0 +1,155 @@
+{
+  "id": "duration-and-rate-risk",
+  "courseId": "bonds-and-fixed-income",
+  "title": "Duration and Rate Risk",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Same rate move, different damage.",
+      "body": "Rates rise by the same amount for two bonds. A short one that repays next year barely flinches. A long one that repays in twenty years drops hard. The length of the loan decides how much a rate change hurts.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/duration-and-rate-risk.jpg",
+        "alt": "Two planks pinned at one end under the same tip weight — a short one barely dips while a much longer one swings steeply down — the longer the bond, the harder a rate nudge moves it."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Duration measures the sensitivity.",
+      "body": "Duration is a single number for how much a bond's price reacts to interest rates. Roughly, it is the average number of years you wait for the bond's cash. Longer waits mean a bigger reaction — more duration, more risk.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "The one-percent rule of thumb.",
+      "body": "Here is the handle: for each **1%** that rates rise, a bond's price falls by about its duration, in percent. Duration **7** means roughly a **7%** drop. Duration **3** means about **3%**. It runs the other way for rate falls.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Longer duration, bigger fall",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            3,
+            7,
+            15
+          ],
+          "labels": [
+            "Dur 3",
+            "Dur 7",
+            "Dur 15"
+          ],
+          "highlightIndex": 1,
+          "yLabel": "Price drop %"
+        }
+      },
+      "caption": "A one-point rate rise, three bonds. The longer the duration, the deeper the fall — a fifteen-year-ish bond loses roughly five times what a three-year one does."
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Rates jump one percent. Which bond's price falls more: a 2-year or a 20-year?",
+      "options": [
+        {
+          "id": "twenty",
+          "label": "The 20-year bond",
+          "correct": true
+        },
+        {
+          "id": "two",
+          "label": "The 2-year bond",
+          "correct": false
+        }
+      ],
+      "explanation": "The longer bond has far more duration — you wait two decades for your money, so its price is far more sensitive to rates. A one-point rise might cost it a good deal; it barely dents the two-year."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "A close estimate, not a law.",
+      "body": "The duration rule is a first-order approximation. For a small rate move it is very accurate; for a large one it slightly overstates the fall, because the real price curve bends. It is the tool for intuition, not the last decimal.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "The asterisk on 'safe'.",
+      "body": "A good-quality bond is safe from default — you will be repaid. It is not safe from rates. A long bond can lose real value the moment rates rise, even though every payment arrives on time. Two different risks, one asset.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "As a rule of thumb, a bond's price falls by about its [[1]] in percent for every one-point rise in interest rates.",
+      "wordBank": [
+        "duration",
+        "coupon",
+        "maturity"
+      ],
+      "answer": "duration",
+      "explanation": "Duration is the price-sensitivity number. Duration 7 means roughly a 7% price drop for a 1% rate rise. Longer bonds carry more duration, and so more rate risk."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Duration measures a bond's rate risk: price falls by about its duration in percent per one-point rate rise.",
+      "bullets": [
+        "Longer bonds have more duration and bigger price swings.",
+        "Duration 7 ≈ a 7% drop for a 1% rate rise.",
+        "A quality bond is safe from default, not from rates."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/duration-and-rate-risk.jpg",
+        "alt": "Two planks pinned at one end under the same tip weight — a short one barely dips while a much longer one swings steeply down — the longer the bond, the harder a rate nudge moves it."
+      },
+      "insight": "Default is not the only way a bond hurts you. Rates can carve value out of it while every payment still arrives on time.",
+      "attribution": {
+        "source": "Unit 2",
+        "detail": "Bonds and Fixed Income"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Interest Rate Risk — When Interest Rates Go Up, Prices of Fixed-Rate Bonds Fall",
+      "url": "https://www.sec.gov/investor/alerts/ib_interestraterisk.pdf",
+      "publisher": "U.S. SEC"
+    },
+    {
+      "title": "Bond Prices, Rates, and Yields",
+      "url": "https://www.finra.org/investors/investing/investment-products/bonds/bond-prices-rates-yields",
+      "publisher": "FINRA"
+    }
+  ]
+}

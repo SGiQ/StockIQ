@@ -8,6 +8,790 @@
 export type NarrationVoice = 'male' | 'female';
 
 export const SPEECH_MANIFEST: Record<string, Record<NarrationVoice, string>> = {
+  "lesson:alternative-assets/commodities-basics#c1": {
+    "male": "eda449691e729aff",
+    "female": "77079db1cad3fb9b"
+  },
+  "lesson:alternative-assets/commodities-basics#c2": {
+    "male": "ac1fcdea895ce2a1",
+    "female": "d0424f5cb56238af"
+  },
+  "lesson:alternative-assets/commodities-basics#c3": {
+    "male": "28dbe404703ce523",
+    "female": "10f518349efc8fa0"
+  },
+  "lesson:alternative-assets/commodities-basics#c4": {
+    "male": "3ec50eb757cbedb1",
+    "female": "aec61441158e0daf"
+  },
+  "lesson:alternative-assets/commodities-basics#c5": {
+    "male": "8b7060e39c7c8601",
+    "female": "825d0c24a326133f"
+  },
+  "lesson:alternative-assets/commodities-basics#c5:feedback-correct": {
+    "male": "c5ff686ee4ef7979",
+    "female": "e951eff679ccf451"
+  },
+  "lesson:alternative-assets/commodities-basics#c5:feedback-incorrect": {
+    "male": "60754d5edff06d65",
+    "female": "f68427a26efe5e5b"
+  },
+  "lesson:alternative-assets/commodities-basics#c6": {
+    "male": "5177ff4aac2d1774",
+    "female": "cc43565d90acaf8f"
+  },
+  "lesson:alternative-assets/commodities-basics#c7": {
+    "male": "125990ae7c260cfb",
+    "female": "bf7c632f4f0d9e9f"
+  },
+  "lesson:alternative-assets/commodities-basics#c8": {
+    "male": "9b6f015048e6b1d6",
+    "female": "024548cf4bd6ba89"
+  },
+  "lesson:alternative-assets/commodities-basics#c8:feedback-correct": {
+    "male": "3355d48eeb7db733",
+    "female": "982076603759f0d4"
+  },
+  "lesson:alternative-assets/commodities-basics#c8:feedback-incorrect": {
+    "male": "e04028532e2340d3",
+    "female": "344a8dee91345472"
+  },
+  "lesson:alternative-assets/commodities-basics#c9": {
+    "male": "ec574f843e5b59c8",
+    "female": "0a2264f705ca0c8e"
+  },
+  "lesson:alternative-assets/commodities-basics#c10": {
+    "male": "e9a8598d29e4b5a5",
+    "female": "9cb212d9c61fa4a2"
+  },
+  "lesson:alternative-assets/forex-basics#c1": {
+    "male": "65d44cb76f609da2",
+    "female": "27b4d61395dcc9e5"
+  },
+  "lesson:alternative-assets/forex-basics#c2": {
+    "male": "38b84bb292afb4a3",
+    "female": "8e62c833e73b4a0e"
+  },
+  "lesson:alternative-assets/forex-basics#c3": {
+    "male": "1186f703b4e051dc",
+    "female": "ce29e216235635ce"
+  },
+  "lesson:alternative-assets/forex-basics#c4": {
+    "male": "5bcd6503eab2e9dc",
+    "female": "6a15970d91a256ba"
+  },
+  "lesson:alternative-assets/forex-basics#c5": {
+    "male": "692362bccb448ff6",
+    "female": "0d9a84cbcdb943ed"
+  },
+  "lesson:alternative-assets/forex-basics#c6": {
+    "male": "bf8994cab058758b",
+    "female": "c54457089fd7a360"
+  },
+  "lesson:alternative-assets/forex-basics#c6:feedback-correct": {
+    "male": "3b94e7c0052e3774",
+    "female": "e8ff6edc88cb73f2"
+  },
+  "lesson:alternative-assets/forex-basics#c6:feedback-incorrect": {
+    "male": "7db3f014c12046a8",
+    "female": "09278570b7c59f04"
+  },
+  "lesson:alternative-assets/forex-basics#c7": {
+    "male": "af3073040fd2703c",
+    "female": "1a62ed89e75679a7"
+  },
+  "lesson:alternative-assets/forex-basics#c8": {
+    "male": "d34a82d5925b03a2",
+    "female": "89fe86876a685b4b"
+  },
+  "lesson:alternative-assets/forex-basics#c8:feedback-correct": {
+    "male": "60b647d6c3e39dd4",
+    "female": "d6f3626a8e947676"
+  },
+  "lesson:alternative-assets/forex-basics#c8:feedback-incorrect": {
+    "male": "b4d40322b3a96c6f",
+    "female": "b534dbfe2a1721f8"
+  },
+  "lesson:alternative-assets/forex-basics#c9": {
+    "male": "295ff4db43d97f95",
+    "female": "0e9f3ffacfe73112"
+  },
+  "lesson:alternative-assets/forex-basics#c10": {
+    "male": "fc1f0c83e7844d20",
+    "female": "4e249e45ca44be1b"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c1": {
+    "male": "e93ae072f60b0aa0",
+    "female": "a1654a8ad5c62827"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c2": {
+    "male": "c76e0a5c29b22d2b",
+    "female": "5106800da779e635"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c3": {
+    "male": "34a22b3063979a11",
+    "female": "9f3422e59682fc46"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c4": {
+    "male": "74ba16e6dcc2e30e",
+    "female": "848392595cb4744a"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c5": {
+    "male": "57c10b62000ded31",
+    "female": "28db71abb569021f"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c6": {
+    "male": "41a218ec6de51bec",
+    "female": "3b87423940809e59"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c6:feedback-correct": {
+    "male": "af10dec5e44e91d1",
+    "female": "72087fc6bfc86415"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c6:feedback-incorrect": {
+    "male": "881abcf1e6c4799f",
+    "female": "ac3d6b81abd8b64b"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c7": {
+    "male": "8b06ab67f8b5dd63",
+    "female": "71a9343026916a36"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c8": {
+    "male": "1bd0a082f3da8481",
+    "female": "cf12c9151e4d16f0"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c8:feedback-correct": {
+    "male": "619707f61d9c7871",
+    "female": "1969fae21473bef3"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c8:feedback-incorrect": {
+    "male": "c5a30d8975313004",
+    "female": "173756ef5905ec55"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c9": {
+    "male": "febbb9dd61ab61a2",
+    "female": "4161135d1b6ae9cf"
+  },
+  "lesson:alternative-assets/real-estate-and-reits#c10": {
+    "male": "16be96e256d992c5",
+    "female": "f019c23a6b33e330"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c1": {
+    "male": "cf03ea1bf0df9ac8",
+    "female": "903d7d898e1d94cf"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c2": {
+    "male": "3119406cf2a9a3ce",
+    "female": "d9510e828c5184d7"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c3": {
+    "male": "609faad603db597e",
+    "female": "098a6cc459e9778b"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c4": {
+    "male": "dea2ffa180270b09",
+    "female": "4ba8fb221abfc16c"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c5": {
+    "male": "7d4f2be283aa5c7f",
+    "female": "4a89887e96029642"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c6": {
+    "male": "11f71d0dca0e7b4b",
+    "female": "01a189429dab9071"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c6:feedback-correct": {
+    "male": "abe8cf7a0b4b2384",
+    "female": "19d3eec78389a1f8"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c6:feedback-incorrect": {
+    "male": "b2ef18a770007f49",
+    "female": "1709c11e40ae81e8"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c7": {
+    "male": "4dd512bc8f7139ef",
+    "female": "1c9f0cf7685030f6"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c8": {
+    "male": "045063428e445701",
+    "female": "492a7ceafec0fb66"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c8:feedback-correct": {
+    "male": "3e16263657967f12",
+    "female": "286eb17fed24e79e"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c8:feedback-incorrect": {
+    "male": "e881d783a6d9d056",
+    "female": "a88529e504ad2c65"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c9": {
+    "male": "df606e91fd2689fa",
+    "female": "19997263a1a63118"
+  },
+  "lesson:bonds-and-fixed-income/bond-types#c10": {
+    "male": "82e529bd266b84ad",
+    "female": "8f75517bdb9197b1"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c1": {
+    "male": "6dfac59808e7572f",
+    "female": "3cd0f3b8989954f4"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c2": {
+    "male": "777fb94ba2475659",
+    "female": "a777b71d47f33065"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c3": {
+    "male": "63d9c9ee13707ae3",
+    "female": "d8a9dc5f459c2218"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c4": {
+    "male": "383e8afd6777eed1",
+    "female": "aa3c3b7afd7c1919"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c5": {
+    "male": "8bed65c8aeeeb7ae",
+    "female": "24305113832938af"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c5:feedback-correct": {
+    "male": "719cbe0a5620fa84",
+    "female": "266654aed853064f"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c5:feedback-incorrect": {
+    "male": "b52b8e209981048a",
+    "female": "1362725f2b7a1c0b"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c6": {
+    "male": "d71d36130068a3d8",
+    "female": "f6e59146b000cd51"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c7": {
+    "male": "5fac22b05b052532",
+    "female": "161267f5c34f303d"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c8": {
+    "male": "e6ba1c5528ab9d84",
+    "female": "c97302e94c38bc2c"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c8:feedback-correct": {
+    "male": "ed3f6edc332958e3",
+    "female": "b2279c01601a1e97"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c8:feedback-incorrect": {
+    "male": "f420199a3ed073f6",
+    "female": "452d606c0793b487"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c9": {
+    "male": "1a6b2016daa58682",
+    "female": "eda8819e4227db4d"
+  },
+  "lesson:bonds-and-fixed-income/duration-and-rate-risk#c10": {
+    "male": "d1420e1ba8eb6216",
+    "female": "3b02e40b98176540"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c1": {
+    "male": "ceb78e7669313f28",
+    "female": "2b26dbd160cd22c3"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c2": {
+    "male": "5368070164086b14",
+    "female": "52f744e52a15ad6b"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c3": {
+    "male": "9155f791e3f21645",
+    "female": "1c2c8cbacda53b89"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c4": {
+    "male": "c50d3f1d73704428",
+    "female": "717e18f148d47e9c"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c5": {
+    "male": "4200fd93eccdd598",
+    "female": "5f0c0879a6be102b"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c5:feedback-correct": {
+    "male": "901acdf588d04ae8",
+    "female": "d72f6fb16ba49684"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c5:feedback-incorrect": {
+    "male": "da88fb361f952192",
+    "female": "b7683595b5d8806b"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c6": {
+    "male": "61f58220d1c1d942",
+    "female": "3319394a03adf691"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c7": {
+    "male": "11fec64a6c0221d4",
+    "female": "40b72b9ac2b5abf2"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c8": {
+    "male": "e00a71439f0edf07",
+    "female": "2923e6cad7bc660b"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c8:feedback-correct": {
+    "male": "687ad51a4d5bed36",
+    "female": "f84aca76a0ff1393"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c8:feedback-incorrect": {
+    "male": "342ed13e33aac9d0",
+    "female": "e80a215601a74ca2"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c9": {
+    "male": "2de39c3c50e6f089",
+    "female": "58c2dd6d64ddb5c2"
+  },
+  "lesson:bonds-and-fixed-income/price-and-yield#c10": {
+    "male": "a522bf1196114544",
+    "female": "d49c6d45ee261209"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c1": {
+    "male": "b4eed06e4f64cafd",
+    "female": "dfeece9a8a33f2da"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c2": {
+    "male": "d1937de31d8dcc29",
+    "female": "81db62d3498c3ca6"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c3": {
+    "male": "c7b191595ddd49e0",
+    "female": "d8cc9fcedf6366cb"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c4": {
+    "male": "2acf2637ee6182f0",
+    "female": "209bbd6dd25f1447"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c5": {
+    "male": "28fe2bc39223cc22",
+    "female": "0ef39fe0471e9fde"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c5:feedback-correct": {
+    "male": "a026e94cc99250a6",
+    "female": "2a328627d5769206"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c5:feedback-incorrect": {
+    "male": "6553143b53c6a302",
+    "female": "035b0d216b933e3a"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c6": {
+    "male": "5d0283dd63978419",
+    "female": "005b2989e2fdae0b"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c7": {
+    "male": "58521b28380c2de3",
+    "female": "f4e9d597d9b1661d"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c8": {
+    "male": "f5111aec3a61156c",
+    "female": "04c141a862575601"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c8:feedback-correct": {
+    "male": "222e5fc768114c8f",
+    "female": "9d4be941388b7473"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c8:feedback-incorrect": {
+    "male": "7a17edbda57d1d81",
+    "female": "f3a2f98ed22d994a"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c9": {
+    "male": "e0168bb2ed8d2274",
+    "female": "5101ca99d27bd835"
+  },
+  "lesson:bonds-and-fixed-income/what-is-a-bond#c10": {
+    "male": "1cc3aa40dd4a1237",
+    "female": "49da79a612682bde"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c1": {
+    "male": "a48e6e53a7187815",
+    "female": "660b5db196f533b6"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c2": {
+    "male": "b0ebd657f014ef04",
+    "female": "eb285dfec9a18e83"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c3": {
+    "male": "da2f4ac525b4c86b",
+    "female": "a00b1377b317e100"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c4": {
+    "male": "0e9a2574b8e5853a",
+    "female": "0bd977a720be0e98"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c5": {
+    "male": "bf2deb5561f75f63",
+    "female": "8f892fbf0e1f7545"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c5:feedback-correct": {
+    "male": "019142bf093c6a1e",
+    "female": "73c265d0a85ce687"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c5:feedback-incorrect": {
+    "male": "515033f29413b03f",
+    "female": "02062fbc07cae1ba"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c6": {
+    "male": "b6cedca5b0ace269",
+    "female": "21b371c3e9606482"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c7": {
+    "male": "0a7bdd75f4d57b54",
+    "female": "c411cc3d149656a9"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c8": {
+    "male": "74e1e52c2235acd4",
+    "female": "e67aa19a20a3b726"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c8:feedback-correct": {
+    "male": "a93238a9c4ceec75",
+    "female": "003170e10ef69b1f"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c8:feedback-incorrect": {
+    "male": "baa995a515f41874",
+    "female": "f36449407580141b"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c9": {
+    "male": "9bbb8e217f9de0b1",
+    "female": "f52f48335336e9d3"
+  },
+  "lesson:crypto-foundations/avoiding-crypto-scams#c10": {
+    "male": "8725c6da8ff4060e",
+    "female": "63b7b0ffe0a4df68"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c1": {
+    "male": "c83f59b3e00109a4",
+    "female": "d371a30d9a03a03f"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c2": {
+    "male": "52817b905e336fad",
+    "female": "70027286362eb158"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c3": {
+    "male": "54f6b966e494d8c6",
+    "female": "e809683ed78b9baa"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c4": {
+    "male": "d99fa69e86a51a15",
+    "female": "ff41cdf1c6e162d1"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c5": {
+    "male": "2e629b9a885add75",
+    "female": "5a89b9da02682c43"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c5:feedback-correct": {
+    "male": "c99b86ba42366fb5",
+    "female": "0defaeef42423d58"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c5:feedback-incorrect": {
+    "male": "9ad954f2a123d27e",
+    "female": "6877352bda27121a"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c6": {
+    "male": "aae5ba514d1203c7",
+    "female": "20c65fb24350d0c2"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c7": {
+    "male": "0fdf170b31729e3c",
+    "female": "5a5d055f5adb4d6f"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c8": {
+    "male": "7d662be6fdc05507",
+    "female": "d93d179aff006e12"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c8:feedback-correct": {
+    "male": "6987be1e869ce1a9",
+    "female": "f8b7ac947bcab64f"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c8:feedback-incorrect": {
+    "male": "2d7afc9ac3a8c565",
+    "female": "c407834bbd0d36d5"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c9": {
+    "male": "6585c2509cbc6e52",
+    "female": "92c161cf26185509"
+  },
+  "lesson:crypto-foundations/crypto-risk-profile#c10": {
+    "male": "17b9afa79a3cff20",
+    "female": "33a2f4af25b7ab17"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c1": {
+    "male": "4ce2d7204bef7aec",
+    "female": "41e2581604ba17e4"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c2": {
+    "male": "45ddfe23f24cd651",
+    "female": "6570203f4c3e1691"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c3": {
+    "male": "d756f71ac125b5a5",
+    "female": "a57bf6cc64c33346"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c3:feedback-correct": {
+    "male": "596d8d9e2c5eab80",
+    "female": "fa059520b787c4e5"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c3:feedback-incorrect": {
+    "male": "4e00163ba8d0a2e3",
+    "female": "64371d2893a55000"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c4": {
+    "male": "4db0c804d353bc31",
+    "female": "8b58585f33a40cc6"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c5": {
+    "male": "3845c0b2e8a3ad2c",
+    "female": "e89fb68ba5ca7aa2"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c6": {
+    "male": "158d9e4f7d424d53",
+    "female": "b39906e0370e1aa5"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c7": {
+    "male": "7f3ac737e80aeacf",
+    "female": "4284e99959ecfa78"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c8": {
+    "male": "b8b2f71d198f2c5f",
+    "female": "3c375eeb0f29e5c7"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c8:feedback-correct": {
+    "male": "47faacc916145e2b",
+    "female": "65bc4c4de61a2aa2"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c8:feedback-incorrect": {
+    "male": "27927f6e7425c6d9",
+    "female": "a7b781633c531a9c"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c9": {
+    "male": "679035fed4a1505d",
+    "female": "70784e5aaf1912e7"
+  },
+  "lesson:crypto-foundations/crypto-valuation#c10": {
+    "male": "bc25c25d1cd9675d",
+    "female": "530e0163046d878c"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c1": {
+    "male": "4a9ff0529be7f39b",
+    "female": "23b335270d84264b"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c2": {
+    "male": "1fe8bd0d187bf920",
+    "female": "8a47de50190dd7de"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c3": {
+    "male": "9f7590c5c8632fa4",
+    "female": "8dba4eadaf45314a"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c4": {
+    "male": "2a2ef0a36dea4360",
+    "female": "80387913fc9d98d7"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c5": {
+    "male": "d7e656d3a8e9a7ff",
+    "female": "fd3a3cc575630961"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c5:feedback-correct": {
+    "male": "4cd11890964e6053",
+    "female": "63dd6eb70af7a96f"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c5:feedback-incorrect": {
+    "male": "98d71c16dbfac9ed",
+    "female": "af5e8f8902779577"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c6": {
+    "male": "06f13f163078a834",
+    "female": "7cb817b99be7e707"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c7": {
+    "male": "d673d6c4569b12ee",
+    "female": "5e799a79464b176c"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c8": {
+    "male": "814d3075cbc37c0d",
+    "female": "ed482702308071a0"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c8:feedback-correct": {
+    "male": "c5b4e6d04430e1b4",
+    "female": "56dbd04dd94e1a44"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c8:feedback-incorrect": {
+    "male": "502d55d430fb0765",
+    "female": "d83c6d7e3907d19a"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c9": {
+    "male": "ac14daeeb8aa2305",
+    "female": "109481be9ec1693b"
+  },
+  "lesson:crypto-foundations/how-crypto-trades#c10": {
+    "male": "7425417583eff990",
+    "female": "2674ce0003ade2b1"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c1": {
+    "male": "f6c89d190faafa6d",
+    "female": "d670e97dfc57bca4"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c2": {
+    "male": "d3bf5419d9287947",
+    "female": "3207a81e0526bc19"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c3": {
+    "male": "5ae855bd936cad1d",
+    "female": "680a50930a8774f0"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c4": {
+    "male": "620a1e2b86ff9628",
+    "female": "12a1fb7152869ffd"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c4:feedback-correct": {
+    "male": "6992fb779af979e1",
+    "female": "bf8bc9b77ef9d95d"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c4:feedback-incorrect": {
+    "male": "00ddaf0970c17184",
+    "female": "feb897048b7a4dce"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c5": {
+    "male": "bedf954916750059",
+    "female": "da4b9dfb35eef570"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c6": {
+    "male": "fc61da84461627ed",
+    "female": "defe9197959e3939"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c7": {
+    "male": "3c2d33ded3393940",
+    "female": "9cb344f8b4c92ced"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c8": {
+    "male": "1de5c83a59d347d2",
+    "female": "2db0ee090a8e3753"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c8:feedback-correct": {
+    "male": "3d7e237f4643b8dd",
+    "female": "873f96ab3e665e40"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c8:feedback-incorrect": {
+    "male": "6e734010b901b4f3",
+    "female": "f074289623a63380"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c9": {
+    "male": "ec152d124c49e7a9",
+    "female": "dd5f720260ebd7f4"
+  },
+  "lesson:crypto-foundations/staking-and-yield#c10": {
+    "male": "9581e7dddfa2c0ff",
+    "female": "e650515b4160c4d0"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c1": {
+    "male": "640d99ec27141208",
+    "female": "80890a9118c73866"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c2": {
+    "male": "86a4727cc254a444",
+    "female": "6fbd9b6087d70071"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c3": {
+    "male": "ab95fb9ccb5887ad",
+    "female": "47eee93ca1e0059a"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c4": {
+    "male": "096abbb6cded2f80",
+    "female": "adf1fcdbf3fa6e12"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c5": {
+    "male": "271bfd76521b9133",
+    "female": "09f852c19f4e8485"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c5:feedback-correct": {
+    "male": "1a77a5536eb30db8",
+    "female": "aaf06518b7067442"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c5:feedback-incorrect": {
+    "male": "f9f4cd7facdcf903",
+    "female": "90bbb8c2c4abb44c"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c6": {
+    "male": "4471ae15eac9e4c5",
+    "female": "e3b588febf2e8f2c"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c7": {
+    "male": "ce7ef198e2b70119",
+    "female": "5fd0c201438b5af0"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c8": {
+    "male": "9e42d238889855f1",
+    "female": "84c110069944e176"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c8:feedback-correct": {
+    "male": "c264c10670a381e8",
+    "female": "4ca49a5c5d5e68a9"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c8:feedback-incorrect": {
+    "male": "d08cef01c4ec0b43",
+    "female": "8ee6798e170762a9"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c9": {
+    "male": "8c46aa0c70853d9d",
+    "female": "cabd4cbca3131363"
+  },
+  "lesson:crypto-foundations/wallets-and-custody#c10": {
+    "male": "c972b1f47fa94c28",
+    "female": "1b10eb03a9b38401"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c1": {
+    "male": "a40b60d19f9f45b1",
+    "female": "67a58a90b38ae92a"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c2": {
+    "male": "5cbf8bb91ecadd8e",
+    "female": "91e3c317ffaa990a"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c3": {
+    "male": "73a33cdbee3ba188",
+    "female": "6c9596e6d9e10991"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c4": {
+    "male": "30ce144c715456a8",
+    "female": "c7894820e744c61a"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c5": {
+    "male": "0633205f22307763",
+    "female": "ffb357ff6cdd7530"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c5:feedback-correct": {
+    "male": "4778c947dca171f6",
+    "female": "881b7e5ab3cee67c"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c5:feedback-incorrect": {
+    "male": "b0272bc653c3732d",
+    "female": "a10c1d5e926cb6df"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c6": {
+    "male": "b8231a6b0fb44303",
+    "female": "ad93a870ba757e35"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c7": {
+    "male": "fb9e0bf51ccf09c4",
+    "female": "b1a7be7a0c2c2186"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c8": {
+    "male": "27505067228187c6",
+    "female": "7a3a0fa14a12408c"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c8:feedback-correct": {
+    "male": "a9ce0f7242f9b25a",
+    "female": "3a4d6ebbf447120c"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c8:feedback-incorrect": {
+    "male": "ae14a040951a93f7",
+    "female": "06f1bc63b6499bda"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c9": {
+    "male": "940a11d208b8b628",
+    "female": "45c82d6840ce55cb"
+  },
+  "lesson:crypto-foundations/what-is-crypto#c10": {
+    "male": "57b7dd5ee333451a",
+    "female": "13d18d26d253365f"
+  },
   "lesson:getting-started/accounts-fees-and-taxes#c1": {
     "male": "914261f0657fdd6a",
     "female": "20767620a2593e7f"

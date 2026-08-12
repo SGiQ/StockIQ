@@ -1,0 +1,157 @@
+{
+  "id": "bond-types",
+  "courseId": "bonds-and-fixed-income",
+  "title": "Kinds of Bonds",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The borrower changes everything.",
+      "body": "Every bond is a loan, but who you lend to sets the risk and the reward. A national government, a blue-chip company, and a struggling one all borrow — and a lender demands a very different rate from each.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/bond-types.jpg",
+        "alt": "Three lenders notes rise on steps — a solid vault with a short flag, a firm building taller, a cracked building with the tallest — more reward as the borrower looks shakier."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Government bonds: the safe end.",
+      "body": "A stable government that borrows in its own currency is the safest kind of borrower, because it is highly unlikely to miss a payment. In return for that safety, these bonds pay the lowest interest. Safety and yield trade off.",
+      "art": {
+        "kind": "glyph",
+        "name": "shield",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Corporate bonds: paid for risk.",
+      "body": "Companies borrow too, and they can fail in ways a government usually cannot. To make up for that added default risk, corporate bonds pay a higher coupon. The weaker the company, the higher the rate it must offer.",
+      "art": {
+        "kind": "glyph",
+        "name": "briefcase",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Municipal bonds: the tax angle.",
+      "body": "Cities and states issue bonds to fund roads, schools and water. In many places the interest carries a tax break, so a lower coupon can still leave more in your pocket than a higher, fully taxed one. Compare after tax.",
+      "art": {
+        "kind": "glyph",
+        "name": "building",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Ratings grade the risk.",
+      "body": "Agencies grade borrowers from top-tier down to speculative. High grades mean safer, lower-paying bonds; low grades — 'high-yield' or 'junk' — pay more precisely because they might not pay at all. The rating is shorthand for default risk.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Two bonds, same maturity: one from a stable government, one from a shaky company. Which pays the higher coupon?",
+      "options": [
+        {
+          "id": "company",
+          "label": "The shaky company",
+          "correct": true
+        },
+        {
+          "id": "govt",
+          "label": "The stable government",
+          "correct": false
+        }
+      ],
+      "explanation": "A riskier borrower has to offer more to attract lenders. The higher coupon is not a free bonus — it is compensation for a real chance the money is not paid back. More yield always marks more risk."
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "Yield rises with risk",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            3,
+            3.5,
+            5,
+            8
+          ],
+          "labels": [
+            "Govt",
+            "Muni",
+            "Corp",
+            "High-yield"
+          ],
+          "highlightIndex": 3,
+          "yLabel": "Yield %"
+        }
+      },
+      "caption": "Yield climbs with risk: safest government debt pays least, speculative 'high-yield' pays most. The extra percentage points are the market's price for a chance of default."
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A lower credit rating signals a greater chance of default, so those bonds must pay a [[1]] coupon to attract lenders.",
+      "wordBank": [
+        "higher",
+        "lower",
+        "fixed"
+      ],
+      "answer": "higher",
+      "explanation": "Risk and reward move together in bonds. A weaker borrower can only compete for lenders by paying more — which is why a fat yield is a warning as much as an attraction."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Bonds differ by who issues them, and yield always rises with the borrower's risk of default.",
+      "bullets": [
+        "Government bonds are safest and pay the least.",
+        "Corporate and high-yield bonds pay more for more risk.",
+        "Credit ratings are a shorthand for default risk."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/bond-types.jpg",
+        "alt": "Three lenders notes rise on steps — a solid vault with a short flag, a firm building taller, a cracked building with the tallest — more reward as the borrower looks shakier."
+      },
+      "insight": "In bonds, a higher yield is never a gift. It is the exact measure of how worried the market is about being repaid.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Bonds and Fixed Income"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Bonds",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Bond Basics",
+      "url": "https://www.finra.org/investors/investing/investment-products/bonds",
+      "publisher": "FINRA"
+    }
+  ]
+}

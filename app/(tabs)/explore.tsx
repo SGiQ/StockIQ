@@ -17,6 +17,9 @@ const CATEGORY_LABELS: Record<CourseCategory, string> = {
   psychology: 'Psychology',
   strategies: 'Strategies',
   'getting-started': 'Getting Started',
+  crypto: 'Crypto',
+  'fixed-income': 'Bonds',
+  alternatives: 'Alternatives',
 };
 
 /** Each category gets a fixed tone so the filter row reads like Imprint's. */
