@@ -93,7 +93,7 @@ export function ArtView({
       // Charts carry their own palette: the profit/payoff family reads best
       // on the high-voltage green, everything else on a calm pastel.
       const preset: PalettePreset =
-        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'sky';
+        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'parchment';
       const p = artPalettes[preset];
       return (
         <View style={[...container, styles.chart, { backgroundColor: p.bg }]}>

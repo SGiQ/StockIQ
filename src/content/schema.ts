@@ -108,6 +108,7 @@ export const PALETTE_PRESETS = [
   'neon',
   'ink',
   'forest',
+  'parchment',
 ] as const;
 export const PalettePresetSchema = z.enum(PALETTE_PRESETS);
 export type PalettePreset = (typeof PALETTE_PRESETS)[number];
