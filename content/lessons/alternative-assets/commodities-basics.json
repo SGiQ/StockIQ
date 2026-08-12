@@ -86,7 +86,7 @@
       "body": "When futures cost more than spot, the market is in **contango**; when less, **backwardation**. It matters because funds rolling expiring contracts forward keep buying pricier ones in contango — a quiet drag that makes some commodity funds lag the spot price.",
       "art": {
         "kind": "glyph",
-        "name": "chart-up",
+        "name": "scale",
         "bg": "lilac"
       }
     },

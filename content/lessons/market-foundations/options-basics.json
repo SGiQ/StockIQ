@@ -11,7 +11,7 @@
       "type": "concept",
       "headline": "A contract, not a share.",
       "body": "An option is a contract. It gives you the **right** — but never the obligation — to buy or sell a stock at a set price before a set date. You pay for that right up front.",
-      "art": { "kind": "glyph", "name": "key", "bg": "lilac" }
+      "art": { "kind": "glyph", "name": "handshake", "bg": "lilac" }
     },
     {
       "id": "c2",
@@ -25,7 +25,7 @@
       "type": "concept",
       "headline": "Every contract has four parts.",
       "body": "The **type** (call or put), the **strike** (the fixed price), the **expiration** (the deadline), and the **premium** (what the contract costs). Change any one and you have a different contract.",
-      "art": { "kind": "glyph", "name": "calendar", "bg": "butter" }
+      "art": { "kind": "glyph", "name": "target", "bg": "butter" }
     },
     {
       "id": "c4",
@@ -82,7 +82,7 @@
       "type": "concept",
       "headline": "Sellers can be assigned.",
       "body": "If you **sell** an option and it finishes in the money, you can be **assigned** — forced to honour it. A call seller must deliver shares; a put seller must buy them, at the strike.",
-      "art": { "kind": "glyph", "name": "bell", "bg": "blush" }
+      "art": { "kind": "glyph", "name": "lock", "bg": "blush" }
     },
     {
       "id": "c8",
@@ -97,7 +97,7 @@
       "type": "concept",
       "headline": "Small bets, big swings.",
       "body": "One contract usually controls **100 shares**, so a little money moves a lot of exposure. That cuts both ways: options can multiply a gain, expire at zero, and — for sellers — carry very large losses.",
-      "art": { "kind": "glyph", "name": "warning", "bg": "butter" }
+      "art": { "kind": "glyph", "name": "scale", "bg": "butter" }
     },
     {
       "id": "c10",
@@ -112,7 +112,7 @@
     {
       "id": "c11",
       "type": "key_insight",
-      "art": { "kind": "glyph", "name": "key", "bg": "lilac" },
+      "art": { "kind": "glyph", "name": "handshake", "bg": "lilac" },
       "insight": "An option is not a share. It is a bet on a price by a deadline, and if the deadline wins, the bet expires at zero.",
       "attribution": { "source": "Options, the basics", "detail": "Market Foundations" }
     }

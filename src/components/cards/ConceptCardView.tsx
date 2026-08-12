@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    paddingTop: space.sm,
-    gap: space.md,
+    paddingTop: space.xs,
+    gap: space.sm,
   },
   /**
    * Shrinks before the text does.
@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
    * zones underneath, and a ScrollView would have to capture those touches.
    */
   art: {
-    marginVertical: space.xs,
+    marginVertical: 0,
     flexShrink: 1,
-    maxHeight: '42%',
+    maxHeight: '38%',
     /**
      * Load-bearing. `ArtView` sizes itself from an aspectRatio, so when this
      * box shrinks the art inside keeps its full height and bleeds out the

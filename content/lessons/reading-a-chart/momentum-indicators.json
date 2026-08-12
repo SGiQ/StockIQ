@@ -60,7 +60,7 @@
       "type": "concept",
       "headline": "In that trend, every 70 print was early.",
       "body": "Look again at that stretch. A trader following a sell-at-70 rule exited on week 4 while RSI held above the line for seven more readings. {{strategy:momentum-investing|Momentum}} systems exist because that persistence is common, not rare.",
-      "art": { "kind": "glyph", "name": "bell", "bg": "blush" }
+      "art": { "kind": "glyph", "name": "clock", "bg": "blush" }
     },
     {
       "id": "c6",
