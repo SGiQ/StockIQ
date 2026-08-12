@@ -241,6 +241,7 @@ export const CandleSchema = z.object({
   h: z.number(),
   l: z.number(),
   c: z.number(),
+  v: z.number().optional(),
 });
 export type Candle = z.infer<typeof CandleSchema>;
 
@@ -298,6 +299,8 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
     levels: z
       .array(z.object({ value: z.number(), label: z.string().max(24) }))
       .optional(),
+    /** SMA periods to compute and overlay, e.g. [5, 10]. */
+    sma: z.array(z.number().int().min(2).max(30)).max(3).optional(),
   }),
   z.object({
     type: z.literal('bars'),

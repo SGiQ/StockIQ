@@ -17,7 +17,22 @@
       "type": "concept",
       "headline": "The body is open to close.",
       "body": "A candle's thick body spans two numbers: where the period **opened** and where it **closed** — the same open and close you see in {{lesson:market-foundations/reading-a-quote|a quote}}. Close above open, the body is an up body. Close below, a down body.",
-      "art": { "kind": "glyph", "name": "candle", "bg": "sky" }
+      "art": {
+        "kind": "chart",
+        "motion": "sequence",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 96, "h": 103, "l": 94, "c": 101 },
+            { "o": 102, "h": 106, "l": 97, "c": 98 },
+            { "o": 98, "h": 104, "l": 97, "c": 103 }
+          ],
+          "annotations": [
+            { "at": 0, "label": "Up body" },
+            { "at": 1, "label": "Down body", "emphasis": true }
+          ]
+        }
+      }
     },
     {
       "id": "c3",
@@ -67,7 +82,22 @@
       "type": "concept",
       "headline": "Wicks are the ground price gave back.",
       "body": "Above and below the body run two thin lines. The upper one reaches the **high**, the lower one the **low**. Price went there and did not stay. A wick is territory that was taken and then lost.",
-      "art": { "kind": "glyph", "name": "arrow-down", "bg": "blush" }
+      "art": {
+        "kind": "chart",
+        "motion": "sequence",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 50, "h": 56, "l": 48, "c": 52 },
+            { "o": 52, "h": 61, "l": 51, "c": 54 },
+            { "o": 54, "h": 55, "l": 44, "c": 53 }
+          ],
+          "annotations": [
+            { "at": 1, "label": "Upper wick" },
+            { "at": 2, "label": "Lower wick", "emphasis": true }
+          ]
+        }
+      }
     },
     {
       "id": "c6",
@@ -103,7 +133,21 @@
       "type": "concept",
       "headline": "A small body means nobody finished ahead.",
       "body": "When the open and the close sit close together, the body is thin. Price may have swung wide inside the period — the wicks show that — but it ended near where it started. Neither side kept its ground.",
-      "art": { "kind": "glyph", "name": "scale", "bg": "lilac" }
+      "art": {
+        "kind": "chart",
+        "motion": "sequence",
+        "spec": {
+          "type": "candles",
+          "candles": [
+            { "o": 50, "h": 54, "l": 47, "c": 52 },
+            { "o": 52, "h": 59, "l": 44, "c": 51 },
+            { "o": 51, "h": 57, "l": 46, "c": 52 }
+          ],
+          "annotations": [
+            { "at": 1, "label": "Tiny body, long wicks", "emphasis": true }
+          ]
+        }
+      }
     },
     {
       "id": "c9",
@@ -140,12 +184,12 @@
         "spec": {
           "type": "candles",
           "candles": [
-            { "o": 50, "h": 52, "l": 49, "c": 51 },
-            { "o": 51, "h": 54, "l": 51, "c": 53 },
-            { "o": 53, "h": 55, "l": 48, "c": 49 },
-            { "o": 49, "h": 50, "l": 47, "c": 48 },
-            { "o": 48, "h": 51, "l": 47, "c": 50 },
-            { "o": 50, "h": 55, "l": 47, "c": 50 }
+            { "o": 50, "h": 52, "l": 49, "c": 51, "v": 120 },
+            { "o": 51, "h": 54, "l": 51, "c": 53, "v": 180 },
+            { "o": 53, "h": 55, "l": 48, "c": 49, "v": 310 },
+            { "o": 49, "h": 50, "l": 47, "c": 48, "v": 250 },
+            { "o": 48, "h": 51, "l": 47, "c": 50, "v": 160 },
+            { "o": 50, "h": 55, "l": 47, "c": 50, "v": 400 }
           ],
           "annotations": [
             { "at": 0, "label": "Monday" },
