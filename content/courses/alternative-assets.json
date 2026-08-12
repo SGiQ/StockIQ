@@ -1,0 +1,27 @@
+{
+  "id": "alternative-assets",
+  "title": "Alternative Assets: Beyond Stocks and Bonds",
+  "author": "StockIQ",
+  "category": "alternatives",
+  "cover": {
+    "kind": "illustration",
+    "source": "/lesson-art/alternative-assets-cover.jpg",
+    "alt": "A compass points out to three emblems — currency coins, an oil barrel with gold bars, and an apartment building — other markets beyond stocks and bonds."
+  },
+  "blurb": "Currencies, commodities and property. Useful to understand how they work and how they are quoted — an optional track, not a requirement before you start investing.",
+  "order": 9,
+  "isNew": true,
+  "units": [
+    {
+      "id": "unit-1",
+      "index": 1,
+      "name": "OTHER MARKETS",
+      "lessonIds": [
+        "forex-basics",
+        "commodities-basics",
+        "real-estate-and-reits"
+      ]
+    }
+  ],
+  "totalXp": 60
+}

@@ -1,0 +1,155 @@
+{
+  "id": "forex-basics",
+  "courseId": "alternative-assets",
+  "title": "Currencies and Forex",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "One currency, priced in another.",
+      "body": "This track is optional — useful to understand, not needed before you invest. Forex means trading currencies, always in pairs: euros priced in dollars, say. You are never buying one thing, but betting one currency against another.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/forex-basics.jpg",
+        "alt": "Two national coins balance on a small scale while a large lever beneath tips the whole platform far from a tiny nudge — small currency moves magnified by leverage."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A pip is the smallest step.",
+      "body": "Currency prices move in tiny increments called pips. For most pairs a pip is the fourth decimal place — **0.0001**. A move from 1.1000 to 1.1001 is one pip. Traders count gains and losses in pips before turning them into money.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "A pip is worth more at size.",
+      "body": "What a pip pays depends on how much currency you hold. On a standard lot of 100,000 units, one pip is worth about **$10**. On a mini lot of 10,000 it is **$1**; on a micro lot of 1,000, just **$0.10**. Same pip, different stakes.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Pip value by lot size",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            10,
+            1,
+            0.1
+          ],
+          "labels": [
+            "Standard",
+            "Mini",
+            "Micro"
+          ],
+          "highlightIndex": 0,
+          "yLabel": "Pip value $"
+        }
+      },
+      "caption": "The same one-pip move pays ten dollars on a standard lot but a dime on a micro lot. Position size sets how much each tick is worth."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "Pips are not percent.",
+      "body": "A hundred pips sounds big, but it is not one percent. A move from 1.1000 to 1.1100 is 100 pips, yet only **0.91%** — you divide the change by the price. Those small percentages are why forex traders reach for leverage.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "At 50:1 leverage, $2,000 controls $100,000. If the pair moves 2% against you, how much do you lose?",
+      "options": [
+        {
+          "id": "all",
+          "label": "$2,000 — your whole margin",
+          "correct": true
+        },
+        {
+          "id": "forty",
+          "label": "$40 — just 2% of your cash",
+          "correct": false
+        }
+      ],
+      "explanation": "Leverage sizes the loss off the $100,000, not your $2,000. A 2% move is **$2,000** — the entire margin. That is how a small price move wipes an account: the loss is measured against the borrowed size."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Leverage is the real risk.",
+      "body": "Because each percent is small, brokers offer huge leverage to make moves feel worthwhile. That same leverage means a tiny move against you erases the whole stake. In forex it is almost never the currency that ruins people. It is the borrowing.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Leverage sizes your loss off the full position, so a 2% move on a $100,000 position is [[1]], not 2% of your cash.",
+      "wordBank": [
+        "$2,000",
+        "$40",
+        "$200"
+      ],
+      "answer": "$2,000",
+      "explanation": "Two percent of $100,000 is $2,000, regardless of how little of your own money is posted as margin. The borrowed size is what the percentage bites into — which is exactly why leverage magnifies losses."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Forex trades currency pairs in pips, where small percent moves are magnified by heavy leverage.",
+      "bullets": [
+        "A pip is 0.0001; its value scales with lot size.",
+        "100 pips at 1.10 is about 0.91%, not 1%.",
+        "Leverage measures losses off the full position, not your cash."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/forex-basics.jpg",
+        "alt": "Two national coins balance on a small scale while a large lever beneath tips the whole platform far from a tiny nudge — small currency moves magnified by leverage."
+      },
+      "insight": "Currencies barely move in percent, so forex sells you leverage to make it interesting. The leverage, not the currency, empties accounts.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Alternative Assets"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Foreign Currency (Forex) Fraud",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/forex_fraud.html",
+      "publisher": "U.S. CFTC"
+    },
+    {
+      "title": "Trading in the Retail Off-Exchange Foreign Currency Market",
+      "url": "https://www.nfa.futures.org/investors/investor-resources/files/forex-investor-guide.pdf",
+      "publisher": "National Futures Association"
+    }
+  ]
+}

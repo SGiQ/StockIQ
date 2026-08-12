@@ -1,0 +1,155 @@
+{
+  "id": "real-estate-and-reits",
+  "courseId": "alternative-assets",
+  "title": "Real Estate and REITs",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Two ways into property.",
+      "body": "You can own real estate directly — buy a building, collect the rent, handle the roof. Or you can buy a **REIT**: shares in a company that owns property for you and trades on the exchange. One is a landlord's job; the other is a click.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/real-estate-and-reits.jpg",
+        "alt": "An apartment building split into equal ownership tiles drips rent coins into waiting hands while a large dial with an up-arrow tugs behind it — shares of property, swayed by rates."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A REIT trades like a stock.",
+      "body": "A real estate investment trust pools money to buy apartments, warehouses or malls, then lists its shares. You get a slice of the rent and the property values without a mortgage or a tenant call, and you can sell your shares any day.",
+      "art": {
+        "kind": "glyph",
+        "name": "building",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "Built to pay out.",
+      "body": "REITs get a tax deal in exchange for a rule: they must distribute at least **90%** of their taxable income to shareholders. That is why REIT dividends run high. The trade-off is less cash kept inside to grow, so price growth tends to be slower.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Cap rate is property's yield.",
+      "body": "To value a building, investors use the **cap rate**: yearly net operating income divided by price. A property earning **$50,000** a year, priced at **$1,000,000**, has a cap rate of **5%** — the real estate cousin of an earnings yield.",
+      "art": {
+        "kind": "glyph",
+        "name": "pie",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "diagram",
+      "title": "One income, three cap rates",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            6.25,
+            5,
+            4
+          ],
+          "labels": [
+            "Price $800k",
+            "Price $1.0M",
+            "Price $1.25M"
+          ],
+          "highlightIndex": 1,
+          "yLabel": "Cap rate %"
+        }
+      },
+      "caption": "Same **$50,000** of income, three prices. Pay less and the cap rate rises; pay more and it falls — just like a bond's yield against its price."
+    },
+    {
+      "id": "c6",
+      "type": "binary_choice",
+      "prompt": "Interest rates rise sharply. Is that generally kind or unkind to REITs?",
+      "options": [
+        {
+          "id": "unkind",
+          "label": "Unkind — borrowing and yields both bite",
+          "correct": true
+        },
+        {
+          "id": "kind",
+          "label": "Kind — property always beats rates",
+          "correct": false
+        }
+      ],
+      "explanation": "REITs borrow heavily to buy property, so higher rates raise their costs. And their dividend now competes with safer bonds paying more. Both pressures usually push REIT prices down when rates climb sharply."
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "REITs move with rates.",
+      "body": "Because they lean on borrowed money and sell themselves on yield, REITs are sensitive to interest rates in a way most stocks are not. When rates rise, their costs go up and their income looks less special beside bonds. Treat them as rate-aware.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A property's [[1]] is its yearly net operating income divided by its price, so $50,000 on a $1,000,000 building is 5%.",
+      "wordBank": [
+        "cap rate",
+        "coupon",
+        "spread"
+      ],
+      "answer": "cap rate",
+      "explanation": "Cap rate is income over price — property's version of a yield. Like a bond, a higher price on the same income means a lower cap rate, and vice versa."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A REIT is listed property that must pay out most of its income, valued by cap rate and sensitive to rates.",
+      "bullets": [
+        "REITs must distribute at least 90% of taxable income.",
+        "Cap rate = net operating income ÷ price.",
+        "Rising rates usually pressure REIT prices down."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/real-estate-and-reits.jpg",
+        "alt": "An apartment building split into equal ownership tiles drips rent coins into waiting hands while a large dial with an up-arrow tugs behind it — shares of property, swayed by rates."
+      },
+      "insight": "A REIT lets you be a landlord without the roof leaks. The rent is high and steady, but it dances to the tune of interest rates.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Alternative Assets"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Real Estate Investment Trusts (REITs)",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/real-estate-investment-trusts-reits",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Instructions for Form 1120-REIT",
+      "url": "https://www.irs.gov/instructions/i1120rei",
+      "publisher": "U.S. IRS"
+    }
+  ]
+}

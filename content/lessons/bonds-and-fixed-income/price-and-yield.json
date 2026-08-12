@@ -1,0 +1,155 @@
+{
+  "id": "price-and-yield",
+  "courseId": "bonds-and-fixed-income",
+  "title": "Why Price and Yield Move Opposite",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "The coupon never moves. The price does.",
+      "body": "A bond's coupon is fixed in dollars the day it is issued — say **$50** a year. What changes as it trades is its price. A bond's yield comes from that one fact: the payment is frozen, the price is free.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/price-and-yield.jpg",
+        "alt": "A seesaw pivots on a fixed coin at its centre: a price block rides high on one end while a yield block sits low on the other — when one rises, the other falls."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Yield is the coupon over the price.",
+      "body": "Current yield is the fixed coupon divided by whatever you pay. A **$50** coupon at a **$1,000** price yields **5%**. Pay only **$800** for the same bond and the yield rises to **6.25%** — same coupon, smaller price.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "One coupon, three yields",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            6.25,
+            5,
+            4
+          ],
+          "labels": [
+            "Price $800",
+            "Price $1,000",
+            "Price $1,250"
+          ],
+          "highlightIndex": 0,
+          "yLabel": "Current yield %"
+        }
+      },
+      "caption": "Same **$50** coupon, three prices. Pay less and the yield climbs; pay more and it falls. Price and yield are locked in opposite directions."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "New rates drag old prices.",
+      "body": "Suppose new bonds start paying **6%** while yours pays **5%**. Nobody buys yours at full price when they can get more elsewhere. So its price falls until its yield to a new buyer matches the going 6%. Rising rates push old prices down.",
+      "art": {
+        "kind": "glyph",
+        "name": "arrow-down",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Interest rates across the market rise. What happens to the price of bonds already issued?",
+      "options": [
+        {
+          "id": "fall",
+          "label": "Their prices fall",
+          "correct": true
+        },
+        {
+          "id": "rise",
+          "label": "Their prices rise",
+          "correct": false
+        }
+      ],
+      "explanation": "An old bond's coupon is fixed, so when new bonds pay more, the only way the old one can compete is to get cheaper. Its price falls until its yield matches the new, higher rate. Rates up, prices down — always."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "A seesaw, every time.",
+      "body": "Price and yield sit on opposite ends of a seesaw. Push the price up and the yield drops; let the price fall and the yield rises. They can never move the same way, because the coupon between them never budges.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Current yield is not the whole story.",
+      "body": "Coupon over price is the quick yield. The fuller measure, **yield to maturity**, also counts getting the face value back at the end. It moves the same way — price up, yield down — but it is the number professionals actually quote.",
+      "art": {
+        "kind": "glyph",
+        "name": "magnifier",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Because a bond's coupon is fixed, when its market price falls its yield must [[1]] — the two always move in opposite directions.",
+      "wordBank": [
+        "rise",
+        "fall",
+        "hold"
+      ],
+      "answer": "rise",
+      "explanation": "Yield is coupon divided by price. Shrink the price under a fixed coupon and the fraction gets bigger. That is why falling prices and rising yields are the same event described two ways."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A bond's coupon is fixed, so its price and its yield always move in opposite directions.",
+      "bullets": [
+        "Current yield = coupon ÷ price.",
+        "When market rates rise, existing bond prices fall.",
+        "Yield to maturity also counts the face value returned."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/price-and-yield.jpg",
+        "alt": "A seesaw pivots on a fixed coin at its centre: a price block rides high on one end while a yield block sits low on the other — when one rises, the other falls."
+      },
+      "insight": "The coupon is nailed down, so price and yield seesaw against each other. Hear that rates rose, and you have already heard that bond prices fell.",
+      "attribution": {
+        "source": "Unit 2",
+        "detail": "Bonds and Fixed Income"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Bonds",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Bond Prices, Rates, and Yields",
+      "url": "https://www.finra.org/investors/investing/investment-products/bonds/bond-prices-rates-yields",
+      "publisher": "FINRA"
+    }
+  ]
+}

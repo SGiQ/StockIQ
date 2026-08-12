@@ -1,0 +1,142 @@
+{
+  "id": "what-is-a-bond",
+  "courseId": "bonds-and-fixed-income",
+  "title": "What a Bond Is",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "A loan you can trade.",
+      "body": "Buy a bond and you are the lender, not the owner. A government or company borrows your money and owes it back, with interest, on a set date. Unlike a personal loan, you can sell that claim to someone else at any time.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/what-is-a-bond.jpg",
+        "alt": "A lender hands coins to a company building and receives a folded note with a calendar marker — a loan that comes back with interest on a set date."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Three numbers define it.",
+      "body": "A bond is described by three things. The **face value** is the amount repaid at the end. The **coupon** is the yearly interest in dollars. The **maturity** is the date the face value comes back. Everything else follows from these.",
+      "art": {
+        "kind": "glyph",
+        "name": "calendar",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "Owner versus lender",
+      "art": {
+        "kind": "scene",
+        "name": "equity-vs-debt",
+        "palette": "butter",
+        "alt": "A shareholder stands inside the business as an owner; a bondholder stands outside holding an IOU to be repaid first."
+      },
+      "caption": "A shareholder owns a piece of the company and its ups and downs. A bondholder simply lent money and is owed a fixed sum back — a different seat, a different risk."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "The coupon rate is simple division.",
+      "body": "The coupon rate is the yearly interest divided by the face value. A bond with a **$1,000** face paying a **$50** coupon has a coupon rate of **5%**. That rate is fixed for the life of the bond and never changes.",
+      "art": {
+        "kind": "glyph",
+        "name": "percent",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A company goes bankrupt. Who has the stronger claim to be paid: a bondholder or a shareholder?",
+      "options": [
+        {
+          "id": "bond",
+          "label": "The bondholder — debt is paid first",
+          "correct": true
+        },
+        {
+          "id": "share",
+          "label": "The shareholder — they own it",
+          "correct": false
+        }
+      ],
+      "explanation": "Lenders are paid before owners. Bondholders are creditors, so they stand ahead of shareholders when a failing company is broken up. That seniority is why a bond is usually less risky than the same company's stock."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "The appeal is knowing.",
+      "body": "A bond's draw is predictability. You know the interest you will receive and the date your money returns. A stock promises neither. For income now, or money needed on a known future date, that certainty is the whole point.",
+      "art": {
+        "kind": "glyph",
+        "name": "calendar",
+        "bg": "lilac"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Predictable is not risk-free.",
+      "body": "The promise is only as good as the borrower. A shaky company can fail to pay and default. That is why a risky borrower must offer a higher coupon to attract lenders — the extra interest is the price of the extra risk.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "A bond's coupon rate is the yearly interest divided by its [[1]] value, and it stays fixed for the whole life of the bond.",
+      "wordBank": [
+        "face",
+        "market",
+        "book"
+      ],
+      "answer": "face",
+      "explanation": "Face value is the sum repaid at maturity, and the coupon is quoted against it. A $50 coupon on a $1,000 face is a fixed 5% coupon rate for the bond's entire life."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A bond is a tradable loan with a fixed coupon and a set repayment date, ranking ahead of stock.",
+      "bullets": [
+        "Face, coupon and maturity are the three defining numbers.",
+        "Coupon rate = yearly coupon ÷ face value.",
+        "Bondholders are paid before shareholders if the issuer fails."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/what-is-a-bond.jpg",
+        "alt": "A lender hands coins to a company building and receives a folded note with a calendar marker — a loan that comes back with interest on a set date."
+      },
+      "insight": "A shareholder owns the upside and the risk. A bondholder just wants to be paid back — less to gain, and first in line.",
+      "attribution": {
+        "source": "Unit 1",
+        "detail": "Bonds and Fixed Income"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Bonds",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Bond Basics",
+      "url": "https://www.finra.org/investors/investing/investment-products/bonds",
+      "publisher": "FINRA"
+    }
+  ]
+}

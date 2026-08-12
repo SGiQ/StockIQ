@@ -8,12 +8,29 @@
 /* eslint-disable */
 import type { Book, Course, Lesson, Strategy, Term, Trader, WeeklyNote } from './schema';
 
+import course_alternativeAssets from '../../content/courses/alternative-assets.json';
+import course_bondsAndFixedIncome from '../../content/courses/bonds-and-fixed-income.json';
+import course_cryptoFoundations from '../../content/courses/crypto-foundations.json';
 import course_gettingStarted from '../../content/courses/getting-started.json';
 import course_marketFoundations from '../../content/courses/market-foundations.json';
 import course_readingABusiness from '../../content/courses/reading-a-business.json';
 import course_readingAChart from '../../content/courses/reading-a-chart.json';
 import course_riskAndPositionSizing from '../../content/courses/risk-and-position-sizing.json';
 import course_tradingPsychology from '../../content/courses/trading-psychology.json';
+import lesson_alternativeAssets_commoditiesBasics from '../../content/lessons/alternative-assets/commodities-basics.json';
+import lesson_alternativeAssets_forexBasics from '../../content/lessons/alternative-assets/forex-basics.json';
+import lesson_alternativeAssets_realEstateAndReits from '../../content/lessons/alternative-assets/real-estate-and-reits.json';
+import lesson_bondsAndFixedIncome_bondTypes from '../../content/lessons/bonds-and-fixed-income/bond-types.json';
+import lesson_bondsAndFixedIncome_durationAndRateRisk from '../../content/lessons/bonds-and-fixed-income/duration-and-rate-risk.json';
+import lesson_bondsAndFixedIncome_priceAndYield from '../../content/lessons/bonds-and-fixed-income/price-and-yield.json';
+import lesson_bondsAndFixedIncome_whatIsABond from '../../content/lessons/bonds-and-fixed-income/what-is-a-bond.json';
+import lesson_cryptoFoundations_avoidingCryptoScams from '../../content/lessons/crypto-foundations/avoiding-crypto-scams.json';
+import lesson_cryptoFoundations_cryptoRiskProfile from '../../content/lessons/crypto-foundations/crypto-risk-profile.json';
+import lesson_cryptoFoundations_cryptoValuation from '../../content/lessons/crypto-foundations/crypto-valuation.json';
+import lesson_cryptoFoundations_howCryptoTrades from '../../content/lessons/crypto-foundations/how-crypto-trades.json';
+import lesson_cryptoFoundations_stakingAndYield from '../../content/lessons/crypto-foundations/staking-and-yield.json';
+import lesson_cryptoFoundations_walletsAndCustody from '../../content/lessons/crypto-foundations/wallets-and-custody.json';
+import lesson_cryptoFoundations_whatIsCrypto from '../../content/lessons/crypto-foundations/what-is-crypto.json';
 import lesson_gettingStarted_accountsFeesAndTaxes from '../../content/lessons/getting-started/accounts-fees-and-taxes.json';
 import lesson_gettingStarted_buildingAPortfolio from '../../content/lessons/getting-started/building-a-portfolio.json';
 import lesson_gettingStarted_firstTrade from '../../content/lessons/getting-started/first-trade.json';
@@ -165,6 +182,9 @@ import term_yield from '../../content/terms/yield.json';
 import note_202608PricedIn from '../../content/weekly-notes/2026-08-priced-in.json';
 
 export const allCourses: Course[] = [
+  course_alternativeAssets as unknown as Course,
+  course_bondsAndFixedIncome as unknown as Course,
+  course_cryptoFoundations as unknown as Course,
   course_gettingStarted as unknown as Course,
   course_marketFoundations as unknown as Course,
   course_readingABusiness as unknown as Course,
@@ -174,6 +194,20 @@ export const allCourses: Course[] = [
 ];
 
 export const allLessons: Lesson[] = [
+  lesson_alternativeAssets_commoditiesBasics as unknown as Lesson,
+  lesson_alternativeAssets_forexBasics as unknown as Lesson,
+  lesson_alternativeAssets_realEstateAndReits as unknown as Lesson,
+  lesson_bondsAndFixedIncome_bondTypes as unknown as Lesson,
+  lesson_bondsAndFixedIncome_durationAndRateRisk as unknown as Lesson,
+  lesson_bondsAndFixedIncome_priceAndYield as unknown as Lesson,
+  lesson_bondsAndFixedIncome_whatIsABond as unknown as Lesson,
+  lesson_cryptoFoundations_avoidingCryptoScams as unknown as Lesson,
+  lesson_cryptoFoundations_cryptoRiskProfile as unknown as Lesson,
+  lesson_cryptoFoundations_cryptoValuation as unknown as Lesson,
+  lesson_cryptoFoundations_howCryptoTrades as unknown as Lesson,
+  lesson_cryptoFoundations_stakingAndYield as unknown as Lesson,
+  lesson_cryptoFoundations_walletsAndCustody as unknown as Lesson,
+  lesson_cryptoFoundations_whatIsCrypto as unknown as Lesson,
   lesson_gettingStarted_accountsFeesAndTaxes as unknown as Lesson,
   lesson_gettingStarted_buildingAPortfolio as unknown as Lesson,
   lesson_gettingStarted_firstTrade as unknown as Lesson,

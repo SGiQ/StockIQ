@@ -1,0 +1,165 @@
+{
+  "id": "crypto-valuation",
+  "courseId": "crypto-foundations",
+  "title": "Why Valuation Is Different",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Nothing to discount.",
+      "body": "A stock can be valued from the cash a business will earn. A crypto asset earns nothing, so there is no stream of profits to discount. That leaves supply and demand doing almost all of the work in setting the price.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/crypto-valuation.jpg",
+        "alt": "One small coin with a tall price banner is dwarfed by a vast mound of many tiny coins — a single coin price versus the true size of all coins together."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "Market cap is price times supply.",
+      "body": "The size of a coin is not its unit price — it is price multiplied by how many coins exist. A coin at **$2** with **100 million** in circulation has a market cap of **$200 million**. That total is what you compare.",
+      "art": {
+        "kind": "glyph",
+        "name": "coins-stack",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "binary_choice",
+      "prompt": "Coin A costs $0.01 and Coin B costs $50. Which one is the bigger asset?",
+      "options": [
+        {
+          "id": "cant",
+          "label": "Can't tell without the supply",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Coin B — it costs far more",
+          "correct": false
+        }
+      ],
+      "explanation": "Unit price alone says nothing. Coin A at $0.01 with 10 billion coins is a **$100 million** asset; Coin B at $50 with 1 million coins is only **$50 million**. Size is price times supply, every time."
+    },
+    {
+      "id": "c4",
+      "type": "diagram",
+      "title": "Cheap price, bigger asset",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            100,
+            50
+          ],
+          "labels": [
+            "A: $0.01",
+            "B: $50"
+          ],
+          "highlightIndex": 0,
+          "yLabel": "Market cap ($M)"
+        }
+      },
+      "caption": "Coin A looks cheap at a cent and Coin B dear at fifty dollars, yet A is the larger asset. Supply, not sticker price, sets the size."
+    },
+    {
+      "id": "c5",
+      "type": "concept",
+      "headline": "A low price is not 'cheap'.",
+      "body": "Beginners buy a coin priced in fractions of a cent because it 'could reach a dollar'. But the supply is usually gigantic, so a dollar would imply a market cap larger than the biggest companies on earth. Do the multiplication first.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "Watch the coins not yet released.",
+      "body": "Circulating supply exists today. Max supply is everything that will ever exist. Price times max supply is the **fully-diluted valuation**. A coin at $2, 100 million out but 1 billion planned, has a $200 million cap — and a **$2 billion** fully-diluted value.",
+      "art": {
+        "kind": "glyph",
+        "name": "pie",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "diagram",
+      "title": "The unreleased overhang",
+      "art": {
+        "kind": "chart",
+        "motion": "build",
+        "spec": {
+          "type": "bars",
+          "values": [
+            200,
+            2000
+          ],
+          "labels": [
+            "Live cap",
+            "Fully diluted"
+          ],
+          "highlightIndex": 1,
+          "yLabel": "Value ($M)"
+        }
+      },
+      "caption": "Only a tenth of the supply is live. The other 900 million coins are an overhang: as they release, they can weigh on the price unless demand grows to match."
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "To compare two coins fairly you multiply price by supply to get the [[1]], because unit price alone hides how many coins exist.",
+      "wordBank": [
+        "market cap",
+        "unit price",
+        "coupon"
+      ],
+      "answer": "market cap",
+      "explanation": "Market cap is price times circulating supply — the real size of the asset. Two coins with wildly different unit prices can be the same size, or the cheaper-looking one can be far bigger."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "A coin's size is price times supply, not its unit price — and unreleased coins can dilute it further.",
+      "bullets": [
+        "Market cap = price × circulating supply.",
+        "A low unit price can still mean a huge asset.",
+        "Fully-diluted value counts coins not yet released."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/crypto-valuation.jpg",
+        "alt": "One small coin with a tall price banner is dwarfed by a vast mound of many tiny coins — a single coin price versus the true size of all coins together."
+      },
+      "insight": "The price tag on one coin tells you almost nothing. Multiply it by the supply, and the real size finally shows up.",
+      "attribution": {
+        "source": "Unit 3",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Customer Advisory: Use Caution When Buying Digital Coins or Tokens",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CFTCBitcoinCustomerCautionAdvisory.htm",
+      "publisher": "U.S. CFTC"
+    }
+  ]
+}

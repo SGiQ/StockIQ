@@ -1,0 +1,174 @@
+{
+  "id": "crypto-risk-profile",
+  "courseId": "crypto-foundations",
+  "title": "Crypto's Risk Profile",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Volatility is not a bug here.",
+      "body": "In stocks, a wild day is news. In crypto, large daily swings are normal — it is a younger, thinner, round-the-clock market driven heavily by sentiment. The same force that delivers fast gains delivers fast, deep losses.",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/crypto-risk-profile.jpg",
+        "alt": "A jagged ridge plunges into a deep narrow chasm, a small ladder reaching only partway up the far wall — a fast, deep fall that needs a giant climb to undo."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A bad year for stocks, in a week.",
+      "body": "A 20% fall is a bad year for a stock index. In crypto a move that size can happen in days, and 50% or more in a single bad stretch is not rare. Prices this fast demand a plan set in advance.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "diagram",
+      "title": "An 80% drawdown",
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "line",
+          "series": [
+            30,
+            60,
+            100,
+            55,
+            30,
+            20,
+            26,
+            40
+          ],
+          "shadeFrom": 2,
+          "shadeLabel": "Underwater",
+          "markers": [
+            {
+              "at": 2,
+              "label": "Peak"
+            },
+            {
+              "at": 5,
+              "label": "Trough",
+              "emphasis": true
+            }
+          ],
+          "xLabel": "Time",
+          "yLabel": "Value"
+        }
+      },
+      "caption": "This coin falls from 100 to 20 — a **drop of 80%**. Climbing back to the peak is not an 80% gain; it is a fourfold move."
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "The hole is deeper than it looks.",
+      "body": "A loss and the gain that repairs it are not equal, and the gap explodes when losses are big. Down 50% needs **+100%** to recover. Down **80%** needs **+400%** — a fourfold move just to get back to even.",
+      "art": {
+        "kind": "glyph",
+        "name": "ladder",
+        "bg": "ink"
+      },
+      "refs": [
+        "lesson:risk-and-position-sizing/why-losses-hurt-more"
+      ]
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "A coin falls 90% from its peak. What gain do you now need just to get back to even?",
+      "options": [
+        {
+          "id": "900",
+          "label": "+900%",
+          "correct": true
+        },
+        {
+          "id": "90",
+          "label": "+90%",
+          "correct": false
+        }
+      ],
+      "explanation": "Fall 90% and $100 becomes $10. Climbing from $10 back to $100 is a $90 gain on a $10 base — that is **+900%**, a tenfold move. The deeper the hole, the more brutal the climb out."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "The sizing math still works.",
+      "body": "Nothing about position sizing changes for crypto. The formula that sets your share count from the loss you can carry works on any asset. If anything, higher volatility means you size **smaller**, not larger, to risk the same amount.",
+      "art": {
+        "kind": "glyph",
+        "name": "shield",
+        "bg": "mint"
+      },
+      "refs": [
+        "lesson:risk-and-position-sizing/position-sizing"
+      ]
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Leverage turns volatility fatal.",
+      "body": "Crypto platforms offer heavy leverage. Borrowing to size up a position this volatile is how accounts go to zero in a single move. Understand the asset unleveraged first — it already moves fast enough without borrowing to move faster.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "Because a deep fall needs a far larger gain to undo, the safest lever you control in a volatile asset is a smaller [[1]].",
+      "wordBank": [
+        "position size",
+        "target price",
+        "time frame"
+      ],
+      "answer": "position size",
+      "explanation": "You cannot control how much crypto swings, only how much you put at risk. Shrinking the position keeps a deep drawdown survivable instead of terminal."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Crypto's swings are larger and faster, and deep losses need punishing gains to recover — so size down.",
+      "bullets": [
+        "Down 80% needs +400%; down 90% needs +900%.",
+        "Position sizing is asset-agnostic and matters more here.",
+        "Leverage on a volatile asset is how accounts hit zero."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/crypto-risk-profile.jpg",
+        "alt": "A jagged ridge plunges into a deep narrow chasm, a small ladder reaching only partway up the far wall — a fast, deep fall that needs a giant climb to undo."
+      },
+      "insight": "You cannot control how far crypto falls, only how much of you falls with it. In a volatile market, size is the whole game.",
+      "attribution": {
+        "source": "Unit 3",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Assessing Your Risk Tolerance",
+      "url": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance",
+      "publisher": "U.S. SEC Investor.gov"
+    }
+  ]
+}

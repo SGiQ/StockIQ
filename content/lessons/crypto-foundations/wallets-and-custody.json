@@ -1,0 +1,141 @@
+{
+  "id": "wallets-and-custody",
+  "courseId": "crypto-foundations",
+  "title": "Who Holds the Keys",
+  "estimatedMinutes": 2,
+  "xp": 20,
+  "cards": [
+    {
+      "id": "c1",
+      "type": "concept",
+      "headline": "Something stocks never made you think about.",
+      "body": "Buy a share and a broker records it and can always recover your account. Crypto adds a question shares never posed: who actually holds the asset — you, or someone you are trusting to hold it for you?",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/wallets-and-custody.jpg",
+        "alt": "The same key appears twice: held in an open hand on one side, sealed inside a tall vault on the other — ownership held by you, or by an exchange."
+      }
+    },
+    {
+      "id": "c2",
+      "type": "concept",
+      "headline": "A key, not a password.",
+      "body": "Owning crypto means holding a private key: a long secret that authorises spending. Whoever knows the key controls the coins. It is not a password you can reset — it is the asset's only lock, and there is no locksmith.",
+      "art": {
+        "kind": "glyph",
+        "name": "lock",
+        "bg": "blush"
+      }
+    },
+    {
+      "id": "c3",
+      "type": "concept",
+      "headline": "You hold it, or they do.",
+      "body": "Self-custody means you keep the key yourself, in your own wallet. Exchange custody means the exchange keeps it and you hold an IOU on their books. One puts control in your hands; the other puts it in theirs.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "mint"
+      }
+    },
+    {
+      "id": "c4",
+      "type": "concept",
+      "headline": "Not your keys, not your coins.",
+      "body": "The oldest saying in crypto is a warning about custody. If an exchange holds your key, your coins are only as safe as that company. If it freezes, fails or is hacked, the IOU can vanish with it.",
+      "art": {
+        "kind": "glyph",
+        "name": "key",
+        "bg": "ink"
+      }
+    },
+    {
+      "id": "c5",
+      "type": "binary_choice",
+      "prompt": "Your coins sit on an exchange that suddenly freezes all withdrawals. In that moment, who controls them?",
+      "options": [
+        {
+          "id": "exchange",
+          "label": "The exchange — it holds the keys",
+          "correct": true
+        },
+        {
+          "id": "you",
+          "label": "You — the app shows your balance",
+          "correct": false
+        }
+      ],
+      "explanation": "A balance on a screen is just the exchange's record of what it owes you. While it holds the keys, it controls the coins. A frozen withdrawal is the moment that difference stops being theoretical."
+    },
+    {
+      "id": "c6",
+      "type": "concept",
+      "headline": "No reset, no recovery.",
+      "body": "Self-custody hands you full control and full responsibility. Lose the key or the recovery phrase and the coins are gone for good — no support line, no reset link. The freedom and the danger are the same fact.",
+      "art": {
+        "kind": "glyph",
+        "name": "warning",
+        "bg": "butter"
+      }
+    },
+    {
+      "id": "c7",
+      "type": "concept",
+      "headline": "Every choice is a trade-off.",
+      "body": "An exchange is convenient and can help if you slip up, but you must trust it. Self-custody removes that trust and puts the whole burden on you. No option has no downside — only which risk you would rather hold.",
+      "art": {
+        "kind": "glyph",
+        "name": "scale",
+        "bg": "sky"
+      }
+    },
+    {
+      "id": "c8",
+      "type": "fill_blank",
+      "body": "If an exchange holds your private key, you do not truly hold the coins — you hold an [[1]] that depends on the exchange staying solvent.",
+      "wordBank": [
+        "IOU",
+        "key",
+        "wallet"
+      ],
+      "answer": "IOU",
+      "explanation": "Custodied coins are a claim on the company, not the asset itself. That is exactly why an exchange failure can wipe out balances that felt real on the screen."
+    },
+    {
+      "id": "c9",
+      "type": "main_idea",
+      "summary": "Whoever holds the private key controls the coins — so the first question in crypto is who holds it.",
+      "bullets": [
+        "A private key is the only lock, and it cannot be reset.",
+        "Exchange custody is convenient but leaves you holding an IOU.",
+        "Self-custody gives full control and full, unrecoverable risk."
+      ]
+    },
+    {
+      "id": "c10",
+      "type": "key_insight",
+      "art": {
+        "kind": "illustration",
+        "source": "/lesson-art/wallets-and-custody.jpg",
+        "alt": "The same key appears twice: held in an open hand on one side, sealed inside a tall vault on the other — ownership held by you, or by an exchange."
+      },
+      "insight": "In crypto, ownership is not who the app says owns it. Ownership is whoever holds the key. Everything else is a promise.",
+      "attribution": {
+        "source": "Unit 2",
+        "detail": "Crypto Foundations"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "title": "Crypto Assets",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/crypto-assets",
+      "publisher": "U.S. SEC Investor.gov"
+    },
+    {
+      "title": "Customer Advisory: Use Caution When Buying Digital Coins or Tokens",
+      "url": "https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/CFTCBitcoinCustomerCautionAdvisory.htm",
+      "publisher": "U.S. CFTC"
+    }
+  ]
+}
