@@ -281,6 +281,8 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
       shadeFrom: z.number().int().min(0).optional(),
       shadeLabel: z.string().max(24).optional(),
       markers: z.array(ChartMarkerSchema).optional(),
+      volume: z.array(z.number().nonnegative()).optional(),
+      sma: z.array(z.number().int().min(2).max(30)).max(3).optional(),
     })
     .refine(
       (spec) =>
@@ -289,6 +291,15 @@ export const ChartSpecSchema = z.discriminatedUnion('type', [
       {
         message: 'compareSeries must have the same number of points as series',
         path: ['compareSeries'],
+      },
+    )
+    .refine(
+      (spec) =>
+        spec.volume === undefined ||
+        spec.volume.length === spec.series.length,
+      {
+        message: 'volume must have the same number of points as series',
+        path: ['volume'],
       },
     ),
   z.object({
