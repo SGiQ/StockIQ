@@ -17,7 +17,16 @@
       "type": "concept",
       "headline": "Two axes. That is the whole frame.",
       "body": "Price runs up the vertical axis. Time runs across the horizontal one. Every chart you will ever open is built on those two and nothing else. Change either axis and the picture changes — the trades behind it do not.",
-      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "line",
+          "series": [42, 45, 44, 48, 51, 49, 53],
+          "xLabel": "Time →",
+          "yLabel": "Price ($) ↑"
+        }
+      }
     },
     {
       "id": "c3",
