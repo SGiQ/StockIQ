@@ -49,6 +49,8 @@ export const palette = {
 
   danger: '#DC2626',
   dangerSoft: '#FEE2E2',
+  /** Muted terracotta — the flat-art family's "down/loss/cost" colour. */
+  terracotta: '#C0634A',
   success: '#16A34A',
   successSoft: '#DCFCE7',
 
@@ -72,6 +74,9 @@ export const artPalettes = {
   neon: { bg: '#00E36A', ink: '#0A0A0A', accent: '#0A0A0A' },
   ink: { bg: '#1A1A1A', ink: '#FFFFFF', accent: '#00E5A0' },
   forest: { bg: '#1D5E4A', ink: '#FFFFFF', accent: '#A8E6A3' },
+  /** Warm cream ground + earthy ink — the flat-illustration family, for the
+   *  everyday bar/line/compounding charts. Accent is a valence-neutral ochre. */
+  parchment: { bg: '#F4ECD6', ink: '#22403A', accent: '#C9822E' },
 } as const;
 
 export type ArtPaletteName = keyof typeof artPalettes;

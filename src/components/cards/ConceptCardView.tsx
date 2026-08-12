@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-    paddingTop: space.md,
-    gap: space.lg,
+    paddingTop: space.sm,
+    gap: space.md,
   },
   /**
    * Shrinks before the text does.

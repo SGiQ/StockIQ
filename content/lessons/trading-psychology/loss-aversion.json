@@ -32,6 +32,7 @@
           "values": [10, 20],
           "labels": ["$100 gain", "$100 loss"],
           "highlightIndex": 1,
+          "highlightTone": "negative",
           "yLabel": "Felt intensity"
         }
       },

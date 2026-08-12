@@ -87,6 +87,7 @@
           "values": [60, 40],
           "labels": ["Worked", "Failed"],
           "highlightIndex": 1,
+          "highlightTone": "negative",
           "yLabel": "out of 100 tries"
         }
       },

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View, type ViewStyle } from 'react-native';
 import type { ArtSpec, PalettePreset } from '@/content/types';
-import { artPalettes, radius } from '@/theme/tokens';
+import { artPalettes, palette, radius } from '@/theme/tokens';
 import { ChartView, type ChartTheme } from './charts';
 import { AnimatedChartView } from './charts/AnimatedChartView';
 import { ArtLabel } from './ArtLabel';
@@ -21,7 +21,15 @@ export interface ArtViewProps {
 
 export const themeFor = (preset: PalettePreset): ChartTheme => {
   const p = artPalettes[preset];
-  return { bg: p.bg, ink: p.ink, accent: p.accent };
+  // Semantic highlights share the flat-art family's green/rust so a chart's
+  // colour means the same thing a lesson illustration's does.
+  return {
+    bg: p.bg,
+    ink: p.ink,
+    accent: p.accent,
+    positive: palette.forest,
+    negative: palette.terracotta,
+  };
 };
 
 /**
@@ -93,7 +101,7 @@ export function ArtView({
       // Charts carry their own palette: the profit/payoff family reads best
       // on the high-voltage green, everything else on a calm pastel.
       const preset: PalettePreset =
-        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'sky';
+        spec.spec.type === 'payoff' ? 'neon' : spec.spec.type === 'candles' ? 'ink' : 'parchment';
       const p = artPalettes[preset];
       return (
         <View style={[...container, styles.chart, { backgroundColor: p.bg }]}>
