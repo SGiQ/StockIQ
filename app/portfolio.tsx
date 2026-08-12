@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, TextInput, UIManager, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, G, Line, Path, Rect } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
 import { formatPrice, marketService, quotesWithBackfill, type Quote } from '@/services/market';
@@ -15,11 +15,142 @@ import {
   totalReturn,
   totalValue,
 } from '@/features/paper';
+import { getTrades, type PaperTrade } from '@/features/paper/tradeHistory';
 import { ASK_FREE_DAILY, asksRemaining, canAsk } from '@/features/advisor';
 import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
+
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const HOW_TO_STEPS = [
+  {
+    title: 'Pick a stock',
+    body: 'Type any ticker symbol — AAPL, TSLA, MSFT, anything publicly traded.',
+    icon: (color: string) => (
+      <Svg width={22} height={22} viewBox="0 0 24 24">
+        <G fill="none" stroke={color} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+          <Circle cx="10.5" cy="10.5" r="6.5" />
+          <Line x1="15.5" y1="15.5" x2="20.5" y2="20.5" />
+        </G>
+      </Svg>
+    ),
+  },
+  {
+    title: 'Set your size',
+    body: 'Enter how many shares. Start small — you have $10,000 in simulated cash.',
+    icon: (color: string) => (
+      <Svg width={22} height={22} viewBox="0 0 24 24">
+        <G fill="none" stroke={color} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+          <Rect x="3.5" y="5" width="17" height="15" rx="2.5" />
+          <Line x1="3.5" y1="10" x2="20.5" y2="10" />
+          <Path d="M8 3v3.5M16 3v3.5" />
+        </G>
+      </Svg>
+    ),
+  },
+  {
+    title: 'Buy or sell',
+    body: 'Orders fill instantly at the current delayed price. No waiting, no fees.',
+    icon: (color: string) => (
+      <Svg width={22} height={22} viewBox="0 0 24 24">
+        <G fill="none" stroke={color} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+          <Path d="M3 20h18" />
+          <Path d="M5 16l4-4.5 3.2 3 5.3-7" />
+          <Path d="M17.5 7.5H21V11" />
+        </G>
+      </Svg>
+    ),
+  },
+  {
+    title: 'Track your P&L',
+    body: 'Watch how the market moves your positions. Green means gain, red means loss.',
+    icon: (color: string) => (
+      <Svg width={22} height={22} viewBox="0 0 24 24">
+        <G fill="none" stroke={color} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+          <Path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" />
+          <Circle cx="12" cy="12" r="2.8" />
+        </G>
+      </Svg>
+    ),
+  },
+];
+
+function HowToSection({ defaultOpen }: { defaultOpen: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  const toggle = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setOpen((prev) => !prev);
+  };
+
+  return (
+    <CardSurface style={htStyles.card}>
+      <Pressable onPress={toggle} style={htStyles.toggle} accessibilityRole="button" accessibilityLabel={open ? 'Collapse how it works' : 'Expand how it works'}>
+        <Text variant="label" color={palette.forestInk} uppercase>
+          How it works
+        </Text>
+        <Svg width={16} height={16} viewBox="0 0 24 24">
+          <Path
+            d={open ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6'}
+            stroke={palette.forestInk}
+            strokeWidth={2.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </Svg>
+      </Pressable>
+      {open && (
+        <View style={htStyles.steps}>
+          {HOW_TO_STEPS.map((step, i) => (
+            <View key={i} style={htStyles.step}>
+              <View style={htStyles.iconWrap}>
+                {step.icon(palette.forestDeep)}
+              </View>
+              <View style={htStyles.stepText}>
+                <Text variant="bodyEm" color={palette.ink}>
+                  {step.title}
+                </Text>
+                <Text variant="caption" color={palette.slate}>
+                  {step.body}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      )}
+    </CardSurface>
+  );
+}
+
+const htStyles = StyleSheet.create({
+  card: {
+    backgroundColor: palette.mintSoft + '30',
+    borderWidth: 1,
+    borderColor: palette.mintSoft + '60',
+  },
+  toggle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  steps: { gap: space.md, marginTop: space.sm },
+  step: { flexDirection: 'row', gap: space.md, alignItems: 'flex-start' },
+  iconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: palette.mintSoft + '50',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+  },
+  stepText: { flex: 1, gap: 2 },
+});
 
 const COACH_CONTEXT: AskContext = {
   card: {
@@ -56,10 +187,14 @@ export default function PortfolioScreen() {
   const [coachText, setCoachText] = useState('');
   const [coaching, setCoaching] = useState(false);
   const [upsellOpen, setUpsellOpen] = useState(false);
+  const [trades, setTrades] = useState<PaperTrade[]>([]);
   const runId = useRef(0);
 
   const unlimited = entitlement.unlimitedAsk;
   const remaining = asksRemaining(profile, toDayISO(), unlimited);
+
+  const loadTrades = useCallback(() => { void getTrades().then(setTrades); }, []);
+  useEffect(loadTrades, [loadTrades]);
 
   const held = useMemo(() => portfolio.positions.map((p) => p.symbol), [portfolio.positions]);
   const heldKey = held.join(',');
@@ -141,12 +276,12 @@ export default function PortfolioScreen() {
           ? await buyShares(sym, q.price, shares)
           : await sellShares(sym, q.price, shares);
         if (!res.ok) setError(res.reason);
-        else setTradeShares('');
+        else { setTradeShares(''); loadTrades(); }
       } finally {
         setBusy(false);
       }
     },
-    [buyShares, sellShares, quotes, sym, tradeShares],
+    [buyShares, sellShares, loadTrades, quotes, sym, tradeShares],
   );
 
   return (
@@ -174,6 +309,8 @@ export default function PortfolioScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <HowToSection defaultOpen={portfolio.positions.length === 0} />
+
         <CardSurface tone="forestDeep" style={styles.summary}>
           <Text variant="label" color={palette.mintSoft} uppercase>
             Portfolio value
@@ -225,11 +362,7 @@ export default function PortfolioScreen() {
           ) : null}
         </CardSurface>
 
-        {portfolio.positions.length === 0 ? (
-          <Text variant="body" color={palette.slate} align="center" style={styles.empty}>
-            No holdings yet. Buy a few shares to practice — with simulated cash.
-          </Text>
-        ) : (
+        {portfolio.positions.length === 0 ? null : (
           <View style={styles.positions}>
             <Text variant="label" color={palette.slate} uppercase>
               Holdings
@@ -287,8 +420,45 @@ export default function PortfolioScreen() {
           )
         ) : null}
 
+        {trades.length > 0 && (
+          <View style={styles.positions}>
+            <Text variant="label" color={palette.slate} uppercase>
+              Trade history
+            </Text>
+            {trades.slice(0, 20).map((t) => (
+              <CardSurface key={t.id} style={styles.posRow}>
+                <View style={styles.posLeft}>
+                  <View style={styles.tradeLine}>
+                    <View style={[styles.sideBadge, t.side === 'buy' ? styles.buyBadge : styles.sellBadge]}>
+                      <Text variant="caption" color={t.side === 'buy' ? palette.forestDeep : palette.danger}>
+                        {t.side.toUpperCase()}
+                      </Text>
+                    </View>
+                    <Text variant="h3" color={palette.ink}>
+                      {t.symbol}
+                    </Text>
+                  </View>
+                  <Text variant="caption" color={palette.slate}>
+                    {`${t.shares} @ ${formatPrice(t.price)} · ${new Date(t.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
+                  </Text>
+                </View>
+                <View style={styles.posRight}>
+                  <Text variant="bodyEm" color={t.side === 'buy' ? palette.ink : palette.emeraldDeep}>
+                    {formatPrice(t.total)}
+                  </Text>
+                </View>
+              </CardSurface>
+            ))}
+            {trades.length > 20 && (
+              <Text variant="caption" color={palette.slateLight} align="center">
+                {`Showing 20 of ${trades.length} trades`}
+              </Text>
+            )}
+          </View>
+        )}
+
         <Pressable
-          onPress={() => void resetPortfolio()}
+          onPress={() => { void resetPortfolio(); setTrades([]); }}
           accessibilityRole="button"
           accessibilityLabel="Reset portfolio"
           style={styles.resetRow}
@@ -342,6 +512,14 @@ const styles = StyleSheet.create({
   posRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   posLeft: { gap: 2 },
   posRight: { alignItems: 'flex-end', gap: 2 },
+  tradeLine: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
+  sideBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  buyBadge: { backgroundColor: palette.emerald + '20' },
+  sellBadge: { backgroundColor: palette.danger + '20' },
   resetRow: { alignItems: 'center', paddingVertical: space.md },
   disclaimer: { marginTop: space.xs },
 });

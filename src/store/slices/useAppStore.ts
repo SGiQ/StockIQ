@@ -40,6 +40,7 @@ import {
 } from '@/features/gems';
 import { crossedMilestone, grantFreeze } from '@/features/streak';
 import { buy as paperBuy, sell as paperSell, emptyPortfolio, type Portfolio, type TradeResult } from '@/features/paper';
+import { recordTrade, clearTrades } from '@/features/paper/tradeHistory';
 import {
   dailyStats,
   questClaimKey,
@@ -660,19 +661,23 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   buyShares: async (symbol, price, shares) => {
-    const res = paperBuy(get().portfolio, symbol.trim().toUpperCase(), price, shares);
+    const sym = symbol.trim().toUpperCase();
+    const res = paperBuy(get().portfolio, sym, price, shares);
     if (res.ok) {
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
+      void recordTrade(sym, 'buy', shares, price);
     }
     return res;
   },
 
   sellShares: async (symbol, price, shares) => {
-    const res = paperSell(get().portfolio, symbol.trim().toUpperCase(), price, shares);
+    const sym = symbol.trim().toUpperCase();
+    const res = paperSell(get().portfolio, sym, price, shares);
     if (res.ok) {
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
+      void recordTrade(sym, 'sell', shares, price);
     }
     return res;
   },
@@ -680,6 +685,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   resetPortfolio: async () => {
     const saved = await repository.paper.set(emptyPortfolio());
     set({ portfolio: { cash: saved.cash, positions: saved.positions } });
+    void clearTrades();
   },
 
   markWeeklyNotesSeen: async () => {
