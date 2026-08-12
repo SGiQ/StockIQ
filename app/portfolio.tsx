@@ -12,6 +12,7 @@ import {
   positionPnL,
   positionPnLPercent,
   positionValue,
+  positionWeights,
   totalReturn,
   totalValue,
 } from '@/features/paper';
@@ -201,6 +202,69 @@ function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; curren
 const chartStyles = StyleSheet.create({
   wrap: { marginTop: space.xs },
   labels: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 2 },
+});
+
+const ALLOC_COLORS = [
+  palette.emeraldDeep,
+  palette.violet,
+  '#4A90E2',
+  palette.flame,
+  '#E0A82E',
+  '#D9776A',
+] as const;
+
+function AllocationBar({
+  weights,
+  cashWeight,
+}: {
+  weights: { symbol: string; weight: number }[];
+  cashWeight: number;
+}) {
+  const segments = [
+    ...weights.map((w, i) => ({
+      label: w.symbol,
+      pct: w.weight,
+      color: ALLOC_COLORS[i % ALLOC_COLORS.length],
+    })),
+    { label: 'Cash', pct: cashWeight, color: palette.slateLight },
+  ].filter((s) => s.pct > 0);
+
+  return (
+    <View style={allocStyles.wrap}>
+      <View style={allocStyles.bar}>
+        {segments.map((s) => (
+          <View
+            key={s.label}
+            style={[allocStyles.segment, { flex: s.pct, backgroundColor: s.color }]}
+          />
+        ))}
+      </View>
+      <View style={allocStyles.legend}>
+        {segments.map((s) => (
+          <View key={s.label} style={allocStyles.legendItem}>
+            <View style={[allocStyles.dot, { backgroundColor: s.color }]} />
+            <Text variant="caption" color={palette.slate}>
+              {`${s.label} ${Math.round(s.pct)}%`}
+            </Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+const allocStyles = StyleSheet.create({
+  wrap: { gap: space.xs },
+  bar: {
+    flexDirection: 'row',
+    height: 10,
+    borderRadius: 5,
+    overflow: 'hidden',
+  },
+  segment: { minWidth: 4 },
+  legend: { flexDirection: 'row', flexWrap: 'wrap', gap: space.xs, rowGap: 2 },
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  dot: { width: 8, height: 8, borderRadius: 4 },
 });
 
 const COACH_CONTEXT: AskContext = {
@@ -457,6 +521,10 @@ export default function PortfolioScreen() {
                 </CardSurface>
               );
             })}
+            <AllocationBar
+              weights={positionWeights(portfolio, priceOf)}
+              cashWeight={value > 0 ? Math.round((portfolio.cash * 100) / value) : 100}
+            />
           </View>
         )}
 
