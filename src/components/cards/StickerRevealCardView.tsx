@@ -9,7 +9,8 @@ import type { StickerRevealCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
-import { motion, palette, radius, shadow, space } from '@/theme/tokens';
+import { motion, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface StickerRevealCardViewProps {
   card: StickerRevealCard;
@@ -42,11 +43,12 @@ function stageHeight(count: number): number {
 }
 
 export function StickerRevealCardView({ card, state }: StickerRevealCardViewProps) {
+  const colors = useColors();
   const revealed = state.kind === 'sticker' ? state.revealed : 0;
 
   return (
     <View style={styles.container} pointerEvents="none">
-      <RichTextView value={card.body} variant="body" color={palette.inkSoft} />
+      <RichTextView value={card.body} variant="body" color={colors.inkSoft} />
 
       <View
         style={[styles.stage, { height: stageHeight(card.stickers.length) }]}
@@ -59,7 +61,7 @@ export function StickerRevealCardView({ card, state }: StickerRevealCardViewProp
 
       {revealed < card.stickers.length && (
         <View style={styles.hint} pointerEvents="none">
-          <Text variant="caption" color={palette.slateLight} align="center">
+          <Text variant="caption" color={colors.slateLight} align="center">
             Tap to reveal
           </Text>
         </View>
@@ -79,6 +81,7 @@ export function StickerRevealCardView({ card, state }: StickerRevealCardViewProp
  * an animation engine doing its job.
  */
 function Sticker({ sticker }: { sticker: StickerRevealCard['stickers'][number] }) {
+  const colors = useColors();
   const progress = useSharedValue(0);
   const land = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -106,6 +109,7 @@ function Sticker({ sticker }: { sticker: StickerRevealCard['stickers'][number] }
     <Animated.View
       style={[
         styles.sticker,
+        { backgroundColor: colors.paper },
         {
           left: `${sticker.anchor.x * 100}%`,
           top: `${sticker.anchor.y * 100}%`,
@@ -115,7 +119,7 @@ function Sticker({ sticker }: { sticker: StickerRevealCard['stickers'][number] }
     >
       <ArtView spec={sticker.art} aspectRatio={1} rounded glyphSize={44} style={styles.stickerArt} />
       <View style={styles.stickerLabel}>
-        <Text variant="label" color={palette.ink} uppercase numberOfLines={2} align="center">
+        <Text variant="label" uppercase numberOfLines={2} align="center">
           {sticker.label}
         </Text>
       </View>
@@ -137,7 +141,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 120,
     alignItems: 'center',
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.sm,
     gap: space.xs,

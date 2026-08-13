@@ -3,7 +3,8 @@ import { Text as RNText, type TextStyle } from 'react-native';
 import { useRouter } from 'expo-router';
 import { parseRichText } from '@/content/richtext';
 import { resolveRef } from '@/content/registry';
-import { fontFamily, palette, type, type TypeVariant } from '@/theme/tokens';
+import { fontFamily, type, type TypeVariant } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface RichTextViewProps {
   value: string;
@@ -28,17 +29,19 @@ export interface RichTextViewProps {
 export function RichTextView({
   value,
   variant = 'body',
-  color = palette.ink,
+  color,
   align,
   renderBlank,
   linksEnabled = false,
   style,
 }: RichTextViewProps) {
   const router = useRouter();
+  const colors = useColors();
+  const resolvedColor = color ?? colors.ink;
   const parsed = useMemo(() => parseRichText(value), [value]);
 
   return (
-    <RNText style={[type[variant], { color }, align ? { textAlign: align } : null, style]}>
+    <RNText style={[type[variant], { color: resolvedColor }, align ? { textAlign: align } : null, style]}>
       {parsed.nodes.map((node, index) => {
         switch (node.kind) {
           case 'text':
@@ -56,16 +59,13 @@ export function RichTextView({
 
           case 'link': {
             const resolved = resolveRef(node.ref);
-            // A dangling ref degrades to plain text rather than crashing the
-            // lesson. The validator already guarantees these resolve, so this
-            // only fires if content and code fall out of sync at runtime.
             if (!resolved) return <RNText key={index}>{node.text}</RNText>;
             return (
               <RNText
                 key={index}
                 style={{
                   fontFamily: fontFamily.bodySemi,
-                  color: linksEnabled ? palette.azure : color,
+                  color: linksEnabled ? colors.azure : resolvedColor,
                   textDecorationLine: linksEnabled ? 'underline' : 'none',
                 }}
                 onPress={linksEnabled ? () => router.push(resolved.href as never) : undefined}

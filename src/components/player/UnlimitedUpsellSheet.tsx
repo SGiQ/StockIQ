@@ -2,6 +2,7 @@ import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PillButton, Text } from '@/components/primitives';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 import { HeartIcon } from './HeartPips';
 
 const PERKS: string[] = [
@@ -26,6 +27,7 @@ export interface UnlimitedUpsellSheetProps {
  * point — nothing else about the gate has to change.
  */
 export function UnlimitedUpsellSheet({ visible, onClose }: UnlimitedUpsellSheetProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
 
   return (
@@ -33,17 +35,17 @@ export function UnlimitedUpsellSheet({ visible, onClose }: UnlimitedUpsellSheetP
       <Pressable style={styles.scrim} onPress={onClose} accessibilityLabel="Close" />
 
       <View style={styles.wrap}>
-        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md }]}>
-          <View style={styles.grabber} />
+        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md, backgroundColor: colors.paperWarm }]}>
+          <View style={[styles.grabber, { backgroundColor: colors.hairline }]} />
 
           <View style={styles.heading}>
             <HeartIcon size={26} filled color={palette.danger} />
-            <Text variant="h3" color={palette.ink}>
+            <Text variant="h3">
               Never run out with StockIQ Pro
             </Text>
           </View>
 
-          <Text variant="bodySm" color={palette.slate}>
+          <Text variant="bodySm" color={colors.slate}>
             Hearts keep the free lesson honest. Pro removes them entirely — plus
             everything below.
           </Text>
@@ -52,22 +54,22 @@ export function UnlimitedUpsellSheet({ visible, onClose }: UnlimitedUpsellSheetP
             {PERKS.map((perk) => (
               <View key={perk} style={styles.perkRow}>
                 <View style={styles.tick}>
-                  <Text variant="label" color={palette.paper}>
+                  <Text variant="label" color={colors.paper}>
                     ✓
                   </Text>
                 </View>
-                <Text variant="body" color={palette.ink} style={styles.perkText}>
+                <Text variant="body" style={styles.perkText}>
                   {perk}
                 </Text>
               </View>
             ))}
           </View>
 
-          <View style={styles.soon}>
+          <View style={[styles.soon, { backgroundColor: colors.paper }]}>
             <Text variant="label" color={palette.forestDeep} uppercase>
               Coming soon
             </Text>
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               Pro is in the works. For now, hearts refill on their own — no
               charge.
             </Text>
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: palette.paperWarm,
     borderTopLeftRadius: radius.card,
     borderTopRightRadius: radius.card,
     paddingHorizontal: space.lg,
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     marginBottom: space.sm,
   },
   heading: {
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   soon: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     gap: space.xxs,

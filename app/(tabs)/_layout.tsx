@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import { TabIcon, type TabIconName } from '@/components/primitives/TabIcon';
-import { fontFamily, palette } from '@/theme/tokens';
+import { fontFamily } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const TABS: Array<{ name: string; title: string; icon: TabIconName }> = [
   { name: 'index', title: 'Learn', icon: 'home' },
@@ -11,15 +12,16 @@ const TABS: Array<{ name: string; title: string; icon: TabIconName }> = [
 ];
 
 export default function TabsLayout() {
+  const colors = useColors();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: palette.ink,
-        tabBarInactiveTintColor: palette.slateLight,
+        tabBarActiveTintColor: colors.ink,
+        tabBarInactiveTintColor: colors.slateLight,
         tabBarStyle: {
-          backgroundColor: palette.paper,
-          borderTopColor: palette.hairline,
+          backgroundColor: colors.paper,
+          borderTopColor: colors.hairline,
           height: 88,
           paddingTop: 8,
         },

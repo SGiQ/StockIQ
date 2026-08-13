@@ -14,11 +14,13 @@ import {
 } from '@/services/market';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
-const toneColor = (t: ReturnType<typeof changeTone>) =>
-  t === 'up' ? palette.emeraldDeep : t === 'down' ? palette.danger : palette.slate;
+const toneColor = (t: ReturnType<typeof changeTone>, slate: string) =>
+  t === 'up' ? palette.emeraldDeep : t === 'down' ? palette.danger : slate;
 
 export default function WatchlistScreen() {
+  const colors = useColors();
   const router = useRouter();
   const watchlist = useAppStore((s) => s.watchlist);
   const addToWatchlist = useAppStore((s) => s.addToWatchlist);
@@ -82,18 +84,18 @@ export default function WatchlistScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           Watchlist
         </Text>
         <Pressable onPress={() => void load()} hitSlop={8} style={styles.refresh} accessibilityRole="button" accessibilityLabel="Refresh quotes">
           {loading ? (
-            <ActivityIndicator size="small" color={palette.slate} />
+            <ActivityIndicator size="small" color={colors.slate} />
           ) : (
             <Svg width={22} height={22} viewBox="0 0 24 24">
-              <Path d="M20 11a8 8 0 10-.9 3.7M20 5v6h-6" fill="none" stroke={palette.slate} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              <Path d="M20 11a8 8 0 10-.9 3.7M20 5v6h-6" fill="none" stroke={colors.slate} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
             </Svg>
           )}
         </Pressable>
@@ -104,21 +106,21 @@ export default function WatchlistScreen() {
           value={draft}
           onChangeText={(t) => setDraft(t.toUpperCase())}
           placeholder="Add a symbol — e.g. AAPL"
-          placeholderTextColor={palette.slateLight}
+          placeholderTextColor={colors.slateLight}
           autoCapitalize="characters"
           autoCorrect={false}
           onSubmitEditing={() => void add()}
           returnKeyType="done"
-          style={styles.input}
+          style={[styles.input, { backgroundColor: colors.paper, color: colors.ink, borderColor: colors.hairline }]}
         />
         <Pressable
           onPress={() => void add()}
           disabled={!draft.trim()}
           accessibilityRole="button"
           accessibilityLabel="Add"
-          style={[styles.addBtn, !draft.trim() && styles.addBtnDisabled]}
+          style={[styles.addBtn, !draft.trim() && { backgroundColor: colors.slateLight }]}
         >
-          <Text variant="label" color={palette.paper} uppercase>
+          <Text variant="label" color={colors.paper} uppercase>
             Add
           </Text>
         </Pressable>
@@ -126,8 +128,8 @@ export default function WatchlistScreen() {
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         {!isMarketLive() ? (
-          <View style={styles.devBanner}>
-            <Text variant="caption" color={palette.slate}>
+          <View style={[styles.devBanner, { backgroundColor: colors.paperWarm, borderColor: colors.hairline }]}>
+            <Text variant="caption" color={colors.slate}>
               Showing placeholder prices — connect market data to go live.
             </Text>
           </View>
@@ -141,10 +143,10 @@ export default function WatchlistScreen() {
 
         {watchlist.length === 0 ? (
           <CardSurface style={styles.empty}>
-            <Text variant="h3" color={palette.ink}>
+            <Text variant="h3">
               Follow a few tickers
             </Text>
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               Add symbols you're curious about. StockIQ shows how they move and explains it in plain language — never a buy or sell call.
             </Text>
           </CardSurface>
@@ -161,11 +163,11 @@ export default function WatchlistScreen() {
                   accessibilityLabel={`${w.symbol} details`}
                 >
                   <View style={styles.rowLeft}>
-                    <Text variant="h3" color={palette.ink}>
+                    <Text variant="h3">
                       {w.symbol}
                     </Text>
                     {q && !q.valid ? (
-                      <Text variant="caption" color={palette.slateLight}>
+                      <Text variant="caption" color={colors.slateLight}>
                         No data for this symbol
                       </Text>
                     ) : null}
@@ -173,15 +175,15 @@ export default function WatchlistScreen() {
                   <View style={styles.rowRight}>
                     {q && q.valid ? (
                       <>
-                        <Text variant="bodyEm" color={palette.ink}>
+                        <Text variant="bodyEm">
                           {formatPrice(q.price)}
                         </Text>
-                        <Text variant="caption" color={toneColor(tone)}>
+                        <Text variant="caption" color={toneColor(tone, colors.slate)}>
                           {formatChange(q.change, q.changePercent)}
                         </Text>
                       </>
                     ) : (
-                      <Text variant="caption" color={palette.slateLight}>
+                      <Text variant="caption" color={colors.slateLight}>
                         {loading ? '…' : '—'}
                       </Text>
                     )}
@@ -195,7 +197,7 @@ export default function WatchlistScreen() {
                   style={styles.remove}
                 >
                   <Svg width={18} height={18} viewBox="0 0 24 24">
-                    <Path d="M6 6l12 12M18 6L6 18" stroke={palette.slateLight} strokeWidth={2} strokeLinecap="round" />
+                    <Path d="M6 6l12 12M18 6L6 18" stroke={colors.slateLight} strokeWidth={2} strokeLinecap="round" />
                   </Svg>
                 </Pressable>
               </CardSurface>
@@ -203,7 +205,7 @@ export default function WatchlistScreen() {
           })
         )}
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+        <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
           Delayed, educational data. StockIQ does not provide financial advice.
         </Text>
       </ScrollView>
@@ -223,14 +225,11 @@ const styles = StyleSheet.create({
   addBar: { flexDirection: 'row', gap: space.sm, paddingHorizontal: space.lg, paddingTop: space.md },
   input: {
     flex: 1,
-    backgroundColor: palette.paper,
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm + 2,
-    color: palette.ink,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   addBtn: {
     paddingHorizontal: space.lg,
@@ -238,14 +237,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.violet,
     borderRadius: radius.pill,
   },
-  addBtnDisabled: { backgroundColor: palette.slateLight },
   body: { padding: space.lg, gap: space.sm, paddingBottom: space.xxl },
   devBanner: {
-    backgroundColor: palette.paperWarm,
     borderRadius: radius.md,
     padding: space.sm,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   empty: { gap: space.sm },
   row: { flexDirection: 'row', alignItems: 'center', gap: space.md },

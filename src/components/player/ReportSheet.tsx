@@ -2,7 +2,8 @@ import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PillButton, Text } from '@/components/primitives';
 import { REPORT_REASONS, type ReportReason } from '@/store/repository';
-import { palette, radius, shadow, space } from '@/theme/tokens';
+import { radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const LABELS: Record<ReportReason, { title: string; detail: string }> = {
   'factually-wrong': {
@@ -38,6 +39,7 @@ export interface ReportSheetProps {
  * to reach a human, and burying it would mean never hearing it.
  */
 export function ReportSheet({ visible, alreadyReported, onClose, onSubmit }: ReportSheetProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
 
   return (
@@ -45,13 +47,13 @@ export function ReportSheet({ visible, alreadyReported, onClose, onSubmit }: Rep
       <Pressable style={styles.scrim} onPress={onClose} accessibilityLabel="Close" />
 
       <View style={styles.wrap}>
-        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md }]}>
-          <View style={styles.grabber} />
+        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md, backgroundColor: colors.paperWarm }]}>
+          <View style={[styles.grabber, { backgroundColor: colors.hairline }]} />
 
-          <Text variant="h3" color={palette.ink}>
+          <Text variant="h3">
             {alreadyReported ? 'Already reported' : 'Report this card'}
           </Text>
-          <Text variant="bodySm" color={palette.slate}>
+          <Text variant="bodySm" color={colors.slate}>
             {alreadyReported
               ? 'Thanks — this card is flagged. Reporting again updates the reason.'
               : 'Reports are saved on this device and reviewed when StockIQ syncs.'}
@@ -64,12 +66,12 @@ export function ReportSheet({ visible, alreadyReported, onClose, onSubmit }: Rep
                 onPress={() => onSubmit(reason)}
                 accessibilityRole="button"
                 accessibilityLabel={LABELS[reason].title}
-                style={({ pressed }) => [styles.option, pressed && styles.optionPressed]}
+                style={({ pressed }) => [styles.option, { backgroundColor: colors.paper }, pressed && styles.optionPressed]}
               >
-                <Text variant="bodyEm" color={palette.ink}>
+                <Text variant="bodyEm">
                   {LABELS[reason].title}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   {LABELS[reason].detail}
                 </Text>
               </Pressable>
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: palette.paperWarm,
     borderTopLeftRadius: radius.card,
     borderTopRightRadius: radius.card,
     paddingHorizontal: space.lg,
@@ -110,7 +111,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     marginBottom: space.sm,
   },
   options: {
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     marginVertical: space.sm,
   },
   option: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     gap: space.xxs,

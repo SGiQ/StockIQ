@@ -5,6 +5,7 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const TERMS = [
   'StockIQ teaches concepts. It does not tell you what to buy, sell, or hold.',
@@ -22,6 +23,7 @@ const TERMS = [
  * acknowledgement is timestamped so there is a record of when it was shown.
  */
 export default function Disclaimer() {
+  const colors = useColors();
   const router = useRouter();
   const acknowledge = useAppStore((s) => s.acknowledgeDisclaimer);
 
@@ -34,7 +36,7 @@ export default function Disclaimer() {
           <View style={styles.badge}>
             <Glyph name="scale" size={30} color={palette.forestDeep} />
           </View>
-          <Text variant="h1" color={palette.paper}>
+          <Text variant="h1" color={colors.paper}>
             Before you start.
           </Text>
         </View>
@@ -43,7 +45,7 @@ export default function Disclaimer() {
           {TERMS.map((term) => (
             <View key={term} style={styles.term}>
               <View style={styles.dot} />
-              <Text variant="body" color={palette.paper} style={styles.termText}>
+              <Text variant="body" color={colors.paper} style={styles.termText}>
                 {term}
               </Text>
             </View>

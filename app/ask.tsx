@@ -10,6 +10,7 @@ import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** A minimal general context so the shared ASK proxy answers a free-form question. */
 const GENERAL_CONTEXT: AskContext = {
@@ -31,6 +32,7 @@ const SUGGESTIONS = [
 ];
 
 export default function AskScreen() {
+  const colors = useColors();
   const router = useRouter();
   const profile = useAppStore((s) => s.profile);
   const history = useAppStore((s) => s.askThreads);
@@ -117,10 +119,10 @@ export default function AskScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           Ask StockIQ
         </Text>
         <View style={styles.headerRight}>
@@ -146,7 +148,7 @@ export default function AskScreen() {
         keyboardShouldPersistTaps="handled"
       >
         {!active ? (
-          <Text variant="body" color={palette.slate}>
+          <Text variant="body" color={colors.slate}>
             Ask anything about investing or markets — concepts, terms, how to read a number. Ask follow-ups and it remembers the thread. Educational only, never a buy or sell call.
           </Text>
         ) : null}
@@ -154,11 +156,11 @@ export default function AskScreen() {
         {turns.map((t, i) => (
           <View key={i} style={styles.turn}>
             <View style={styles.qBubble}>
-              <Text variant="bodyEm" color={palette.ink}>
+              <Text variant="bodyEm">
                 {t.question}
               </Text>
             </View>
-            <Text variant="body" color={palette.ink}>
+            <Text variant="body">
               {t.answer}
             </Text>
           </View>
@@ -167,11 +169,11 @@ export default function AskScreen() {
         {streaming ? (
           <View style={styles.turn}>
             <View style={styles.qBubble}>
-              <Text variant="bodyEm" color={palette.ink}>
+              <Text variant="bodyEm">
                 {pending}
               </Text>
             </View>
-            <Text variant="body" color={palette.ink}>
+            <Text variant="body">
               {answer || 'Thinking…'}
             </Text>
           </View>
@@ -185,10 +187,10 @@ export default function AskScreen() {
 
         {!active && outOfAsks ? (
           <CardSurface style={styles.capCard}>
-            <Text variant="h3" color={palette.ink}>
+            <Text variant="h3">
               You're out of questions today
             </Text>
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               {`Free includes ${ASK_FREE_DAILY} a day. They reset tomorrow — or go unlimited with Pro.`}
             </Text>
             <PillButton label="Go Unlimited" variant="primary" onPress={() => setUpsellOpen(true)} />
@@ -197,7 +199,7 @@ export default function AskScreen() {
 
         {!active && !outOfAsks ? (
           <View style={styles.suggestions}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Try asking
             </Text>
             {SUGGESTIONS.map((s) => (
@@ -206,9 +208,9 @@ export default function AskScreen() {
                 onPress={() => void submit(s)}
                 accessibilityRole="button"
                 accessibilityLabel={s}
-                style={({ pressed }) => [styles.suggestion, pressed && styles.pressed]}
+                style={({ pressed }) => [styles.suggestion, { backgroundColor: colors.paper, borderColor: colors.hairline }, pressed && styles.pressed]}
               >
-                <Text variant="bodySm" color={palette.ink}>
+                <Text variant="bodySm">
                   {s}
                 </Text>
               </Pressable>
@@ -218,7 +220,7 @@ export default function AskScreen() {
 
         {!active && history.length > 0 ? (
           <View style={styles.historyWrap}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Recent — tap to continue
             </Text>
             {history.slice(0, 8).map((t) => (
@@ -230,10 +232,10 @@ export default function AskScreen() {
                 style={({ pressed }) => [pressed && styles.pressed]}
               >
                 <CardSurface style={styles.historyCard}>
-                  <Text variant="bodyEm" color={palette.ink}>
+                  <Text variant="bodyEm">
                     {t.question}
                   </Text>
-                  <Text variant="caption" color={palette.slate} numberOfLines={2}>
+                  <Text variant="caption" color={colors.slate} numberOfLines={2}>
                     {t.answer}
                   </Text>
                 </CardSurface>
@@ -243,26 +245,26 @@ export default function AskScreen() {
         ) : null}
       </ScrollView>
 
-      <View style={styles.inputBar}>
+      <View style={[styles.inputBar, { borderTopColor: colors.hairline, backgroundColor: colors.paperWarm }]}>
         <TextInput
           value={draft}
           onChangeText={setDraft}
           placeholder={outOfAsks ? 'Out of questions today' : active ? 'Ask a follow-up…' : 'Ask anything…'}
-          placeholderTextColor={palette.slateLight}
+          placeholderTextColor={colors.slateLight}
           editable={!outOfAsks && !streaming}
           onSubmitEditing={() => void submit(draft)}
           returnKeyType="send"
-          style={styles.input}
+          style={[styles.input, { backgroundColor: colors.paper, color: colors.ink }]}
         />
         <Pressable
           onPress={() => void submit(draft)}
           disabled={streaming || !draft.trim()}
           accessibilityRole="button"
           accessibilityLabel="Send"
-          style={[styles.send, (streaming || !draft.trim()) && styles.sendDisabled]}
+          style={[styles.send, (streaming || !draft.trim()) && { backgroundColor: colors.slateLight }]}
         >
           <Svg width={20} height={20} viewBox="0 0 24 24">
-            <Path d="M4 12l16-8-6 8 6 8z" fill={palette.paper} />
+            <Path d="M4 12l16-8-6 8 6 8z" fill={colors.paper} />
           </Svg>
         </Pressable>
       </View>
@@ -300,11 +302,9 @@ const styles = StyleSheet.create({
   capCard: { gap: space.sm },
   suggestions: { gap: space.sm },
   suggestion: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   pressed: { opacity: 0.6 },
   historyWrap: { gap: space.sm, marginTop: space.sm },
@@ -316,16 +316,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
     paddingVertical: space.md,
     borderTopWidth: 1,
-    borderTopColor: palette.hairline,
-    backgroundColor: palette.paperWarm,
   },
   input: {
     flex: 1,
-    backgroundColor: palette.paper,
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm + 2,
-    color: palette.ink,
     fontSize: 16,
   },
   send: {
@@ -336,5 +332,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  sendDisabled: { backgroundColor: palette.slateLight },
+  sendDisabled: {},
 });

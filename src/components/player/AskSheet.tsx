@@ -17,6 +17,7 @@ import { Chip, PillButton, Text } from '@/components/primitives';
 import { AskError, SUGGESTED_QUESTIONS, askService } from '@/services/ask';
 import * as haptics from '@/lib/haptics';
 import { palette, radius, shadow, space, type as typeScale } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface AskSheetProps {
   visible: boolean;
@@ -33,6 +34,7 @@ export interface AskSheetProps {
  * closes the sheet should not keep paying for tokens they will never read.
  */
 export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: AskSheetProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
 
   const [question, setQuestion] = useState('');
@@ -136,19 +138,19 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.sheetWrap}
       >
-        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md }]}>
-          <View style={styles.grabber} />
+        <View style={[styles.sheet, { paddingBottom: insets.bottom + space.md, backgroundColor: colors.paperWarm }]}>
+          <View style={[styles.grabber, { backgroundColor: colors.hairline }]} />
 
           <View style={styles.head}>
             <View style={styles.badge}>
               <Sparkle />
             </View>
-            <Text variant="h3" color={palette.ink} style={styles.headText}>
+            <Text variant="h3" style={styles.headText}>
               Ask about this card
             </Text>
             <Pressable onPress={dismiss} hitSlop={10} accessibilityRole="button" accessibilityLabel="Close">
               <Svg width={20} height={20} viewBox="0 0 24 24">
-                <Path d="M6 6l12 12M18 6L6 18" stroke={palette.slate} strokeWidth={2.4} strokeLinecap="round" />
+                <Path d="M6 6l12 12M18 6L6 18" stroke={colors.slate} strokeWidth={2.4} strokeLinecap="round" />
               </Svg>
             </Pressable>
           </View>
@@ -164,21 +166,21 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
             <>
               <ScrollView style={styles.body} contentContainerStyle={styles.bodyContent}>
                 {question.length > 0 && (
-                  <Text variant="bodyEm" color={palette.ink}>
+                  <Text variant="bodyEm">
                     {question}
                   </Text>
                 )}
 
                 {answer.length > 0 && (
-                  <Text variant="body" color={palette.inkSoft}>
+                  <Text variant="body" color={colors.inkSoft}>
                     {answer}
                   </Text>
                 )}
 
                 {streaming && answer.length === 0 && (
                   <View style={styles.thinking}>
-                    <ActivityIndicator color={palette.slate} />
-                    <Text variant="caption" color={palette.slate}>
+                    <ActivityIndicator color={colors.slate} />
+                    <Text variant="caption" color={colors.slate}>
                       Thinking…
                     </Text>
                   </View>
@@ -213,8 +215,8 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
                   value={question}
                   onChangeText={setQuestion}
                   placeholder="Ask anything about this card"
-                  placeholderTextColor={palette.slateLight}
-                  style={styles.input}
+                  placeholderTextColor={colors.slateLight}
+                  style={[styles.input, { color: colors.ink, backgroundColor: colors.paper, borderColor: colors.hairline }]}
                   multiline
                   accessibilityLabel="Your question"
                   onSubmitEditing={() => void submit(question)}
@@ -237,7 +239,7 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
             One of the three places the not-advice notice appears, alongside
             onboarding and every strategy page.
           */}
-          <Text variant="caption" color={palette.slateLight} align="center">
+          <Text variant="caption" color={colors.slateLight} align="center">
             Educational only — not financial advice.
           </Text>
         </View>
@@ -257,9 +259,10 @@ function SetUpInline({
   onSave: () => void;
   saving: boolean;
 }) {
+  const colors = useColors();
   return (
     <View style={styles.empty}>
-      <Text variant="body" color={palette.inkSoft}>
+      <Text variant="body" color={colors.inkSoft}>
         ASK runs on your own Anthropic API key. It is stored in this
         device&apos;s keychain and sent only to api.anthropic.com.
       </Text>
@@ -267,11 +270,11 @@ function SetUpInline({
         value={value}
         onChangeText={onChange}
         placeholder="sk-ant-…"
-        placeholderTextColor={palette.slateLight}
+        placeholderTextColor={colors.slateLight}
         autoCapitalize="none"
         autoCorrect={false}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { color: colors.ink, backgroundColor: colors.paper, borderColor: colors.hairline }]}
         accessibilityLabel="Anthropic API key"
       />
       <PillButton
@@ -311,7 +314,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: palette.paperWarm,
     borderTopLeftRadius: radius.card,
     borderTopRightRadius: radius.card,
     paddingHorizontal: space.lg,
@@ -325,7 +327,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
   },
   head: {
     flexDirection: 'row',
@@ -370,11 +371,8 @@ const styles = StyleSheet.create({
   },
   input: {
     ...typeScale.body,
-    color: palette.ink,
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     borderWidth: 1,
-    borderColor: palette.hairline,
     paddingHorizontal: space.md,
     paddingVertical: space.md,
     maxHeight: 120,

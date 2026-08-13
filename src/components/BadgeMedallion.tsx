@@ -3,6 +3,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { Text } from '@/components/primitives';
 import type { BadgeDef, BadgeTier } from '@/features/achievements';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** Tier → accent, reusing the dashboard's existing accent palette. */
 const TIER_COLOR: Record<BadgeTier, string> = {
@@ -27,6 +28,7 @@ export function BadgeMedallion({
   size?: number;
   showLabel?: boolean;
 }) {
+  const colors = useColors();
   const color = TIER_COLOR[badge.tier];
 
   return (
@@ -38,7 +40,7 @@ export function BadgeMedallion({
             width: size,
             height: size,
             borderRadius: size / 2,
-            backgroundColor: earned ? color : palette.hairline,
+            backgroundColor: earned ? color : colors.hairline,
           },
           !earned && styles.locked,
         ]}
@@ -46,14 +48,14 @@ export function BadgeMedallion({
         <Glyph
           name={badge.glyph}
           size={size * 0.5}
-          color={earned ? palette.paper : palette.slateLight}
+          color={earned ? colors.paper : colors.slateLight}
           strokeWidth={2}
         />
       </View>
       {showLabel ? (
         <Text
           variant="caption"
-          color={earned ? palette.ink : palette.slateLight}
+          color={earned ? colors.ink : colors.slateLight}
           align="center"
           numberOfLines={2}
         >

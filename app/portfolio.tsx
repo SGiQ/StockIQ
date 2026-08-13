@@ -23,6 +23,7 @@ import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -82,6 +83,7 @@ const HOW_TO_STEPS = [
 ];
 
 function HowToSection({ defaultOpen }: { defaultOpen: boolean }) {
+  const colors = useColors();
   const [open, setOpen] = useState(defaultOpen);
 
   const toggle = () => {
@@ -114,10 +116,10 @@ function HowToSection({ defaultOpen }: { defaultOpen: boolean }) {
                 {step.icon(palette.forestDeep)}
               </View>
               <View style={htStyles.stepText}>
-                <Text variant="bodyEm" color={palette.ink}>
+                <Text variant="bodyEm">
                   {step.title}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   {step.body}
                 </Text>
               </View>
@@ -221,13 +223,14 @@ function AllocationBar({
   weights: { symbol: string; weight: number }[];
   cashWeight: number;
 }) {
+  const colors = useColors();
   const segments = [
     ...weights.map((w, i) => ({
       label: w.symbol,
       pct: w.weight,
       color: ALLOC_COLORS[i % ALLOC_COLORS.length],
     })),
-    { label: 'Cash', pct: cashWeight, color: palette.slateLight },
+    { label: 'Cash', pct: cashWeight, color: colors.slateLight },
   ].filter((s) => s.pct > 0);
 
   return (
@@ -244,7 +247,7 @@ function AllocationBar({
         {segments.map((s) => (
           <View key={s.label} style={allocStyles.legendItem}>
             <View style={[allocStyles.dot, { backgroundColor: s.color }]} />
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               {`${s.label} ${Math.round(s.pct)}%`}
             </Text>
           </View>
@@ -279,12 +282,13 @@ const COACH_CONTEXT: AskContext = {
   courseTitle: 'Market',
 };
 
-const toneColor = (n: number) =>
-  n > 0 ? palette.emeraldDeep : n < 0 ? palette.danger : palette.slate;
+const toneColor = (n: number, slate: string) =>
+  n > 0 ? palette.emeraldDeep : n < 0 ? palette.danger : slate;
 
 const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '-' : ''}${formatPrice(Math.abs(n)).slice(1)}`;
 
 export default function PortfolioScreen() {
+  const colors = useColors();
   const router = useRouter();
   const portfolio = useAppStore((s) => s.portfolio);
   const watchlist = useAppStore((s) => s.watchlist);
@@ -438,10 +442,10 @@ export default function PortfolioScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           Practice
         </Text>
       </View>
@@ -459,7 +463,7 @@ export default function PortfolioScreen() {
           <Text variant="label" color={palette.mintSoft} uppercase>
             Portfolio value
           </Text>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             {formatPrice(value)}
           </Text>
           <Text variant="h3" color={ret.abs > 0 ? palette.mint : ret.abs < 0 ? palette.flame : palette.mintSoft}>
@@ -477,22 +481,22 @@ export default function PortfolioScreen() {
               value={tradeSymbol}
               onChangeText={(t) => setTradeSymbol(t.toUpperCase())}
               placeholder="Symbol"
-              placeholderTextColor={palette.slateLight}
+              placeholderTextColor={colors.slateLight}
               autoCapitalize="characters"
               autoCorrect={false}
-              style={[styles.input, styles.symInput]}
+              style={[styles.input, styles.symInput, { backgroundColor: colors.paper, color: colors.ink, borderColor: colors.hairline }]}
             />
             <TextInput
               value={tradeShares}
               onChangeText={setTradeShares}
               placeholder="Shares"
-              placeholderTextColor={palette.slateLight}
+              placeholderTextColor={colors.slateLight}
               keyboardType="number-pad"
-              style={[styles.input, styles.sharesInput]}
+              style={[styles.input, styles.sharesInput, { backgroundColor: colors.paper, color: colors.ink, borderColor: colors.hairline }]}
             />
           </View>
           {tradeQuote && tradeQuote.valid ? (
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               {`${sym} at ${formatPrice(tradeQuote.price)}${tradeShares ? ` · ${formatPrice(tradeQuote.price * Number(tradeShares || 0))} total` : ''}`}
             </Text>
           ) : null}
@@ -509,7 +513,7 @@ export default function PortfolioScreen() {
 
         {watchSymbols.length > 0 && (
           <View style={styles.positions}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Watching
             </Text>
             {watchSymbols.map((ws) => {
@@ -517,15 +521,15 @@ export default function PortfolioScreen() {
               return (
                 <CardSurface key={ws} style={styles.posRow}>
                   <View style={styles.posLeft}>
-                    <Text variant="h3" color={palette.ink}>
+                    <Text variant="h3">
                       {ws}
                     </Text>
                     {q?.valid ? (
-                      <Text variant="caption" color={toneColor(q.change)}>
+                      <Text variant="caption" color={toneColor(q.change, colors.slate)}>
                         {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%`}
                       </Text>
                     ) : (
-                      <Text variant="caption" color={palette.slateLight}>loading</Text>
+                      <Text variant="caption" color={colors.slateLight}>loading</Text>
                     )}
                   </View>
                   <Pressable
@@ -545,7 +549,7 @@ export default function PortfolioScreen() {
 
         {portfolio.positions.length === 0 ? null : (
           <View style={styles.positions}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Holdings
             </Text>
             {portfolio.positions.map((pos) => {
@@ -556,18 +560,18 @@ export default function PortfolioScreen() {
               return (
                 <CardSurface key={pos.symbol} style={styles.posRow}>
                   <View style={styles.posLeft}>
-                    <Text variant="h3" color={palette.ink}>
+                    <Text variant="h3">
                       {pos.symbol}
                     </Text>
-                    <Text variant="caption" color={palette.slate}>
+                    <Text variant="caption" color={colors.slate}>
                       {`${pos.shares} @ ${formatPrice(pos.avgCost)}`}
                     </Text>
                   </View>
                   <View style={styles.posRight}>
-                    <Text variant="bodyEm" color={live ? palette.ink : palette.slate}>
+                    <Text variant="bodyEm" color={live ? colors.ink : colors.slate}>
                       {formatPrice(positionValue(pos, price))}
                     </Text>
-                    <Text variant="caption" color={live ? toneColor(pnl) : palette.slateLight}>
+                    <Text variant="caption" color={live ? toneColor(pnl, colors.slate) : colors.slateLight}>
                       {live ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : 'at cost'}
                     </Text>
                   </View>
@@ -587,7 +591,7 @@ export default function PortfolioScreen() {
               <Text variant="label" color={palette.violetInk} uppercase>
                 Coach's read
               </Text>
-              <Text variant="body" color={palette.ink}>
+              <Text variant="body">
                 {coachText || 'Thinking…'}
               </Text>
               {!coaching ? (
@@ -598,7 +602,7 @@ export default function PortfolioScreen() {
             <>
               <PillButton label="✦  Coach my portfolio" variant="primary" onPress={() => void coach()} />
               {!unlimited ? (
-                <Text variant="caption" color={palette.slateLight} align="center">
+                <Text variant="caption" color={colors.slateLight} align="center">
                   {`${remaining} of ${ASK_FREE_DAILY} free coaching + questions left today`}
                 </Text>
               ) : null}
@@ -608,7 +612,7 @@ export default function PortfolioScreen() {
 
         {trades.length > 0 && (
           <View style={styles.positions}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Trade history
             </Text>
             {trades.slice(0, 20).map((t) => (
@@ -620,23 +624,23 @@ export default function PortfolioScreen() {
                         {t.side.toUpperCase()}
                       </Text>
                     </View>
-                    <Text variant="h3" color={palette.ink}>
+                    <Text variant="h3">
                       {t.symbol}
                     </Text>
                   </View>
-                  <Text variant="caption" color={palette.slate}>
+                  <Text variant="caption" color={colors.slate}>
                     {`${t.shares} @ ${formatPrice(t.price)} · ${new Date(t.timestamp).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
                   </Text>
                 </View>
                 <View style={styles.posRight}>
-                  <Text variant="bodyEm" color={t.side === 'buy' ? palette.ink : palette.emeraldDeep}>
+                  <Text variant="bodyEm" color={t.side === 'buy' ? colors.ink : palette.emeraldDeep}>
                     {formatPrice(t.total)}
                   </Text>
                 </View>
               </CardSurface>
             ))}
             {trades.length > 20 && (
-              <Text variant="caption" color={palette.slateLight} align="center">
+              <Text variant="caption" color={colors.slateLight} align="center">
                 {`Showing 20 of ${trades.length} trades`}
               </Text>
             )}
@@ -649,12 +653,12 @@ export default function PortfolioScreen() {
           accessibilityLabel="Reset portfolio"
           style={styles.resetRow}
         >
-          <Text variant="bodySm" color={palette.slate}>
+          <Text variant="bodySm" color={colors.slate}>
             Reset to {formatPrice(STARTING_CASH)}
           </Text>
         </Pressable>
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+        <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
           A practice sandbox with delayed prices and simulated money. Not real trading, not advice.
         </Text>
       </ScrollView>
@@ -681,14 +685,11 @@ const styles = StyleSheet.create({
   coachCard: { gap: space.sm },
   tradeInputs: { flexDirection: 'row', gap: space.sm },
   input: {
-    backgroundColor: palette.paper,
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm + 2,
-    color: palette.ink,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   symInput: { flex: 1 },
   sharesInput: { width: 110 },

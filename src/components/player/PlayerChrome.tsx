@@ -5,9 +5,11 @@ import { Text } from '@/components/primitives';
 import { SpeakerIcon } from '@/components/primitives/SpeakerIcon';
 import { Sparkle } from './AskSheet';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** Thin mint progress bar pinned to the top of the player. */
 export function ProgressBar({ current, total }: { current: number; total: number }) {
+  const colors = useColors();
   // A plain width derived straight from the card index. This used to animate
   // with a reanimated spring, which silently stopped re-driving in the
   // production web build — the bar froze near the start and never advanced.
@@ -17,7 +19,7 @@ export function ProgressBar({ current, total }: { current: number; total: number
 
   return (
     <View
-      style={styles.track}
+      style={[styles.track, { backgroundColor: colors.hairline }]}
       accessibilityRole="progressbar"
       accessibilityValue={{ min: 0, max: total, now: current + 1 }}
     >
@@ -27,18 +29,19 @@ export function ProgressBar({ current, total }: { current: number; total: number
 }
 
 export function ExitButton({ onPress }: { onPress: () => void }) {
+  const colors = useColors();
   return (
     <Pressable
       onPress={onPress}
       hitSlop={12}
       accessibilityRole="button"
       accessibilityLabel="Close lesson"
-      style={styles.exit}
+      style={[styles.exit, { borderColor: colors.hairline, backgroundColor: colors.paper }]}
     >
       <Svg width={18} height={18} viewBox="0 0 24 24">
         <Path
           d="M6 6l12 12M18 6L6 18"
-          stroke={palette.ink}
+          stroke={colors.ink}
           strokeWidth={2.4}
           strokeLinecap="round"
         />
@@ -74,9 +77,10 @@ export function ActionPill({
   narrationPlaying?: boolean;
   onToggleNarration?: () => void;
 }) {
+  const colors = useColors();
   return (
     <View style={styles.actionRow}>
-      <View style={styles.pill}>
+      <View style={[styles.pill, { backgroundColor: colors.paper }]}>
         {narrationAvailable && onToggleNarration ? (
           <Pressable
             onPress={onToggleNarration}
@@ -93,7 +97,7 @@ export function ActionPill({
             style={styles.pillButton}
           >
             <SpeakerIcon
-              color={narrationPlaying ? palette.emerald : palette.ink}
+              color={narrationPlaying ? palette.emerald : colors.ink}
               muted={!narrationEnabled}
             />
           </Pressable>
@@ -110,7 +114,7 @@ export function ActionPill({
           <Svg width={22} height={22} viewBox="0 0 24 24">
             <Path
               d="M6 21V4M6 4.5h11l-2.5 4L17 13H6z"
-              stroke={reported ? palette.flame : palette.ink}
+              stroke={reported ? palette.flame : colors.ink}
               fill={reported ? palette.flame : 'none'}
               strokeWidth={2}
               strokeLinecap="round"
@@ -130,7 +134,7 @@ export function ActionPill({
           <Svg width={22} height={22} viewBox="0 0 24 24">
             <Path
               d="M12 20.5C6.5 16.8 3 13.9 3 9.9A4.9 4.9 0 017.9 5c1.7 0 3.2.8 4.1 2.1A5 5 0 0116.1 5 4.9 4.9 0 0121 9.9c0 4-3.5 6.9-9 10.6z"
-              stroke={saved ? palette.danger : palette.ink}
+              stroke={saved ? palette.danger : colors.ink}
               fill={saved ? palette.danger : 'none'}
               strokeWidth={2}
               strokeLinejoin="round"
@@ -152,7 +156,7 @@ export function ActionPill({
           style={styles.askGradient}
         >
           <Sparkle size={18} />
-          <Text variant="label" color={palette.paper} uppercase>
+          <Text variant="label" color={colors.paper} uppercase>
             Ask
           </Text>
         </LinearGradient>
@@ -163,8 +167,9 @@ export function ActionPill({
 
 /** Card counter shown next to the progress bar, e.g. "3 / 11". */
 export function CardCounter({ current, total }: { current: number; total: number }) {
+  const colors = useColors();
   return (
-    <Text variant="label" color={palette.slateLight}>
+    <Text variant="label" color={colors.slateLight}>
       {`${current + 1} / ${total}`}
     </Text>
   );
@@ -175,7 +180,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 6,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     overflow: 'hidden',
   },
   fill: {
@@ -188,10 +192,8 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: radius.pill,
     borderWidth: 1,
-    borderColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: palette.paper,
   },
   actionRow: {
     flexDirection: 'row',
@@ -203,7 +205,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    backgroundColor: palette.paper,
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm + 2,

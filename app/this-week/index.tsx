@@ -5,10 +5,12 @@ import Svg, { Path } from 'react-native-svg';
 import { listWeeklyNotes } from '@/content/registry';
 import { CardSurface, Screen, Text } from '@/components/primitives';
 import { useAppStore } from '@/store/slices/useAppStore';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** Short, dated market reads that tie a moment back to a concept. */
 export default function ThisWeekScreen() {
+  const colors = useColors();
   const router = useRouter();
   const notes = listWeeklyNotes();
   const markSeen = useAppStore((s) => s.markWeeklyNotesSeen);
@@ -28,21 +30,21 @@ export default function ThisWeekScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           This Week
         </Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <Text variant="body" color={palette.slate}>
+        <Text variant="body" color={colors.slate}>
           Short, timely reads that connect a market moment to a concept you've learned.
         </Text>
 
         {notes.length === 0 ? (
-          <Text variant="body" color={palette.slateLight}>Nothing yet — check back soon.</Text>
+          <Text variant="body" color={colors.slateLight}>Nothing yet — check back soon.</Text>
         ) : (
           notes.map((note) => (
             <Pressable
@@ -52,13 +54,13 @@ export default function ThisWeekScreen() {
               accessibilityLabel={note.title}
             >
               <CardSurface style={styles.card}>
-                <Text variant="label" color={palette.slateLight} uppercase>
+                <Text variant="label" color={colors.slateLight} uppercase>
                   {formatDate(note.publishedOn)}
                 </Text>
-                <Text variant="h3" color={palette.ink}>
+                <Text variant="h3">
                   {note.title}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   {note.summary}
                 </Text>
               </CardSurface>

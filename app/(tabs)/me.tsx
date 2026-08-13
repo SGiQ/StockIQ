@@ -15,8 +15,10 @@ import { pairing } from '@/store';
 import { deriveDashboardMetrics } from '@/lib/dashboard';
 import { courseCompletion, selectReadiness, totalEarnedXp, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function DashboardTab() {
+  const colors = useColors();
   const router = useRouter();
   const profile = useAppStore((s) => s.profile);
   const streak = useAppStore((s) => s.streak);
@@ -69,14 +71,14 @@ export default function DashboardTab() {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View>
-            <Text variant="h1" color={palette.ink}>Your dashboard</Text>
-            <Text variant="caption" color={palette.slate}>A clear view of your learning.</Text>
+            <Text variant="h1">Your dashboard</Text>
+            <Text variant="caption" color={colors.slate}>A clear view of your learning.</Text>
           </View>
           <Pressable
             onPress={() => router.push('/settings' as never)}
             accessibilityRole="button"
             accessibilityLabel="Settings"
-            style={styles.settingsButton}
+            style={[styles.settingsButton, { backgroundColor: colors.paper }]}
           >
             <SettingsIcon />
           </Pressable>
@@ -87,13 +89,13 @@ export default function DashboardTab() {
             <Image
               source={require('../../public/logo/SG.png')}
               contentFit="contain"
-              style={styles.avatar}
+              style={[styles.avatar, { backgroundColor: colors.paper }]}
               accessibilityLabel="StockIQ"
             />
             <View style={styles.heroCopy}>
               <Text variant="label" color={palette.mintSoft} uppercase>Learning portfolio</Text>
-              <Text variant="display" color={palette.paper}>{`${totalEarnedXp(progress)} XP`}</Text>
-              <Text variant="caption" color={palette.paper}>
+              <Text variant="display" color={colors.paper}>{`${totalEarnedXp(progress)} XP`}</Text>
+              <Text variant="caption" color={colors.paper}>
                 {`${metrics.completedCount} of ${totalLessons} lessons complete`}
               </Text>
             </View>
@@ -133,7 +135,7 @@ export default function DashboardTab() {
                 </Svg>
               </View>
               <View style={styles.reviewCopy}>
-                <Text variant="h3" color={palette.paper}>Keep it sharp</Text>
+                <Text variant="h3" color={colors.paper}>Keep it sharp</Text>
                 <Text variant="caption" color={palette.mintSoft}>
                   {`${dueReviews} card${dueReviews === 1 ? '' : 's'} due for review`}
                 </Text>
@@ -152,8 +154,8 @@ export default function DashboardTab() {
 
         <CardSurface style={styles.streakCard}>
           <View>
-            <Text variant="h3" color={palette.ink}>This week</Text>
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="h3">This week</Text>
+            <Text variant="caption" color={colors.slate}>
               {streak?.currentStreak ? `Keep your ${streak.currentStreak}-day streak moving.` : 'Complete a lesson to start your streak.'}
             </Text>
           </View>
@@ -168,8 +170,8 @@ export default function DashboardTab() {
           <CardSurface style={styles.badgesCard}>
             <View style={styles.badgesHeader}>
               <View>
-                <Text variant="h3" color={palette.ink}>Badges</Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="h3">Badges</Text>
+                <Text variant="caption" color={colors.slate}>
                   {`${badges.length} of ${BADGES.length} earned`}
                 </Text>
               </View>
@@ -203,10 +205,10 @@ export default function DashboardTab() {
                 </View>
                 <View style={styles.courseCopy}>
                   <View style={styles.courseHeading}>
-                    <Text variant="body" color={palette.ink} numberOfLines={1}>{course.title}</Text>
+                    <Text variant="body" numberOfLines={1}>{course.title}</Text>
                     <Text variant="label" color={palette.forestDeep}>{`${Math.round(completion * 100)}%`}</Text>
                   </View>
-                  <View style={styles.track}>
+                  <View style={[styles.track, { backgroundColor: colors.hairline }]}>
                     <View style={[styles.fill, { width: `${completion * 100}%` }]} />
                   </View>
                 </View>
@@ -224,14 +226,14 @@ export default function DashboardTab() {
                   key={lesson.id}
                   onPress={() => router.push(`/lesson/${lesson.courseId}/${lesson.lessonId}` as never)}
                   accessibilityRole="button"
-                  style={[styles.recentRow, index > 0 && styles.rowDivider]}
+                  style={[styles.recentRow, index > 0 && styles.rowDivider, index > 0 && { borderTopColor: colors.hairline }]}
                 >
-                  <View style={styles.checkCircle}><Text variant="label" color={palette.paper}>✓</Text></View>
+                  <View style={styles.checkCircle}><Text variant="label" color={colors.paper}>✓</Text></View>
                   <View style={styles.courseCopy}>
-                    <Text variant="body" color={palette.ink} numberOfLines={1}>
+                    <Text variant="body" numberOfLines={1}>
                       {getLesson(lesson.courseId, lesson.lessonId)?.title ?? lesson.lessonId}
                     </Text>
-                    <Text variant="caption" color={palette.slate}>{`${lesson.xpAwarded} XP${lesson.starred ? ' · Starred' : ''}`}</Text>
+                    <Text variant="caption" color={colors.slate}>{`${lesson.xpAwarded} XP${lesson.starred ? ' · Starred' : ''}`}</Text>
                   </View>
                 </Pressable>
               ))}
@@ -253,7 +255,7 @@ export default function DashboardTab() {
           onPress={() => router.push('/settings/devices' as never)}
         />
 
-        <Text variant="caption" color={palette.slateLight} align="center">
+        <Text variant="caption" color={colors.slateLight} align="center">
           {`${liked.length} liked item${liked.length === 1 ? '' : 's'} · Educational content only`}
         </Text>
       </ScrollView>
@@ -262,39 +264,43 @@ export default function DashboardTab() {
 }
 
 function StatCard({ value, label, accent }: { value: number; label: string; accent: string }) {
+  const colors = useColors();
   return (
     <CardSurface style={styles.statCard}>
       <View style={[styles.statDot, { backgroundColor: accent }]} />
-      <Text variant="h2" color={palette.ink}>{value}</Text>
-      <Text variant="caption" color={palette.slate}>{label}</Text>
+      <Text variant="h2">{value}</Text>
+      <Text variant="caption" color={colors.slate}>{label}</Text>
     </CardSurface>
   );
 }
 
 function SectionTitle({ title }: { title: string }) {
-  return <Text variant="label" color={palette.slate} uppercase>{title}</Text>;
+  const colors = useColors();
+  return <Text variant="label" color={colors.slate} uppercase>{title}</Text>;
 }
 
 function DashboardLink({ icon, title, subtitle, onPress }: { icon: React.ReactNode; title: string; subtitle: string; onPress: () => void }) {
+  const colors = useColors();
   return (
     <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={title}>
       <CardSurface style={styles.linkRow}>
         <View style={styles.linkIcon}>{icon}</View>
         <View style={styles.courseCopy}>
-          <Text variant="body" color={palette.ink}>{title}</Text>
-          <Text variant="caption" color={palette.slate}>{subtitle}</Text>
+          <Text variant="body">{title}</Text>
+          <Text variant="caption" color={colors.slate}>{subtitle}</Text>
         </View>
-        <Text variant="h2" color={palette.slateLight}>›</Text>
+        <Text variant="h2" color={colors.slateLight}>›</Text>
       </CardSurface>
     </Pressable>
   );
 }
 
 function SettingsIcon() {
+  const colors = useColors();
   return (
     <Svg width={22} height={22} viewBox="0 0 24 24">
-      <Circle cx={12} cy={12} r={3.2} fill="none" stroke={palette.ink} strokeWidth={2} />
-      <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={palette.ink} strokeWidth={2} strokeLinecap="round" />
+      <Circle cx={12} cy={12} r={3.2} fill="none" stroke={colors.ink} strokeWidth={2} />
+      <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={colors.ink} strokeWidth={2} strokeLinecap="round" />
     </Svg>
   );
 }
@@ -311,10 +317,10 @@ function AccountIcon() {
 const styles = StyleSheet.create({
   body: { padding: space.lg, paddingBottom: space.xxl + 96, gap: space.md },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  settingsButton: { width: 46, height: 46, borderRadius: radius.pill, backgroundColor: palette.paper, alignItems: 'center', justifyContent: 'center' },
+  settingsButton: { width: 46, height: 46, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
   hero: { padding: space.lg, gap: space.md },
   heroTop: { flexDirection: 'row', alignItems: 'center', gap: space.md },
-  avatar: { width: 62, height: 62, borderRadius: radius.md, backgroundColor: palette.paper },
+  avatar: { width: 62, height: 62, borderRadius: radius.md },
   heroCopy: { flex: 1, gap: space.xxs },
   heroTrack: { height: 8, borderRadius: radius.pill, backgroundColor: 'rgba(255,255,255,0.18)', overflow: 'hidden' },
   heroFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint },
@@ -339,11 +345,11 @@ const styles = StyleSheet.create({
   courseArt: { width: 52, borderRadius: radius.md, overflow: 'hidden' },
   courseCopy: { flex: 1, gap: space.xs },
   courseHeading: { flexDirection: 'row', justifyContent: 'space-between', gap: space.sm, alignItems: 'center' },
-  track: { height: 7, borderRadius: radius.pill, backgroundColor: palette.hairline, overflow: 'hidden' },
+  track: { height: 7, borderRadius: radius.pill, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.emerald },
   listCard: { paddingVertical: 0 },
   recentRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingVertical: space.md },
-  rowDivider: { borderTopWidth: 1, borderTopColor: palette.hairline },
+  rowDivider: { borderTopWidth: 1 },
   checkCircle: { width: 32, height: 32, borderRadius: radius.pill, backgroundColor: palette.emeraldDeep, alignItems: 'center', justifyContent: 'center' },
   linkRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderRadius: radius.lg },
   linkIcon: { width: 44, height: 44, borderRadius: radius.md, backgroundColor: palette.mintSoft, alignItems: 'center', justifyContent: 'center' },

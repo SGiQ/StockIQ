@@ -15,6 +15,7 @@ import {
 import { progressId } from '@/store';
 import { toPlainText } from '@/content/richtext';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The course path.
@@ -26,6 +27,7 @@ import { palette, radius, space } from '@/theme/tokens';
 export default function CourseScreen() {
   const { courseId } = useLocalSearchParams<{ courseId: string }>();
   const router = useRouter();
+  const colors = useColors();
 
   const course = getCourse(courseId);
   // Subscribe to the stable progress map and derive from it. Passing a
@@ -80,7 +82,7 @@ export default function CourseScreen() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M15 5l-7 7 7 7"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -88,7 +90,7 @@ export default function CourseScreen() {
             />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink} numberOfLines={2} style={styles.headerTitle}>
+        <Text variant="h3" numberOfLines={2} style={styles.headerTitle}>
           {course.title}
         </Text>
         <Pressable
@@ -96,18 +98,18 @@ export default function CourseScreen() {
           accessibilityRole="button"
           accessibilityLabel="Home"
           hitSlop={8}
-          style={styles.logoCrop}
+          style={[styles.logoCrop, { backgroundColor: colors.paper }]}
         >
           <Image source={require('../../public/logo/SG.png')} resizeMode="contain" style={styles.logo} />
         </Pressable>
       </View>
 
-      <View style={styles.progressHeader}>
+      <View style={[styles.progressHeader, { borderBottomColor: colors.hairline }]}>
         <View style={styles.progressCopy}>
-          <Text variant="label" color={palette.slate} uppercase>{currentUnitName ?? 'Your progress'}</Text>
+          <Text variant="label" color={colors.slate} uppercase>{currentUnitName ?? 'Your progress'}</Text>
           <Text variant="caption" color={palette.forestDeep}>{`${earnedXp} / ${course.totalXp} XP`}</Text>
         </View>
-        <View style={styles.progressTrack}><View style={[styles.progressFill, { width: `${Math.round(progress * 100)}%` }]} /></View>
+        <View style={[styles.progressTrack, { backgroundColor: colors.hairline }]}><View style={[styles.progressFill, { width: `${Math.round(progress * 100)}%` }]} /></View>
         <Text variant="label" color={palette.forestDeep}>{`${Math.round(progress * 100)}%`}</Text>
       </View>
 
@@ -151,7 +153,7 @@ export default function CourseScreen() {
             </Fragment>
           ))}
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+        <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
           Educational content only. StockIQ does not provide financial advice.
         </Text>
       </ScrollView>
@@ -170,11 +172,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     flex: 1,
   },
-  logoCrop: { width: 64, height: 42, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: palette.paper },
+  logoCrop: { width: 64, height: 42, overflow: 'hidden', borderRadius: radius.sm },
   logo: { width: '100%', height: '100%' },
-  progressHeader: { flexDirection: 'row', alignItems: 'center', gap: space.sm, paddingHorizontal: space.lg, paddingTop: space.md, paddingBottom: space.sm, borderBottomWidth: 1, borderBottomColor: palette.hairline },
+  progressHeader: { flexDirection: 'row', alignItems: 'center', gap: space.sm, paddingHorizontal: space.lg, paddingTop: space.md, paddingBottom: space.sm, borderBottomWidth: 1 },
   progressCopy: { flex: 1 },
-  progressTrack: { width: 84, height: 5, borderRadius: radius.pill, overflow: 'hidden', backgroundColor: palette.hairline },
+  progressTrack: { width: 84, height: 5, borderRadius: radius.pill, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.emeraldDeep },
   path: {
     paddingHorizontal: space.lg,

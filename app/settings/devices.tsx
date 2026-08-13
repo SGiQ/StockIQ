@@ -11,6 +11,7 @@ import {
 import { pairing } from '@/store';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space, type as typeScale } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * Device pairing and revocation.
@@ -21,6 +22,7 @@ import { palette, radius, space, type as typeScale } from '@/theme/tokens';
  */
 export default function DevicesSettings() {
   const router = useRouter();
+  const colors = useColors();
   // Captured locally: TypeScript will not carry a narrowing of an imported
   // binding into the callbacks below, and an optional capability is exactly
   // the case where that matters.
@@ -70,7 +72,7 @@ export default function DevicesSettings() {
       <Screen>
         <SettingsHeader onBack={() => (router.canGoBack() ? router.back() : router.replace('/settings' as never))} />
         <View style={styles.note}>
-          <Text variant="body" color={palette.inkSoft}>
+          <Text variant="body" color={colors.inkSoft}>
             Sync is not set up, so this app keeps everything on this device only.
             Nothing is uploaded and there is nothing to pair.
           </Text>
@@ -187,39 +189,39 @@ export default function DevicesSettings() {
     <Screen tone="warm">
       <SettingsHeader onBack={() => (router.canGoBack() ? router.back() : router.replace('/settings' as never))} />
       <ScrollView contentContainerStyle={styles.body}>
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           Recovery
         </Text>
         {appleAvailable ? (
           <>
-            <Text variant="body" color={palette.inkSoft}>
+            <Text variant="body" color={colors.inkSoft}>
               Sign in with Apple so this account can be restored if you lose
               every device. StockIQ asks for no name or email — only the
               anonymous identifier Apple issues for this app.
             </Text>
             <PillButton label="Sign in with Apple" onPress={appleSignIn} disabled={busy} />
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               Or use email below — it works on any device.
             </Text>
           </>
         ) : (
-          <Text variant="body" color={palette.inkSoft}>
+          <Text variant="body" color={colors.inkSoft}>
             {Platform.OS === 'web'
               ? 'Use email below to secure this account, restore it in any browser, and sync progress across your devices.'
               : 'Use email below to secure this account so it can be recovered if you lose your devices. Sign in with Apple is an optional alternative available in a future development build.'}
           </Text>
         )}
 
-        <View style={styles.deviceSessionBox}>
+        <View style={[styles.deviceSessionBox, { backgroundColor: colors.paperWarm, borderColor: colors.hairline }]}>
           <Text variant="label" color={palette.forestDeep} uppercase>
             {Platform.OS === 'web' ? 'This browser' : 'This device'}
           </Text>
-          <Text variant="body" color={palette.ink}>
+          <Text variant="body">
             {signedIn
               ? `Signed in${signedInEmail ? ` as ${signedInEmail}` : ''}`
               : 'Local learning profile'}
           </Text>
-          <Text variant="caption" color={palette.inkSoft}>
+          <Text variant="caption" color={colors.inkSoft}>
             {`Signing out clears StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'} but does not delete cloud progress or affect other devices.`}
           </Text>
           {confirmingSignOut ? (
@@ -232,45 +234,45 @@ export default function DevicesSettings() {
           )}
         </View>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.slateLight }]} />
 
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           Email sign-in
         </Text>
         {signedInEmail ? (
           <View style={styles.signedInBox}>
             <Text variant="label" color={palette.forestDeep}>Signed in</Text>
-            <Text variant="body" color={palette.ink}>{signedInEmail}</Text>
-            <Text variant="caption" color={palette.inkSoft}>
+            <Text variant="body">{signedInEmail}</Text>
+            <Text variant="caption" color={colors.inkSoft}>
               Progress is saved locally and restored from this account each time you return.
             </Text>
           </View>
         ) : null}
         {!signedIn ? (
           <>
-            <Text variant="body" color={palette.inkSoft}>
+            <Text variant="body" color={colors.inkSoft}>
               Use the focused sign-in flow to create an account or restore progress with a six-digit email code.
             </Text>
             <PillButton label="Sign in or create account" onPress={() => router.push('/sign-in')} />
           </>
         ) : null}
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.slateLight }]} />
 
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           Add another device
         </Text>
-        <Text variant="body" color={palette.inkSoft}>
+        <Text variant="body" color={colors.inkSoft}>
           Show a code here, then type it into StockIQ on your other device. Both
           devices keep their progress — nothing is replaced.
         </Text>
 
         {code ? (
-          <View style={styles.codeBox}>
-            <Text variant="display" color={palette.ink} align="center">
+          <View style={[styles.codeBox, { backgroundColor: colors.paperWarm }]}>
+            <Text variant="display" align="center">
               {code}
             </Text>
-            <Text variant="caption" color={palette.slate} align="center">
+            <Text variant="caption" color={colors.slate} align="center">
               {minutesLeft > 0 ? `Expires in about ${minutesLeft} min` : 'Expired'}
             </Text>
           </View>
@@ -278,14 +280,14 @@ export default function DevicesSettings() {
 
         <PillButton label={code ? 'New code' : 'Show a code'} onPress={showCode} disabled={busy} />
 
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           Anyone who types this code can read and change everything in your
           account until it expires. Only share it with your own device.
         </Text>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.slateLight }]} />
 
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           Enter a code
         </Text>
         <TextInput
@@ -294,36 +296,36 @@ export default function DevicesSettings() {
           autoCapitalize="characters"
           autoCorrect={false}
           placeholder="8-character code"
-          placeholderTextColor={palette.slateLight}
-          style={styles.input}
+          placeholderTextColor={colors.slateLight}
+          style={[styles.input, { borderColor: colors.slateLight, color: colors.ink }]}
           maxLength={12}
         />
         <PillButton label="Link this device" onPress={join} disabled={busy || !entry.trim()} />
 
         {status ? (
-          <Text variant="caption" color={palette.inkSoft}>
+          <Text variant="caption" color={colors.inkSoft}>
             {status}
           </Text>
         ) : null}
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.slateLight }]} />
 
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           Linked devices
         </Text>
         {devices.length === 0 ? (
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             No devices yet.
           </Text>
         ) : (
           devices.map((device) => (
             <View key={device.id} style={styles.row}>
               <View style={styles.rowText}>
-                <Text variant="body" color={palette.ink}>
+                <Text variant="body">
                   {device.label ?? 'Unnamed device'}
                   {device.id === thisDevice ? ' · this device' : ''}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   Last seen {new Date(device.lastSeenAt).toLocaleDateString()}
                 </Text>
               </View>
@@ -333,21 +335,21 @@ export default function DevicesSettings() {
             </View>
           ))
         )}
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           Removing a device stops it reading this account. Use it if you lose a
           phone — the other devices are unaffected.
         </Text>
 
-        <View style={styles.divider} />
+        <View style={[styles.divider, { backgroundColor: colors.slateLight }]} />
 
         <Text variant="label" color={palette.danger} uppercase>
           Delete account
         </Text>
         <View style={styles.dangerBox}>
-          <Text variant="body" color={palette.ink}>
+          <Text variant="body">
             Permanently delete your account and all of its data.
           </Text>
-          <Text variant="caption" color={palette.inkSoft}>
+          <Text variant="caption" color={colors.inkSoft}>
             {`This erases your cloud progress, saved cards, sign-in email, and every linked device from our servers, and wipes StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'}. Other devices lose access too. This cannot be undone.`}
           </Text>
           {confirmingDelete ? (
@@ -365,14 +367,15 @@ export default function DevicesSettings() {
 }
 
 function SettingsHeader({ onBack }: { onBack: () => void }) {
+  const colors = useColors();
   return (
     <View style={styles.header}>
       <Pressable onPress={onBack} hitSlop={12} accessibilityRole="button" accessibilityLabel="Back">
         <Svg width={24} height={24} viewBox="0 0 24 24">
-          <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </Svg>
       </Pressable>
-      <Text variant="h2" color={palette.ink}>Account & sync</Text>
+      <Text variant="h2">Account & sync</Text>
     </View>
   );
 }
@@ -389,7 +392,6 @@ const styles = StyleSheet.create({
   body: { gap: space.md, paddingHorizontal: space.lg, paddingBottom: space.xxl },
   note: { padding: space.lg },
   codeBox: {
-    backgroundColor: palette.paperWarm,
     borderRadius: radius.lg,
     paddingVertical: space.lg,
     gap: space.xs,
@@ -401,10 +403,8 @@ const styles = StyleSheet.create({
     gap: space.xxs,
   },
   deviceSessionBox: {
-    backgroundColor: palette.paperWarm,
     borderRadius: radius.lg,
     borderWidth: 1,
-    borderColor: palette.hairline,
     padding: space.md,
     gap: space.sm,
   },
@@ -419,15 +419,13 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: palette.slateLight,
     borderRadius: radius.md,
     paddingHorizontal: space.md,
     paddingVertical: space.sm,
     fontSize: typeScale.body.fontSize,
-    color: palette.ink,
     letterSpacing: 2,
   },
-  divider: { height: 1, backgroundColor: palette.slateLight, opacity: 0.4, marginVertical: space.sm },
+  divider: { height: 1, opacity: 0.4, marginVertical: space.sm },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

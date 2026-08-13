@@ -4,6 +4,7 @@ import type { KeyInsightCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { Text } from '@/components/primitives';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The shareable poster.
@@ -31,6 +32,7 @@ export function KeyInsightPoster({
   compact?: boolean;
   active?: boolean;
 }) {
+  const colors = useColors();
   const framed = card.frame === 'gradient';
 
   /**
@@ -41,7 +43,7 @@ export function KeyInsightPoster({
    * for sharing, and a capture must never race a running animation.
    */
   const body = (
-    <View style={styles.poster}>
+    <View style={[styles.poster, { backgroundColor: colors.ink }]}>
         <ArtView
           spec={card.art}
           aspectRatio={1}
@@ -53,7 +55,7 @@ export function KeyInsightPoster({
         <View style={compact ? styles.textCompact : styles.text}>
           <Text
             variant={compact ? 'caption' : 'insight'}
-            color={palette.paper}
+            color={colors.paper}
             align="center"
             numberOfLines={compact ? 4 : undefined}
             style={compact ? styles.insightCompact : undefined}
@@ -63,11 +65,11 @@ export function KeyInsightPoster({
 
           {card.attribution && !compact && (
             <View style={styles.attribution}>
-              <Text variant="label" color={palette.slateLight} align="center" uppercase>
+              <Text variant="label" color={colors.slateLight} align="center" uppercase>
                 {card.attribution.source}
               </Text>
               {card.attribution.detail && (
-                <Text variant="caption" color={palette.slate} align="center">
+                <Text variant="caption" color={colors.slate} align="center">
                   {card.attribution.detail}
                 </Text>
               )}
@@ -92,9 +94,10 @@ export function KeyInsightPoster({
 }
 
 export function KeyInsightCardView({ card, active = true }: { card: KeyInsightCard; active?: boolean }) {
+  const colors = useColors();
   return (
     <View style={styles.container} pointerEvents="none">
-      <Text variant="label" color={palette.slate} uppercase align="center">
+      <Text variant="label" color={colors.slate} uppercase align="center">
         Key Insight
       </Text>
       <KeyInsightPoster card={card} active={active} />
@@ -119,7 +122,6 @@ const styles = StyleSheet.create({
   poster: {
     borderRadius: radius.lg,
     overflow: 'hidden',
-    backgroundColor: palette.ink,
   },
   text: {
     paddingHorizontal: space.lg,

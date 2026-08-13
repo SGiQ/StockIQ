@@ -7,9 +7,11 @@ import { openLegal } from '@/lib/legal';
 import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { PLAN_CYCLE, PLAN_LABEL } from '@/features/entitlement';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const colors = useColors();
   const enabled = useAppStore((s) => s.profile?.narrationEnabled ?? false);
   const voice = useAppStore((s) => s.profile?.narrationVoice ?? 'female');
   const speed = useAppStore((s) => s.profile?.narrationSpeed ?? 1);
@@ -29,7 +31,7 @@ export default function SettingsScreen() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M15 5l-7 7 7 7"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -37,11 +39,11 @@ export default function SettingsScreen() {
             />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>Settings</Text>
+        <Text variant="h2">Settings</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
-        <Text variant="label" color={palette.slate} uppercase>Learning</Text>
+        <Text variant="label" color={colors.slate} uppercase>Learning</Text>
         <SettingsRow
           title="Narration"
           subtitle={`${enabled ? 'Autoplay on' : 'Autoplay off'} · ${voice} · ${speed}×`}
@@ -49,20 +51,20 @@ export default function SettingsScreen() {
           onPress={() => router.push('/settings/narration' as never)}
         />
 
-        <Text variant="label" color={palette.slate} uppercase>Account</Text>
+        <Text variant="label" color={colors.slate} uppercase>Account</Text>
         <SettingsRow
           title="Email sign-in & sync"
           subtitle={pairing ? 'Recover your account and link devices' : 'Sync is not configured'}
           icon={<AccountIcon />}
           onPress={() => router.push('/settings/devices' as never)}
         />
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           Sign in by email to keep progress available across your devices. No password required.
         </Text>
 
         {__DEV__ && (
           <>
-            <Text variant="label" color={palette.slate} uppercase>Developer</Text>
+            <Text variant="label" color={colors.slate} uppercase>Developer</Text>
             <SettingsRow
               title={`Simulate plan · ${PLAN_LABEL[entitlement.plan]}`}
               subtitle="Dev only — tap to cycle Free → Pro → Elite. Never synced."
@@ -74,7 +76,7 @@ export default function SettingsScreen() {
           </>
         )}
 
-        <Text variant="label" color={palette.slate} uppercase>Legal</Text>
+        <Text variant="label" color={colors.slate} uppercase>Legal</Text>
         <SettingsRow
           title="Privacy Policy"
           subtitle="What we collect and how it's handled"
@@ -98,15 +100,16 @@ function SettingsRow({ title, subtitle, icon, onPress }: {
   icon: React.ReactNode;
   onPress: () => void;
 }) {
+  const colors = useColors();
   return (
     <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={title}>
       <CardSurface style={styles.row}>
         <View style={styles.rowIcon}>{icon}</View>
         <View style={styles.rowText}>
-          <Text variant="h3" color={palette.ink}>{title}</Text>
-          <Text variant="caption" color={palette.slate}>{subtitle}</Text>
+          <Text variant="h3">{title}</Text>
+          <Text variant="caption" color={colors.slate}>{subtitle}</Text>
         </View>
-        <Text variant="h2" color={palette.slateLight}>›</Text>
+        <Text variant="h2" color={colors.slateLight}>›</Text>
       </CardSurface>
     </Pressable>
   );

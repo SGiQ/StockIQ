@@ -6,6 +6,7 @@ import type { FillBlankCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { PillButton, RichTextView, Text } from '@/components/primitives';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface FillBlankCardViewProps {
   card: FillBlankCard;
@@ -29,6 +30,7 @@ export function FillBlankCardView({
   onAnswered,
   shakeStyle,
 }: FillBlankCardViewProps) {
+  const colors = useColors();
   const picked = state.kind === 'blank' ? state.picked : undefined;
   const choicesOpen = state.kind === 'blank' ? state.choicesOpen : false;
   const checked = state.kind === 'blank' ? state.checked : false;
@@ -61,9 +63,9 @@ export function FillBlankCardView({
         <RichTextView
           value={card.body}
           variant="h3"
-          color={palette.ink}
+          color={colors.ink}
           renderBlank={() => (
-            <Text variant="h3" color={palette.paper} style={{ backgroundColor: blankColor }}>
+            <Text variant="h3" color={colors.paper} style={{ backgroundColor: blankColor }}>
               {`  ${picked ?? '?'}  `}
             </Text>
           )}
@@ -99,7 +101,7 @@ export function FillBlankCardView({
                 >
                   <Text
                     variant="h3"
-                    color={palette.paper}
+                    color={colors.paper}
                     align="center"
                     style={isPicked ? undefined : styles.bankWordIdle}
                   >
@@ -131,7 +133,7 @@ export function FillBlankCardView({
             <RichTextView
               value={card.explanation}
               variant="bodySm"
-              color={palette.inkSoft}
+              color={colors.inkSoft}
               style={styles.explanationBody}
             />
           )}

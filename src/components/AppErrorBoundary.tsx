@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
+import * as Sentry from '@sentry/react-native';
 import { trackTelemetry } from '@/services/telemetry';
 import { Text } from '@/components/primitives';
 import { palette, radius, space } from '@/theme/tokens';
@@ -11,7 +12,8 @@ export class AppErrorBoundary extends Component<{ children: ReactNode }, { faile
     return { failed: true };
   }
 
-  componentDidCatch(error: Error, _info: ErrorInfo) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    Sentry.captureException(error, { extra: { componentStack: info.componentStack } });
     void trackTelemetry('client_error', undefined, error.name.slice(0, 40));
   }
 

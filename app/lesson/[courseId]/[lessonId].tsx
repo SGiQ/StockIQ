@@ -13,6 +13,7 @@ import { SourceLinks } from '@/components/kb/SourceLinks';
 import { reportId, savedCardId } from '@/store';
 import { useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 import { trackTelemetry } from '@/services/telemetry';
 
 export default function LessonScreen() {
@@ -133,6 +134,7 @@ function CompletionScreen({
   sources: NonNullable<ReturnType<typeof getLesson>>['sources'];
 }) {
   const router = useRouter();
+  const colors = useColors();
   const next = getNextLesson(courseId, lessonId);
 
   return (
@@ -142,12 +144,12 @@ function CompletionScreen({
           <Glyph
             name={completion.starred ? 'target' : 'check'}
             size={56}
-            color={palette.paper}
+            color={colors.paper}
             strokeWidth={2.4}
           />
         </View>
 
-        <Text variant="display" color={palette.ink} align="center">
+        <Text variant="display" align="center">
           {completion.starred ? 'Perfect run.' : 'Lesson complete.'}
         </Text>
 
@@ -168,7 +170,7 @@ function CompletionScreen({
             ) : null}
           </View>
         ) : (
-          <Text variant="caption" color={palette.slate} align="center">
+          <Text variant="caption" color={colors.slate} align="center">
             Reviewed — XP was already earned for this lesson.
           </Text>
         )}
@@ -184,12 +186,12 @@ function CompletionScreen({
             <Text variant="label" color={palette.flame} uppercase>
               {`${completion.streakMilestone}-day streak!`}
             </Text>
-            <Text variant="caption" color={palette.slate} align="center">
+            <Text variant="caption" color={colors.slate} align="center">
               A milestone. Keep the chain alive.
             </Text>
           </View>
         ) : (
-          <Text variant="body" color={palette.slate} align="center">
+          <Text variant="body" color={colors.slate} align="center">
             {completion.streak.currentStreak === 1
               ? 'Streak started. Come back tomorrow to keep it.'
               : `You're on a ${completion.streak.currentStreak}-day streak.`}

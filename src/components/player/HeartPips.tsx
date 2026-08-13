@@ -4,6 +4,7 @@ import { Text } from '@/components/primitives';
 import { snapshot, MAX_HEARTS } from '@/features/hearts';
 import type { HeartsValue } from '@/store/repository';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** The save-action heart path, reused so hearts read as one shape app-wide. */
 export const HEART_PATH =
@@ -46,9 +47,10 @@ export interface HeartPipsProps {
  * conversion surface, exactly as the out-of-hearts overlay is.
  */
 export function HeartPips({ state, now, onPress }: HeartPipsProps) {
+  const colors = useColors();
   const count = state ? snapshot(state, now).count : MAX_HEARTS;
   const empty = count <= 0;
-  const color = empty ? palette.slateLight : palette.danger;
+  const color = empty ? colors.slateLight : palette.danger;
 
   return (
     <Pressable

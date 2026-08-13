@@ -8,6 +8,7 @@ import { CardSurface, PillButton, RichTextView, Screen, Text } from '@/component
 import { buildAssessment, type BadgeDef } from '@/features/achievements';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const QUESTION_COUNT = 8;
 
@@ -21,6 +22,7 @@ type Phase = 'intro' | 'quiz' | 'result';
  * knowledge check, not a trading clearance — the score it feeds is educational.
  */
 export default function AssessmentScreen() {
+  const colors = useColors();
   const router = useRouter();
   const recordAssessment = useAppStore((s) => s.recordAssessment);
 
@@ -81,14 +83,14 @@ export default function AssessmentScreen() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M6 6l12 12M18 6L6 18"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               fill="none"
             />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           Readiness check
         </Text>
       </View>
@@ -115,7 +117,7 @@ export default function AssessmentScreen() {
             </Text>
           </View>
 
-          <RichTextView value={current.prompt} variant="h2" color={palette.ink} />
+          <RichTextView value={current.prompt} variant="h2" color={colors.ink} />
 
           <View style={styles.options}>
             {current.options.map((option) => {
@@ -135,11 +137,12 @@ export default function AssessmentScreen() {
                   disabled={revealed}
                   style={[
                     styles.option,
+                    { backgroundColor: colors.paper, borderColor: colors.hairline },
                     state === 'correct' && styles.optionCorrect,
                     state === 'wrong' && styles.optionWrong,
                   ]}
                 >
-                  <Text variant="body" color={palette.ink} style={styles.optionLabel}>
+                  <Text variant="body" style={styles.optionLabel}>
                     {option.label}
                   </Text>
                   {state === 'correct' ? <Mark kind="check" /> : null}
@@ -150,8 +153,8 @@ export default function AssessmentScreen() {
           </View>
 
           {revealed ? (
-            <CardSurface style={styles.explanation}>
-              <RichTextView value={current.explanation} variant="caption" color={palette.slate} />
+            <CardSurface style={{ backgroundColor: colors.paperWarm }}>
+              <RichTextView value={current.explanation} variant="caption" color={colors.slate} />
             </CardSurface>
           ) : null}
 
@@ -165,7 +168,7 @@ export default function AssessmentScreen() {
         </ScrollView>
       ) : (
         <View style={styles.body}>
-          <Text variant="body" color={palette.slate} align="center">
+          <Text variant="body" color={colors.slate} align="center">
             No questions are available yet.
           </Text>
           <PillButton label="Back" variant="dark" fullWidth={false} onPress={exit} />
@@ -176,12 +179,13 @@ export default function AssessmentScreen() {
 }
 
 function QuizProgress({ index, total }: { index: number; total: number }) {
+  const colors = useColors();
   return (
     <View style={styles.progressWrap}>
-      <View style={styles.progressTrack}>
+      <View style={[styles.progressTrack, { backgroundColor: colors.hairline }]}>
         <View style={[styles.progressFill, { width: `${((index + 1) / total) * 100}%` }]} />
       </View>
-      <Text variant="caption" color={palette.slate}>
+      <Text variant="caption" color={colors.slate}>
         {`Question ${index + 1} of ${total}`}
       </Text>
     </View>
@@ -189,12 +193,13 @@ function QuizProgress({ index, total }: { index: number; total: number }) {
 }
 
 function Intro({ total, onBegin, onCancel }: { total: number; onBegin: () => void; onCancel: () => void }) {
+  const colors = useColors();
   return (
     <ScrollView contentContainerStyle={styles.introBody} showsVerticalScrollIndicator={false}>
-      <Text variant="display" color={palette.ink}>
+      <Text variant="display">
         Check your readiness.
       </Text>
-      <Text variant="body" color={palette.slate}>
+      <Text variant="body" color={colors.slate}>
         {`${total} questions drawn from across the five topics. Answer honestly — this measures how much of the curriculum has landed, and your best score feeds your Market Readiness.`}
       </Text>
       <CardSurface style={styles.introNote}>
@@ -223,6 +228,7 @@ function Result({
   onRetake: () => void;
   onDone: () => void;
 }) {
+  const colors = useColors();
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const strong = pct >= 80;
   const fair = pct >= 50;
@@ -235,17 +241,17 @@ function Result({
   return (
     <ScrollView contentContainerStyle={styles.resultBody} showsVerticalScrollIndicator={false}>
       <View style={[styles.scoreDisc, { backgroundColor: strong ? palette.emerald : palette.azure }]}>
-        <Text variant="display" color={palette.paper}>
+        <Text variant="display" color={colors.paper}>
           {`${pct}%`}
         </Text>
       </View>
-      <Text variant="h1" color={palette.ink} align="center">
+      <Text variant="h1" align="center">
         {`${correct} of ${total} correct`}
       </Text>
-      <Text variant="body" color={palette.slate} align="center">
+      <Text variant="body" color={colors.slate} align="center">
         {message}
       </Text>
-      <Text variant="caption" color={palette.slateLight} align="center">
+      <Text variant="caption" color={colors.slateLight} align="center">
         Your Market Readiness keeps your best result — this attempt only helps it.
       </Text>
 
@@ -297,7 +303,6 @@ const styles = StyleSheet.create({
   progressTrack: {
     height: 7,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     overflow: 'hidden',
   },
   progressFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint },
@@ -314,16 +319,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.sm,
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     borderWidth: 2,
-    borderColor: palette.hairline,
   },
   optionCorrect: { borderColor: palette.emerald, backgroundColor: 'rgba(74,222,128,0.12)' },
   optionWrong: { borderColor: palette.danger, backgroundColor: 'rgba(220,38,38,0.08)' },
   optionLabel: { flex: 1 },
-  explanation: { backgroundColor: palette.paperWarm },
+  explanation: {},
   introBody: { padding: space.lg, paddingBottom: space.xxl, gap: space.md },
   introNote: { padding: space.md, backgroundColor: palette.mintSoft },
   introActions: { gap: space.sm, marginTop: space.md },

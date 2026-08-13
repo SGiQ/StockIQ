@@ -6,7 +6,8 @@ import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { savedCardId } from '@/store';
 import { useAppStore } from '@/store/slices/useAppStore';
-import { palette, space } from '@/theme/tokens';
+import { space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * A book's visual guide, played in the lesson player.
@@ -23,6 +24,7 @@ import { palette, space } from '@/theme/tokens';
 const BOOK_COURSE_ID = 'book';
 
 export default function BookGuide() {
+  const colors = useColors();
   const { bookId } = useLocalSearchParams<{ bookId: string }>();
   const router = useRouter();
   const book = getBook(bookId);
@@ -38,7 +40,7 @@ export default function BookGuide() {
   if (!book) {
     return (
       <Screen tone="paper">
-        <View style={styles.centre}>
+        <View style={[styles.centre, { backgroundColor: colors.paper }]}>
           <Text variant="h2">Guide not found</Text>
           <PillButton label="Go back" variant="dark" fullWidth={false} onPress={exit} />
         </View>
@@ -68,6 +70,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: space.lg,
     padding: space.lg,
-    backgroundColor: palette.paper,
   },
 });

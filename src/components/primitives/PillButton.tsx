@@ -7,7 +7,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as haptics from '@/lib/haptics';
 import { Text } from './Text';
-import { motion, palette, radius, shadow, space } from '@/theme/tokens';
+import { motion, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -36,14 +37,17 @@ export interface PillButtonProps {
   testID?: string;
 }
 
-const SURFACES: Record<PillVariant, { bg: string; fg: string; border?: string }> = {
-  primary: { bg: palette.violet, fg: palette.paper },
-  secondary: { bg: palette.violetSoft, fg: palette.violetInk },
-  dark: { bg: palette.ink, fg: palette.paper },
-  light: { bg: palette.paper, fg: palette.ink },
-  ghost: { bg: 'transparent', fg: palette.ink, border: palette.hairline },
-  danger: { bg: palette.danger, fg: palette.paper },
-};
+function useSurfaces() {
+  const c = useColors();
+  return {
+    primary: { bg: c.violet, fg: c.paper },
+    secondary: { bg: c.violetSoft, fg: c.violetInk },
+    dark: { bg: c.ink, fg: c.paper },
+    light: { bg: c.paper, fg: c.ink },
+    ghost: { bg: 'transparent', fg: c.ink, border: c.hairline },
+    danger: { bg: c.danger, fg: c.paper },
+  } as Record<PillVariant, { bg: string; fg: string; border?: string }>;
+}
 
 /**
  * The heavy rounded pill that carries every action in the app. Press state
@@ -61,7 +65,8 @@ export function PillButton({
   testID,
 }: PillButtonProps) {
   const pressed = useSharedValue(0);
-  const surface = SURFACES[variant];
+  const surfaces = useSurfaces();
+  const surface = surfaces[variant];
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: 1 - pressed.value * 0.03 }],

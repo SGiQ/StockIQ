@@ -4,6 +4,7 @@ import { listWeeklyNotes } from '@/content/registry';
 import { CardSurface, Text } from '@/components/primitives';
 import { unseenWeeklyNoteCount, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The home entry point into This Week: the latest note, with a "new" dot when
@@ -11,6 +12,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * reason to return — a fresh, timely read each drop.
  */
 export function ThisWeekCard() {
+  const colors = useColors();
   const router = useRouter();
   const profile = useAppStore((s) => s.profile);
   const latest = listWeeklyNotes()[0];
@@ -31,10 +33,10 @@ export function ThisWeekCard() {
           </Text>
           {unseen > 0 ? <View style={styles.newDot} /> : null}
         </View>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           {latest.title}
         </Text>
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           {latest.summary}
         </Text>
       </CardSurface>

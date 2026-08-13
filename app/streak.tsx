@@ -9,6 +9,7 @@ import { STREAK_FREEZE_COST } from '@/features/gems';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
@@ -35,6 +36,7 @@ function useMonthGrid(): { title: string; weeks: (string | null)[][] } {
 }
 
 export default function StreakScreen() {
+  const colors = useColors();
   const router = useRouter();
   const streak = useAppStore((s) => s.streak);
   const gemBalance = useAppStore((s) => s.gems?.balance ?? 0);
@@ -58,10 +60,10 @@ export default function StreakScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           Streak
         </Text>
       </View>
@@ -71,7 +73,7 @@ export default function StreakScreen() {
           <Text variant="display" color={palette.flame}>
             {`${streak?.currentStreak ?? 0}`}
           </Text>
-          <Text variant="body" color={palette.slate}>
+          <Text variant="body" color={colors.slate}>
             {streak && streak.currentStreak > 0
               ? `day streak · longest ${streak.longestStreak}`
               : 'Finish a lesson today to start one.'}
@@ -79,12 +81,12 @@ export default function StreakScreen() {
         </CardSurface>
 
         <CardSurface style={styles.calendarCard}>
-          <Text variant="h3" color={palette.ink}>
+          <Text variant="h3">
             {title}
           </Text>
           <View style={styles.weekRow}>
             {WEEKDAYS.map((d, i) => (
-              <Text key={i} variant="label" color={palette.slateLight} style={styles.weekday}>
+              <Text key={i} variant="label" color={colors.slateLight} style={styles.weekday}>
                 {d}
               </Text>
             ))}
@@ -103,7 +105,7 @@ export default function StreakScreen() {
                     >
                       <Text
                         variant="caption"
-                        color={active.has(day) ? palette.paper : palette.slate}
+                        color={active.has(day) ? colors.paper : colors.slate}
                       >
                         {String(Number(day.slice(-2)))}
                       </Text>
@@ -117,14 +119,14 @@ export default function StreakScreen() {
 
         <CardSurface style={styles.freezeCard}>
           <View style={styles.freezeHead}>
-            <Text variant="h3" color={palette.ink}>
+            <Text variant="h3">
               Streak freezes
             </Text>
             <Text variant="label" color={palette.azure} uppercase>
               {`${freezes} / ${MAX_FREEZES}`}
             </Text>
           </View>
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             A freeze protects your streak for one missed day — it's spent
             automatically the day you skip. Keep up to {MAX_FREEZES} on hand.
           </Text>
@@ -142,7 +144,7 @@ export default function StreakScreen() {
           />
           <View style={styles.gemRow}>
             <GemIcon size={14} />
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               {`You have ${gemBalance} gems`}
             </Text>
           </View>

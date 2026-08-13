@@ -1,17 +1,21 @@
 import { Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 import { Text } from './Text';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export type ChipTone = 'neutral' | 'violet' | 'mint' | 'azure' | 'flame' | 'dark';
 
-const TONES: Record<ChipTone, { bg: string; fg: string; border?: string }> = {
-  neutral: { bg: palette.paper, fg: palette.ink, border: palette.hairline },
-  violet: { bg: palette.violet, fg: palette.paper },
-  mint: { bg: palette.mint, fg: palette.forestInk },
-  azure: { bg: palette.azure, fg: palette.paper },
-  flame: { bg: palette.flame, fg: palette.paper },
-  dark: { bg: palette.ink, fg: palette.paper },
-};
+function useChipTones() {
+  const c = useColors();
+  return {
+    neutral: { bg: c.paper, fg: c.ink, border: c.hairline },
+    violet: { bg: c.violet, fg: c.paper },
+    mint: { bg: c.mint, fg: c.forestInk },
+    azure: { bg: c.azure, fg: c.paper },
+    flame: { bg: c.flame, fg: c.paper },
+    dark: { bg: c.ink, fg: c.paper },
+  } as Record<ChipTone, { bg: string; fg: string; border?: string }>;
+}
 
 export interface ChipProps {
   label: string;
@@ -36,7 +40,8 @@ export function Chip({
   compact = false,
   style,
 }: ChipProps) {
-  const resolved = selected && tone === 'neutral' ? TONES.dark : TONES[tone];
+  const tones = useChipTones();
+  const resolved = selected && tone === 'neutral' ? tones.dark : tones[tone];
   const content = (
     <View
       style={[

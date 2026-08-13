@@ -7,6 +7,7 @@ import type { CardUiState } from '@/components/player/cardState';
 import { ArtView } from '@/components/art/ArtView';
 import { PillButton, RichTextView, Text } from '@/components/primitives';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface BinaryChoiceCardViewProps {
   card: BinaryChoiceCard;
@@ -33,6 +34,7 @@ export function BinaryChoiceCardView({
   shakeStyle,
   active = true,
 }: BinaryChoiceCardViewProps) {
+  const colors = useColors();
   const selected = state.kind === 'choice' ? state.selected : undefined;
   const checked = state.kind === 'choice' ? state.checked : false;
   const correct = state.kind === 'choice' ? state.correct : undefined;
@@ -59,7 +61,7 @@ export function BinaryChoiceCardView({
     // the navigation zones; only the options and Check Answer are targets.
     <View style={styles.container} pointerEvents="box-none">
       <View style={styles.prompt} pointerEvents="none">
-        <RichTextView value={card.prompt} variant="h2" color={palette.ink} />
+        <RichTextView value={card.prompt} variant="h2" color={colors.ink} />
         {card.art && <ArtView spec={card.art} aspectRatio={1.5} glyphSize={56} active={active} />}
       </View>
 
@@ -128,7 +130,7 @@ export function BinaryChoiceCardView({
           <RichTextView
             value={card.explanation}
             variant="bodySm"
-            color={palette.inkSoft}
+            color={colors.inkSoft}
             style={styles.explanationBody}
           />
         </View>

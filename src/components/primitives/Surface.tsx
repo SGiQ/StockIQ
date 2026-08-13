@@ -1,21 +1,25 @@
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
-import { palette, radius, shadow, space } from '@/theme/tokens';
+import { radius, shadow, space } from '@/theme/tokens';
+import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 export type SurfaceTone = 'paper' | 'warm' | 'forest' | 'forestDeep' | 'ink';
-
-const TONES: Record<SurfaceTone, string> = {
-  paper: palette.paper,
-  warm: palette.paperWarm,
-  forest: palette.forest,
-  forestDeep: palette.forestDeep,
-  ink: palette.ink,
-};
 
 /** Whether text on this surface should be light. */
 export const isDarkTone = (tone: SurfaceTone): boolean =>
   tone === 'forest' || tone === 'forestDeep' || tone === 'ink';
+
+function useTones() {
+  const c = useColors();
+  return {
+    paper: c.paper,
+    warm: c.paperWarm,
+    forest: c.forest,
+    forestDeep: c.forestDeep,
+    ink: c.ink,
+  } as Record<SurfaceTone, string>;
+}
 
 export interface ScreenProps {
   tone?: SurfaceTone;
@@ -26,8 +30,9 @@ export interface ScreenProps {
 
 /** Full-screen background with safe-area insets applied. */
 export function Screen({ tone = 'warm', edges = ['top', 'bottom'], children, style }: ScreenProps) {
+  const tones = useTones();
   return (
-    <SafeAreaView edges={edges} style={[styles.screen, { backgroundColor: TONES[tone] }, style]}>
+    <SafeAreaView edges={edges} style={[styles.screen, { backgroundColor: tones[tone] }, style]}>
       {children}
     </SafeAreaView>
   );
@@ -49,13 +54,17 @@ export function CardSurface({
   elevated = true,
   style,
 }: CardSurfaceProps) {
+  const tones = useTones();
+  const isDark = useIsDark();
+  const colors = useColors();
   return (
     <View
       style={[
         styles.card,
-        { backgroundColor: TONES[tone] },
+        { backgroundColor: tones[tone] },
+        isDark ? { borderWidth: 1, borderColor: colors.hairline } : null,
         padded ? { padding: space.md } : null,
-        elevated ? shadow.card : null,
+        elevated && !isDark ? shadow.card : null,
         style,
       ]}
     >

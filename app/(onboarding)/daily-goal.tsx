@@ -5,6 +5,7 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The commitment step.
@@ -23,6 +24,7 @@ const GOALS: { minutes: number; label: string; hint: string; recommended?: boole
 ];
 
 export default function DailyGoal() {
+  const colors = useColors();
   const router = useRouter();
   const setDailyGoal = useAppStore((s) => s.setDailyGoal);
   // Default to the recommended pace, so Continue is live on arrival.
@@ -34,7 +36,7 @@ export default function DailyGoal() {
         <OnboardingProgress step={2} total={4} />
 
         <View style={styles.header}>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             Set a daily goal.
           </Text>
           <Text variant="body" color={palette.mintSoft}>
@@ -52,11 +54,11 @@ export default function DailyGoal() {
                 onPress={() => setMinutes(goal.minutes)}
                 accessibilityRole="radio"
                 accessibilityState={{ selected }}
-                style={[styles.option, selected && styles.optionSelected]}
+                style={[styles.option, { backgroundColor: colors.paper }, selected && styles.optionSelected]}
               >
                 <View style={styles.optionCopy}>
                   <View style={styles.labelRow}>
-                    <Text variant="body" color={palette.ink}>
+                    <Text variant="body">
                       {goal.label}
                     </Text>
                     {goal.recommended ? (
@@ -67,11 +69,11 @@ export default function DailyGoal() {
                       </View>
                     ) : null}
                   </View>
-                  <Text variant="caption" color={palette.slate}>
+                  <Text variant="caption" color={colors.slate}>
                     {goal.hint}
                   </Text>
                 </View>
-                <View style={[styles.radio, selected && styles.radioOn]}>
+                <View style={[styles.radio, { borderColor: colors.hairline }, selected && styles.radioOn]}>
                   {selected ? <View style={styles.radioDot} /> : null}
                 </View>
               </Pressable>
@@ -111,7 +113,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     borderWidth: 3,
@@ -141,7 +142,6 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: radius.pill,
     borderWidth: 2,
-    borderColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
   },

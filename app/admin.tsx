@@ -4,6 +4,7 @@ import Svg, { Line, Rect } from 'react-native-svg';
 import { Screen, Text } from '@/components/primitives';
 import { SYNC_URL } from '@/config';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 interface Overview {
   totalAccounts: number;
@@ -50,16 +51,18 @@ async function adminFetch<T>(path: string, secret: string): Promise<T> {
 }
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
+  const colors = useColors();
   return (
-    <View style={s.statCard}>
-      <Text variant="caption" color={palette.slate} uppercase>{label}</Text>
-      <Text variant="display" color={palette.ink} style={s.statValue}>{String(value)}</Text>
-      {sub ? <Text variant="caption" color={palette.slate}>{sub}</Text> : null}
+    <View style={[s.statCard, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
+      <Text variant="caption" color={colors.slate} uppercase>{label}</Text>
+      <Text variant="display" style={s.statValue}>{String(value)}</Text>
+      {sub ? <Text variant="caption" color={colors.slate}>{sub}</Text> : null}
     </View>
   );
 }
 
 function SignupChart({ data }: { data: SignupRow[] }) {
+  const colors = useColors();
   if (data.length === 0) return null;
   const max = Math.max(...data.map(d => d.count), 1);
   const w = 600;
@@ -67,8 +70,8 @@ function SignupChart({ data }: { data: SignupRow[] }) {
   const barW = Math.max(4, Math.min(16, (w - 20) / data.length - 2));
 
   return (
-    <View style={s.chartWrap}>
-      <Text variant="label" color={palette.slate} uppercase>Signups (last 30 days)</Text>
+    <View style={[s.chartWrap, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
+      <Text variant="label" color={colors.slate} uppercase>Signups (last 30 days)</Text>
       <Svg width="100%" height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet">
         {data.map((d, i) => {
           const barH = (d.count / max) * (h - 20);
@@ -86,7 +89,7 @@ function SignupChart({ data }: { data: SignupRow[] }) {
             />
           );
         })}
-        <Line x1={10} y1={h - 1} x2={w - 10} y2={h - 1} stroke={palette.hairline} strokeWidth={1} />
+        <Line x1={10} y1={h - 1} x2={w - 10} y2={h - 1} stroke={colors.hairline} strokeWidth={1} />
       </Svg>
     </View>
   );
@@ -104,13 +107,14 @@ function formatAgo(ts: number) {
   return `${Math.floor(diff / 86_400_000)}d ago`;
 }
 
-function planColor(plan: string) {
+function planColor(plan: string, slate: string) {
   if (plan === 'elite') return palette.violet;
   if (plan === 'pro') return palette.emeraldDeep;
-  return palette.slate;
+  return slate;
 }
 
 export default function AdminPage() {
+  const colors = useColors();
   const [secret, setSecret] = useState('');
   const [authed, setAuthed] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -153,21 +157,21 @@ export default function AdminPage() {
     return (
       <Screen tone="warm" edges={['top']}>
         <View style={s.loginWrap}>
-          <Text variant="h1" color={palette.ink}>Admin</Text>
-          <Text variant="body" color={palette.slate}>Enter the admin secret to continue.</Text>
+          <Text variant="h1">Admin</Text>
+          <Text variant="body" color={colors.slate}>Enter the admin secret to continue.</Text>
           <TextInput
             value={secret}
             onChangeText={setSecret}
             placeholder="Admin secret"
-            placeholderTextColor={palette.slateLight}
+            placeholderTextColor={colors.slateLight}
             secureTextEntry
             autoCapitalize="none"
             autoCorrect={false}
-            style={s.input}
+            style={[s.input, { backgroundColor: colors.paper, color: colors.ink, borderColor: colors.hairline }]}
             onSubmitEditing={handleLogin}
           />
           <Pressable onPress={handleLogin} style={s.loginBtn} disabled={loading}>
-            <Text variant="label" color={palette.paper}>{loading ? 'Loading...' : 'Sign in'}</Text>
+            <Text variant="label" color={colors.paper}>{loading ? 'Loading...' : 'Sign in'}</Text>
           </Pressable>
           {error ? <Text variant="caption" color={palette.danger}>{error}</Text> : null}
         </View>
@@ -179,7 +183,7 @@ export default function AdminPage() {
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={s.body} showsVerticalScrollIndicator={false}>
         <View style={s.header}>
-          <Text variant="h1" color={palette.ink}>Dashboard</Text>
+          <Text variant="h1">Dashboard</Text>
           <Pressable onPress={() => void load(secret)} style={s.refreshBtn}>
             <Text variant="label" color={palette.forestDeep}>Refresh</Text>
           </Pressable>
@@ -187,7 +191,7 @@ export default function AdminPage() {
 
         {overview && (
           <>
-            <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>Users</Text>
+            <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>Users</Text>
             <View style={s.statGrid}>
               <StatCard label="Total accounts" value={overview.totalAccounts} />
               <StatCard label="Devices" value={overview.totalDevices} />
@@ -196,7 +200,7 @@ export default function AdminPage() {
               <StatCard label="This month" value={overview.signupsThisMonth} sub="new signups" />
             </View>
 
-            <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>Engagement</Text>
+            <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>Engagement</Text>
             <View style={s.statGrid}>
               <StatCard label="DAU today" value={overview.dauToday} />
               <StatCard label="DAU yesterday" value={overview.dauYesterday} />
@@ -204,7 +208,7 @@ export default function AdminPage() {
               <StatCard label="MAU" value={overview.mau} />
             </View>
 
-            <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>Learning</Text>
+            <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>Learning</Text>
             <View style={s.statGrid}>
               <StatCard label="Lessons completed" value={overview.lessonsCompleted} sub={`${overview.lessonsCompletedToday} today`} />
               <StatCard label="Avg / user" value={overview.avgLessonsPerUser} sub="lessons completed" />
@@ -215,12 +219,12 @@ export default function AdminPage() {
 
             {overview.authBreakdown.length > 0 && (
               <>
-                <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>Auth methods</Text>
-                <View style={s.tableCard}>
+                <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>Auth methods</Text>
+                <View style={[s.tableCard, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
                   {overview.authBreakdown.map((a) => (
-                    <View key={a.provider} style={s.tableRow}>
-                      <Text variant="body" color={palette.ink} style={s.tableCell}>{a.provider}</Text>
-                      <Text variant="bodyEm" color={palette.ink}>{a.count}</Text>
+                    <View key={a.provider} style={[s.tableRow, { borderBottomColor: colors.hairline }]}>
+                      <Text variant="body" style={s.tableCell}>{a.provider}</Text>
+                      <Text variant="bodyEm">{a.count}</Text>
                     </View>
                   ))}
                 </View>
@@ -233,47 +237,47 @@ export default function AdminPage() {
 
         {telemetry.length > 0 && (
           <>
-            <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>Telemetry (7 days)</Text>
-            <View style={s.tableCard}>
-              <View style={s.tableRow}>
-                <Text variant="label" color={palette.slate} style={s.tableCell}>Event</Text>
-                <Text variant="label" color={palette.slate}>Count</Text>
+            <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>Telemetry (7 days)</Text>
+            <View style={[s.tableCard, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
+              <View style={[s.tableRow, { borderBottomColor: colors.hairline }]}>
+                <Text variant="label" color={colors.slate} style={s.tableCell}>Event</Text>
+                <Text variant="label" color={colors.slate}>Count</Text>
               </View>
               {telemetry.map((t) => (
-                <View key={t.event_type} style={s.tableRow}>
-                  <Text variant="bodySm" color={palette.ink} style={s.tableCell}>{t.event_type}</Text>
-                  <Text variant="bodySm" color={palette.ink}>{t.count}</Text>
+                <View key={t.event_type} style={[s.tableRow, { borderBottomColor: colors.hairline }]}>
+                  <Text variant="bodySm" style={s.tableCell}>{t.event_type}</Text>
+                  <Text variant="bodySm">{t.count}</Text>
                 </View>
               ))}
             </View>
           </>
         )}
 
-        <Text variant="label" color={palette.slate} uppercase style={s.sectionLabel}>
+        <Text variant="label" color={colors.slate} uppercase style={s.sectionLabel}>
           {`Users (${usersTotal} total)`}
         </Text>
-        <View style={s.tableCard}>
-          <View style={s.tableRow}>
-            <Text variant="label" color={palette.slate} style={s.userCell}>Account</Text>
-            <Text variant="label" color={palette.slate} style={s.userCellSm}>Plan</Text>
-            <Text variant="label" color={palette.slate} style={s.userCellSm}>XP</Text>
-            <Text variant="label" color={palette.slate} style={s.userCellSm}>Lessons</Text>
-            <Text variant="label" color={palette.slate} style={s.userCellSm}>Streak</Text>
-            <Text variant="label" color={palette.slate} style={s.userCellSm}>Last seen</Text>
+        <View style={[s.tableCard, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
+          <View style={[s.tableRow, { borderBottomColor: colors.hairline }]}>
+            <Text variant="label" color={colors.slate} style={s.userCell}>Account</Text>
+            <Text variant="label" color={colors.slate} style={s.userCellSm}>Plan</Text>
+            <Text variant="label" color={colors.slate} style={s.userCellSm}>XP</Text>
+            <Text variant="label" color={colors.slate} style={s.userCellSm}>Lessons</Text>
+            <Text variant="label" color={colors.slate} style={s.userCellSm}>Streak</Text>
+            <Text variant="label" color={colors.slate} style={s.userCellSm}>Last seen</Text>
           </View>
           {users.map((u) => (
-            <View key={u.accountId} style={s.tableRow}>
+            <View key={u.accountId} style={[s.tableRow, { borderBottomColor: colors.hairline }]}>
               <View style={s.userCell}>
-                <Text variant="bodySm" color={palette.ink} numberOfLines={1}>{u.accountId.slice(0, 16)}...</Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="bodySm" numberOfLines={1}>{u.accountId.slice(0, 16)}...</Text>
+                <Text variant="caption" color={colors.slate}>
                   {`${formatDate(u.createdAt)} · ${u.devices} device${u.devices !== 1 ? 's' : ''}${u.provider ? ` · ${u.provider}` : ''}`}
                 </Text>
               </View>
-              <Text variant="bodySm" color={planColor(u.plan)} style={s.userCellSm}>{u.plan}</Text>
-              <Text variant="bodySm" color={palette.ink} style={s.userCellSm}>{u.totalXp}</Text>
-              <Text variant="bodySm" color={palette.ink} style={s.userCellSm}>{u.lessonsCompleted}</Text>
-              <Text variant="bodySm" color={palette.ink} style={s.userCellSm}>{u.currentStreak}</Text>
-              <Text variant="bodySm" color={palette.slate} style={s.userCellSm}>{formatAgo(u.lastSeen)}</Text>
+              <Text variant="bodySm" color={planColor(u.plan, colors.slate)} style={s.userCellSm}>{u.plan}</Text>
+              <Text variant="bodySm" style={s.userCellSm}>{u.totalXp}</Text>
+              <Text variant="bodySm" style={s.userCellSm}>{u.lessonsCompleted}</Text>
+              <Text variant="bodySm" style={s.userCellSm}>{u.currentStreak}</Text>
+              <Text variant="bodySm" color={colors.slate} style={s.userCellSm}>{formatAgo(u.lastSeen)}</Text>
             </View>
           ))}
         </View>
@@ -289,14 +293,11 @@ const s = StyleSheet.create({
   input: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: palette.paper,
     borderRadius: radius.pill,
     paddingHorizontal: space.lg,
     paddingVertical: space.sm + 4,
-    color: palette.ink,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   loginBtn: {
     backgroundColor: palette.forestDeep,
@@ -316,31 +317,25 @@ const s = StyleSheet.create({
   sectionLabel: { marginTop: space.lg, marginBottom: space.xs },
   statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   statCard: {
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     minWidth: 140,
     flex: 1,
     gap: 2,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   statValue: { fontSize: 32, lineHeight: 38 },
   chartWrap: {
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     marginTop: space.md,
     gap: space.sm,
     borderWidth: 1,
-    borderColor: palette.hairline,
   },
   tableCard: {
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.sm,
     borderWidth: 1,
-    borderColor: palette.hairline,
     overflow: 'hidden',
   },
   tableRow: {
@@ -349,7 +344,6 @@ const s = StyleSheet.create({
     paddingVertical: space.xs + 2,
     paddingHorizontal: space.sm,
     borderBottomWidth: 1,
-    borderBottomColor: palette.hairline,
   },
   tableCell: { flex: 1 },
   userCell: { flex: 2, gap: 1 },

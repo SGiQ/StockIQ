@@ -21,7 +21,8 @@ import {
 } from '@/services/narration/speech';
 import { useNarration } from '@/services/narration/useNarration';
 import { Text } from '@/components/primitives';
-import { motion, palette, radius, space } from '@/theme/tokens';
+import { motion, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 import { trackTelemetry } from '@/services/telemetry';
 import {
   canAdvance,
@@ -100,6 +101,7 @@ export function LessonPlayer({
   onTutorialDismissed,
   enforceHearts = false,
 }: LessonPlayerProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
 
   /**
@@ -423,7 +425,7 @@ export function LessonPlayer({
     // forward onLayout to its child. The root has no horizontal padding, so
     // its width is the stage width.
     <View
-      style={styles.root}
+      style={[styles.root, { backgroundColor: colors.paper }]}
       onLayout={(e) => {
         const next = e.nativeEvent.layout.width;
         if (next > 0 && next !== width) {
@@ -586,7 +588,6 @@ export function LessonPlayer({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.paper,
     // Cards live at `left: i * width`, so the deck is far wider than the
     // screen. Without clipping, neighbouring cards bleed into view and the
     // document itself becomes horizontally scrollable on web.

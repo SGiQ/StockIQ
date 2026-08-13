@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { usePathname } from 'expo-router';
+import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 /**
  * Constrains the web build to phone dimensions.
@@ -50,6 +51,8 @@ const IS_TOUCH_DEVICE =
 export function PhoneFrame({ children }: { children: ReactNode }) {
   const { width, height } = useWindowDimensions();
   const pathname = usePathname();
+  const colors = useColors();
+  const isDark = useIsDark();
 
   // Hooks must run unconditionally, so the platform check comes after them.
   if (Platform.OS !== 'web') return <>{children}</>;
@@ -64,15 +67,14 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
   if (width < FRAME_WIDTH + 40) return <>{children}</>;
 
   return (
-    <View style={styles.page}>
+    <View style={[styles.page, { backgroundColor: isDark ? '#1A1A1A' : '#E8E8E6' }]}>
       <View
         style={[
           styles.device,
           {
             width: FRAME_WIDTH,
-            // Never taller than the window, or the tab bar sits below the
-            // fold and the thing you most need to reach is unreachable.
             height: Math.min(FRAME_HEIGHT, height - 32),
+            backgroundColor: colors.paperWarm,
           },
         ]}
       >
@@ -87,15 +89,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E8E8E6',
   },
   device: {
-    // `overflow: hidden` is load-bearing: without it the deck's off-screen
-    // cards render outside the frame and the illusion — and the layout —
-    // both break.
     overflow: 'hidden',
     borderRadius: 44,
-    backgroundColor: '#FFFFFF',
     boxShadow: '0 24px 60px rgba(0,0,0,0.18)',
   },
 });

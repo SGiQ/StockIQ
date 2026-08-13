@@ -7,6 +7,7 @@ import { CardSurface, Screen, Text } from '@/components/primitives';
 import { BADGES } from '@/features/achievements';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The full achievement wall — earned badges first, then everything still to
@@ -14,6 +15,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * trophy case you can't add to.
  */
 export default function BadgesScreen() {
+  const colors = useColors();
   const router = useRouter();
   const badges = useAppStore((s) => s.badges);
   const refreshAchievements = useAppStore((s) => s.refreshAchievements);
@@ -53,7 +55,7 @@ export default function BadgesScreen() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M15 5l-7 7 7 7"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -61,7 +63,7 @@ export default function BadgesScreen() {
             />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           Badges
         </Text>
       </View>
@@ -71,7 +73,7 @@ export default function BadgesScreen() {
           <Text variant="label" color={palette.mintSoft} uppercase>
             Achievements
           </Text>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             {`${earnedCount} of ${total}`}
           </Text>
           <View style={styles.summaryTrack}>
@@ -87,10 +89,10 @@ export default function BadgesScreen() {
             <CardSurface key={def.id} style={styles.row}>
               <BadgeMedallion badge={def} earned={earned} size={54} />
               <View style={styles.rowCopy}>
-                <Text variant="body" color={earned ? palette.ink : palette.slate}>
+                <Text variant="body" color={earned ? colors.ink : colors.slate}>
                   {def.name}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   {def.description}
                 </Text>
               </View>
@@ -112,11 +114,12 @@ export default function BadgesScreen() {
 }
 
 function LockIcon() {
+  const colors = useColors();
   return (
     <Svg width={20} height={20} viewBox="0 0 24 24">
       <Path
         d="M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 017 0v3"
-        stroke={palette.slateLight}
+        stroke={colors.slateLight}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"

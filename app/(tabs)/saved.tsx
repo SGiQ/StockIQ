@@ -10,7 +10,8 @@ import { Chip, Screen, Text } from '@/components/primitives';
 import { Glyph } from '@/components/art/Glyph';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { SavedCard } from '@/store';
-import { palette, radius, shadow, space } from '@/theme/tokens';
+import { radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 type SortMode = 'recent' | 'title';
 
@@ -22,6 +23,7 @@ interface Resolved {
 }
 
 export default function SavedTab() {
+  const colors = useColors();
   const router = useRouter();
   const saved = useAppStore((s) => s.saved);
   const [sort, setSort] = useState<SortMode>('recent');
@@ -50,7 +52,7 @@ export default function SavedTab() {
   return (
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text variant="h1" color={palette.ink}>
+        <Text variant="h1">
           Saved cards
         </Text>
 
@@ -86,7 +88,7 @@ export default function SavedTab() {
                 ) : (
                   <FallbackTile item={item} />
                 )}
-                <Text variant="caption" color={palette.slate} numberOfLines={1}>
+                <Text variant="caption" color={colors.slate} numberOfLines={1}>
                   {item.lessonTitle}
                 </Text>
               </Pressable>
@@ -104,6 +106,7 @@ export default function SavedTab() {
  * otherwise its own words rather than an empty grey box.
  */
 function FallbackTile({ item }: { item: Resolved }) {
+  const colors = useColors();
   const card = item.card!;
   const art = 'art' in card ? card.art : undefined;
   const excerpt =
@@ -116,18 +119,18 @@ function FallbackTile({ item }: { item: Resolved }) {
           : card.type.replace('_', ' ');
 
   return (
-    <View style={styles.fallback}>
+    <View style={[styles.fallback, { backgroundColor: colors.paper }]}>
       {art ? (
         <ArtView spec={art} aspectRatio={1} rounded={false} glyphSize={48} />
       ) : (
-        <View style={styles.fallbackBlank}>
-          <Text variant="bodySm" color={palette.inkSoft} align="center" numberOfLines={4}>
+        <View style={[styles.fallbackBlank, { backgroundColor: colors.hairline }]}>
+          <Text variant="bodySm" color={colors.inkSoft} align="center" numberOfLines={4}>
             {excerpt}
           </Text>
         </View>
       )}
       <View style={styles.fallbackLabel}>
-        <Text variant="label" color={palette.slate} uppercase numberOfLines={1}>
+        <Text variant="label" color={colors.slate} uppercase numberOfLines={1}>
           {card.type.replace('_', ' ')}
         </Text>
       </View>
@@ -136,15 +139,16 @@ function FallbackTile({ item }: { item: Resolved }) {
 }
 
 function Empty() {
+  const colors = useColors();
   return (
     <View style={styles.empty}>
-      <View style={styles.emptyBadge}>
-        <Glyph name="bell" size={30} color={palette.slate} />
+      <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
+        <Glyph name="bell" size={30} color={colors.slate} />
       </View>
-      <Text variant="h3" color={palette.ink} align="center">
+      <Text variant="h3" align="center">
         Nothing saved yet
       </Text>
-      <Text variant="body" color={palette.slate} align="center">
+      <Text variant="body" color={colors.slate} align="center">
         Tap the heart on any card during a lesson to keep it here.
       </Text>
     </View>
@@ -178,12 +182,10 @@ const styles = StyleSheet.create({
   fallback: {
     borderRadius: radius.lg,
     overflow: 'hidden',
-    backgroundColor: palette.paper,
     ...shadow.card,
   },
   fallbackBlank: {
     aspectRatio: 1,
-    backgroundColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
     padding: space.sm,
@@ -201,7 +203,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: space.sm,

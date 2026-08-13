@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native'
 import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Text } from '@/components/primitives';
 import { fontFamily, palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const FEATURES = [
   {
@@ -109,6 +110,7 @@ const TIERS = [
 
 export default function LandingPage() {
   const router = useRouter();
+  const colors = useColors();
   const { width } = useWindowDimensions();
   const compact = width < 760;
   const wide = width >= 1200;
@@ -116,7 +118,7 @@ export default function LandingPage() {
   const heroSource = require('../public/lesson-art/ownership.jpg');
 
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.pageContent}>
+    <ScrollView style={[styles.page, { backgroundColor: colors.paperWarm }]} contentContainerStyle={styles.pageContent}>
       {/* ── Nav ─────────────────────────────────────────────────────── */}
       <View style={[styles.nav, compact && styles.navCompact, compactSection]}>
         <Image
@@ -125,7 +127,7 @@ export default function LandingPage() {
           style={styles.brandMark}
           accessibilityLabel="StockIQ"
         />
-        <Text variant="h2" color={palette.ink}>StockIQ</Text>
+        <Text variant="h2">StockIQ</Text>
         <View style={styles.navSpacer} />
         {!compact ? (
           <PillButton
@@ -144,24 +146,24 @@ export default function LandingPage() {
           <View style={styles.eyebrow}>
             <Text variant="label" color={palette.forestDeep} uppercase>Learn investing visually</Text>
           </View>
-          <Text color={palette.ink} style={[styles.heroTitle, compact && styles.heroTitleCompact, wide && styles.heroTitleWide]}>
+          <Text style={[styles.heroTitle, compact && styles.heroTitleCompact, wide && styles.heroTitleWide]}>
             Understand the market.{'\n'}Build your own judgment.
           </Text>
-          <Text variant="body" color={palette.inkSoft} style={[styles.heroBody, wide && styles.heroBodyWide]}>
+          <Text variant="body" color={colors.inkSoft} style={[styles.heroBody, wide && styles.heroBodyWide]}>
             56 visual lessons. Paper trading with real stocks. An AI tutor that explains anything. All in two minutes a day.
           </Text>
           <View style={[styles.actions, compact && styles.actionsCompact]}>
             <PillButton label="Start learning — it's free" onPress={() => router.push('/(onboarding)/welcome')} />
             <PillButton label="I already have an account" variant="ghost" onPress={() => router.push('/sign-in')} />
           </View>
-          <Text variant="caption" color={palette.slate}>Educational content — not individualized financial advice.</Text>
+          <Text variant="caption" color={colors.slate}>Educational content — not individualized financial advice.</Text>
         </View>
 
         <View style={styles.artShell}>
           <Image source={heroSource} style={styles.heroArt} contentFit="cover" transition={250} />
           <View style={styles.artCaption}>
             <Text variant="label" color={palette.mintSoft} uppercase>Lesson 1</Text>
-            <Text variant="h2" color={palette.paper}>A stock is ownership.</Text>
+            <Text variant="h2" color={colors.paper}>A stock is ownership.</Text>
           </View>
         </View>
       </View>
@@ -171,23 +173,23 @@ export default function LandingPage() {
         {SOCIAL_PROOF.map((item) => (
           <View key={item.label} style={styles.proofItem}>
             <Text color={palette.forestDeep} style={[styles.proofStat, wide && styles.proofStatWide]}>{item.stat}</Text>
-            <Text variant={wide ? 'body' : 'bodySm'} color={palette.inkSoft}>{item.label}</Text>
+            <Text variant={wide ? 'body' : 'bodySm'} color={colors.inkSoft}>{item.label}</Text>
           </View>
         ))}
       </View>
 
       {/* ── How it works ────────────────────────────────────────────── */}
-      <View style={[styles.section, compactSection, compact && styles.roundedSection]}>
+      <View style={[styles.section, { backgroundColor: colors.paperWarm }, compactSection, compact && styles.roundedSection]}>
         <Text variant="label" color={palette.forestDeep} uppercase align="center">How it works</Text>
-        <Text variant="h1" color={palette.ink} align="center">From curious beginner to confident thinker.</Text>
+        <Text variant="h1" align="center">From curious beginner to confident thinker.</Text>
         <View style={[styles.featureGrid, compact && styles.featureGridCompact]}>
           {FEATURES.map((feature) => (
-            <View key={feature.title} style={styles.featureCard}>
+            <View key={feature.title} style={[styles.featureCard, { backgroundColor: colors.paper, borderColor: colors.hairline }]}>
               <View style={styles.featureIcon}>
                 <Glyph name={feature.icon} size={24} color={palette.forestDeep} />
               </View>
-              <Text variant="h3" color={palette.ink}>{feature.title}</Text>
-              <Text variant="bodySm" color={palette.inkSoft}>{feature.body}</Text>
+              <Text variant="h3">{feature.title}</Text>
+              <Text variant="bodySm" color={colors.inkSoft}>{feature.body}</Text>
             </View>
           ))}
         </View>
@@ -196,7 +198,7 @@ export default function LandingPage() {
       {/* ── Capabilities (the depth) ────────────────────────────────── */}
       <View style={[styles.capSection, compactSection, compact && styles.roundedSection]}>
         <Text variant="label" color={palette.mintSoft} uppercase align="center">More than lessons</Text>
-        <Text variant="h1" color={palette.paper} align="center">Practice what you learn.</Text>
+        <Text variant="h1" color={colors.paper} align="center">Practice what you learn.</Text>
         <Text variant="body" color={palette.mintSoft} align="center" style={styles.capSub}>
           Paper trade real stocks. Ask an AI tutor anything. Watch the market and connect it to what you're learning.
         </Text>
@@ -206,7 +208,7 @@ export default function LandingPage() {
               <View style={styles.capIcon}>
                 <Glyph name={cap.icon} size={22} color={palette.mint} />
               </View>
-              <Text variant="h3" color={palette.paper}>{cap.title}</Text>
+              <Text variant="h3" color={colors.paper}>{cap.title}</Text>
               <Text variant="bodySm" color={palette.mintSoft}>{cap.body}</Text>
             </View>
           ))}
@@ -214,41 +216,41 @@ export default function LandingPage() {
       </View>
 
       {/* ── Gamification strip ──────────────────────────────────────── */}
-      <View style={[styles.section, { backgroundColor: palette.paper }, compactSection, compact && styles.roundedSection]}>
+      <View style={[styles.section, { backgroundColor: colors.paper }, compactSection, compact && styles.roundedSection]}>
         <Text variant="label" color={palette.forestDeep} uppercase align="center">Stay motivated</Text>
-        <Text variant="h1" color={palette.ink} align="center">Built to keep you coming back.</Text>
+        <Text variant="h1" align="center">Built to keep you coming back.</Text>
         <View style={[styles.gameGrid, compact && styles.gameGridCompact]}>
           <View style={styles.gameItem}>
             <Text style={styles.gameEmoji}>🔥</Text>
-            <Text variant="h3" color={palette.ink}>Daily streaks</Text>
-            <Text variant="bodySm" color={palette.inkSoft}>Set a daily goal. Build a streak. Use streak freezes to protect it on busy days.</Text>
+            <Text variant="h3">Daily streaks</Text>
+            <Text variant="bodySm" color={colors.inkSoft}>Set a daily goal. Build a streak. Use streak freezes to protect it on busy days.</Text>
           </View>
           <View style={styles.gameItem}>
             <Text style={styles.gameEmoji}>⭐</Text>
-            <Text variant="h3" color={palette.ink}>XP and badges</Text>
-            <Text variant="bodySm" color={palette.inkSoft}>Earn XP for every lesson. Unlock 13 badges from First Steps to Full Curriculum.</Text>
+            <Text variant="h3">XP and badges</Text>
+            <Text variant="bodySm" color={colors.inkSoft}>Earn XP for every lesson. Unlock 13 badges from First Steps to Full Curriculum.</Text>
           </View>
           <View style={styles.gameItem}>
             <Text style={styles.gameEmoji}>🧠</Text>
-            <Text variant="h3" color={palette.ink}>Market Readiness</Text>
-            <Text variant="bodySm" color={palette.inkSoft}>A 0–100 score that tracks your actual investing knowledge across six dimensions.</Text>
+            <Text variant="h3">Market Readiness</Text>
+            <Text variant="bodySm" color={colors.inkSoft}>A 0–100 score that tracks your actual investing knowledge across six dimensions.</Text>
           </View>
           <View style={styles.gameItem}>
             <Text style={styles.gameEmoji}>🏆</Text>
-            <Text variant="h3" color={palette.ink}>Leagues</Text>
-            <Text variant="bodySm" color={palette.inkSoft}>Compete weekly with other learners. Climb from Bronze to Diamond based on real progress.</Text>
+            <Text variant="h3">Leagues</Text>
+            <Text variant="bodySm" color={colors.inkSoft}>Compete weekly with other learners. Climb from Bronze to Diamond based on real progress.</Text>
           </View>
         </View>
       </View>
 
       {/* ── Knowledge Base tease ────────────────────────────────────── */}
-      <View style={[styles.kbSection, compactSection, compact && styles.roundedSection]}>
+      <View style={[styles.kbSection, { backgroundColor: colors.paperWarm }, compactSection, compact && styles.roundedSection]}>
         <View style={[styles.kbInner, wide && styles.kbInnerWide]}>
           <Text variant="label" color={palette.forestDeep} uppercase>Knowledge Base</Text>
-          <Text variant="h1" color={palette.ink} style={styles.kbTitle}>
+          <Text variant="h1" style={styles.kbTitle}>
             Learn from the greatest investors in history.
           </Text>
-          <Text variant="body" color={palette.inkSoft} style={styles.kbBody}>
+          <Text variant="body" color={colors.inkSoft} style={styles.kbBody}>
             Read the strategies of Buffett, Lynch, and Dalio. Study 5 classic investing books as interactive card decks. Browse 86 terms in plain English. Every strategy unlocks only after you finish the lessons — so you actually understand what you're using.
           </Text>
           <View style={styles.kbChips}>
@@ -262,10 +264,10 @@ export default function LandingPage() {
       </View>
 
       {/* ── Pricing ─────────────────────────────────────────────────── */}
-      <View style={[styles.pricingSection, compactSection, compact && styles.roundedSection]}>
+      <View style={[styles.pricingSection, { backgroundColor: colors.paper }, compactSection, compact && styles.roundedSection]}>
         <Text variant="label" color={palette.forestDeep} uppercase align="center">Simple pricing</Text>
-        <Text variant="h1" color={palette.ink} align="center">Pick your pace.</Text>
-        <Text variant="body" color={palette.inkSoft} align="center" style={styles.pricingSub}>
+        <Text variant="h1" align="center">Pick your pace.</Text>
+        <Text variant="body" color={colors.inkSoft} align="center" style={styles.pricingSub}>
           Every lesson is free. Upgrade when you want unlimited AI, unlimited hearts, and the full Knowledge Base.
         </Text>
         <View style={[styles.tierGrid, compact && styles.tierGridCompact]}>
@@ -274,32 +276,33 @@ export default function LandingPage() {
               key={tier.name}
               style={[
                 styles.tierCard,
+                { backgroundColor: colors.paperWarm, borderColor: colors.hairline },
                 tier.highlight && styles.tierCardHighlight,
               ]}
             >
               {tier.highlight && (
                 <View style={styles.tierBadge}>
-                  <Text variant="label" color={palette.paper} uppercase>Most popular</Text>
+                  <Text variant="label" color={colors.paper} uppercase>Most popular</Text>
                 </View>
               )}
-              <Text variant="h2" color={tier.highlight ? palette.paper : palette.ink}>{tier.name}</Text>
+              <Text variant="h2" color={tier.highlight ? colors.paper : colors.ink}>{tier.name}</Text>
               <View style={styles.tierPriceRow}>
-                <Text color={tier.highlight ? palette.paper : palette.ink} style={styles.tierPrice}>{tier.price}</Text>
-                <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : palette.slate}>{tier.period}</Text>
+                <Text color={tier.highlight ? colors.paper : colors.ink} style={styles.tierPrice}>{tier.price}</Text>
+                <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : colors.slate}>{tier.period}</Text>
               </View>
               {'altPrice' in tier && tier.altPrice ? (
-                <Text variant="caption" color={tier.highlight ? palette.mintSoft : palette.slate}>
+                <Text variant="caption" color={tier.highlight ? palette.mintSoft : colors.slate}>
                   {`or ${tier.altPrice} monthly`}
                 </Text>
               ) : null}
-              <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : palette.inkSoft} style={styles.tierDesc}>
+              <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : colors.inkSoft} style={styles.tierDesc}>
                 {tier.description}
               </Text>
               <View style={styles.tierDivider} />
               {tier.features.map((f) => (
                 <View key={f} style={styles.tierFeatureRow}>
                   <Text variant="bodySm" color={tier.highlight ? palette.mint : palette.emeraldDeep}>✓</Text>
-                  <Text variant="bodySm" color={tier.highlight ? palette.paper : palette.ink}>{f}</Text>
+                  <Text variant="bodySm" color={tier.highlight ? colors.paper : colors.ink}>{f}</Text>
                 </View>
               ))}
               <View style={styles.tierCtaWrap}>
@@ -316,7 +319,7 @@ export default function LandingPage() {
 
       {/* ── Final CTA ───────────────────────────────────────────────── */}
       <View style={[styles.finalCta, compactSection, compact && styles.roundedSection]}>
-        <Text variant="h1" color={palette.paper} align="center">Make the market make sense.</Text>
+        <Text variant="h1" color={colors.paper} align="center">Make the market make sense.</Text>
         <Text variant="body" color={palette.mintSoft} align="center">
           Nine courses. Paper trading. An AI that never gets tired of your questions. Start for free.
         </Text>
@@ -325,15 +328,15 @@ export default function LandingPage() {
 
       {/* ── Footer ──────────────────────────────────────────────────── */}
       <View style={[styles.footer, compactSection]}>
-        <Text variant="h3" color={palette.ink}>StockIQ</Text>
-        <Text variant="caption" color={palette.slate}>Learn clearly. Invest thoughtfully.</Text>
+        <Text variant="h3">StockIQ</Text>
+        <Text variant="caption" color={colors.slate}>Learn clearly. Invest thoughtfully.</Text>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#F4F0E8', overflow: 'hidden' },
+  page: { flex: 1, overflow: 'hidden' },
   pageContent: { alignItems: 'center', flexGrow: 1, flexShrink: 1, flexBasis: '100%' },
 
   nav: { width: '100%', maxWidth: 1280, minHeight: 82, paddingHorizontal: space.xl, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: space.sm },
@@ -363,12 +366,12 @@ const styles = StyleSheet.create({
   proofStat: { fontFamily: fontFamily.displayBold, fontSize: 36, lineHeight: 42 },
   proofStatWide: { fontSize: 48, lineHeight: 54 },
 
-  section: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.paperWarm, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+  section: { width: '100%', alignSelf: 'stretch', paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
   roundedSection: { borderRadius: radius.lg, marginBottom: space.lg },
 
   featureGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', gap: space.lg, marginTop: space.xl },
   featureGridCompact: { flexDirection: 'column' },
-  featureCard: { flex: 1, backgroundColor: palette.paper, borderRadius: radius.lg, padding: space.lg, gap: space.md, borderWidth: 1, borderColor: palette.hairline },
+  featureCard: { flex: 1, borderRadius: radius.lg, padding: space.lg, gap: space.md, borderWidth: 1 },
   featureIcon: { width: 52, height: 52, borderRadius: radius.md, backgroundColor: '#DCEBDD', alignItems: 'center', justifyContent: 'center' },
 
   capSection: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.forestDeep, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
@@ -383,7 +386,7 @@ const styles = StyleSheet.create({
   gameItem: { flex: 1, minWidth: 220, gap: space.sm, padding: space.md },
   gameEmoji: { fontSize: 32, lineHeight: 38 },
 
-  kbSection: { width: '100%', alignSelf: 'stretch', backgroundColor: '#F4F0E8', paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center' },
+  kbSection: { width: '100%', alignSelf: 'stretch', paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center' },
   kbInner: { maxWidth: 720, gap: space.md },
   kbInnerWide: { maxWidth: 900 },
   kbTitle: { maxWidth: 520 },
@@ -391,11 +394,11 @@ const styles = StyleSheet.create({
   kbChips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm },
   kbChip: { backgroundColor: '#DCEBDD', borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: space.xs + 2 },
 
-  pricingSection: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.paper, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+  pricingSection: { width: '100%', alignSelf: 'stretch', paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
   pricingSub: { maxWidth: 520, marginBottom: space.md },
   tierGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', gap: space.lg, marginTop: space.md, alignItems: 'stretch' },
   tierGridCompact: { flexDirection: 'column' },
-  tierCard: { flex: 1, backgroundColor: palette.paperWarm, borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1, borderColor: palette.hairline },
+  tierCard: { flex: 1, borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1 },
   tierCardHighlight: { backgroundColor: palette.forestDeep, borderColor: palette.forestDeep },
   tierBadge: { alignSelf: 'flex-start', backgroundColor: palette.emeraldDeep, borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: 4 },
   tierPriceRow: { flexDirection: 'row', alignItems: 'baseline', gap: space.xs },
