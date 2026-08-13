@@ -5,6 +5,54 @@ import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Text } from '@/components/primitives';
 import { fontFamily, palette, radius, shadow, space } from '@/theme/tokens';
 
+const FEATURES = [
+  {
+    icon: 'clock' as const,
+    title: 'Two-minute lessons',
+    body: 'Bite-sized cards that teach one idea at a time — tap through at your pace.',
+  },
+  {
+    icon: 'chart-up' as const,
+    title: 'Real charts, real concepts',
+    body: 'Illustrated explanations of candlesticks, support levels, moving averages, and more.',
+  },
+  {
+    icon: 'brain' as const,
+    title: 'Quizzes that stick',
+    body: 'Every lesson tests you. Spaced review brings concepts back before you forget.',
+  },
+];
+
+const CAPABILITIES = [
+  {
+    icon: 'coins-stack' as const,
+    title: 'Paper trading',
+    body: 'Practice buying and selling real stocks with $10K in virtual cash. Track your portfolio, watch it grow, and learn from AI coaching — zero risk.',
+  },
+  {
+    icon: 'lightbulb' as const,
+    title: 'AI tutor',
+    body: 'Ask anything about investing and get a clear, jargon-free answer. Works inside lessons too — tap to ask about what you just learned.',
+  },
+  {
+    icon: 'eye' as const,
+    title: 'Watchlist',
+    body: 'Follow the stocks you care about. When a price moves, tap "Explain this move" and the AI tells you why — connected to the concepts you\'re learning.',
+  },
+  {
+    icon: 'key' as const,
+    title: 'Unlock strategies',
+    body: 'Value investing, momentum, CANSLIM, and more. Each strategy unlocks only after you finish the lessons that explain it — so you actually understand it.',
+  },
+];
+
+const SOCIAL_PROOF = [
+  { stat: '56', label: 'lessons across 9 courses' },
+  { stat: '86', label: 'terms in the glossary' },
+  { stat: '7', label: 'real investing strategies' },
+  { stat: '8', label: 'legendary trader profiles' },
+];
+
 const TIERS = [
   {
     name: 'Free',
@@ -12,8 +60,9 @@ const TIERS = [
     period: 'forever',
     description: 'Everything you need to start learning.',
     features: [
-      'All 37 lessons',
+      'All 56 lessons',
       'Streaks, XP, and badges',
+      'Paper trading',
       'Knowledge Base previews',
       '5 hearts per session',
       '3 AI tutor questions / day',
@@ -34,7 +83,7 @@ const TIERS = [
       'Full Knowledge Base',
       'Spaced-repetition review',
       'Monthly streak repair',
-      'No ads, offline access',
+      'No ads',
     ],
     highlight: true,
     cta: 'Start free trial',
@@ -58,26 +107,17 @@ const TIERS = [
   },
 ] as const;
 
-const FEATURES = [
-  { icon: 'clock', title: 'Two-minute lessons', body: 'Build market fluency one focused idea at a time.' },
-  { icon: 'chart-up', title: 'Ideas you can see', body: 'Paper-craft stories, real charts, and interactive explanations.' },
-  { icon: 'brain', title: 'Practice that sticks', body: 'Quizzes, spoken feedback, streaks, and progress tracking.' },
-] as const;
-
 export default function LandingPage() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const compact = width < 760;
-  // Mobile browsers can report the layout viewport before reserving space for
-  // their scrollbar/chrome. Leave one extra gutter so nothing is clipped at
-  // the physical right edge on iPhone-sized web views.
+  const wide = width >= 1200;
   const compactSection = compact ? { width: Math.max(280, width - 72), paddingHorizontal: 0 } : null;
-  // Bundle the hero locally rather than hardcoding the Vercel URL for native —
-  // it then loads offline and doesn't couple a native build to the web deploy.
   const heroSource = require('../public/lesson-art/ownership.jpg');
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.pageContent}>
+      {/* ── Nav ─────────────────────────────────────────────────────── */}
       <View style={[styles.nav, compact && styles.navCompact, compactSection]}>
         <Image
           source={require('../public/logo/SG.png')}
@@ -98,22 +138,23 @@ export default function LandingPage() {
         ) : null}
       </View>
 
+      {/* ── Hero ────────────────────────────────────────────────────── */}
       <View style={[styles.hero, compact && styles.heroCompact, compactSection]}>
         <View style={styles.heroCopy}>
-          <View style={styles.eyebrow}><Text variant="label" color={palette.forestDeep} uppercase>Learn investing visually</Text></View>
-          <Text color={palette.ink} style={[styles.heroTitle, compact && styles.heroTitleCompact]}>
-            Understand the market.{`\n`}Build your own judgment.
+          <View style={styles.eyebrow}>
+            <Text variant="label" color={palette.forestDeep} uppercase>Learn investing visually</Text>
+          </View>
+          <Text color={palette.ink} style={[styles.heroTitle, compact && styles.heroTitleCompact, wide && styles.heroTitleWide]}>
+            Understand the market.{'\n'}Build your own judgment.
           </Text>
-          <Text variant="body" color={palette.inkSoft} style={styles.heroBody}>
-            Bite-sized lessons on stocks, business fundamentals, charts, risk, psychology, and proven investing strategies.
+          <Text variant="body" color={palette.inkSoft} style={[styles.heroBody, wide && styles.heroBodyWide]}>
+            56 visual lessons. Paper trading with real stocks. An AI tutor that explains anything. All in two minutes a day.
           </Text>
           <View style={[styles.actions, compact && styles.actionsCompact]}>
-            {/* New users start with onboarding, not an email wall; returning
-                users take the secondary path straight to sign-in. */}
-            <PillButton label="Get started" onPress={() => router.push('/(onboarding)/welcome')} />
+            <PillButton label="Start learning — it's free" onPress={() => router.push('/(onboarding)/welcome')} />
             <PillButton label="I already have an account" variant="ghost" onPress={() => router.push('/sign-in')} />
           </View>
-          <Text variant="caption" color={palette.slate}>Educational content—not individualized financial advice.</Text>
+          <Text variant="caption" color={palette.slate}>Educational content — not individualized financial advice.</Text>
         </View>
 
         <View style={styles.artShell}>
@@ -125,13 +166,26 @@ export default function LandingPage() {
         </View>
       </View>
 
-      <View style={[styles.featuresSection, compactSection, compact && styles.roundedSection]}>
-        <Text variant="label" color={palette.forestDeep} uppercase align="center">A smarter way to learn</Text>
+      {/* ── Social proof strip ──────────────────────────────────────── */}
+      <View style={[styles.proofStrip, compactSection, compact && styles.proofStripCompact]}>
+        {SOCIAL_PROOF.map((item) => (
+          <View key={item.label} style={styles.proofItem}>
+            <Text color={palette.forestDeep} style={[styles.proofStat, wide && styles.proofStatWide]}>{item.stat}</Text>
+            <Text variant={wide ? 'body' : 'bodySm'} color={palette.inkSoft}>{item.label}</Text>
+          </View>
+        ))}
+      </View>
+
+      {/* ── How it works ────────────────────────────────────────────── */}
+      <View style={[styles.section, compactSection, compact && styles.roundedSection]}>
+        <Text variant="label" color={palette.forestDeep} uppercase align="center">How it works</Text>
         <Text variant="h1" color={palette.ink} align="center">From curious beginner to confident thinker.</Text>
         <View style={[styles.featureGrid, compact && styles.featureGridCompact]}>
           {FEATURES.map((feature) => (
             <View key={feature.title} style={styles.featureCard}>
-              <View style={styles.featureIcon}><Glyph name={feature.icon} size={24} color={palette.forestDeep} /></View>
+              <View style={styles.featureIcon}>
+                <Glyph name={feature.icon} size={24} color={palette.forestDeep} />
+              </View>
               <Text variant="h3" color={palette.ink}>{feature.title}</Text>
               <Text variant="bodySm" color={palette.inkSoft}>{feature.body}</Text>
             </View>
@@ -139,11 +193,80 @@ export default function LandingPage() {
         </View>
       </View>
 
+      {/* ── Capabilities (the depth) ────────────────────────────────── */}
+      <View style={[styles.capSection, compactSection, compact && styles.roundedSection]}>
+        <Text variant="label" color={palette.mintSoft} uppercase align="center">More than lessons</Text>
+        <Text variant="h1" color={palette.paper} align="center">Practice what you learn.</Text>
+        <Text variant="body" color={palette.mintSoft} align="center" style={styles.capSub}>
+          Paper trade real stocks. Ask an AI tutor anything. Watch the market and connect it to what you're learning.
+        </Text>
+        <View style={[styles.capGrid, compact && styles.capGridCompact]}>
+          {CAPABILITIES.map((cap) => (
+            <View key={cap.title} style={styles.capCard}>
+              <View style={styles.capIcon}>
+                <Glyph name={cap.icon} size={22} color={palette.mint} />
+              </View>
+              <Text variant="h3" color={palette.paper}>{cap.title}</Text>
+              <Text variant="bodySm" color={palette.mintSoft}>{cap.body}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      {/* ── Gamification strip ──────────────────────────────────────── */}
+      <View style={[styles.section, { backgroundColor: palette.paper }, compactSection, compact && styles.roundedSection]}>
+        <Text variant="label" color={palette.forestDeep} uppercase align="center">Stay motivated</Text>
+        <Text variant="h1" color={palette.ink} align="center">Built to keep you coming back.</Text>
+        <View style={[styles.gameGrid, compact && styles.gameGridCompact]}>
+          <View style={styles.gameItem}>
+            <Text style={styles.gameEmoji}>🔥</Text>
+            <Text variant="h3" color={palette.ink}>Daily streaks</Text>
+            <Text variant="bodySm" color={palette.inkSoft}>Set a daily goal. Build a streak. Use streak freezes to protect it on busy days.</Text>
+          </View>
+          <View style={styles.gameItem}>
+            <Text style={styles.gameEmoji}>⭐</Text>
+            <Text variant="h3" color={palette.ink}>XP and badges</Text>
+            <Text variant="bodySm" color={palette.inkSoft}>Earn XP for every lesson. Unlock 13 badges from First Steps to Full Curriculum.</Text>
+          </View>
+          <View style={styles.gameItem}>
+            <Text style={styles.gameEmoji}>🧠</Text>
+            <Text variant="h3" color={palette.ink}>Market Readiness</Text>
+            <Text variant="bodySm" color={palette.inkSoft}>A 0–100 score that tracks your actual investing knowledge across six dimensions.</Text>
+          </View>
+          <View style={styles.gameItem}>
+            <Text style={styles.gameEmoji}>🏆</Text>
+            <Text variant="h3" color={palette.ink}>Leagues</Text>
+            <Text variant="bodySm" color={palette.inkSoft}>Compete weekly with other learners. Climb from Bronze to Diamond based on real progress.</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* ── Knowledge Base tease ────────────────────────────────────── */}
+      <View style={[styles.kbSection, compactSection, compact && styles.roundedSection]}>
+        <View style={[styles.kbInner, wide && styles.kbInnerWide]}>
+          <Text variant="label" color={palette.forestDeep} uppercase>Knowledge Base</Text>
+          <Text variant="h1" color={palette.ink} style={styles.kbTitle}>
+            Learn from the greatest investors in history.
+          </Text>
+          <Text variant="body" color={palette.inkSoft} style={styles.kbBody}>
+            Read the strategies of Buffett, Lynch, and Dalio. Study 5 classic investing books as interactive card decks. Browse 86 terms in plain English. Every strategy unlocks only after you finish the lessons — so you actually understand what you're using.
+          </Text>
+          <View style={styles.kbChips}>
+            {['Warren Buffett', 'Peter Lynch', 'Ray Dalio', 'Jesse Livermore', 'Value Investing', 'CANSLIM', 'Momentum'].map((name) => (
+              <View key={name} style={styles.kbChip}>
+                <Text variant="label" color={palette.forestDeep}>{name}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+
+      {/* ── Pricing ─────────────────────────────────────────────────── */}
       <View style={[styles.pricingSection, compactSection, compact && styles.roundedSection]}>
         <Text variant="label" color={palette.forestDeep} uppercase align="center">Simple pricing</Text>
         <Text variant="h1" color={palette.ink} align="center">Pick your pace.</Text>
         <Text variant="body" color={palette.inkSoft} align="center" style={styles.pricingSub}>
-          All lessons are free. Upgrade when you want more depth, more practice, and no limits.
+          Every lesson is free. Upgrade when you want unlimited AI, unlimited hearts, and the full Knowledge Base.
         </Text>
         <View style={[styles.tierGrid, compact && styles.tierGridCompact]}>
           {TIERS.map((tier) => (
@@ -191,12 +314,16 @@ export default function LandingPage() {
         </View>
       </View>
 
+      {/* ── Final CTA ───────────────────────────────────────────────── */}
       <View style={[styles.finalCta, compactSection, compact && styles.roundedSection]}>
         <Text variant="h1" color={palette.paper} align="center">Make the market make sense.</Text>
-        <Text variant="body" color={palette.mintSoft} align="center">Five learning paths. Thirty-seven lessons. Your pace.</Text>
+        <Text variant="body" color={palette.mintSoft} align="center">
+          Nine courses. Paper trading. An AI that never gets tired of your questions. Start for free.
+        </Text>
         <PillButton label="Begin with Market Foundations" variant="light" fullWidth={false} onPress={() => router.push('/(onboarding)/welcome')} />
       </View>
 
+      {/* ── Footer ──────────────────────────────────────────────────── */}
       <View style={[styles.footer, compactSection]}>
         <Text variant="h3" color={palette.ink}>StockIQ</Text>
         <Text variant="caption" color={palette.slate}>Learn clearly. Invest thoughtfully.</Text>
@@ -207,34 +334,68 @@ export default function LandingPage() {
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: '#F4F0E8', overflow: 'hidden' },
-  pageContent: { alignItems: 'center' },
-  nav: { width: '100%', maxWidth: 1180, minHeight: 82, paddingHorizontal: space.lg, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  pageContent: { alignItems: 'center', flexGrow: 1, flexShrink: 1, flexBasis: '100%' },
+
+  nav: { width: '100%', maxWidth: 1280, minHeight: 82, paddingHorizontal: space.xl, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: space.sm },
   navCompact: { alignSelf: 'center' },
   brandMark: { width: 40, height: 40, borderRadius: 10 },
   navSpacer: { flex: 1 },
   navButton: { minHeight: 44, paddingVertical: space.sm, paddingHorizontal: space.lg },
-  hero: { width: '100%', maxWidth: 1180, paddingHorizontal: space.lg, paddingTop: 56, paddingBottom: 88, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: 72 },
+
+  hero: { width: '100%', maxWidth: 1280, paddingHorizontal: space.xl, paddingTop: 56, paddingBottom: 88, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: 72 },
   heroCompact: { alignSelf: 'center', flexDirection: 'column', paddingTop: space.xl, paddingBottom: 56, gap: space.xl },
   heroCopy: { flex: 1, gap: space.lg },
   eyebrow: { alignSelf: 'flex-start', backgroundColor: '#DCEBDD', borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: space.sm },
   heroTitle: { fontFamily: fontFamily.displayBold, fontSize: 56, lineHeight: 62, letterSpacing: -1.4 },
   heroTitleCompact: { fontSize: 40, lineHeight: 47, letterSpacing: -0.8 },
+  heroTitleWide: { fontSize: 64, lineHeight: 70, letterSpacing: -1.6 },
   heroBody: { maxWidth: 570 },
+  heroBodyWide: { fontSize: 20, lineHeight: 30 },
   actions: { maxWidth: 420, gap: space.sm },
   actionsCompact: { maxWidth: undefined, width: '100%' },
-  artShell: { flex: 0.82, minWidth: 0, width: '100%', maxWidth: 470, aspectRatio: 0.82, borderRadius: 36, overflow: 'hidden', backgroundColor: palette.forestDeep, ...shadow.floating },
+  artShell: { flex: 0.82, minWidth: 0, width: '100%', maxWidth: 520, aspectRatio: 0.82, borderRadius: 36, overflow: 'hidden', backgroundColor: palette.forestDeep, ...shadow.floating },
   heroArt: { width: '100%', height: '76%' },
   artCaption: { flex: 1, backgroundColor: palette.forestDeep, padding: space.lg, justifyContent: 'center', gap: space.xs },
-  featuresSection: { width: '100%', backgroundColor: palette.paper, paddingHorizontal: space.lg, paddingVertical: 88, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
-  featureGrid: { width: '100%', maxWidth: 1100, flexDirection: 'row', gap: space.lg, marginTop: space.xl },
+
+  proofStrip: { width: '100%', maxWidth: 1280, paddingHorizontal: space.xl, paddingVertical: space.xxl, boxSizing: 'border-box', flexDirection: 'row', justifyContent: 'space-around', gap: space.lg },
+  proofStripCompact: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' },
+  proofItem: { alignItems: 'center', minWidth: 120, paddingVertical: space.sm },
+  proofStat: { fontFamily: fontFamily.displayBold, fontSize: 36, lineHeight: 42 },
+  proofStatWide: { fontSize: 48, lineHeight: 54 },
+
+  section: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.paperWarm, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+  roundedSection: { borderRadius: radius.lg, marginBottom: space.lg },
+
+  featureGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', gap: space.lg, marginTop: space.xl },
   featureGridCompact: { flexDirection: 'column' },
-  featureCard: { flex: 1, backgroundColor: palette.paperWarm, borderRadius: radius.lg, padding: space.lg, gap: space.md, borderWidth: 1, borderColor: palette.hairline },
+  featureCard: { flex: 1, backgroundColor: palette.paper, borderRadius: radius.lg, padding: space.lg, gap: space.md, borderWidth: 1, borderColor: palette.hairline },
   featureIcon: { width: 52, height: 52, borderRadius: radius.md, backgroundColor: '#DCEBDD', alignItems: 'center', justifyContent: 'center' },
-  pricingSection: { width: '100%', backgroundColor: '#F4F0E8', paddingHorizontal: space.lg, paddingVertical: 88, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+
+  capSection: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.forestDeep, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+  capSub: { maxWidth: 560, marginBottom: space.sm },
+  capGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', flexWrap: 'wrap', gap: space.lg, marginTop: space.md },
+  capGridCompact: { flexDirection: 'column' },
+  capCard: { flex: 1, minWidth: 240, backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
+  capIcon: { width: 44, height: 44, borderRadius: radius.md, backgroundColor: 'rgba(0,229,160,0.15)', alignItems: 'center', justifyContent: 'center' },
+
+  gameGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', flexWrap: 'wrap', gap: space.lg, marginTop: space.xl },
+  gameGridCompact: { flexDirection: 'column' },
+  gameItem: { flex: 1, minWidth: 220, gap: space.sm, padding: space.md },
+  gameEmoji: { fontSize: 32, lineHeight: 38 },
+
+  kbSection: { width: '100%', alignSelf: 'stretch', backgroundColor: '#F4F0E8', paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center' },
+  kbInner: { maxWidth: 720, gap: space.md },
+  kbInnerWide: { maxWidth: 900 },
+  kbTitle: { maxWidth: 520 },
+  kbBody: { maxWidth: 620 },
+  kbChips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, marginTop: space.sm },
+  kbChip: { backgroundColor: '#DCEBDD', borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: space.xs + 2 },
+
+  pricingSection: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.paper, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
   pricingSub: { maxWidth: 520, marginBottom: space.md },
-  tierGrid: { width: '100%', maxWidth: 1100, flexDirection: 'row', gap: space.lg, marginTop: space.md, alignItems: 'stretch' },
+  tierGrid: { width: '100%', maxWidth: 1200, flexDirection: 'row', gap: space.lg, marginTop: space.md, alignItems: 'stretch' },
   tierGridCompact: { flexDirection: 'column' },
-  tierCard: { flex: 1, backgroundColor: palette.paper, borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1, borderColor: palette.hairline },
+  tierCard: { flex: 1, backgroundColor: palette.paperWarm, borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1, borderColor: palette.hairline },
   tierCardHighlight: { backgroundColor: palette.forestDeep, borderColor: palette.forestDeep },
   tierBadge: { alignSelf: 'flex-start', backgroundColor: palette.emeraldDeep, borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: 4 },
   tierPriceRow: { flexDirection: 'row', alignItems: 'baseline', gap: space.xs },
@@ -243,7 +404,7 @@ const styles = StyleSheet.create({
   tierDivider: { height: 1, backgroundColor: 'rgba(128,128,128,0.2)', marginVertical: space.xs },
   tierFeatureRow: { flexDirection: 'row', gap: space.xs, alignItems: 'flex-start' },
   tierCtaWrap: { marginTop: 'auto' as const, paddingTop: space.md },
-  finalCta: { width: '100%', backgroundColor: palette.forestDeep, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.lg },
-  footer: { width: '100%', maxWidth: 1180, paddingHorizontal: space.lg, paddingVertical: space.xl, boxSizing: 'border-box', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.md },
-  roundedSection: { borderRadius: radius.lg, marginBottom: space.lg },
+
+  finalCta: { width: '100%', alignSelf: 'stretch', backgroundColor: palette.forestDeep, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.lg },
+  footer: { width: '100%', maxWidth: 1280, paddingHorizontal: space.xl, paddingVertical: space.xl, boxSizing: 'border-box', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.md },
 });
