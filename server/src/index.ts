@@ -51,6 +51,7 @@ import {
 import { pushAndPull } from './sync.ts';
 import { recordTelemetry } from './telemetry.ts';
 import { leagueStandings } from './leagues.ts';
+import { adminOverview, signupTimeline, listUsers, telemetrySummary } from './admin.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
 /** Requests larger than this are refused before being buffered. */
@@ -60,7 +61,7 @@ const MAX_BODY_BYTES = 4 * 1024 * 1024;
 // the capability token is — but without it the browser refuses the call.
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
-  'access-control-allow-headers': 'content-type, x-device-id, x-device-label',
+  'access-control-allow-headers': 'content-type, x-device-id, x-device-label, authorization',
   'access-control-allow-methods': 'GET, POST, DELETE, OPTIONS',
 } as const;
 
@@ -136,6 +137,42 @@ const server = createServer((req, res) => {
         });
       }
 
+      // ── Admin routes ─────────────────────────────────────────────────
+      const rawUrl = req.url ?? '';
+      const path = rawUrl.split('?')[0] ?? '';
+      if (path.startsWith('/v1/admin/')) {
+        const secret = process.env.ADMIN_SECRET;
+        if (!secret || req.headers['authorization'] !== `Bearer ${secret}`) {
+          return send(res, 401, { error: 'unauthorized' });
+        }
+        const client = await pool.connect();
+        try {
+          await client.query('BEGIN');
+          let payload: unknown;
+          const qs = new URLSearchParams(rawUrl.split('?')[1] ?? '');
+
+          if (path === '/v1/admin/overview') {
+            payload = await adminOverview(client);
+          } else if (path === '/v1/admin/signups') {
+            payload = await signupTimeline(client, Number(qs.get('days') ?? 30));
+          } else if (path === '/v1/admin/users') {
+            payload = await listUsers(client, Number(qs.get('limit') ?? 50), Number(qs.get('offset') ?? 0));
+          } else if (path === '/v1/admin/telemetry') {
+            payload = await telemetrySummary(client, Number(qs.get('days') ?? 7));
+          } else {
+            await client.query('ROLLBACK');
+            return send(res, 404, { error: 'not found' });
+          }
+          await client.query('COMMIT');
+          return send(res, 200, payload);
+        } catch (error) {
+          await client.query('ROLLBACK');
+          throw error;
+        } finally {
+          client.release();
+        }
+      }
+
       // Every route below is device-authenticated and runs in one
       // transaction, so account resolution and the work it authorises can
       // never be split across two connections.
@@ -153,7 +190,6 @@ const server = createServer((req, res) => {
         '/v1/leagues': 'GET',
         '/v1/telemetry': 'POST',
       };
-      const path = (req.url ?? '').split('?')[0] ?? '';
       const isRevoke = req.method === 'DELETE' && path.startsWith('/v1/devices/');
 
       if (!isRevoke && routes[path] !== req.method) {

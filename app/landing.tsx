@@ -5,6 +5,59 @@ import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Text } from '@/components/primitives';
 import { fontFamily, palette, radius, shadow, space } from '@/theme/tokens';
 
+const TIERS = [
+  {
+    name: 'Free',
+    price: '$0',
+    period: 'forever',
+    description: 'Everything you need to start learning.',
+    features: [
+      'All 37 lessons',
+      'Streaks, XP, and badges',
+      'Knowledge Base previews',
+      '5 hearts per session',
+      '3 AI tutor questions / day',
+    ],
+    highlight: false,
+    cta: 'Get started',
+  },
+  {
+    name: 'Pro',
+    price: '$5',
+    period: '/mo billed yearly',
+    altPrice: '$9.99/mo',
+    description: 'Learn without limits.',
+    features: [
+      'Everything in Free',
+      'Unlimited hearts',
+      'Unlimited AI tutor',
+      'Full Knowledge Base',
+      'Spaced-repetition review',
+      'Monthly streak repair',
+      'No ads, offline access',
+    ],
+    highlight: true,
+    cta: 'Start free trial',
+  },
+  {
+    name: 'Elite',
+    price: '$10',
+    period: '/mo billed yearly',
+    altPrice: '$19.99/mo',
+    description: 'AI-powered coaching for serious learners.',
+    features: [
+      'Everything in Pro',
+      'Personalized coaching path',
+      '"Explain this ticker" AI',
+      'Socratic AI mode',
+      'Portfolio-simulator lessons',
+      'Priority new content',
+    ],
+    highlight: false,
+    cta: 'Start free trial',
+  },
+] as const;
+
 const FEATURES = [
   { icon: 'clock', title: 'Two-minute lessons', body: 'Build market fluency one focused idea at a time.' },
   { icon: 'chart-up', title: 'Ideas you can see', body: 'Paper-craft stories, real charts, and interactive explanations.' },
@@ -86,6 +139,58 @@ export default function LandingPage() {
         </View>
       </View>
 
+      <View style={[styles.pricingSection, compactSection, compact && styles.roundedSection]}>
+        <Text variant="label" color={palette.forestDeep} uppercase align="center">Simple pricing</Text>
+        <Text variant="h1" color={palette.ink} align="center">Pick your pace.</Text>
+        <Text variant="body" color={palette.inkSoft} align="center" style={styles.pricingSub}>
+          All lessons are free. Upgrade when you want more depth, more practice, and no limits.
+        </Text>
+        <View style={[styles.tierGrid, compact && styles.tierGridCompact]}>
+          {TIERS.map((tier) => (
+            <View
+              key={tier.name}
+              style={[
+                styles.tierCard,
+                tier.highlight && styles.tierCardHighlight,
+              ]}
+            >
+              {tier.highlight && (
+                <View style={styles.tierBadge}>
+                  <Text variant="label" color={palette.paper} uppercase>Most popular</Text>
+                </View>
+              )}
+              <Text variant="h2" color={tier.highlight ? palette.paper : palette.ink}>{tier.name}</Text>
+              <View style={styles.tierPriceRow}>
+                <Text color={tier.highlight ? palette.paper : palette.ink} style={styles.tierPrice}>{tier.price}</Text>
+                <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : palette.slate}>{tier.period}</Text>
+              </View>
+              {'altPrice' in tier && tier.altPrice ? (
+                <Text variant="caption" color={tier.highlight ? palette.mintSoft : palette.slate}>
+                  {`or ${tier.altPrice} monthly`}
+                </Text>
+              ) : null}
+              <Text variant="bodySm" color={tier.highlight ? palette.mintSoft : palette.inkSoft} style={styles.tierDesc}>
+                {tier.description}
+              </Text>
+              <View style={styles.tierDivider} />
+              {tier.features.map((f) => (
+                <View key={f} style={styles.tierFeatureRow}>
+                  <Text variant="bodySm" color={tier.highlight ? palette.mint : palette.emeraldDeep}>✓</Text>
+                  <Text variant="bodySm" color={tier.highlight ? palette.paper : palette.ink}>{f}</Text>
+                </View>
+              ))}
+              <View style={styles.tierCtaWrap}>
+                <PillButton
+                  label={tier.cta}
+                  variant={tier.highlight ? 'light' : 'ghost'}
+                  onPress={() => router.push('/(onboarding)/welcome')}
+                />
+              </View>
+            </View>
+          ))}
+        </View>
+      </View>
+
       <View style={[styles.finalCta, compactSection, compact && styles.roundedSection]}>
         <Text variant="h1" color={palette.paper} align="center">Make the market make sense.</Text>
         <Text variant="body" color={palette.mintSoft} align="center">Five learning paths. Thirty-seven lessons. Your pace.</Text>
@@ -125,6 +230,19 @@ const styles = StyleSheet.create({
   featureGridCompact: { flexDirection: 'column' },
   featureCard: { flex: 1, backgroundColor: palette.paperWarm, borderRadius: radius.lg, padding: space.lg, gap: space.md, borderWidth: 1, borderColor: palette.hairline },
   featureIcon: { width: 52, height: 52, borderRadius: radius.md, backgroundColor: '#DCEBDD', alignItems: 'center', justifyContent: 'center' },
+  pricingSection: { width: '100%', backgroundColor: '#F4F0E8', paddingHorizontal: space.lg, paddingVertical: 88, boxSizing: 'border-box', alignItems: 'center', gap: space.md },
+  pricingSub: { maxWidth: 520, marginBottom: space.md },
+  tierGrid: { width: '100%', maxWidth: 1100, flexDirection: 'row', gap: space.lg, marginTop: space.md, alignItems: 'stretch' },
+  tierGridCompact: { flexDirection: 'column' },
+  tierCard: { flex: 1, backgroundColor: palette.paper, borderRadius: radius.lg, padding: space.lg, gap: space.sm, borderWidth: 1, borderColor: palette.hairline },
+  tierCardHighlight: { backgroundColor: palette.forestDeep, borderColor: palette.forestDeep },
+  tierBadge: { alignSelf: 'flex-start', backgroundColor: palette.emeraldDeep, borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: 4 },
+  tierPriceRow: { flexDirection: 'row', alignItems: 'baseline', gap: space.xs },
+  tierPrice: { fontFamily: fontFamily.displayBold, fontSize: 44, lineHeight: 50 },
+  tierDesc: { marginBottom: space.xs },
+  tierDivider: { height: 1, backgroundColor: 'rgba(128,128,128,0.2)', marginVertical: space.xs },
+  tierFeatureRow: { flexDirection: 'row', gap: space.xs, alignItems: 'flex-start' },
+  tierCtaWrap: { marginTop: 'auto' as const, paddingTop: space.md },
   finalCta: { width: '100%', backgroundColor: palette.forestDeep, paddingHorizontal: space.lg, paddingVertical: 80, boxSizing: 'border-box', alignItems: 'center', gap: space.lg },
   footer: { width: '100%', maxWidth: 1180, paddingHorizontal: space.lg, paddingVertical: space.xl, boxSizing: 'border-box', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.md },
   roundedSection: { borderRadius: radius.lg, marginBottom: space.lg },
