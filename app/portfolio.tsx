@@ -159,7 +159,8 @@ const CHART_H = 80;
 const CHART_PAD = { x: 2, y: 8 };
 
 function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; current: number }) {
-  const points = snapshots.length > 0 ? snapshots : [{ t: 0, v: STARTING_CASH }];
+  const raw = snapshots.length > 0 ? snapshots : [{ t: 0, v: STARTING_CASH }];
+  const points = raw[0].v === STARTING_CASH ? raw : [{ t: 0, v: STARTING_CASH }, ...raw];
   const allValues = [...points.map((s) => s.v), current];
   const min = Math.min(...allValues);
   const max = Math.max(...allValues);
@@ -286,6 +287,7 @@ const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '-' : ''}${formatPrice(Ma
 export default function PortfolioScreen() {
   const router = useRouter();
   const portfolio = useAppStore((s) => s.portfolio);
+  const watchlist = useAppStore((s) => s.watchlist);
   const buyShares = useAppStore((s) => s.buyShares);
   const sellShares = useAppStore((s) => s.sellShares);
   const resetPortfolio = useAppStore((s) => s.resetPortfolio);
@@ -334,6 +336,20 @@ export default function PortfolioScreen() {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [heldKey]);
+
+  const watchSymbols = useMemo(
+    () => watchlist.map((w) => w.symbol).filter((s) => !held.includes(s)),
+    [watchlist, held],
+  );
+  const watchKey = watchSymbols.join(',');
+
+  useEffect(() => {
+    if (watchSymbols.length === 0) return;
+    void marketService.quotes(watchSymbols).then((qs) => {
+      setQuotes((prev) => ({ ...prev, ...Object.fromEntries(qs.map((q) => [q.symbol, q])) }));
+    }).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchKey]);
 
   // The trade symbol is a single quote, fetched once typing settles.
   useEffect(() => {
@@ -491,15 +507,52 @@ export default function PortfolioScreen() {
           ) : null}
         </CardSurface>
 
+        {watchSymbols.length > 0 && (
+          <View style={styles.positions}>
+            <Text variant="label" color={palette.slate} uppercase>
+              Watching
+            </Text>
+            {watchSymbols.map((ws) => {
+              const q = quotes[ws];
+              return (
+                <CardSurface key={ws} style={styles.posRow}>
+                  <View style={styles.posLeft}>
+                    <Text variant="h3" color={palette.ink}>
+                      {ws}
+                    </Text>
+                    {q?.valid ? (
+                      <Text variant="caption" color={toneColor(q.change)}>
+                        {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%`}
+                      </Text>
+                    ) : (
+                      <Text variant="caption" color={palette.slateLight}>loading</Text>
+                    )}
+                  </View>
+                  <Pressable
+                    onPress={() => setTradeSymbol(ws)}
+                    hitSlop={8}
+                    style={styles.quickBuy}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Trade ${ws}`}
+                  >
+                    <Text variant="caption" color={palette.forestDeep}>Trade</Text>
+                  </Pressable>
+                </CardSurface>
+              );
+            })}
+          </View>
+        )}
+
         {portfolio.positions.length === 0 ? null : (
           <View style={styles.positions}>
             <Text variant="label" color={palette.slate} uppercase>
               Holdings
             </Text>
             {portfolio.positions.map((pos) => {
-              const price = priceOf(pos.symbol);
-              const pnl = price !== undefined ? positionPnL(pos, price) : 0;
-              const pnlPct = price !== undefined ? positionPnLPercent(pos, price) : 0;
+              const price = priceOf(pos.symbol) ?? pos.avgCost;
+              const live = priceOf(pos.symbol) !== undefined;
+              const pnl = positionPnL(pos, price);
+              const pnlPct = positionPnLPercent(pos, price);
               return (
                 <CardSurface key={pos.symbol} style={styles.posRow}>
                   <View style={styles.posLeft}>
@@ -511,11 +564,11 @@ export default function PortfolioScreen() {
                     </Text>
                   </View>
                   <View style={styles.posRight}>
-                    <Text variant="bodyEm" color={palette.ink}>
-                      {price !== undefined ? formatPrice(positionValue(pos, price)) : '—'}
+                    <Text variant="bodyEm" color={live ? palette.ink : palette.slate}>
+                      {formatPrice(positionValue(pos, price))}
                     </Text>
-                    <Text variant="caption" color={toneColor(pnl)}>
-                      {price !== undefined ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : ' '}
+                    <Text variant="caption" color={live ? toneColor(pnl) : palette.slateLight}>
+                      {live ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : 'at cost'}
                     </Text>
                   </View>
                 </CardSurface>
@@ -645,6 +698,12 @@ const styles = StyleSheet.create({
   posRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   posLeft: { gap: 2 },
   posRight: { alignItems: 'flex-end', gap: 2 },
+  quickBuy: {
+    backgroundColor: palette.mintSoft + '40',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
+  },
   tradeLine: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
   sideBadge: {
     paddingHorizontal: 6,
