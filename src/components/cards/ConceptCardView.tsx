@@ -22,7 +22,7 @@ export function ConceptCardView({ card, active = true }: { card: ConceptCard; ac
 
       {card.art && (
         <View style={styles.art}>
-          <ArtView spec={card.art} aspectRatio={1.35} glyphSize={72} active={active} />
+          <ArtView spec={card.art} aspectRatio={4 / 3} glyphSize={72} active={active} />
         </View>
       )}
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   art: {
     marginVertical: 0,
     flexShrink: 1,
-    maxHeight: '38%',
+    maxHeight: '48%',
     /**
      * Load-bearing. `ArtView` sizes itself from an aspectRatio, so when this
      * box shrinks the art inside keeps its full height and bleeds out the

@@ -62,7 +62,14 @@ export function BinaryChoiceCardView({
     <View style={styles.container} pointerEvents="box-none">
       <View style={styles.prompt} pointerEvents="none">
         <RichTextView value={card.prompt} variant="h2" color={colors.ink} />
-        {card.art && <ArtView spec={card.art} aspectRatio={1.5} glyphSize={56} active={active} />}
+        {card.art && (
+          <ArtView
+            spec={card.art}
+            aspectRatio={card.art.kind === 'illustration' ? 4 / 3 : 1.5}
+            glyphSize={56}
+            active={active}
+          />
+        )}
       </View>
 
       <Animated.View style={[styles.options, shakeStyle]}>

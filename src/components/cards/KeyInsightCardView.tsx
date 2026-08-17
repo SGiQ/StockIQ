@@ -3,16 +3,29 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { KeyInsightCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { Text } from '@/components/primitives';
+import { lessonArtRatios } from '@/content/index.generated';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
+
+// Illustrations arrive in a handful of ratios (square, 4:3 landscape, 3:4
+// portrait). Framing the poster art at the source's true ratio avoids the
+// cover-crop that used to slice a third of the width off every landscape hero.
+function artAspectFor(card: KeyInsightCard): number {
+  if (card.art.kind === 'illustration') {
+    return lessonArtRatios[card.art.source] ?? 1;
+  }
+  return 1;
+}
 
 /**
  * The shareable poster.
  *
- * Fixed geometry — a square art panel above a black text panel — is what
+ * Predictable geometry — a fixed art panel above a black text panel — is what
  * makes these exportable as images later without a bespoke layout per card,
  * and it is why the schema keeps `insight` as plain text rather than
- * RichText.
+ * RichText. The art panel takes its aspect from the source illustration so
+ * landscape heroes aren't cover-cropped down to their centre band, but the
+ * text panel keeps its layout regardless.
  *
  * Extracted from the card view so the Saved Cards gallery (Phase 2) can
  * render the identical poster outside the player.
@@ -46,7 +59,7 @@ export function KeyInsightPoster({
     <View style={[styles.poster, { backgroundColor: colors.ink }]}>
         <ArtView
           spec={card.art}
-          aspectRatio={1}
+          aspectRatio={artAspectFor(card)}
           rounded={false}
           glyphSize={compact ? 44 : 96}
           active={active}

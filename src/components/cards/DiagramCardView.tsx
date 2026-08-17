@@ -21,7 +21,7 @@ export function DiagramCardView({ card, active = true }: { card: DiagramCard; ac
 
       <ArtView
         spec={card.art}
-        aspectRatio={card.art.kind === 'illustration' ? 1.35 : 1.15}
+        aspectRatio={card.art.kind === 'illustration' ? 4 / 3 : 1.15}
         active={active}
       />
 
