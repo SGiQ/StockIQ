@@ -12,6 +12,7 @@ import { initialStateFor, type CardUiState } from '@/components/player/cardState
 import { buildReviewQueue } from '@/features/review';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * Spaced review.
@@ -22,6 +23,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * Market Readiness score honest over time.
  */
 export default function ReviewScreen() {
+  const colors = useColors();
   const router = useRouter();
   const reviews = useAppStore((s) => s.reviews);
   const recordReview = useAppStore((s) => s.recordReview);
@@ -83,20 +85,20 @@ export default function ReviewScreen() {
       <View style={styles.header}>
         <Pressable onPress={exit} hitSlop={12} accessibilityRole="button" accessibilityLabel="Close">
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M6 6l12 12M18 6L6 18" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" fill="none" />
+            <Path d="M6 6l12 12M18 6L6 18" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           Review
         </Text>
       </View>
 
       {!done && total > 0 ? (
         <View style={styles.progressWrap}>
-          <View style={styles.progressTrack}>
+          <View style={[styles.progressTrack, { backgroundColor: colors.hairline }]}>
             <View style={[styles.progressFill, { width: `${((index + 1) / total) * 100}%` }]} />
           </View>
-          <Text variant="caption" color={palette.slate}>{`Card ${index + 1} of ${total}`}</Text>
+          <Text variant="caption" color={colors.slate}>{`Card ${index + 1} of ${total}`}</Text>
         </View>
       ) : null}
 
@@ -134,16 +136,17 @@ function Summary({
   reward: { gemsAwarded: number; heartRefilled: boolean } | null;
   onDone: () => void;
 }) {
+  const colors = useColors();
   const allCaughtUp = total === 0;
   return (
     <ScrollView contentContainerStyle={styles.summary} showsVerticalScrollIndicator={false}>
       <View style={styles.summaryBadge}>
-        <Glyph name={allCaughtUp ? 'check' : 'brain'} size={52} color={palette.paper} strokeWidth={2.2} />
+        <Glyph name={allCaughtUp ? 'check' : 'brain'} size={52} color={colors.paper} strokeWidth={2.2} />
       </View>
-      <Text variant="display" color={palette.ink} align="center">
+      <Text variant="display" align="center">
         {allCaughtUp ? 'All caught up.' : 'Review done.'}
       </Text>
-      <Text variant="body" color={palette.slate} align="center">
+      <Text variant="body" color={colors.slate} align="center">
         {allCaughtUp
           ? 'Nothing is due right now. Finish a lesson, or come back tomorrow — cards resurface on a spacing schedule so they actually stick.'
           : `You remembered ${remembered} of ${total}. The ones you missed will come back sooner; the rest, later. That spacing is what makes it durable.`}
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     paddingBottom: space.sm,
   },
   progressWrap: { paddingHorizontal: space.lg, gap: space.xs, paddingBottom: space.sm },
-  progressTrack: { height: 7, borderRadius: radius.pill, backgroundColor: palette.hairline, overflow: 'hidden' },
+  progressTrack: { height: 7, borderRadius: radius.pill, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint },
   body: { padding: space.lg, paddingBottom: space.xxl, gap: space.lg },
   summary: {

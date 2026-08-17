@@ -7,13 +7,15 @@ import { PROMOTE_TOP, RELEGATE_BOTTOM, currentWeekXp, daysLeftInWeek, type Outco
 import { fetchLeagueStandings, simulatedView, type LeagueView } from '@/services/leagues';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
-
-const outcomeColor = (o: Outcome) =>
-  o === 'promote' ? palette.emeraldDeep : o === 'relegate' ? palette.danger : palette.slateLight;
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function LeaguesScreen() {
   const router = useRouter();
+  const colors = useColors();
   const progress = useAppStore((s) => s.progress);
+
+  const outcomeColor = (o: Outcome) =>
+    o === 'promote' ? palette.emeraldDeep : o === 'relegate' ? palette.danger : colors.slateLight;
 
   const now = Date.now();
   const youXp = useMemo(() => currentWeekXp(progress, now), [progress, now]);
@@ -44,10 +46,10 @@ export default function LeaguesScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           League
         </Text>
       </View>
@@ -57,7 +59,7 @@ export default function LeaguesScreen() {
           <Text variant="label" color={palette.mintSoft} uppercase>
             {`${tier} league`}
           </Text>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             {`#${yourRank}`}
           </Text>
           <Text variant="caption" color={palette.mintSoft}>
@@ -74,7 +76,7 @@ export default function LeaguesScreen() {
           </Text>
         </View>
 
-        <View style={styles.list}>
+        <View style={[styles.list, { backgroundColor: colors.paper }]}>
           {entries.map((e, i) => (
             <View key={`${e.name}-${i}`}>
               {i === PROMOTE_TOP && entries.length > PROMOTE_TOP + RELEGATE_BOTTOM ? (
@@ -84,14 +86,14 @@ export default function LeaguesScreen() {
                 <View style={[styles.divider, { backgroundColor: palette.danger }]} />
               ) : null}
               <View style={[styles.row, e.isYou && styles.youRow]}>
-                <Text variant="bodyEm" color={palette.slate} style={styles.rank}>
+                <Text variant="bodyEm" color={colors.slate} style={styles.rank}>
                   {e.rank}
                 </Text>
-                <Text variant="bodyEm" color={e.isYou ? palette.violetInk : palette.ink} style={styles.name}>
+                <Text variant="bodyEm" color={e.isYou ? palette.violetInk : colors.ink} style={styles.name}>
                   {e.isYou ? 'You' : e.name}
                 </Text>
                 <View style={[styles.dot, { backgroundColor: outcomeColor(e.outcome) }]} />
-                <Text variant="bodyEm" color={palette.ink} style={styles.xp}>
+                <Text variant="bodyEm" style={styles.xp}>
                   {`${e.xp} XP`}
                 </Text>
               </View>
@@ -100,11 +102,11 @@ export default function LeaguesScreen() {
         </View>
 
         {!view.live ? (
-          <Text variant="caption" color={palette.slateLight} align="center" style={styles.note}>
+          <Text variant="caption" color={colors.slateLight} align="center" style={styles.note}>
             Preview: you're competing against a sample cohort until leagues go live. Your weekly XP is real — earn more to climb.
           </Text>
         ) : (
-          <Text variant="caption" color={palette.slateLight} align="center" style={styles.note}>
+          <Text variant="caption" color={colors.slateLight} align="center" style={styles.note}>
             Top finishers promote, bottom finishers relegate when the week ends. Your weekly XP is real.
           </Text>
         )}
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
   body: { padding: space.lg, gap: space.md, paddingBottom: space.xxl },
   summary: { alignItems: 'center', gap: space.xxs, paddingVertical: space.lg },
   legend: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: space.xs },
-  list: { backgroundColor: palette.paper, borderRadius: radius.lg, overflow: 'hidden' },
+  list: { borderRadius: radius.lg, overflow: 'hidden' },
   divider: { height: 2, marginVertical: space.xs, marginHorizontal: space.md, borderRadius: 1 },
   row: {
     flexDirection: 'row',

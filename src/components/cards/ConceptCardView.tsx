@@ -2,7 +2,8 @@ import { StyleSheet, View } from 'react-native';
 import type { ConceptCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The workhorse card: a short headline, a short body, optional art.
@@ -11,20 +12,21 @@ import { palette, radius, space } from '@/theme/tokens';
  * touches and the tap zones underneath handle navigation.
  */
 export function ConceptCardView({ card, active = true }: { card: ConceptCard; active?: boolean }) {
+  const colors = useColors();
   // Wholly inert: "none" rather than "box-none" so taps fall through to the
   // navigation zones underneath. box-none would leave the text subtree as a
   // hit target on web and silently swallow every forward tap.
   return (
     <View style={styles.container} pointerEvents="none">
-      <RichTextView value={card.headline} variant="h1" color={palette.ink} />
+      <RichTextView value={card.headline} variant="h1" color={colors.ink} />
 
       {card.art && (
         <View style={styles.art}>
-          <ArtView spec={card.art} aspectRatio={1.35} glyphSize={72} active={active} />
+          <ArtView spec={card.art} aspectRatio={4 / 3} glyphSize={72} active={active} />
         </View>
       )}
 
-      <RichTextView value={card.body} variant="body" color={palette.inkSoft} style={styles.body} />
+      <RichTextView value={card.body} variant="body" color={colors.inkSoft} style={styles.body} />
     </View>
   );
 }
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   art: {
     marginVertical: 0,
     flexShrink: 1,
-    maxHeight: '38%',
+    maxHeight: '48%',
     /**
      * Load-bearing. `ArtView` sizes itself from an aspectRatio, so when this
      * box shrinks the art inside keeps its full height and bleeds out the

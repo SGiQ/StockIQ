@@ -5,6 +5,7 @@ import { CardSurface, Text } from '@/components/primitives';
 import { dueReviewCount } from '@/features/review';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The keep-sharp nudge: appears only when spaced-review cards have fallen due.
@@ -14,6 +15,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * clearing them. Hidden when there's nothing due, so it never nags.
  */
 export function KeepSharpCard() {
+  const colors = useColors();
   const router = useRouter();
   const reviews = useAppStore((s) => s.reviews);
   const due = dueReviewCount(reviews, Date.now());
@@ -30,14 +32,14 @@ export function KeepSharpCard() {
           <Glyph name="brain" size={24} color={palette.forestDeep} />
         </View>
         <View style={styles.text}>
-          <Text variant="h3" color={palette.ink}>
+          <Text variant="h3">
             Keep sharp
           </Text>
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             {`${due} card${due === 1 ? '' : 's'} due — a quick review keeps your readiness up.`}
           </Text>
         </View>
-        <Text variant="h2" color={palette.slateLight}>
+        <Text variant="h2" color={colors.slateLight}>
           ›
         </Text>
       </CardSurface>

@@ -6,7 +6,8 @@ import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { savedCardId } from '@/store';
 import { useAppStore } from '@/store/slices/useAppStore';
-import { palette, space } from '@/theme/tokens';
+import { space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * A strategy's guide, played in the lesson player.
@@ -27,6 +28,7 @@ import { palette, space } from '@/theme/tokens';
 const STRATEGY_COURSE_ID = 'strategy';
 
 export default function StrategyGuide() {
+  const colors = useColors();
   const { strategyId } = useLocalSearchParams<{ strategyId: string }>();
   const router = useRouter();
   const strategy = getStrategy(strategyId);
@@ -56,7 +58,7 @@ export default function StrategyGuide() {
   if (!strategy?.guideCards?.length || !unlockedStrategies.includes(strategy.id)) {
     return (
       <Screen tone="paper">
-        <View style={styles.centre}>
+        <View style={[styles.centre, { backgroundColor: colors.paper }]}>
           <Text variant="h2">
             {!strategy?.guideCards?.length ? 'Guide not found' : 'Finish the prerequisites first'}
           </Text>
@@ -94,6 +96,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: space.lg,
     padding: space.lg,
-    backgroundColor: palette.paper,
   },
 });

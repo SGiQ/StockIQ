@@ -25,8 +25,10 @@ import {
   useAppStore,
 } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function LearnTab() {
+  const colors = useColors();
   const router = useRouter();
   const courses = listCourses();
   const totalXp = useAppStore((s) => totalEarnedXp(s.progress));
@@ -49,7 +51,7 @@ export default function LearnTab() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text variant="h1" color={palette.ink}>
+            <Text variant="h1">
               Keep going.
             </Text>
             <View style={styles.statusCluster}>
@@ -67,7 +69,7 @@ export default function LearnTab() {
                 onPress={() => router.push('/leagues' as never)}
                 accessibilityRole="button"
                 accessibilityLabel="League"
-                style={styles.narrationSettings}
+                style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
                 hitSlop={8}
               >
                 <Svg width={22} height={22} viewBox="0 0 24 24">
@@ -86,7 +88,7 @@ export default function LearnTab() {
               onPress={() => router.push('/portfolio' as never)}
               accessibilityRole="button"
               accessibilityLabel="Practice portfolio"
-              style={styles.narrationSettings}
+              style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
               <Svg width={22} height={22} viewBox="0 0 24 24">
@@ -104,7 +106,7 @@ export default function LearnTab() {
               onPress={() => router.push('/watchlist' as never)}
               accessibilityRole="button"
               accessibilityLabel="Watchlist"
-              style={styles.narrationSettings}
+              style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
               <Svg width={22} height={22} viewBox="0 0 24 24">
@@ -123,7 +125,7 @@ export default function LearnTab() {
               onPress={() => router.push('/ask' as never)}
               accessibilityRole="button"
               accessibilityLabel="Ask StockIQ"
-              style={styles.narrationSettings}
+              style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
               <Svg width={22} height={22} viewBox="0 0 24 24">
@@ -141,12 +143,12 @@ export default function LearnTab() {
               onPress={() => router.push('/settings/narration' as never)}
               accessibilityRole="button"
               accessibilityLabel="Narration settings"
-              style={styles.narrationSettings}
+              style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
               <SpeakerIcon
                 size={20}
-                color={narrationEnabled ? palette.forestDeep : palette.slate}
+                color={narrationEnabled ? palette.forestDeep : colors.slate}
                 muted={!narrationEnabled}
               />
             </Pressable>
@@ -154,12 +156,12 @@ export default function LearnTab() {
               onPress={() => router.push('/settings' as never)}
               accessibilityRole="button"
               accessibilityLabel="Settings"
-              style={styles.narrationSettings}
+              style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
               <Svg width={22} height={22} viewBox="0 0 24 24">
-                <Circle cx={12} cy={12} r={3.2} fill="none" stroke={palette.ink} strokeWidth={2} />
-                <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={palette.ink} strokeWidth={2} strokeLinecap="round" />
+                <Circle cx={12} cy={12} r={3.2} fill="none" stroke={colors.ink} strokeWidth={2} />
+                <Path d="M12 2.7v2.1M12 19.2v2.1M2.7 12h2.1M19.2 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke={colors.ink} strokeWidth={2} strokeLinecap="round" />
               </Svg>
             </Pressable>
           </View>
@@ -173,12 +175,12 @@ export default function LearnTab() {
           <CardSurface style={styles.streakCard}>
             <View style={styles.streakTop}>
               <View style={styles.streakHeading}>
-                <Text variant="h3" color={palette.ink}>
+                <Text variant="h3">
                   {streak && streak.currentStreak > 0
                     ? `${streak.currentStreak}-day streak`
                     : 'Start a streak'}
                 </Text>
-                <Text variant="caption" color={palette.slate}>
+                <Text variant="caption" color={colors.slate}>
                   {streak && streak.currentStreak > 0
                     ? `Longest: ${streak.longestStreak}`
                     : 'Finish a lesson today'}
@@ -206,7 +208,7 @@ export default function LearnTab() {
           <CourseCard key={course.id} courseId={course.id} />
         ))}
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+        <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
           Educational content only. StockIQ does not provide financial advice.
         </Text>
       </ScrollView>
@@ -215,6 +217,7 @@ export default function LearnTab() {
 }
 
 function CourseCard({ courseId }: { courseId: string }) {
+  const colors = useColors();
   const router = useRouter();
   const course = listCourses().find((c) => c.id === courseId)!;
   const progressMap = useAppStore((s) => s.progress);
@@ -232,10 +235,10 @@ function CourseCard({ courseId }: { courseId: string }) {
           <ArtView spec={course.cover} aspectRatio={1} glyphSize={40} />
         </View>
         <View style={styles.cardText}>
-          <Text variant="h3" color={palette.ink} numberOfLines={2}>
+          <Text variant="h3" numberOfLines={2}>
             {course.title}
           </Text>
-          <Text variant="caption" color={done ? palette.forestDeep : palette.slate}>
+          <Text variant="caption" color={done ? palette.forestDeep : colors.slate}>
             {done
               ? `Complete · ${earnedXp} / ${course.totalXp} XP`
               : `${earnedXp} / ${course.totalXp} XP · ${Math.round(progress * 100)}%`}
@@ -243,12 +246,12 @@ function CourseCard({ courseId }: { courseId: string }) {
         </View>
       </View>
 
-      <View style={styles.track}>
+      <View style={[styles.track, { backgroundColor: colors.hairline }]}>
         <View style={[styles.fill, { width: `${Math.max(2, progress * 100)}%` }]} />
       </View>
 
       {nextTitle && !done && (
-        <Text variant="caption" color={palette.slate} numberOfLines={1}>
+        <Text variant="caption" color={colors.slate} numberOfLines={1}>
           {`Up next: ${nextTitle}`}
         </Text>
       )}
@@ -308,7 +311,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: radius.pill,
-    backgroundColor: palette.paper,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -350,7 +352,6 @@ const styles = StyleSheet.create({
   track: {
     height: 8,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     overflow: 'hidden',
   },
   fill: {

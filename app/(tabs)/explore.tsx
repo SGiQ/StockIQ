@@ -8,6 +8,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { Chip, Screen, Text } from '@/components/primitives';
 import { courseCompletion, useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const CATEGORY_LABELS: Record<CourseCategory, string> = {
   fundamentals: 'Fundamentals',
@@ -26,6 +27,7 @@ const CATEGORY_LABELS: Record<CourseCategory, string> = {
 const CATEGORY_TONES = ['violet', 'flame', 'azure', 'mint', 'dark', 'neutral'] as const;
 
 export default function ExploreTab() {
+  const colors = useColors();
   const router = useRouter();
   const courses = listCourses();
   const [filter, setFilter] = useState<CourseCategory | null>(null);
@@ -55,7 +57,7 @@ export default function ExploreTab() {
   return (
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text variant="h1" color={palette.ink}>
+        <Text variant="h1">
           Explore
         </Text>
 
@@ -71,10 +73,10 @@ export default function ExploreTab() {
         >
           <View style={styles.kbCard}>
             <View style={styles.kbIcon}>
-              <Glyph name="compass" size={26} color={palette.paper} />
+              <Glyph name="compass" size={26} color={colors.paper} />
             </View>
             <View style={styles.kbText}>
-              <Text variant="h3" color={palette.paper}>
+              <Text variant="h3" color={colors.paper}>
                 Knowledge base
               </Text>
               <Text variant="caption" color={palette.mintSoft}>
@@ -112,7 +114,7 @@ export default function ExploreTab() {
         </Section>
 
         {shown.length === 0 && (
-          <Text variant="body" color={palette.slate} align="center">
+          <Text variant="body" color={colors.slate} align="center">
             Nothing here yet.
           </Text>
         )}
@@ -124,7 +126,7 @@ export default function ExploreTab() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <View style={styles.section}>
-      <Text variant="h2" color={palette.ink}>
+      <Text variant="h2">
         {title}
       </Text>
       {children}
@@ -143,6 +145,7 @@ function Grid({ courses }: { courses: Course[] }) {
 }
 
 function CourseTile({ course }: { course: Course }) {
+  const colors = useColors();
   const router = useRouter();
   const progressMap = useAppStore((s) => s.progress);
   const progress = useMemo(
@@ -163,23 +166,23 @@ function CourseTile({ course }: { course: Course }) {
             flag: a finished course reads as finished, never "New". */}
         {progress >= 1 ? (
           <View style={styles.doneBadge}>
-            <Text variant="label" color={palette.paper} uppercase>
+            <Text variant="label" color={colors.paper} uppercase>
               Done
             </Text>
           </View>
         ) : course.isNew && progress === 0 ? (
-          <View style={styles.newBadge}>
-            <Text variant="label" color={palette.paper} uppercase>
+          <View style={[styles.newBadge, { backgroundColor: colors.ink }]}>
+            <Text variant="label" color={colors.paper} uppercase>
               New
             </Text>
           </View>
         ) : null}
       </View>
 
-      <Text variant="bodySm" color={palette.ink} numberOfLines={2} style={styles.tileTitle}>
+      <Text variant="bodySm" numberOfLines={2} style={styles.tileTitle}>
         {course.title}
       </Text>
-      <Text variant="caption" color={progress >= 1 ? palette.forestDeep : palette.slate}>
+      <Text variant="caption" color={progress >= 1 ? palette.forestDeep : colors.slate}>
         {progress >= 1
           ? 'Complete'
           : progress > 0
@@ -248,7 +251,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: space.sm,
     right: space.sm,
-    backgroundColor: palette.ink,
     borderRadius: radius.pill,
     paddingHorizontal: space.sm,
     paddingVertical: space.xxs + 1,

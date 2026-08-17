@@ -8,6 +8,7 @@ import { useAppStore } from '@/store/slices/useAppStore';
 import type { CourseId } from '@/content/types';
 import type { ExperienceLevel, LearningGoal } from '@/store/repository';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The personalisation step.
@@ -39,6 +40,7 @@ function recommendCourse(level: ExperienceLevel, goals: LearningGoal[]): CourseI
 }
 
 export default function Experience() {
+  const colors = useColors();
   const router = useRouter();
   const setExperience = useAppStore((s) => s.setExperience);
   const selectCourse = useAppStore((s) => s.selectCourse);
@@ -58,7 +60,7 @@ export default function Experience() {
         <OnboardingProgress step={1} total={4} />
 
         <View style={styles.header}>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             Let's tune it to you.
           </Text>
           <Text variant="body" color={palette.mintSoft}>
@@ -142,29 +144,30 @@ function Option({
   mode: 'radio' | 'check';
   onPress: () => void;
 }) {
+  const colors = useColors();
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole={mode === 'check' ? 'checkbox' : 'radio'}
       accessibilityState={{ selected, checked: selected }}
-      style={[styles.option, selected && styles.optionSelected]}
+      style={[styles.option, { backgroundColor: colors.paper }, selected && styles.optionSelected]}
     >
       <View style={styles.optionCopy}>
-        <Text variant="body" color={palette.ink}>
+        <Text variant="body">
           {label}
         </Text>
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           {hint}
         </Text>
       </View>
       {mode === 'check' ? (
-        <View style={[styles.check, selected && styles.checkOn]}>
+        <View style={[styles.check, { borderColor: colors.hairline }, selected && styles.checkOn]}>
           {selected ? (
             <Svg width={14} height={14} viewBox="0 0 24 24">
               <Path
                 d="M5 13l4 4L19 7"
                 fill="none"
-                stroke={palette.paper}
+                stroke={colors.paper}
                 strokeWidth={3}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -173,7 +176,7 @@ function Option({
           ) : null}
         </View>
       ) : (
-        <View style={[styles.radio, selected && styles.radioOn]}>
+        <View style={[styles.radio, { borderColor: colors.hairline }, selected && styles.radioOn]}>
           {selected ? <View style={styles.radioDot} /> : null}
         </View>
       )}
@@ -211,7 +214,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     borderWidth: 3,
@@ -230,7 +232,6 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: radius.pill,
     borderWidth: 2,
-    borderColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -248,7 +249,6 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
   },

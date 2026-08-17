@@ -17,7 +17,15 @@
       "type": "concept",
       "headline": "Two axes. That is the whole frame.",
       "body": "Price runs up the vertical axis. Time runs across the horizontal one. Every chart you will ever open is built on those two and nothing else. Change either axis and the picture changes — the trades behind it do not.",
-      "art": { "kind": "glyph", "name": "clock", "bg": "lilac" }
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "line",
+          "series": [42, 43, 45, 44, 48, 47, 49, 51, 49, 53],
+          "volume": [80, 120, 150, 90, 200, 110, 170, 180, 100, 160]
+        }
+      }
     },
     {
       "id": "c3",
@@ -29,12 +37,14 @@
         "spec": {
           "type": "line",
           "series": [50, 52, 51, 54, 53],
-          "xLabels": ["Mon", "Tue", "Wed", "Thu", "Fri"],
-          "xLabel": "Time",
-          "yLabel": "Price ($)"
+          "volume": [100, 130, 90, 160, 120],
+          "markers": [
+            { "at": 0, "label": "Monday" },
+            { "at": 3, "label": "Thursday" }
+          ]
         }
       },
-      "caption": "Read it like a map: left to right is time, bottom to top is price. Each point marks where the last trade of that day happened. The line just connects them."
+      "caption": "Read it like a map: left to right is time, bottom to top is price. Each point is the closing price for that day. The bars underneath show how many shares changed hands."
     },
     {
       "id": "c4",
@@ -99,7 +109,20 @@
       "type": "concept",
       "headline": "Change the timeframe, change the story.",
       "body": "The same stock can be an uptrend on a one-year chart and a downtrend on a one-month chart. Both charts are honest. They answer different questions, because they cover different spans of time.",
-      "art": { "kind": "glyph", "name": "calendar", "bg": "butter" }
+      "art": {
+        "kind": "chart",
+        "motion": "draw",
+        "spec": {
+          "type": "line",
+          "series": [55, 57, 60, 61, 58, 55, 53],
+          "volume": [90, 120, 180, 200, 150, 130, 100],
+          "sma": [3],
+          "markers": [
+            { "at": 2, "label": "Uptrend here" },
+            { "at": 5, "label": "Downtrend here", "emphasis": true }
+          ]
+        }
+      }
     },
     {
       "id": "c8",
@@ -110,17 +133,16 @@
         "motion": "draw",
         "spec": {
           "type": "line",
-          "series": [40, 45, 51, 56, 60, 55, 50, 47, 45, 53, 62, 72],
-          "xLabels": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"],
-          "xLabel": "Months",
-          "yLabel": "Price ($)",
+          "series": [40, 46, 53, 60, 55, 50, 47, 45, 54, 64, 72],
+          "volume": [100, 130, 150, 200, 170, 140, 120, 110, 160, 250, 300],
+          "sma": [3],
           "markers": [
-            { "at": 4, "label": "$60" },
-            { "at": 8, "label": "$45", "emphasis": true }
+            { "at": 3, "label": "$60" },
+            { "at": 7, "label": "$45", "emphasis": true }
           ]
         }
       },
-      "caption": "Twelve months, $40 to $72 — up 80%. Inside it, months 5 to 9 fell from $60 to $45, down 25%. Open only that window and the same stock looks broken."
+      "caption": "Eleven months, $40 to $72 — up 80%. Inside it, months 4 to 8 fell from $60 to $45, down 25%. Open only that window and the same stock looks broken."
     },
     {
       "id": "c9",

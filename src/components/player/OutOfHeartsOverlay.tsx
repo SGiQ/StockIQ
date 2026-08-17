@@ -9,9 +9,11 @@ import { useAppStore } from '@/store/slices/useAppStore';
 import { GemIcon } from '@/components/Currency';
 import type { HeartsValue } from '@/store/repository';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 import { HEART_PATH } from './HeartPips';
 
 function BrokenHeart() {
+  const colors = useColors();
   return (
     <Svg width={84} height={84} viewBox="0 0 24 24">
       <Path
@@ -25,7 +27,7 @@ function BrokenHeart() {
       <Path
         d="M12 4.5l-1.7 5.2 2.6 1.8-2 2 1.3 4.4"
         fill="none"
-        stroke={palette.paper}
+        stroke={colors.paper}
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -56,6 +58,7 @@ export function OutOfHeartsOverlay({
   onExit,
   onRegenerated,
 }: OutOfHeartsOverlayProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
   const [now, setNow] = useState(() => Date.now());
   const regenNotified = useRef(false);
@@ -79,18 +82,18 @@ export function OutOfHeartsOverlay({
   }, [snap.count, onRegenerated]);
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top + space.xl, paddingBottom: insets.bottom + space.lg }]}>
+    <View style={[styles.root, { paddingTop: insets.top + space.xl, paddingBottom: insets.bottom + space.lg, backgroundColor: colors.paper }]}>
       <View style={styles.body}>
         <BrokenHeart />
 
-        <Text variant="display" color={palette.ink} align="center">
+        <Text variant="display" align="center">
           Out of hearts
         </Text>
 
-        <Text variant="body" color={palette.slate} align="center">
+        <Text variant="body" color={colors.slate} align="center">
           You miss a heart for each wrong answer. Take a breather — the next one
           comes back in{' '}
-          <Text variant="bodyEm" color={palette.ink}>
+          <Text variant="bodyEm">
             {formatCountdown(snap.nextInMs)}
           </Text>
           .
@@ -104,7 +107,7 @@ export function OutOfHeartsOverlay({
 
         <View style={styles.gemRow}>
           <GemIcon size={15} />
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             {canAffordRefill
               ? `You have ${gemBalance} gems`
               : `${gemBalance} / ${HEART_REFILL_COST} gems — earn more in lessons and review`}
@@ -134,7 +137,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: palette.paper,
     paddingHorizontal: space.lg,
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -5,7 +5,8 @@ import Svg, { Path } from 'react-native-svg';
 import { listTerms } from '@/content/registry';
 import { toPlainText } from '@/content/richtext';
 import { CardSurface, Screen, Text } from '@/components/primitives';
-import { palette, radius, space, type as typeScale } from '@/theme/tokens';
+import { radius, space, type as typeScale } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The glossary — a reference layer over the curriculum.
@@ -15,6 +16,7 @@ import { palette, radius, space, type as typeScale } from '@/theme/tokens';
  * actually teaches it.
  */
 export default function Glossary() {
+  const colors = useColors();
   const router = useRouter();
   const terms = listTerms();
   const [query, setQuery] = useState('');
@@ -42,7 +44,7 @@ export default function Glossary() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M15 5l-7 7 7 7"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -50,7 +52,7 @@ export default function Glossary() {
             />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           Glossary
         </Text>
       </View>
@@ -60,16 +62,16 @@ export default function Glossary() {
           value={query}
           onChangeText={setQuery}
           placeholder="Search terms"
-          placeholderTextColor={palette.slateLight}
+          placeholderTextColor={colors.slateLight}
           autoCapitalize="none"
           autoCorrect={false}
-          style={styles.search}
+          style={[styles.search, { borderColor: colors.hairline, backgroundColor: colors.paper, color: colors.ink }]}
         />
       </View>
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         {filtered.length === 0 ? (
-          <Text variant="body" color={palette.slate} align="center">
+          <Text variant="body" color={colors.slate} align="center">
             No terms match "{query.trim()}".
           </Text>
         ) : (
@@ -81,10 +83,10 @@ export default function Glossary() {
               accessibilityLabel={term.term}
             >
               <CardSurface style={styles.row}>
-                <Text variant="h3" color={palette.ink}>
+                <Text variant="h3">
                   {term.term}
                 </Text>
-                <Text variant="caption" color={palette.slate} numberOfLines={2}>
+                <Text variant="caption" color={colors.slate} numberOfLines={2}>
                   {toPlainText(term.definition)}
                 </Text>
               </CardSurface>
@@ -108,11 +110,8 @@ const styles = StyleSheet.create({
   search: {
     minHeight: 48,
     borderWidth: 1.5,
-    borderColor: palette.hairline,
     borderRadius: radius.md,
-    backgroundColor: palette.paper,
     paddingHorizontal: space.md,
-    color: palette.ink,
     ...typeScale.body,
   },
   body: { padding: space.lg, paddingTop: space.xs, paddingBottom: space.xxl, gap: space.sm },

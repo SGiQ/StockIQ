@@ -19,6 +19,7 @@ const hero = (source: string, alt: string, focalY?: number): Hero => ({
  */
 export const lessonArtwork: Record<string, Hero> = {
   'getting-started/first-trade': hero('broker-agent', 'A broker hands a share across a bridge, turning a decision into ownership.'),
+  'getting-started/index-funds': hero('index-basket', 'A weighted basket of companies sits beside a benchmark running path — one purchase buys the whole market slice, not a bet on any single name.'),
 
   'market-foundations/bid-ask-and-spread': hero('bid-ask-paper', 'Buyers and sellers face each other across the small gap between their best offers.'),
   'market-foundations/exchanges-and-brokers': hero('exchanges-and-brokers', 'An order travels through a broker into an exchange where buyers and sellers meet.'),
@@ -83,8 +84,12 @@ export const lessonArtwork: Record<string, Hero> = {
 /**
  * Lessons whose opening card carries its own bespoke illustration, so the hero
  * bookends only the closing card rather than covering that opening art.
+ *
+ * Exported so the bookend content-quality guardrail can honour the same
+ * exception rather than fail these lessons for having intentional mismatched
+ * bookends.
  */
-const heroClosingOnly = new Set<string>(['market-foundations/what-moves-a-price']);
+export const heroClosingOnly = new Set<string>(['market-foundations/what-moves-a-price']);
 
 export const applyLessonArtwork = (lesson: Lesson): Lesson => {
   const path = `${lesson.courseId}/${lesson.id}`;

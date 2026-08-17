@@ -1,5 +1,6 @@
 import { Text as RNText, type TextProps as RNTextProps, type TextStyle } from 'react-native';
-import { palette, type, type TypeVariant } from '@/theme/tokens';
+import { type, type TypeVariant } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface TextProps extends RNTextProps {
   variant?: TypeVariant;
@@ -15,19 +16,20 @@ export interface TextProps extends RNTextProps {
  */
 export function Text({
   variant = 'body',
-  color = palette.ink,
+  color,
   align,
   uppercase,
   style,
   children,
   ...rest
 }: TextProps) {
+  const colors = useColors();
   return (
     <RNText
       {...rest}
       style={[
         type[variant],
-        { color },
+        { color: color ?? colors.ink },
         align ? { textAlign: align } : null,
         uppercase ? { textTransform: 'uppercase' } : null,
         style,

@@ -7,9 +7,11 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** Mirrors "Choose your course." from the Imprint onboarding. */
 export default function ChooseCourse() {
+  const colors = useColors();
   const router = useRouter();
   const courses = listCourses();
   const selectCourse = useAppStore((s) => s.selectCourse);
@@ -24,7 +26,7 @@ export default function ChooseCourse() {
         <OnboardingProgress step={3} total={4} />
 
         <View style={styles.header}>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             Choose your course.
           </Text>
           <Text variant="body" color={palette.mintSoft}>
@@ -41,13 +43,13 @@ export default function ChooseCourse() {
                 onPress={() => setSelected(course.id)}
                 accessibilityRole="button"
                 accessibilityState={{ selected: isSelected }}
-                style={[styles.row, isSelected && styles.rowSelected]}
+                style={[styles.row, { backgroundColor: colors.paper }, isSelected && styles.rowSelected]}
               >
                 <View style={styles.cover}>
                   <ArtView spec={course.cover} aspectRatio={1} glyphSize={36} />
                 </View>
                 <View style={styles.rowTitle}>
-                  <Text variant="h3" color={palette.ink}>
+                  <Text variant="h3">
                     {course.title}
                   </Text>
                   {course.id === recommended ? (
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    backgroundColor: palette.paper,
     borderRadius: radius.lg,
     padding: space.md,
     borderWidth: 3,

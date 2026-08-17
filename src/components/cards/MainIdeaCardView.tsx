@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import type { MainIdeaCard } from '@/content/types';
 import { PillButton, RichTextView, Text } from '@/components/primitives';
 import { palette, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface MainIdeaCardViewProps {
   card: MainIdeaCard;
@@ -14,17 +15,18 @@ export interface MainIdeaCardViewProps {
  * feel they finished the section rather than sliding past it.
  */
 export function MainIdeaCardView({ card, onContinue }: MainIdeaCardViewProps) {
+  const colors = useColors();
   return (
     // Root is box-none so the Continue button stays tappable, but the prose
     // above it is explicitly "none" — otherwise that subtree would capture
     // forward taps meant for the navigation zones underneath.
     <View style={styles.container} pointerEvents="box-none">
       <View style={styles.prose} pointerEvents="none">
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           {card.title ?? 'The Main Idea'}
         </Text>
 
-        <RichTextView value={card.summary} variant="h2" color={palette.ink} />
+        <RichTextView value={card.summary} variant="h2" color={colors.ink} />
 
         <View style={styles.bullets}>
           {card.bullets.map((bullet, index) => (
@@ -33,7 +35,7 @@ export function MainIdeaCardView({ card, onContinue }: MainIdeaCardViewProps) {
               <RichTextView
                 value={bullet}
                 variant="body"
-                color={palette.inkSoft}
+                color={colors.inkSoft}
                 style={styles.bulletText}
               />
             </View>

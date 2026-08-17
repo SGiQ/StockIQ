@@ -6,6 +6,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { CardSurface, Screen, Text } from '@/components/primitives';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const KIND_GLYPH = {
   trader: 'people',
@@ -31,6 +32,7 @@ const KIND_LABEL = {
  * content behind them until Phase 3.
  */
 export default function LikedTab() {
+  const colors = useColors();
   const router = useRouter();
   const liked = useAppStore((s) => s.liked);
 
@@ -45,19 +47,19 @@ export default function LikedTab() {
   return (
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text variant="h1" color={palette.ink}>
+        <Text variant="h1">
           Liked
         </Text>
 
         {items.length === 0 ? (
           <View style={styles.empty}>
-            <View style={styles.emptyBadge}>
-              <Glyph name="heart" size={30} color={palette.slate} />
+            <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
+              <Glyph name="heart" size={30} color={colors.slate} />
             </View>
-            <Text variant="h3" color={palette.ink} align="center">
+            <Text variant="h3" align="center">
               Nothing liked yet
             </Text>
-            <Text variant="body" color={palette.slate} align="center">
+            <Text variant="body" color={colors.slate} align="center">
               Lessons, traders, strategies, and books you like will collect here.
             </Text>
           </View>
@@ -74,10 +76,10 @@ export default function LikedTab() {
                   <Glyph name={KIND_GLYPH[item.kind]} size={22} color={palette.forestDeep} />
                 </View>
                 <View style={styles.rowText}>
-                  <Text variant="label" color={palette.slate} uppercase>
+                  <Text variant="label" color={colors.slate} uppercase>
                     {KIND_LABEL[item.kind]}
                   </Text>
-                  <Text variant="h3" color={palette.ink} numberOfLines={2}>
+                  <Text variant="h3" numberOfLines={2}>
                     {item.title}
                   </Text>
                 </View>
@@ -123,7 +125,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: space.sm,

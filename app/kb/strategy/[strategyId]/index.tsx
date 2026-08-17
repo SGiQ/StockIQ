@@ -12,6 +12,7 @@ import { SourceLinks } from '@/components/kb/SourceLinks';
 import { courseNodeStatuses, useAppStore } from '@/store/slices/useAppStore';
 import { progressId } from '@/store';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const TIMEFRAME_LABEL = {
   intraday: 'Intraday',
@@ -21,6 +22,7 @@ const TIMEFRAME_LABEL = {
 } as const;
 
 export default function StrategyDetail() {
+  const colors = useColors();
   const { strategyId } = useLocalSearchParams<{ strategyId: string }>();
   const router = useRouter();
   const strategy = getStrategy(strategyId);
@@ -75,7 +77,7 @@ export default function StrategyDetail() {
         <Chip label={`Risk ${strategy.riskLevel} / 5`} tone={strategy.riskLevel >= 4 ? 'flame' : 'neutral'} />
       </View>
 
-      <RichTextView value={strategy.thesis} variant="body" color={palette.inkSoft} linksEnabled />
+      <RichTextView value={strategy.thesis} variant="body" color={colors.inkSoft} linksEnabled />
 
       {/*
         Directly under the thesis and above the rules: the rules are reference
@@ -121,6 +123,7 @@ function LockedStrategy({
   entityRef: EntityRef;
   gates: Array<{ path: LessonPath; courseId: string; lessonId: string; title: string; done: boolean }>;
 }) {
+  const colors = useColors();
   const router = useRouter();
   const remaining = gates.filter((g) => !g.done).length;
 
@@ -129,14 +132,14 @@ function LockedStrategy({
       <EntityHeader eyebrow="Locked strategy" title={name} entityRef={entityRef} />
 
       <ScrollView contentContainerStyle={styles.lockedBody} showsVerticalScrollIndicator={false}>
-        <View style={styles.lockBadge}>
-          <Glyph name="lock" size={38} color={palette.slate} />
+        <View style={[styles.lockBadge, { backgroundColor: colors.hairline }]}>
+          <Glyph name="lock" size={38} color={colors.slate} />
         </View>
 
-        <Text variant="h2" color={palette.ink} align="center">
+        <Text variant="h2" align="center">
           Finish the groundwork first.
         </Text>
-        <Text variant="body" color={palette.slate} align="center">
+        <Text variant="body" color={colors.slate} align="center">
           {`${name} builds on ${gates.length} lesson${gates.length === 1 ? '' : 's'}. ${remaining} left to go.`}
         </Text>
 
@@ -151,19 +154,19 @@ function LockedStrategy({
               accessibilityLabel={gate.title}
             >
               <CardSurface style={styles.gate}>
-                <View style={[styles.gateMark, gate.done && styles.gateMarkDone]}>
+                <View style={[styles.gateMark, { backgroundColor: colors.hairline }, gate.done && styles.gateMarkDone]}>
                   <Glyph
                     name={gate.done ? 'check' : 'arrow-up'}
                     size={16}
-                    color={gate.done ? palette.paper : palette.slate}
+                    color={gate.done ? colors.paper : colors.slate}
                     strokeWidth={2.8}
                   />
                 </View>
                 <View style={styles.gateText}>
-                  <Text variant="bodyEm" color={palette.ink} numberOfLines={2}>
+                  <Text variant="bodyEm" numberOfLines={2}>
                     {gate.title}
                   </Text>
-                  <Text variant="caption" color={palette.slate}>
+                  <Text variant="caption" color={colors.slate}>
                     {gate.done ? 'Completed' : 'Tap to start this lesson'}
                   </Text>
                 </View>
@@ -203,7 +206,6 @@ const styles = StyleSheet.create({
     width: 84,
     height: 84,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: space.lg,
@@ -223,7 +225,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
   },

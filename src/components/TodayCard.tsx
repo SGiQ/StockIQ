@@ -14,9 +14,11 @@ import {
 import { useAppStore } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** A ring that fills toward the day's XP goal. */
 function GoalRing({ value, goal, size = 68 }: { value: number; goal: number; size?: number }) {
+  const colors = useColors();
   const stroke = 8;
   const r = (size - stroke) / 2;
   const circumference = 2 * Math.PI * r;
@@ -26,7 +28,7 @@ function GoalRing({ value, goal, size = 68 }: { value: number; goal: number; siz
   return (
     <View style={{ width: size, height: size }}>
       <Svg width={size} height={size}>
-        <Circle cx={center} cy={center} r={r} stroke={palette.hairline} strokeWidth={stroke} fill="none" />
+        <Circle cx={center} cy={center} r={r} stroke={colors.hairline} strokeWidth={stroke} fill="none" />
         <Circle
           cx={center}
           cy={center}
@@ -41,7 +43,7 @@ function GoalRing({ value, goal, size = 68 }: { value: number; goal: number; siz
         />
       </Svg>
       <View style={styles.ringLabel}>
-        <Text variant="label" color={palette.ink}>
+        <Text variant="label">
           {String(value)}
         </Text>
       </View>
@@ -58,6 +60,7 @@ function GoalRing({ value, goal, size = 68 }: { value: number; goal: number; siz
  * a quest, so a checked quest here has already added its gems.
  */
 export function TodayCard() {
+  const colors = useColors();
   const progress = useAppStore((s) => s.progress);
   const goalMinutes = useAppStore((s) => s.profile?.dailyGoalMinutes ?? null);
   const claims = useAppStore((s) => s.profile?.questClaims ?? []);
@@ -73,10 +76,10 @@ export function TodayCard() {
       <View style={styles.top}>
         <GoalRing value={stats.xp} goal={goal} />
         <View style={styles.topText}>
-          <Text variant="h3" color={palette.ink}>
+          <Text variant="h3">
             {stats.xp >= goal ? 'Daily goal met' : 'Today'}
           </Text>
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             {`${stats.xp} / ${goal} XP${stats.xp >= goal ? ' — nice.' : ' today'}`}
           </Text>
         </View>
@@ -88,18 +91,18 @@ export function TodayCard() {
           const done = claimed.has(questClaimKey(today, quest.id)) || value >= quest.target;
           return (
             <View key={quest.id} style={styles.quest}>
-              <View style={[styles.check, done && styles.checkOn]}>
+              <View style={[styles.check, { borderColor: colors.hairline }, done && styles.checkOn]}>
                 {done ? (
-                  <Text variant="label" color={palette.paper}>
+                  <Text variant="label" color={colors.paper}>
                     ✓
                   </Text>
                 ) : null}
               </View>
               <View style={styles.questBody}>
-                <Text variant="bodySm" color={palette.ink}>
+                <Text variant="bodySm">
                   {quest.title}
                 </Text>
-                <View style={styles.track}>
+                <View style={[styles.track, { backgroundColor: colors.hairline }]}>
                   <View
                     style={[
                       styles.fill,
@@ -143,13 +146,12 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: radius.pill,
     borderWidth: 2,
-    borderColor: palette.hairline,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkOn: { borderColor: palette.emerald, backgroundColor: palette.emerald },
   questBody: { flex: 1, gap: space.xxs },
-  track: { height: 5, borderRadius: radius.pill, backgroundColor: palette.hairline, overflow: 'hidden' },
+  track: { height: 5, borderRadius: radius.pill, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: radius.pill, backgroundColor: palette.mint },
   fillDone: { backgroundColor: palette.emerald },
   reward: { flexDirection: 'row', alignItems: 'center', gap: 2 },

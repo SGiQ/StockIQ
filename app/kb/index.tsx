@@ -7,6 +7,7 @@ import { Glyph } from '@/components/art/Glyph';
 import { CardSurface, Screen, Text } from '@/components/primitives';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The knowledge-base hub.
@@ -15,6 +16,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * browsing beats querying, and seeing the whole set is part of the point.
  */
 export default function KnowledgeBase() {
+  const colors = useColors();
   const router = useRouter();
   const traders = listTraders();
   const strategies = listStrategies();
@@ -31,10 +33,10 @@ export default function KnowledgeBase() {
     <Screen tone="warm" edges={['top']}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text variant="h1" color={palette.ink}>
+          <Text variant="h1">
             Knowledge base
           </Text>
-          <Text variant="body" color={palette.slate}>
+          <Text variant="body" color={colors.slate}>
             The people, the playbooks, and the books worth reading.
           </Text>
         </View>
@@ -100,7 +102,7 @@ export default function KnowledgeBase() {
           />
         </Section>
 
-        <Text variant="caption" color={palette.slateLight} align="center">
+        <Text variant="caption" color={colors.slateLight} align="center">
           Educational content only. StockIQ does not provide financial advice.
         </Text>
       </ScrollView>
@@ -119,10 +121,11 @@ function Section({
   count: number;
   children: React.ReactNode;
 }) {
+  const colors = useColors();
   return (
     <View style={styles.section}>
       <View style={styles.sectionHead}>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           {title}
         </Text>
         <View style={styles.count}>
@@ -131,7 +134,7 @@ function Section({
           </Text>
         </View>
       </View>
-      <Text variant="caption" color={palette.slate}>
+      <Text variant="caption" color={colors.slate}>
         {subtitle}
       </Text>
       <View style={styles.rows}>{children}</View>
@@ -152,6 +155,7 @@ function Row({
   onPress: () => void;
   locked?: boolean;
 }) {
+  const colors = useColors();
   return (
     <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={title}>
       <CardSurface style={styles.row}>
@@ -159,14 +163,14 @@ function Row({
           <ArtView spec={art} aspectRatio={1} glyphSize={26} />
         </View>
         <View style={styles.rowText}>
-          <Text variant="h3" color={locked ? palette.slate : palette.ink} numberOfLines={2}>
+          <Text variant="h3" color={locked ? colors.slate : undefined} numberOfLines={2}>
             {title}
           </Text>
-          <Text variant="caption" color={palette.slate} numberOfLines={2}>
+          <Text variant="caption" color={colors.slate} numberOfLines={2}>
             {subtitle}
           </Text>
         </View>
-        {locked && <Glyph name="lock" size={20} color={palette.slateLight} />}
+        {locked && <Glyph name="lock" size={20} color={colors.slateLight} />}
       </CardSurface>
     </Pressable>
   );

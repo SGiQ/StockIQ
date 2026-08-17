@@ -14,6 +14,7 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { pairing } from '@/store';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space, type as typeScale } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const RESEND_SECONDS = 30;
 
@@ -25,6 +26,7 @@ const RESEND_SECONDS = 30;
  * existing account or secure the learner's current local profile.
  */
 export default function SignIn() {
+  const colors = useColors();
   const router = useRouter();
   const api = pairing;
   const codeRef = useRef<TextInput>(null);
@@ -97,7 +99,7 @@ export default function SignIn() {
       <Screen tone="warm">
         <View style={styles.shell}>
           <Text variant="h1">Sign-in is temporarily unavailable.</Text>
-          <Text variant="body" color={palette.inkSoft}>You can still learn without an account on this device.</Text>
+          <Text variant="body" color={colors.inkSoft}>You can still learn without an account on this device.</Text>
           <PillButton label="Continue without an account" onPress={() => router.replace('/(onboarding)/experience' as never)} />
         </View>
       </Screen>
@@ -112,7 +114,7 @@ export default function SignIn() {
             accessibilityRole="button"
             accessibilityLabel="Go back"
             onPress={() => (router.canGoBack() ? router.back() : router.replace('/landing'))}
-            style={styles.back}
+            style={[styles.back, { backgroundColor: colors.paper }]}
           >
             <Text variant="h2">‹</Text>
           </Pressable>
@@ -128,13 +130,13 @@ export default function SignIn() {
             <>
               <View style={styles.copy}>
                 <Text variant="h1">Continue with email</Text>
-                <Text variant="body" color={palette.inkSoft}>
+                <Text variant="body" color={colors.inkSoft}>
                   No password. We’ll send a six-digit code. New learners create an account; returning learners restore their progress.
                 </Text>
               </View>
 
               <View style={styles.form}>
-                <Text variant="label" color={palette.slate} uppercase>Email address</Text>
+                <Text variant="label" color={colors.slate} uppercase>Email address</Text>
                 <TextInput
                   value={email}
                   onChangeText={setEmail}
@@ -147,8 +149,8 @@ export default function SignIn() {
                   textContentType="emailAddress"
                   returnKeyType="next"
                   placeholder="you@example.com"
-                  placeholderTextColor={palette.slateLight}
-                  style={styles.input}
+                  placeholderTextColor={colors.slateLight}
+                  style={[styles.input, { borderColor: colors.slateLight, backgroundColor: colors.paper, color: colors.ink }]}
                 />
                 <PillButton label="Email me a code" onPress={requestCode} disabled={busy || !emailLooksValid} />
               </View>
@@ -157,7 +159,7 @@ export default function SignIn() {
             <>
               <View style={styles.copy}>
                 <Text variant="h1">Check your email</Text>
-                <Text variant="body" color={palette.inkSoft}>
+                <Text variant="body" color={colors.inkSoft}>
                   Enter the six-digit code sent to {normalisedEmail}.
                 </Text>
                 <Pressable onPress={() => { setStep('email'); setStatus(null); }} accessibilityRole="button">
@@ -166,7 +168,7 @@ export default function SignIn() {
               </View>
 
               <View style={styles.form}>
-                <Text variant="label" color={palette.slate} uppercase>Verification code</Text>
+                <Text variant="label" color={colors.slate} uppercase>Verification code</Text>
                 <TextInput
                   ref={codeRef}
                   value={code}
@@ -178,8 +180,8 @@ export default function SignIn() {
                   returnKeyType="done"
                   maxLength={6}
                   placeholder="000000"
-                  placeholderTextColor={palette.slateLight}
-                  style={[styles.input, styles.codeInput]}
+                  placeholderTextColor={colors.slateLight}
+                  style={[styles.input, styles.codeInput, { borderColor: colors.slateLight, backgroundColor: colors.paper, color: colors.ink }]}
                 />
                 <PillButton label="Continue" onPress={verifyCode} disabled={busy || code.length !== 6} />
                 <PillButton
@@ -198,7 +200,7 @@ export default function SignIn() {
             </View>
           ) : null}
 
-          <Text variant="caption" color={palette.slate} align="center">
+          <Text variant="caption" color={colors.slate} align="center">
             By continuing, you agree that StockIQ is educational and does not provide individualized financial advice.
           </Text>
         </ScrollView>
@@ -210,13 +212,13 @@ export default function SignIn() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   shell: { flexGrow: 1, padding: space.lg, paddingBottom: space.xl, gap: space.lg },
-  back: { width: 44, height: 44, borderRadius: radius.pill, backgroundColor: palette.paper, alignItems: 'center', justifyContent: 'center', ...shadow.card },
+  back: { width: 44, height: 44, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center', ...shadow.card },
   brandMark: { width: 48, height: 48, borderRadius: radius.md, marginTop: space.sm },
   copy: { gap: space.sm },
   form: { gap: space.md },
-  input: { minHeight: 58, borderWidth: 1.5, borderColor: palette.slateLight, borderRadius: radius.md, backgroundColor: palette.paper, paddingHorizontal: space.md, color: palette.ink, ...typeScale.body },
+  input: { minHeight: 58, borderWidth: 1.5, borderRadius: radius.md, paddingHorizontal: space.md, ...typeScale.body },
   codeInput: { textAlign: 'center', letterSpacing: 8, fontSize: 24 },
   dividerRow: { flexDirection: 'row', alignItems: 'center', gap: space.md },
-  divider: { flex: 1, height: 1, backgroundColor: palette.hairline },
+  divider: { flex: 1, height: 1 },
   status: { borderRadius: radius.md, backgroundColor: palette.dangerSoft, padding: space.md },
 });

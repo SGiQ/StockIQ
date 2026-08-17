@@ -21,7 +21,8 @@ import {
 } from '@/services/narration/speech';
 import { useNarration } from '@/services/narration/useNarration';
 import { Text } from '@/components/primitives';
-import { motion, palette, radius, space } from '@/theme/tokens';
+import { motion, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 import { trackTelemetry } from '@/services/telemetry';
 import {
   canAdvance,
@@ -100,6 +101,7 @@ export function LessonPlayer({
   onTutorialDismissed,
   enforceHearts = false,
 }: LessonPlayerProps) {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
 
   /**
@@ -126,9 +128,7 @@ export function LessonPlayer({
   const [reportOpen, setReportOpen] = useState(false);
   const [upsellOpen, setUpsellOpen] = useState(false);
 
-  // Consecutive correct answers, for the combo flourish. Reset by a miss.
-  const [combo, setCombo] = useState(0);
-  // One score per card per session, so a re-render never double-counts a combo.
+  // One score per card per session, so a re-render never double-counts.
   const scoredRef = useRef<Set<CardId>>(new Set());
 
   /* ---------------------------------------------------------------- *
@@ -425,7 +425,7 @@ export function LessonPlayer({
     // forward onLayout to its child. The root has no horizontal padding, so
     // its width is the stage width.
     <View
-      style={styles.root}
+      style={[styles.root, { backgroundColor: colors.paper }]}
       onLayout={(e) => {
         const next = e.nativeEvent.layout.width;
         if (next > 0 && next !== width) {
@@ -446,15 +446,6 @@ export function LessonPlayer({
         )}
       </View>
 
-      {combo >= 2 && (
-        <View style={[styles.comboWrap, { top: insets.top + space.sm + 48 }]} pointerEvents="none">
-          <View style={styles.comboPill}>
-            <Text variant="label" color={palette.paper} uppercase>
-              {`${combo} in a row`}
-            </Text>
-          </View>
-        </View>
-      )}
 
       <GestureDetector gesture={pan}>
         {/*
@@ -499,16 +490,9 @@ export function LessonPlayer({
                     onStateChange={(next) => setCardState(windowCard.id, next)}
                     onAnswered={(correct) => {
                       onAnswered?.(windowCard.id, correct);
-                      // Combo + haptics, scored once per card.
                       if (!scoredRef.current.has(windowCard.id)) {
                         scoredRef.current.add(windowCard.id);
-                        if (correct) {
-                          setCombo((c) => c + 1);
-                          haptics.tap();
-                        } else {
-                          setCombo(0);
-                          haptics.warn();
-                        }
+                        haptics[correct ? 'tap' : 'warn']();
                       }
                       // A wrong answer costs a heart — once per card per session.
                       if (heartsGateActive && !correct && !chargedRef.current.has(windowCard.id)) {
@@ -604,7 +588,6 @@ export function LessonPlayer({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: palette.paper,
     // Cards live at `left: i * width`, so the deck is far wider than the
     // screen. Without clipping, neighbouring cards bleed into view and the
     // document itself becomes horizontally scrollable on web.
@@ -616,21 +599,6 @@ const styles = StyleSheet.create({
     gap: space.md,
     paddingHorizontal: space.lg,
     paddingBottom: space.sm,
-  },
-  comboWrap: {
-    // `top` is set inline from the safe-area inset so it always clears the
-    // header (which grows with the notch) instead of overlapping the headline.
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    zIndex: 5,
-  },
-  comboPill: {
-    backgroundColor: palette.flame,
-    borderRadius: radius.pill,
-    paddingHorizontal: space.md,
-    paddingVertical: space.xs,
   },
   stage: {
     flex: 1,

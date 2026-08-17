@@ -3,15 +3,17 @@ import Svg, { Path } from 'react-native-svg';
 import { Text } from '@/components/primitives';
 import { trailingWeek, type DayISO } from '@/lib/dates';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** The flame from the Imprint streak row — filled when the day is active. */
 function Flame({ active }: { active: boolean }) {
+  const colors = useColors();
   return (
     <Svg width={20} height={22} viewBox="0 0 24 24">
       <Path
         d="M12 2.5c.6 3 2.4 4.2 3.9 5.7A7.6 7.6 0 0118.5 14a6.5 6.5 0 01-13 0c0-2.3 1.1-3.9 2.3-5.3.5 1 1.2 1.6 2 1.9-.4-2.9.5-6 2.2-8.1z"
-        fill={active ? palette.flame : palette.hairline}
-        stroke={active ? palette.flame : palette.hairline}
+        fill={active ? palette.flame : colors.hairline}
+        stroke={active ? palette.flame : colors.hairline}
         strokeWidth={1.4}
         strokeLinejoin="round"
       />
@@ -39,13 +41,14 @@ export interface StreakRowProps {
  * widgets that happen to agree.
  */
 export function StreakRow({ activeDays, today }: StreakRowProps) {
+  const colors = useColors();
   const week = trailingWeek(activeDays, today);
 
   return (
     <View style={styles.row}>
       {week.map((day) => (
         <View key={day.day} style={styles.day}>
-          <Text variant="label" color={day.isToday ? palette.forestDeep : palette.slateLight}>
+          <Text variant="label" color={day.isToday ? palette.forestDeep : colors.slateLight}>
             {day.initial}
           </Text>
           <View style={[styles.slot, day.isToday && styles.slotToday]}>

@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface OnboardingProgressProps {
   /** 1-based position of the current step. */
@@ -17,6 +18,7 @@ export interface OnboardingProgressProps {
  * a faint tint of it.
  */
 export function OnboardingProgress({ step, total }: OnboardingProgressProps) {
+  const colors = useColors();
   return (
     <View
       style={styles.row}
@@ -25,7 +27,7 @@ export function OnboardingProgress({ step, total }: OnboardingProgressProps) {
       accessibilityLabel={`Step ${step} of ${total}`}
     >
       {Array.from({ length: total }, (_, i) => (
-        <View key={i} style={[styles.segment, i < step ? styles.on : styles.off]} />
+        <View key={i} style={[styles.segment, i < step ? { backgroundColor: colors.paper } : styles.off]} />
       ))}
     </View>
   );
@@ -40,9 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 5,
     borderRadius: radius.pill,
-  },
-  on: {
-    backgroundColor: palette.paper,
   },
   off: {
     backgroundColor: 'rgba(255,255,255,0.22)',

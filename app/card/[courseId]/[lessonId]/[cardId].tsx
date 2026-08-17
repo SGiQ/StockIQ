@@ -11,6 +11,7 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { shareViewAsImage } from '@/services/share/shareCard';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * A single saved card, big, with share and unsave.
@@ -19,6 +20,7 @@ import { palette, radius, space } from '@/theme/tokens';
  * must not end up in the exported image.
  */
 export default function CardDetail() {
+  const colors = useColors();
   const { courseId, lessonId, cardId } = useLocalSearchParams<{
     courseId: string;
     lessonId: string;
@@ -66,17 +68,17 @@ export default function CardDetail() {
           hitSlop={12}
           accessibilityRole="button"
           accessibilityLabel="Close"
-          style={styles.close}
+          style={[styles.close, { borderColor: colors.hairline, backgroundColor: colors.paper }]}
         >
           <Svg width={18} height={18} viewBox="0 0 24 24">
-            <Path d="M6 6l12 12M18 6L6 18" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" />
+            <Path d="M6 6l12 12M18 6L6 18" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" />
           </Svg>
         </Pressable>
         <View style={styles.headerText}>
-          <Text variant="label" color={palette.slate} uppercase numberOfLines={1}>
+          <Text variant="label" color={colors.slate} uppercase numberOfLines={1}>
             {course?.title ?? ''}
           </Text>
-          <Text variant="h3" color={palette.ink} numberOfLines={1}>
+          <Text variant="h3" numberOfLines={1}>
             {lesson?.title ?? ''}
           </Text>
         </View>
@@ -86,7 +88,7 @@ export default function CardDetail() {
         {card.type === 'key_insight' ? (
           // collapsable={false} keeps the view backed by a real native view
           // so view-shot has something to capture on Android.
-          <View ref={posterRef} collapsable={false} style={styles.posterWrap}>
+          <View ref={posterRef} collapsable={false} style={[styles.posterWrap, { backgroundColor: colors.paperWarm }]}>
             <KeyInsightPoster card={card as KeyInsightCard} />
           </View>
         ) : (
@@ -135,8 +137,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: radius.pill,
     borderWidth: 1,
-    borderColor: palette.hairline,
-    backgroundColor: palette.paper,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -148,9 +148,7 @@ const styles = StyleSheet.create({
     padding: space.lg,
     gap: space.lg,
   },
-  posterWrap: {
-    backgroundColor: palette.paperWarm,
-  },
+  posterWrap: {},
   generic: {
     minHeight: 420,
   },

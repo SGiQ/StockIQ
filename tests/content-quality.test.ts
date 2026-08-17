@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import { allLessons, allStrategies } from '../src/content/index.generated';
 import { initialStateFor } from '../src/components/player/cardState';
-import { lessonArtwork } from '../src/content/lessonArtwork';
+import { heroClosingOnly, lessonArtwork } from '../src/content/lessonArtwork';
 import { listCourses, listLessonsInCourse } from '../src/content/registry';
 import type { Card } from '../src/content/types';
 
@@ -22,7 +22,6 @@ import type { Card } from '../src/content/types';
 const LESSONS_AWAITING_ART = new Set<string>([
   'market-foundations/options-basics',
   'getting-started/building-a-portfolio',
-  'getting-started/index-funds',
   'getting-started/accounts-fees-and-taxes',
 ]);
 
@@ -160,8 +159,14 @@ test('every illustrated lesson has a shipped paper-craft opening and closing boo
     const closing = lesson.cards.at(-1);
     assert.ok(opening.type === 'concept' && opening.art?.kind === 'illustration', `${lesson.id}: opening has no hero`);
     assert.ok(closing?.type === 'key_insight' && closing.art.kind === 'illustration', `${lesson.id}: closing has no hero`);
-    assert.equal(opening.art.source, closing.art.source, `${lesson.id}: bookends do not match`);
+    // Lessons whose opening carries bespoke art (heroClosingOnly) intentionally
+    // don't repeat the hero at the top — the closing key_insight is still the
+    // hero, so the file exists and the guardrail on the closing art still runs.
+    if (!heroClosingOnly.has(lessonKey(lesson))) {
+      assert.equal(opening.art.source, closing.art.source, `${lesson.id}: bookends do not match`);
+    }
     assert.ok(existsSync(join(process.cwd(), 'public', opening.art.source)), `${lesson.id}: missing ${opening.art.source}`);
+    assert.ok(existsSync(join(process.cwd(), 'public', closing.art.source)), `${lesson.id}: missing ${closing.art.source}`);
   }
 });
 

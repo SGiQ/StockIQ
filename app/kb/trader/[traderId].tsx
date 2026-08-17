@@ -11,8 +11,10 @@ import {
 } from '@/components/kb/EntityScaffold';
 import { RefChips, bookRefs, strategyRefs, traderRefs } from '@/components/kb/RefChips';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function TraderDetail() {
+  const colors = useColors();
   const { traderId } = useLocalSearchParams<{ traderId: string }>();
   const trader = getTrader(traderId);
 
@@ -34,7 +36,7 @@ export default function TraderDetail() {
       hero={trader.portrait}
       oneLiner={trader.oneLiner}
     >
-      <RichTextView value={trader.bio} variant="body" color={palette.inkSoft} linksEnabled />
+      <RichTextView value={trader.bio} variant="body" color={colors.inkSoft} linksEnabled />
 
       <BulletBlock title="How they thought" items={trader.philosophy} />
 
@@ -44,23 +46,23 @@ export default function TraderDetail() {
 
       {trader.famousTrades && trader.famousTrades.length > 0 && (
         <View style={{ gap: space.md }}>
-          <Text variant="label" color={palette.slate} uppercase>
+          <Text variant="label" color={colors.slate} uppercase>
             Famous trades
           </Text>
           {trader.famousTrades.map((trade, index) => (
             <View
               key={index}
               style={{
-                backgroundColor: palette.paper,
+                backgroundColor: colors.paper,
                 borderRadius: radius.md,
                 padding: space.md,
                 gap: space.xs,
               }}
             >
-              <Text variant="bodyEm" color={palette.ink}>
+              <Text variant="bodyEm">
                 {trade.year ? `${trade.title} (${trade.year})` : trade.title}
               </Text>
-              <RichTextView value={trade.story} variant="bodySm" color={palette.inkSoft} />
+              <RichTextView value={trade.story} variant="bodySm" color={colors.inkSoft} />
               <SourceCite source={trade.source} url={trade.sourceUrl} />
             </View>
           ))}
@@ -68,7 +70,7 @@ export default function TraderDetail() {
       )}
 
       <View style={{ gap: space.md }}>
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           In their words
         </Text>
         {trader.quotes.map((quote, index) => (
@@ -81,11 +83,11 @@ export default function TraderDetail() {
               gap: space.xxs,
             }}
           >
-            <Text variant="insight" color={palette.ink}>
+            <Text variant="insight">
               {quote.text}
             </Text>
             {quote.context && (
-              <Text variant="caption" color={palette.slate}>
+              <Text variant="caption" color={colors.slate}>
                 {quote.context}
               </Text>
             )}

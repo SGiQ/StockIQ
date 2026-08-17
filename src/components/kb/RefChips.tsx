@@ -3,7 +3,8 @@ import { useRouter } from 'expo-router';
 import { resolveRef, type ResolvedRef } from '@/content/registry';
 import type { EntityRef } from '@/content/types';
 import { Chip, Text } from '@/components/primitives';
-import { palette, space } from '@/theme/tokens';
+import { space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const TONE = {
   trader: 'violet',
@@ -27,6 +28,7 @@ export interface RefChipsProps {
  * better failure than a chip that goes nowhere.
  */
 export function RefChips({ title, refs }: RefChipsProps) {
+  const colors = useColors();
   const router = useRouter();
   const resolved = refs
     .map(resolveRef)
@@ -37,7 +39,7 @@ export function RefChips({ title, refs }: RefChipsProps) {
   return (
     <View style={styles.block}>
       {title && (
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           {title}
         </Text>
       )}

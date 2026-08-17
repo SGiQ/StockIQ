@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { Glyph } from '@/components/art/Glyph';
 import { PillButton, Screen, Text } from '@/components/primitives';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const PROMISES = [
   { glyph: 'clock', text: 'Bite-size lessons, zero jargon' },
@@ -11,13 +12,14 @@ const PROMISES = [
 ] as const;
 
 export default function Welcome() {
+  const colors = useColors();
   const router = useRouter();
 
   return (
     <Screen tone="forest">
       <View style={styles.content}>
         <View style={styles.hero}>
-          <Text variant="display" color={palette.paper}>
+          <Text variant="display" color={colors.paper}>
             Learn the market.
           </Text>
           <Text variant="h1" color={palette.mintSoft}>
@@ -31,7 +33,7 @@ export default function Welcome() {
               <View style={styles.promiseIcon}>
                 <Glyph name={promise.glyph} size={22} color={palette.forestDeep} />
               </View>
-              <Text variant="body" color={palette.paper} style={styles.promiseText}>
+              <Text variant="body" color={colors.paper} style={styles.promiseText}>
                 {promise.text}
               </Text>
             </View>

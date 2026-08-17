@@ -5,9 +5,11 @@ import type { EntityRef } from '@/content/types';
 import { PillButton, RichTextView, Screen, Text } from '@/components/primitives';
 import { EntityDetail } from '@/components/kb/EntityScaffold';
 import { RefChips, strategyRefs, traderRefs } from '@/components/kb/RefChips';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function BookDetail() {
+  const colors = useColors();
   const { bookId } = useLocalSearchParams<{ bookId: string }>();
   const router = useRouter();
   const book = getBook(bookId);
@@ -29,7 +31,7 @@ export default function BookDetail() {
       entityRef={`book:${book.id}` as EntityRef}
       hero={book.cover}
     >
-      <RichTextView value={book.summary} variant="body" color={palette.inkSoft} linksEnabled />
+      <RichTextView value={book.summary} variant="body" color={colors.inkSoft} linksEnabled />
 
       <View style={styles.actions}>
         <PillButton
@@ -55,14 +57,14 @@ export default function BookDetail() {
         The guide is an original summary of the book's ideas — never its text —
         and saying so plainly on the page is part of keeping it that way.
       */}
-      <View style={styles.attribution}>
-        <Text variant="label" color={palette.slate} uppercase>
+      <View style={[styles.attribution, { backgroundColor: colors.paper }]}>
+        <Text variant="label" color={colors.slate} uppercase>
           About this guide
         </Text>
-        <Text variant="caption" color={palette.slate}>
+        <Text variant="caption" color={colors.slate}>
           {book.attribution}
         </Text>
-        <Text variant="caption" color={palette.slateLight}>
+        <Text variant="caption" color={colors.slateLight}>
           This is an original summary written for StockIQ. It is not an extract, and it is
           not a substitute for reading the book.
         </Text>
@@ -81,7 +83,6 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   attribution: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     gap: space.xs,

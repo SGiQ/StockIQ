@@ -7,6 +7,7 @@ import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Screen, Text } from '@/components/primitives';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /** Shared back chrome for every knowledge-base detail screen. */
 export function EntityHeader({
@@ -18,6 +19,7 @@ export function EntityHeader({
   title: string;
   entityRef: EntityRef;
 }) {
+  const colors = useColors();
   const router = useRouter();
   return (
     <View style={styles.header}>
@@ -30,7 +32,7 @@ export function EntityHeader({
         <Svg width={24} height={24} viewBox="0 0 24 24">
           <Path
             d="M15 5l-7 7 7 7"
-            stroke={palette.ink}
+            stroke={colors.ink}
             strokeWidth={2.4}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -39,10 +41,10 @@ export function EntityHeader({
         </Svg>
       </Pressable>
       <View style={styles.headerText}>
-        <Text variant="label" color={palette.slate} uppercase>
+        <Text variant="label" color={colors.slate} uppercase>
           {eyebrow}
         </Text>
-        <Text variant="h3" color={palette.ink} numberOfLines={2}>
+        <Text variant="h3" numberOfLines={2}>
           {title}
         </Text>
       </View>
@@ -52,6 +54,7 @@ export function EntityHeader({
 }
 
 function LikeButton({ entityRef }: { entityRef: EntityRef }) {
+  const colors = useColors();
   // Subscribe to the liked list, not to the store's helper method — the
   // method reference is stable and would never re-render this button.
   const liked = useAppStore((s) => s.liked);
@@ -70,7 +73,7 @@ function LikeButton({ entityRef }: { entityRef: EntityRef }) {
         <Path
           d="M12 20.5C6.5 16.8 3 13.9 3 9.9A4.9 4.9 0 017.9 5c1.7 0 3.2.8 4.1 2.1A5 5 0 0116.1 5 4.9 4.9 0 0121 9.9c0 4-3.5 6.9-9 10.6z"
           fill={isLiked ? palette.danger : 'none'}
-          stroke={isLiked ? palette.danger : palette.ink}
+          stroke={isLiked ? palette.danger : colors.ink}
           strokeWidth={2}
           strokeLinejoin="round"
         />
@@ -100,6 +103,7 @@ export function EntityDetail({
   children,
   showAdviceNotice = false,
 }: EntityDetailProps) {
+  const colors = useColors();
   return (
     <Screen tone="warm">
       <EntityHeader eyebrow={eyebrow} title={title} entityRef={entityRef} />
@@ -112,7 +116,7 @@ export function EntityDetail({
         )}
 
         {oneLiner && (
-          <Text variant="h2" color={palette.ink}>
+          <Text variant="h2">
             {oneLiner}
           </Text>
         )}
@@ -121,7 +125,7 @@ export function EntityDetail({
 
         {showAdviceNotice && (
           <View style={styles.notice}>
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               This describes how an approach has been practised and written about. It is
               educational only — not a recommendation, and not personalised advice.
             </Text>
@@ -142,10 +146,11 @@ export function BulletBlock({
   items: string[];
   tone?: string;
 }) {
+  const colors = useColors();
   if (items.length === 0) return null;
   return (
     <View style={styles.block}>
-      <Text variant="label" color={palette.slate} uppercase>
+      <Text variant="label" color={colors.slate} uppercase>
         {title}
       </Text>
       {items.map((item, index) => (
@@ -154,7 +159,7 @@ export function BulletBlock({
           <RichTextView
             value={item}
             variant="body"
-            color={palette.inkSoft}
+            color={colors.inkSoft}
             linksEnabled
             style={styles.bulletText}
           />
@@ -171,9 +176,10 @@ export function BulletBlock({
  * interview) — the citation text is always shown either way.
  */
 export function SourceCite({ source, url }: { source: string; url?: string }) {
+  const colors = useColors();
   if (!url) {
     return (
-      <Text variant="caption" color={palette.slateLight}>
+      <Text variant="caption" color={colors.slateLight}>
         {`Source: ${source}`}
       </Text>
     );
@@ -198,16 +204,17 @@ export function SourcedRows({
   title: string;
   rows: Array<{ metric: string; value: string; note?: string; source: string; sourceUrl?: string }>;
 }) {
+  const colors = useColors();
   if (rows.length === 0) return null;
   return (
     <View style={styles.block}>
-      <Text variant="label" color={palette.slate} uppercase>
+      <Text variant="label" color={colors.slate} uppercase>
         {title}
       </Text>
       {rows.map((row, index) => (
-        <View key={index} style={styles.row}>
+        <View key={index} style={[styles.row, { backgroundColor: colors.paper }]}>
           <View style={styles.rowTop}>
-            <Text variant="bodyEm" color={palette.ink} style={styles.rowMetric}>
+            <Text variant="bodyEm" style={styles.rowMetric}>
               {row.metric}
             </Text>
             <Text variant="bodyEm" color={palette.forestDeep}>
@@ -215,7 +222,7 @@ export function SourcedRows({
             </Text>
           </View>
           {row.note && (
-            <Text variant="caption" color={palette.slate}>
+            <Text variant="caption" color={colors.slate}>
               {row.note}
             </Text>
           )}
@@ -270,7 +277,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   row: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     gap: space.xxs,

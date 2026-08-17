@@ -1,6 +1,7 @@
 import { Platform, Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 import { Text } from '@/components/primitives';
 import { palette, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The invisible navigation zones: left third goes back, right two-thirds
@@ -54,10 +55,11 @@ export function TapZones({ onBack, onForward }: { onBack: () => void; onForward:
  * produced unreadable overlapping text.
  */
 export function TapZoneTutorial() {
+  const colors = useColors();
   return (
-    <View style={[StyleSheet.absoluteFill, styles.tutorial]} pointerEvents="none">
+    <View style={[StyleSheet.absoluteFill, styles.tutorial, { backgroundColor: colors.paper }]} pointerEvents="none">
       <View style={styles.tutorialBack}>
-        <Text variant="h3" color={palette.inkSoft} align="center">
+        <Text variant="h3" color={colors.inkSoft} align="center">
           {'tap here\nto go\nback'}
         </Text>
       </View>
@@ -65,7 +67,7 @@ export function TapZoneTutorial() {
       <View style={styles.divider} />
 
       <View style={styles.tutorialForward}>
-        <Text variant="h2" color={palette.ink} align="center">
+        <Text variant="h2" align="center">
           {'tap here\nto go\nforward'}
         </Text>
       </View>
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
   tutorial: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: palette.paper,
   },
   tutorialBack: {
     flex: 1,

@@ -2,12 +2,14 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import type { ContentSource } from '@/content/types';
 import { Glyph } from '@/components/art/Glyph';
 import { Text } from '@/components/primitives';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export function SourceLinks({ sources, compact = false }: { sources: ContentSource[]; compact?: boolean }) {
+  const colors = useColors();
   return (
     <View style={styles.wrap}>
-      <Text variant="label" color={palette.slate} uppercase>
+      <Text variant="label" color={colors.slate} uppercase>
         Sources
       </Text>
       <View style={styles.list}>
@@ -19,17 +21,18 @@ export function SourceLinks({ sources, compact = false }: { sources: ContentSour
             accessibilityLabel={`${source.title}, ${source.publisher}`}
             style={({ pressed }) => [
               styles.source,
+              { borderColor: colors.hairline, backgroundColor: colors.paper },
               compact && styles.sourceCompact,
               pressed && styles.pressed,
             ]}
           >
             <View style={styles.text}>
-              <Text variant={compact ? 'caption' : 'bodyEm'} color={palette.ink} numberOfLines={2}>
+              <Text variant={compact ? 'caption' : 'bodyEm'} numberOfLines={2}>
                 {source.title}
               </Text>
-              <Text variant="caption" color={palette.slate}>{source.publisher}</Text>
+              <Text variant="caption" color={colors.slate}>{source.publisher}</Text>
             </View>
-            <Glyph name="arrow-up" size={17} color={palette.slate} />
+            <Glyph name="arrow-up" size={17} color={colors.slate} />
           </Pressable>
         ))}
       </View>
@@ -43,9 +46,7 @@ const styles = StyleSheet.create({
   source: {
     minHeight: 64,
     borderWidth: 1,
-    borderColor: palette.hairline,
     borderRadius: radius.md,
-    backgroundColor: palette.paper,
     padding: space.md,
     flexDirection: 'row',
     alignItems: 'center',

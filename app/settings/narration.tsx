@@ -8,9 +8,11 @@ import { useNarration } from '@/services/narration/useNarration';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { UserProfile } from '@/store/repository';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export default function NarrationSettings() {
   const router = useRouter();
+  const colors = useColors();
   const enabled = useAppStore((s) => s.profile?.narrationEnabled ?? false);
   const voice = useAppStore((s) => s.profile?.narrationVoice ?? 'female');
   const speed = useAppStore((s) => s.profile?.narrationSpeed ?? 1);
@@ -46,7 +48,7 @@ export default function NarrationSettings() {
           <Svg width={24} height={24} viewBox="0 0 24 24">
             <Path
               d="M15 5l-7 7 7 7"
-              stroke={palette.ink}
+              stroke={colors.ink}
               strokeWidth={2.4}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -54,7 +56,7 @@ export default function NarrationSettings() {
             />
           </Svg>
         </Pressable>
-        <Text variant="h3" color={palette.ink}>
+        <Text variant="h3">
           Narration
         </Text>
       </View>
@@ -64,14 +66,14 @@ export default function NarrationSettings() {
           <View style={styles.heroIcon}>
             <SpeakerIcon
               size={30}
-              color={palette.paper}
+              color={colors.paper}
               muted={!enabled}
             />
           </View>
-          <Text variant="h2" color={palette.ink}>
+          <Text variant="h2">
             Listen as you learn.
           </Text>
-          <Text variant="body" color={palette.slate}>
+          <Text variant="body" color={colors.slate}>
             StockIQ can read each card as it appears. Quiz choices stay silent;
             after you submit an answer, the result and explanation are spoken.
           </Text>
@@ -80,10 +82,10 @@ export default function NarrationSettings() {
         <CardSurface style={styles.section}>
           <View style={styles.sectionHeading}>
             <View style={styles.sectionText}>
-              <Text variant="h3" color={palette.ink}>
+              <Text variant="h3">
                 Autoplay narration
               </Text>
-              <Text variant="caption" color={palette.slate}>
+              <Text variant="caption" color={colors.slate}>
                 Start reading each new card automatically.
               </Text>
             </View>
@@ -92,15 +94,15 @@ export default function NarrationSettings() {
               accessibilityRole="switch"
               accessibilityState={{ checked: enabled }}
               accessibilityLabel="Autoplay narration"
-              style={[styles.switchTrack, enabled && styles.switchTrackOn]}
+              style={[styles.switchTrack, { backgroundColor: colors.hairline }, enabled && styles.switchTrackOn]}
             >
-              <View style={[styles.switchThumb, enabled && styles.switchThumbOn]} />
+              <View style={[styles.switchThumb, { backgroundColor: colors.paper }, enabled && styles.switchThumbOn]} />
             </Pressable>
           </View>
         </CardSurface>
 
         <View style={styles.voiceSection}>
-          <Text variant="label" color={palette.slate} uppercase>
+          <Text variant="label" color={colors.slate} uppercase>
             Voice
           </Text>
           <View style={styles.voiceChoices}>
@@ -129,10 +131,10 @@ export default function NarrationSettings() {
         {Platform.OS === 'web' ? (
         <CardSurface style={styles.auditionSection}>
           <View style={styles.sectionText}>
-            <Text variant="label" color={palette.slate} uppercase>
+            <Text variant="label" color={colors.slate} uppercase>
               Help choose the new male voice
             </Text>
-            <Text variant="bodySm" color={palette.inkSoft}>
+            <Text variant="bodySm" color={colors.inkSoft}>
               Try three replacements for the current narrator. These samples do not change your saved voice.
             </Text>
           </View>
@@ -149,11 +151,12 @@ export default function NarrationSettings() {
                 accessibilityLabel={`${candidate.label} voice sample`}
                 style={[
                   styles.auditionChoice,
+                  { borderColor: colors.hairline },
                   auditionVoice === candidate.id && styles.auditionChoiceSelected,
                 ]}
               >
-                <Text variant="label" color={palette.ink}>{candidate.label}</Text>
-                <Text variant="caption" color={palette.slate}>{candidate.note}</Text>
+                <Text variant="label">{candidate.label}</Text>
+                <Text variant="caption" color={colors.slate}>{candidate.note}</Text>
               </Pressable>
             ))}
           </View>
@@ -173,7 +176,7 @@ export default function NarrationSettings() {
         ) : null}
 
         <View style={styles.voiceSection}>
-          <Text variant="label" color={palette.slate} uppercase>
+          <Text variant="label" color={colors.slate} uppercase>
             Playback speed
           </Text>
           <View style={styles.speedChoices} accessibilityRole="radiogroup">
@@ -186,20 +189,20 @@ export default function NarrationSettings() {
               />
             ))}
           </View>
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             Applies to previews and every narrated lesson card.
           </Text>
         </View>
 
-        <View style={styles.note}>
-          <Text variant="label" color={palette.slate} uppercase>
+        <View style={[styles.note, { backgroundColor: colors.paper }]}>
+          <Text variant="label" color={colors.slate} uppercase>
             How it works
           </Text>
-          <Text variant="bodySm" color={palette.inkSoft}>
+          <Text variant="bodySm" color={colors.inkSoft}>
             Every clip is generated before release. Your device never sends
             lesson text—or an API key—to a speech service while you learn.
           </Text>
-          <Text variant="bodySm" color={palette.inkSoft}>
+          <Text variant="bodySm" color={colors.inkSoft}>
             The narration voices are AI-generated, not recordings of human
             narrators.
           </Text>
@@ -226,15 +229,16 @@ function SpeedChoice({
   selected: boolean;
   onPress: () => void;
 }) {
+  const colors = useColors();
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="radio"
       accessibilityState={{ selected }}
       accessibilityLabel={`${value} times speed`}
-      style={[styles.speedChoice, selected && styles.speedChoiceSelected]}
+      style={[styles.speedChoice, { borderColor: colors.hairline, backgroundColor: colors.paper }, selected && styles.speedChoiceSelected]}
     >
-      <Text variant="label" color={selected ? palette.forestDeep : palette.ink}>
+      <Text variant="label" color={selected ? palette.forestDeep : colors.ink}>
         {`${value}×`}
       </Text>
     </Pressable>
@@ -250,18 +254,19 @@ function VoiceChoice({
   selected: boolean;
   onPress: () => void;
 }) {
+  const colors = useColors();
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="radio"
       accessibilityState={{ selected }}
       accessibilityLabel={`${label} narrator`}
-      style={[styles.voiceChoice, selected && styles.voiceChoiceSelected]}
+      style={[styles.voiceChoice, { backgroundColor: colors.paper }, selected && styles.voiceChoiceSelected]}
     >
-      <View style={[styles.radio, selected && styles.radioSelected]}>
+      <View style={[styles.radio, { borderColor: colors.slateLight }, selected && styles.radioSelected]}>
         {selected ? <View style={styles.radioDot} /> : null}
       </View>
-      <Text variant="body" color={palette.ink}>
+      <Text variant="body">
         {label}
       </Text>
     </Pressable>
@@ -309,7 +314,6 @@ const styles = StyleSheet.create({
     width: 52,
     height: 30,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     padding: 3,
     justifyContent: 'center',
   },
@@ -320,7 +324,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: radius.pill,
-    backgroundColor: palette.paper,
   },
   switchThumbOn: {
     alignSelf: 'flex-end',
@@ -338,7 +341,6 @@ const styles = StyleSheet.create({
     minHeight: 66,
     borderRadius: radius.md,
     borderWidth: 1,
-    borderColor: palette.hairline,
     paddingHorizontal: space.md,
     paddingVertical: space.sm,
     justifyContent: 'center',
@@ -360,8 +362,6 @@ const styles = StyleSheet.create({
     minHeight: 48,
     borderRadius: radius.pill,
     borderWidth: 1,
-    borderColor: palette.hairline,
-    backgroundColor: palette.paper,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -373,7 +373,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: space.md,
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     borderWidth: 2,
     borderColor: 'transparent',
@@ -388,7 +387,6 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: radius.pill,
     borderWidth: 2,
-    borderColor: palette.slateLight,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -402,7 +400,6 @@ const styles = StyleSheet.create({
     backgroundColor: palette.emerald,
   },
   note: {
-    backgroundColor: palette.paper,
     borderRadius: radius.md,
     padding: space.md,
     gap: space.sm,

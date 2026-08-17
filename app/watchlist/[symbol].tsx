@@ -11,6 +11,7 @@ import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { toDayISO } from '@/lib/dates';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 const GENERAL_CONTEXT: AskContext = {
   card: {
@@ -23,10 +24,11 @@ const GENERAL_CONTEXT: AskContext = {
   courseTitle: 'Market',
 };
 
-const toneColor = (t: ReturnType<typeof changeTone>) =>
-  t === 'up' ? palette.emeraldDeep : t === 'down' ? palette.danger : palette.slate;
+const toneColor = (t: ReturnType<typeof changeTone>, slate: string) =>
+  t === 'up' ? palette.emeraldDeep : t === 'down' ? palette.danger : slate;
 
 export default function TickerScreen() {
+  const colors = useColors();
   const { symbol: raw } = useLocalSearchParams<{ symbol: string }>();
   const symbol = (raw ?? '').toUpperCase();
   const router = useRouter();
@@ -107,10 +109,10 @@ export default function TickerScreen() {
           accessibilityLabel="Back"
         >
           <Svg width={24} height={24} viewBox="0 0 24 24">
-            <Path d="M15 5l-7 7 7 7" stroke={palette.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <Path d="M15 5l-7 7 7 7" stroke={colors.ink} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </Svg>
         </Pressable>
-        <Text variant="h2" color={palette.ink}>
+        <Text variant="h2">
           {symbol}
         </Text>
       </View>
@@ -118,18 +120,18 @@ export default function TickerScreen() {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <CardSurface style={styles.quoteCard}>
           {loadingQuote ? (
-            <ActivityIndicator color={palette.slate} />
+            <ActivityIndicator color={colors.slate} />
           ) : quote && quote.valid ? (
             <>
-              <Text variant="display" color={palette.ink}>
+              <Text variant="display">
                 {formatPrice(quote.price)}
               </Text>
-              <Text variant="h3" color={toneColor(tone)}>
+              <Text variant="h3" color={toneColor(tone, colors.slate)}>
                 {formatChange(quote.change, quote.changePercent)}
               </Text>
             </>
           ) : (
-            <Text variant="body" color={palette.slate}>
+            <Text variant="body" color={colors.slate}>
               No market data for {symbol}.
             </Text>
           )}
@@ -142,7 +144,7 @@ export default function TickerScreen() {
                 <Text variant="label" color={palette.violetInk} uppercase>
                   What's behind the move
                 </Text>
-                <Text variant="body" color={palette.ink}>
+                <Text variant="body">
                   {explanation || 'Thinking…'}
                 </Text>
               </CardSurface>
@@ -157,7 +159,7 @@ export default function TickerScreen() {
               <PillButton label="Explain again" variant="ghost" onPress={() => void explain()} />
             ) : null}
             {!unlimited ? (
-              <Text variant="caption" color={palette.slateLight} align="center">
+              <Text variant="caption" color={colors.slateLight} align="center">
                 {`${remaining} of ${ASK_FREE_DAILY} free explanations left today`}
               </Text>
             ) : null}
@@ -184,7 +186,7 @@ export default function TickerScreen() {
           </Text>
         </Pressable>
 
-        <Text variant="caption" color={palette.slateLight} align="center" style={styles.disclaimer}>
+        <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
           Educational explanation of a delayed price move — not a buy, sell, or hold call, and not a prediction.
         </Text>
       </ScrollView>

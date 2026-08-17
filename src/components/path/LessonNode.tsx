@@ -5,6 +5,7 @@ import { Text } from '@/components/primitives';
 import type { GlyphName } from '@/content/types';
 import type { LessonNodeStatus } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 export interface LessonNodeProps {
   lessonId: string;
@@ -49,6 +50,7 @@ export function LessonNode({
   isCurrent,
   onPress,
 }: LessonNodeProps) {
+  const colors = useColors();
   const locked = status === 'locked';
   const completed = status === 'completed';
 
@@ -58,15 +60,16 @@ export function LessonNode({
       <View
         style={[
           styles.station,
+          { borderColor: colors.paperWarm },
           completed && styles.stationComplete,
-          isCurrent && styles.stationCurrent,
+          isCurrent && [styles.stationCurrent, { borderColor: colors.paper }],
           locked && styles.stationLocked,
         ]}
       >
         <Glyph
           name={completed ? 'check' : locked ? 'lock' : glyphFor(lessonId)}
           size={isCurrent ? 25 : 20}
-          color={completed || isCurrent ? palette.paper : palette.slateLight}
+          color={completed || isCurrent ? colors.paper : colors.slateLight}
           strokeWidth={2.3}
         />
       </View>
@@ -81,16 +84,16 @@ export function LessonNode({
         >
           <View style={styles.currentMeta}>
             <View style={styles.continueChip}>
-              <Text variant="label" color={palette.paper} uppercase>Continue</Text>
+              <Text variant="label" color={colors.paper} uppercase>Continue</Text>
             </View>
-            <Text variant="label" color={palette.slate} uppercase>{`${estimatedMinutes} min`}</Text>
+            <Text variant="label" color={colors.slate} uppercase>{`${estimatedMinutes} min`}</Text>
           </View>
           <Text variant="h2" color={palette.forestInk}>{title}</Text>
-          <Text variant="bodySm" color={palette.inkSoft} numberOfLines={3}>{summary}</Text>
+          <Text variant="bodySm" color={colors.inkSoft} numberOfLines={3}>{summary}</Text>
           <View style={styles.resumeButton}>
-            <Text variant="label" color={palette.paper} uppercase>Resume journey</Text>
+            <Text variant="label" color={colors.paper} uppercase>Resume journey</Text>
             <Svg width={18} height={18} viewBox="0 0 24 24">
-              <Path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke={palette.paper} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+              <Path d="M5 12h13m-5-5 5 5-5 5" fill="none" stroke={colors.paper} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
             </Svg>
           </View>
         </Pressable>
@@ -103,10 +106,10 @@ export function LessonNode({
           accessibilityState={{ disabled: locked }}
           style={({ pressed }) => [styles.compactStop, pressed && !locked && styles.pressed]}
         >
-          <Text variant="h3" color={locked ? palette.slateLight : completed ? palette.slate : palette.ink}>{title}</Text>
+          <Text variant="h3" color={locked ? colors.slateLight : completed ? colors.slate : colors.ink}>{title}</Text>
           <View style={styles.categoryRow}>
-            <Glyph name={locked ? 'lock' : glyphFor(lessonId)} size={16} color={locked ? palette.slateLight : palette.slate} />
-            <Text variant="label" color={locked ? palette.slateLight : palette.slate} uppercase>
+            <Glyph name={locked ? 'lock' : glyphFor(lessonId)} size={16} color={locked ? colors.slateLight : colors.slate} />
+            <Text variant="label" color={locked ? colors.slateLight : colors.slate} uppercase>
               {completed && starred ? `${categoryFor(lessonId)} · Starred` : categoryFor(lessonId)}
             </Text>
           </View>
@@ -122,9 +125,9 @@ const styles = StyleSheet.create({
   line: { position: 'absolute', left: 25, top: 0, bottom: 0, width: 4 },
   lineComplete: { backgroundColor: palette.emeraldDeep },
   lineLocked: { backgroundColor: '#D8DED9' },
-  station: { position: 'absolute', left: 8, top: 4, width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 4, borderColor: palette.paperWarm, zIndex: 2 },
+  station: { position: 'absolute', left: 8, top: 4, width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 4, zIndex: 2 },
   stationComplete: { backgroundColor: palette.emeraldDeep },
-  stationCurrent: { left: 4, top: 0, width: 46, height: 46, backgroundColor: palette.forestInk, borderColor: palette.paper, ...shadow.floating },
+  stationCurrent: { left: 4, top: 0, width: 46, height: 46, backgroundColor: palette.forestInk, ...shadow.floating },
   stationLocked: { backgroundColor: '#E5E8E5', borderWidth: 2, borderColor: '#CBD1CC' },
   compactStop: { gap: space.sm, paddingTop: space.xs },
   categoryRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },

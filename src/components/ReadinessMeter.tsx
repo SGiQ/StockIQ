@@ -2,7 +2,8 @@ import { View, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { CardSurface, PillButton, Text } from '@/components/primitives';
 import type { MarketReadiness } from '@/features/achievements';
-import { palette, radius, space } from '@/theme/tokens';
+import { radius, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
 
 /**
  * The Market Readiness card.
@@ -23,6 +24,7 @@ export function ReadinessMeter({
   onTakeCheck: () => void;
   assessmentTaken: boolean;
 }) {
+  const colors = useColors();
   const { score, tier, components } = readiness;
 
   return (
@@ -30,13 +32,13 @@ export function ReadinessMeter({
       <View style={styles.top}>
         <Ring score={score} color={tier.color} />
         <View style={styles.headline}>
-          <Text variant="label" color={palette.slate} uppercase>
+          <Text variant="label" color={colors.slate} uppercase>
             Market Readiness
           </Text>
-          <Text variant="h2" color={palette.ink}>
+          <Text variant="h2">
             {tier.label}
           </Text>
-          <Text variant="caption" color={palette.slate}>
+          <Text variant="caption" color={colors.slate}>
             {tier.caption}
           </Text>
         </View>
@@ -45,10 +47,10 @@ export function ReadinessMeter({
       <View style={styles.components}>
         {components.map((component) => (
           <View key={component.key} style={styles.componentRow}>
-            <Text variant="caption" color={palette.slate} style={styles.componentLabel}>
+            <Text variant="caption" color={colors.slate} style={styles.componentLabel}>
               {component.label}
             </Text>
-            <View style={styles.componentTrack}>
+            <View style={[styles.componentTrack, { backgroundColor: colors.hairline }]}>
               <View
                 style={[
                   styles.componentFill,
@@ -66,7 +68,7 @@ export function ReadinessMeter({
         onPress={onTakeCheck}
       />
 
-      <Text variant="caption" color={palette.slateLight} align="center">
+      <Text variant="caption" color={colors.slateLight} align="center">
         Measures how much of the StockIQ curriculum you've mastered — not a signal to buy or sell.
         All investing carries risk.
       </Text>
@@ -75,6 +77,7 @@ export function ReadinessMeter({
 }
 
 function Ring({ score, color }: { score: number; color: string }) {
+  const colors = useColors();
   const size = 96;
   const stroke = 10;
   const r = (size - stroke) / 2;
@@ -86,7 +89,7 @@ function Ring({ score, color }: { score: number; color: string }) {
   return (
     <View style={styles.ringWrap}>
       <Svg width={size} height={size}>
-        <Circle cx={cx} cy={cy} r={r} stroke={palette.hairline} strokeWidth={stroke} fill="none" />
+        <Circle cx={cx} cy={cy} r={r} stroke={colors.hairline} strokeWidth={stroke} fill="none" />
         {/* Rotate the arc so it begins at 12 o'clock. A `transform` string
             attribute renders as valid SVG on web; the `origin`/`rotation`
             props emit a `transform-origin` DOM attribute React rejects. At a
@@ -107,10 +110,10 @@ function Ring({ score, color }: { score: number; color: string }) {
         ) : null}
       </Svg>
       <View style={styles.ringLabel}>
-        <Text variant="h1" color={palette.ink}>
+        <Text variant="h1">
           {score}
         </Text>
-        <Text variant="label" color={palette.slateLight}>
+        <Text variant="label" color={colors.slateLight}>
           /100
         </Text>
       </View>
@@ -131,7 +134,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 7,
     borderRadius: radius.pill,
-    backgroundColor: palette.hairline,
     overflow: 'hidden',
   },
   componentFill: { height: '100%', borderRadius: radius.pill },

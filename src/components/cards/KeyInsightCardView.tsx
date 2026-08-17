@@ -3,15 +3,29 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { KeyInsightCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { Text } from '@/components/primitives';
+import { lessonArtRatios } from '@/content/index.generated';
 import { palette, radius, shadow, space } from '@/theme/tokens';
+import { useColors } from '@/theme/ThemeProvider';
+
+// Illustrations arrive in a handful of ratios (square, 4:3 landscape, 3:4
+// portrait). Framing the poster art at the source's true ratio avoids the
+// cover-crop that used to slice a third of the width off every landscape hero.
+function artAspectFor(card: KeyInsightCard): number {
+  if (card.art.kind === 'illustration') {
+    return lessonArtRatios[card.art.source] ?? 1;
+  }
+  return 1;
+}
 
 /**
  * The shareable poster.
  *
- * Fixed geometry — a square art panel above a black text panel — is what
+ * Predictable geometry — a fixed art panel above a black text panel — is what
  * makes these exportable as images later without a bespoke layout per card,
  * and it is why the schema keeps `insight` as plain text rather than
- * RichText.
+ * RichText. The art panel takes its aspect from the source illustration so
+ * landscape heroes aren't cover-cropped down to their centre band, but the
+ * text panel keeps its layout regardless.
  *
  * Extracted from the card view so the Saved Cards gallery (Phase 2) can
  * render the identical poster outside the player.
@@ -31,6 +45,7 @@ export function KeyInsightPoster({
   compact?: boolean;
   active?: boolean;
 }) {
+  const colors = useColors();
   const framed = card.frame === 'gradient';
 
   /**
@@ -41,10 +56,10 @@ export function KeyInsightPoster({
    * for sharing, and a capture must never race a running animation.
    */
   const body = (
-    <View style={styles.poster}>
+    <View style={[styles.poster, { backgroundColor: colors.ink }]}>
         <ArtView
           spec={card.art}
-          aspectRatio={1}
+          aspectRatio={artAspectFor(card)}
           rounded={false}
           glyphSize={compact ? 44 : 96}
           active={active}
@@ -53,7 +68,7 @@ export function KeyInsightPoster({
         <View style={compact ? styles.textCompact : styles.text}>
           <Text
             variant={compact ? 'caption' : 'insight'}
-            color={palette.paper}
+            color={colors.paper}
             align="center"
             numberOfLines={compact ? 4 : undefined}
             style={compact ? styles.insightCompact : undefined}
@@ -63,11 +78,11 @@ export function KeyInsightPoster({
 
           {card.attribution && !compact && (
             <View style={styles.attribution}>
-              <Text variant="label" color={palette.slateLight} align="center" uppercase>
+              <Text variant="label" color={colors.slateLight} align="center" uppercase>
                 {card.attribution.source}
               </Text>
               {card.attribution.detail && (
-                <Text variant="caption" color={palette.slate} align="center">
+                <Text variant="caption" color={colors.slate} align="center">
                   {card.attribution.detail}
                 </Text>
               )}
@@ -92,9 +107,10 @@ export function KeyInsightPoster({
 }
 
 export function KeyInsightCardView({ card, active = true }: { card: KeyInsightCard; active?: boolean }) {
+  const colors = useColors();
   return (
     <View style={styles.container} pointerEvents="none">
-      <Text variant="label" color={palette.slate} uppercase align="center">
+      <Text variant="label" color={colors.slate} uppercase align="center">
         Key Insight
       </Text>
       <KeyInsightPoster card={card} active={active} />
@@ -119,7 +135,6 @@ const styles = StyleSheet.create({
   poster: {
     borderRadius: radius.lg,
     overflow: 'hidden',
-    backgroundColor: palette.ink,
   },
   text: {
     paddingHorizontal: space.lg,
