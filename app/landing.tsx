@@ -114,7 +114,12 @@ export default function LandingPage() {
   const { width } = useWindowDimensions();
   const compact = width < 760;
   const wide = width >= 1200;
-  const compactSection = compact ? { width: Math.max(280, width - 72), paddingHorizontal: 0 } : null;
+  // Sections default to `alignSelf: 'stretch'` for the desktop full-bleed
+  // look; that pins the compact fixed-width version to the left edge of the
+  // viewport, so re-centre it explicitly.
+  const compactSection = compact
+    ? { width: Math.max(280, width - 72), paddingHorizontal: 0, alignSelf: 'center' as const }
+    : null;
   const heroSource = require('../public/lesson-art/ownership.jpg');
 
   return (
@@ -142,7 +147,7 @@ export default function LandingPage() {
 
       {/* ── Hero ────────────────────────────────────────────────────── */}
       <View style={[styles.hero, compact && styles.heroCompact, compactSection]}>
-        <View style={styles.heroCopy}>
+        <View style={[styles.heroCopy, compact && styles.heroCopyCompact]}>
           <View style={styles.eyebrow}>
             <Text variant="label" color={palette.forestDeep} uppercase>Learn investing visually</Text>
           </View>
@@ -159,7 +164,7 @@ export default function LandingPage() {
           <Text variant="caption" color={colors.slate}>Educational content — not individualized financial advice.</Text>
         </View>
 
-        <View style={styles.artShell}>
+        <View style={[styles.artShell, compact && styles.artShellCompact]}>
           <Image source={heroSource} style={styles.heroArt} contentFit="cover" transition={250} />
           <View style={styles.artCaption}>
             <Text variant="label" color={palette.mintSoft} uppercase>Lesson 1</Text>
@@ -348,6 +353,12 @@ const styles = StyleSheet.create({
   hero: { width: '100%', maxWidth: 1280, paddingHorizontal: space.xl, paddingTop: 56, paddingBottom: 88, boxSizing: 'border-box', flexDirection: 'row', alignItems: 'center', gap: 72 },
   heroCompact: { alignSelf: 'center', flexDirection: 'column', paddingTop: space.xl, paddingBottom: 56, gap: space.xl },
   heroCopy: { flex: 1, gap: space.lg },
+  // In column layout the parent-side `flex: 1` / `flex: 0.82` on these
+  // children forces them to divvy the parent's height with flex-basis 0 —
+  // content overflowed its computed share and the disclaimer landed on top of
+  // the hero art. Reset all three flex axes so each block sizes to its own
+  // content (heroCopy) or its own aspect-ratio (artShell).
+  heroCopyCompact: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', alignSelf: 'stretch' },
   eyebrow: { alignSelf: 'flex-start', backgroundColor: '#DCEBDD', borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: space.sm },
   heroTitle: { fontFamily: fontFamily.displayBold, fontSize: 56, lineHeight: 62, letterSpacing: -1.4 },
   heroTitleCompact: { fontSize: 40, lineHeight: 47, letterSpacing: -0.8 },
@@ -357,6 +368,10 @@ const styles = StyleSheet.create({
   actions: { maxWidth: 420, gap: space.sm },
   actionsCompact: { maxWidth: undefined, width: '100%' },
   artShell: { flex: 0.82, minWidth: 0, width: '100%', maxWidth: 520, aspectRatio: 0.82, borderRadius: 36, overflow: 'hidden', backgroundColor: palette.forestDeep, ...shadow.floating },
+  // Same story as the copy block: reset all three flex axes so the shell
+  // stops trying to fill the column and lets its aspect-ratio compute a real
+  // height from the row-full width.
+  artShellCompact: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', alignSelf: 'stretch', width: '100%' },
   heroArt: { width: '100%', height: '76%' },
   artCaption: { flex: 1, backgroundColor: palette.forestDeep, padding: space.lg, justifyContent: 'center', gap: space.xs },
 
