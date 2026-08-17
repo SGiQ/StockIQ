@@ -114,12 +114,11 @@ export default function LandingPage() {
   const { width } = useWindowDimensions();
   const compact = width < 760;
   const wide = width >= 1200;
-  // Sections default to `alignSelf: 'stretch'` for the desktop full-bleed
-  // look; that pins the compact fixed-width version to the left edge of the
-  // viewport, so re-centre it explicitly.
-  const compactSection = compact
-    ? { width: Math.max(280, width - 72), paddingHorizontal: 0, alignSelf: 'center' as const }
-    : null;
+  // Sections need to fill the viewport on mobile so a coloured background
+  // (dark green cap section, etc) reads as full-bleed rather than a floating
+  // panel with white gutters. The content inside stays inset via
+  // `paddingHorizontal`, keeping a comfortable side margin around the cards.
+  const compactSection = compact ? { width: '100%' as const, paddingHorizontal: space.lg } : null;
   const heroSource = require('../public/lesson-art/ownership.jpg');
 
   return (
