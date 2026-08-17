@@ -196,7 +196,7 @@ export default function DevicesSettings() {
           <>
             <Text variant="body" color={colors.inkSoft}>
               Sign in with Apple so this account can be restored if you lose
-              every device. StockIQ asks for no name or email — only the
+              every device. StockiQ asks for no name or email — only the
               anonymous identifier Apple issues for this app.
             </Text>
             <PillButton label="Sign in with Apple" onPress={appleSignIn} disabled={busy} />
@@ -222,7 +222,7 @@ export default function DevicesSettings() {
               : 'Local learning profile'}
           </Text>
           <Text variant="caption" color={colors.inkSoft}>
-            {`Signing out clears StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'} but does not delete cloud progress or affect other devices.`}
+            {`Signing out clears StockiQ from this ${Platform.OS === 'web' ? 'browser' : 'device'} but does not delete cloud progress or affect other devices.`}
           </Text>
           {confirmingSignOut ? (
             <View style={styles.signOutActions}>
@@ -263,7 +263,7 @@ export default function DevicesSettings() {
           Add another device
         </Text>
         <Text variant="body" color={colors.inkSoft}>
-          Show a code here, then type it into StockIQ on your other device. Both
+          Show a code here, then type it into StockiQ on your other device. Both
           devices keep their progress — nothing is replaced.
         </Text>
 
@@ -350,7 +350,7 @@ export default function DevicesSettings() {
             Permanently delete your account and all of its data.
           </Text>
           <Text variant="caption" color={colors.inkSoft}>
-            {`This erases your cloud progress, saved cards, sign-in email, and every linked device from our servers, and wipes StockIQ from this ${Platform.OS === 'web' ? 'browser' : 'device'}. Other devices lose access too. This cannot be undone.`}
+            {`This erases your cloud progress, saved cards, sign-in email, and every linked device from our servers, and wipes StockiQ from this ${Platform.OS === 'web' ? 'browser' : 'device'}. Other devices lose access too. This cannot be undone.`}
           </Text>
           {confirmingDelete ? (
             <View style={styles.signOutActions}>

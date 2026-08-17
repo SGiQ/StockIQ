@@ -1,12 +1,12 @@
-# StockIQ Monetization Plan
+# StockiQ Monetization Plan
 
-> Adapted from Duolingo's freemium playbook, grounded in StockIQ's actual
+> Adapted from Duolingo's freemium playbook, grounded in StockiQ's actual
 > architecture and platform position. Educational content only — monetization
 > stays on the education/tools side of the "not financial advice" line.
 
 ## Context that shapes everything
 
-StockIQ is **live on web (Vercel) but not yet on iOS/Android** (no Apple
+StockiQ is **live on web (Vercel) but not yet on iOS/Android** (no Apple
 Developer account). That is not a limitation — it is the single biggest
 monetization advantage, because it lets us start with web checkout and avoid the
 Apple/Google 15–30% tax entirely.
@@ -28,7 +28,7 @@ revenue is subscriptions, ~9% of monthly actives pay, and conversion climbed
 from ~3% to ~9% purely through funnel experiments. The UI is copyable; the
 experiment cadence is the real moat.
 
-| Duolingo lever | StockIQ equivalent | Status |
+| Duolingo lever | StockiQ equivalent | Status |
 |---|---|---|
 | Hearts (run out → wait/pay) | Hearts on quiz cards — the timed, high-intent conversion moment | ❌ build (quiz cards + advance-gating already exist) |
 | Streaks + streak repair | Streak + paid "streak repair" perk | ✅ exists |
@@ -47,8 +47,8 @@ anchor above Duolingo. Most finance-ed apps land at $60–200/yr.
 | Tier | Price | Includes |
 |---|---|---|
 | **Free** | $0 | All 37 lessons, streaks, XP, badges. **But:** 5 hearts, ~3 ASK questions/day, ads between lessons, KB previews only |
-| **StockIQ Pro** | **$9.99/mo** or **$59.99/yr** (~$5/mo — anchor the annual) | No ads, unlimited hearts, unlimited ASK (fair-use cap), full Knowledge Base, spaced-repetition review unlocked, monthly streak repair, offline |
-| **StockIQ Elite** | **$19.99/mo** or **$119.99/yr** | Everything in Pro **+** AI-native features: personalized coaching path, "explain this real ticker," Socratic AI mode, portfolio-simulator lessons, priority new content |
+| **StockiQ Pro** | **$9.99/mo** or **$59.99/yr** (~$5/mo — anchor the annual) | No ads, unlimited hearts, unlimited ASK (fair-use cap), full Knowledge Base, spaced-repetition review unlocked, monthly streak repair, offline |
+| **StockiQ Elite** | **$19.99/mo** or **$119.99/yr** | Everything in Pro **+** AI-native features: personalized coaching path, "explain this real ticker," Socratic AI mode, portfolio-simulator lessons, priority new content |
 
 Why this shape:
 

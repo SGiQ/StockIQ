@@ -65,7 +65,7 @@ export default function BookDetail() {
           {book.attribution}
         </Text>
         <Text variant="caption" color={colors.slateLight}>
-          This is an original summary written for StockIQ. It is not an extract, and it is
+          This is an original summary written for StockiQ. It is not an extract, and it is
           not a substitute for reading the book.
         </Text>
       </View>

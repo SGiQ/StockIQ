@@ -1,5 +1,5 @@
 /**
- * StockIQ ASK proxy.
+ * StockiQ ASK proxy.
  *
  * Exists for exactly one reason: an API key cannot be kept secret inside a
  * client app. Anyone can pull the bundle off a device and read it. So the key
@@ -34,7 +34,7 @@ const MODEL = 'claude-haiku-4-5';
 const MAX_TOKENS = 1024;
 const DEFAULT_DAILY_LIMIT = 100;
 
-const SYSTEM_PROMPT = `You are the StockIQ tutor. A learner is part-way through a short card-based lesson on the stock market and has tapped ASK on the card described below.
+const SYSTEM_PROMPT = `You are the StockiQ tutor. A learner is part-way through a short card-based lesson on the stock market and has tapped ASK on the card described below.
 
 Rules:
 - Answer only about the concept on the current card and ideas directly adjacent to it. If the question is off-topic, say so in one sentence and point back to the card.

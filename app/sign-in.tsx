@@ -123,7 +123,7 @@ export default function SignIn() {
             source={require('../public/logo/SG.png')}
             contentFit="contain"
             style={styles.brandMark}
-            accessibilityLabel="StockIQ"
+            accessibilityLabel="StockiQ"
           />
 
           {step === 'email' ? (
@@ -201,7 +201,7 @@ export default function SignIn() {
           ) : null}
 
           <Text variant="caption" color={colors.slate} align="center">
-            By continuing, you agree that StockIQ is educational and does not provide individualized financial advice.
+            By continuing, you agree that StockiQ is educational and does not provide individualized financial advice.
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>

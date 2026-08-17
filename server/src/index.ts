@@ -1,5 +1,5 @@
 /**
- * StockIQ sync service.
+ * StockiQ sync service.
  *
  * One endpoint, POST /v1/sync, which pushes a client's changed records and
  * returns everything that changed for that owner since the client's cursor.
@@ -237,7 +237,7 @@ const server = createServer((req, res) => {
           //
           // Anything ABOUT THE ADDRESS — no account, rate limited — answers
           // `ok: true`, because reporting it would turn this endpoint into a
-          // way to test whether any given person uses StockIQ.
+          // way to test whether any given person uses StockiQ.
           //
           // Anything about the SERVER — email unconfigured, bad API key,
           // unverified domain — is reported as a 503. Those faults are

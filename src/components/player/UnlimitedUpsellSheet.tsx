@@ -20,7 +20,7 @@ export interface UnlimitedUpsellSheetProps {
 /**
  * The "Go Unlimited" surface.
  *
- * A placeholder until billing lands: it presents StockIQ Pro and captures
+ * A placeholder until billing lands: it presents StockiQ Pro and captures
  * intent, but there is no checkout yet, so it is honest about "coming soon"
  * rather than dangling a buy button that does nothing. When Stripe web checkout
  * ships (see docs/monetization.md), the single CTA here becomes the entry
@@ -41,7 +41,7 @@ export function UnlimitedUpsellSheet({ visible, onClose }: UnlimitedUpsellSheetP
           <View style={styles.heading}>
             <HeartIcon size={26} filled color={palette.danger} />
             <Text variant="h3">
-              Never run out with StockIQ Pro
+              Never run out with StockiQ Pro
             </Text>
           </View>
 

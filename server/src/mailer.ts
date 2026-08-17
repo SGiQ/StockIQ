@@ -184,9 +184,9 @@ export function signInMessage(to: string, code: string, minutes: number): SentMe
   const deepLink = `${process.env.APP_LINK_BASE ?? 'stockiq://sign-in'}?code=${code}`;
   return {
     to,
-    subject: `${code} is your StockIQ sign-in code`,
+    subject: `${code} is your StockiQ sign-in code`,
     text: [
-      `Your StockIQ sign-in code is:`,
+      `Your StockiQ sign-in code is:`,
       ``,
       `    ${code}`,
       ``,

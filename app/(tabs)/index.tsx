@@ -124,7 +124,7 @@ export default function LearnTab() {
             <Pressable
               onPress={() => router.push('/ask' as never)}
               accessibilityRole="button"
-              accessibilityLabel="Ask StockIQ"
+              accessibilityLabel="Ask StockiQ"
               style={[styles.narrationSettings, { backgroundColor: colors.paper }]}
               hitSlop={8}
             >
@@ -209,7 +209,7 @@ export default function LearnTab() {
         ))}
 
         <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
-          Educational content only. StockIQ does not provide financial advice.
+          Educational content only. StockiQ does not provide financial advice.
         </Text>
       </ScrollView>
     </Screen>

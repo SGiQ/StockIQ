@@ -154,7 +154,7 @@ export default function CourseScreen() {
           ))}
 
         <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
-          Educational content only. StockIQ does not provide financial advice.
+          Educational content only. StockiQ does not provide financial advice.
         </Text>
       </ScrollView>
     </Screen>

@@ -90,7 +90,7 @@ export default function DashboardTab() {
               source={require('../../public/logo/SG.png')}
               contentFit="contain"
               style={[styles.avatar, { backgroundColor: colors.paper }]}
-              accessibilityLabel="StockIQ"
+              accessibilityLabel="StockiQ"
             />
             <View style={styles.heroCopy}>
               <Text variant="label" color={palette.mintSoft} uppercase>Learning portfolio</Text>

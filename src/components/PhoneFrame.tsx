@@ -6,7 +6,7 @@ import { useColors, useIsDark } from '@/theme/ThemeProvider';
 /**
  * Constrains the web build to phone dimensions.
  *
- * StockIQ is a phone app. Run full-width in a desktop browser it stops being
+ * StockiQ is a phone app. Run full-width in a desktop browser it stops being
  * a useful preview: the card deck stretches to 1400pt, line lengths triple,
  * and layout bugs that would be obvious at 390pt disappear. Worse, bugs that
  * only exist at desktop width — the deck misalignment found in Phase 5 —

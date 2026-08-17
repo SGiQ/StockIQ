@@ -170,7 +170,7 @@
       "type": "key_insight",
       "art": { "kind": "glyph", "name": "scale", "bg": "ink" },
       "insight": "A multiple is only half a price. The other half is the growth rate you cannot yet see, and that is the half you can be wrong about.",
-      "attribution": { "source": "Growth at a Reasonable Price", "detail": "StockIQ strategy guide" }
+      "attribution": { "source": "Growth at a Reasonable Price", "detail": "StockiQ strategy guide" }
     }
   ],
   "sources": [

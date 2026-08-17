@@ -1,5 +1,5 @@
 /**
- * StockIQ content validator.
+ * StockiQ content validator.
  *
  * Five passes, run in order. Passes 1–4 produce errors (exit 1); pass 5
  * produces warnings. Every message is written to be actionable by whoever

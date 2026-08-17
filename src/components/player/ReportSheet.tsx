@@ -56,7 +56,7 @@ export function ReportSheet({ visible, alreadyReported, onClose, onSubmit }: Rep
           <Text variant="bodySm" color={colors.slate}>
             {alreadyReported
               ? 'Thanks — this card is flagged. Reporting again updates the reason.'
-              : 'Reports are saved on this device and reviewed when StockIQ syncs.'}
+              : 'Reports are saved on this device and reviewed when StockiQ syncs.'}
           </Text>
 
           <View style={styles.options}>

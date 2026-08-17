@@ -1,5 +1,5 @@
 /**
- * StockIQ narration server.
+ * StockiQ narration server.
  *
  * Serves the pre-rendered lesson audio out of the `stockiq-narration` R2
  * bucket. It exists so the app has a production-grade audio origin without

@@ -1,4 +1,4 @@
-# StockIQ account-entry flow
+# StockiQ account-entry flow
 
 ## Decision
 
@@ -38,9 +38,9 @@ guesses, rate-limits sends, and answers known and unknown addresses identically.
 That matches OWASP's account-enumeration guidance and the retry/rate-limit
 recommendations used by verification providers.
 
-Email codes are appropriate here because StockIQ is an educational product and
+Email codes are appropriate here because StockiQ is an educational product and
 does not hold money or execute trades. NIST does not treat email as a suitable
-out-of-band authenticator for higher-assurance authentication. If StockIQ later
+out-of-band authenticator for higher-assurance authentication. If StockiQ later
 adds brokerage, payments, or other high-value actions, those actions should use
 passkeys or another phishing-resistant authenticator rather than relying on
 email alone.

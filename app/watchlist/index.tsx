@@ -147,7 +147,7 @@ export default function WatchlistScreen() {
               Follow a few tickers
             </Text>
             <Text variant="caption" color={colors.slate}>
-              Add symbols you're curious about. StockIQ shows how they move and explains it in plain language — never a buy or sell call.
+              Add symbols you're curious about. StockiQ shows how they move and explains it in plain language — never a buy or sell call.
             </Text>
           </CardSurface>
         ) : (
@@ -206,7 +206,7 @@ export default function WatchlistScreen() {
         )}
 
         <Text variant="caption" color={colors.slateLight} align="center" style={styles.disclaimer}>
-          Delayed, educational data. StockIQ does not provide financial advice.
+          Delayed, educational data. StockiQ does not provide financial advice.
         </Text>
       </ScrollView>
     </Screen>

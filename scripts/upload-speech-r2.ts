@@ -1,4 +1,4 @@
-/** Uploads generated narration clips to StockIQ's public Cloudflare R2 bucket. */
+/** Uploads generated narration clips to StockiQ's public Cloudflare R2 bucket. */
 import { spawn } from 'node:child_process';
 import { readdir } from 'node:fs/promises';
 import path from 'node:path';

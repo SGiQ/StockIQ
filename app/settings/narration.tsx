@@ -74,7 +74,7 @@ export default function NarrationSettings() {
             Listen as you learn.
           </Text>
           <Text variant="body" color={colors.slate}>
-            StockIQ can read each card as it appears. Quiz choices stay silent;
+            StockiQ can read each card as it appears. Quiz choices stay silent;
             after you submit an answer, the result and explanation are spoken.
           </Text>
         </View>

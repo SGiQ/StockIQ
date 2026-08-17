@@ -1,4 +1,4 @@
-# StockIQ — "what else we need" roadmap
+# StockiQ — "what else we need" roadmap
 
 Synthesis of a four-part deep-dive audit (content, screens/flows, production,
 legal/store) run 2026-08-03. Ordered by priority. The web app is live and in

@@ -103,7 +103,7 @@ export default function KnowledgeBase() {
         </Section>
 
         <Text variant="caption" color={colors.slateLight} align="center">
-          Educational content only. StockIQ does not provide financial advice.
+          Educational content only. StockiQ does not provide financial advice.
         </Text>
       </ScrollView>
     </Screen>

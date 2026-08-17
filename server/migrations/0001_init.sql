@@ -1,4 +1,4 @@
--- StockIQ sync store.
+-- StockiQ sync store.
 --
 -- The table is deliberately the same shape as the device's local `records`
 -- table (see src/store/sqlite/SqliteRepository.ts): one row per record, with

@@ -1,5 +1,5 @@
 /**
- * StockIQ market-data proxy.
+ * StockiQ market-data proxy.
  *
  * Same reason as the ASK worker: a vendor API key cannot be kept secret inside
  * a client app. The Finnhub key lives here as a Cloudflare secret, the app
