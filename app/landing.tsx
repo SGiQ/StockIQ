@@ -129,9 +129,9 @@ export default function LandingPage() {
           source={require('../public/logo/SG.png')}
           contentFit="contain"
           style={styles.brandMark}
-          accessibilityLabel="StockIQ"
+          accessibilityLabel="StockiQ"
         />
-        <Text variant="h2">StockIQ</Text>
+        <Text variant="h2">StockiQ</Text>
         <View style={styles.navSpacer} />
         {!compact ? (
           <PillButton
@@ -332,7 +332,7 @@ export default function LandingPage() {
 
       {/* ── Footer ──────────────────────────────────────────────────── */}
       <View style={[styles.footer, compactSection]}>
-        <Text variant="h3">StockIQ</Text>
+        <Text variant="h3">StockiQ</Text>
         <Text variant="caption" color={colors.slate}>Learn clearly. Invest thoughtfully.</Text>
       </View>
     </ScrollView>

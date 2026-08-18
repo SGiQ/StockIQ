@@ -4,7 +4,7 @@
   Editorial policy lives in the CONSTRAINTS block of that script.
 -->
 
-# Authoring a StockIQ lesson
+# Authoring a StockiQ lesson
 
 Everything below is derived from `src/content/schema.ts` and the current
 contents of `content/`, so it cannot drift from what the validator will

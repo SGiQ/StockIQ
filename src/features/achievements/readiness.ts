@@ -1,5 +1,5 @@
 /**
- * Market Readiness — a 0..100 measure of how much of the StockIQ curriculum a
+ * Market Readiness — a 0..100 measure of how much of the StockiQ curriculum a
  * learner has mastered.
  *
  * IMPORTANT FRAMING: this is an *educational* score, not a signal to trade. It

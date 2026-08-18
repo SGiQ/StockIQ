@@ -5,7 +5,7 @@ verified. This is the ordered path from here to a submitted app. Steps marked
 **(you)** need your accounts/credentials; I can drive the rest.
 
 ## Already prepped & verified (no action needed)
-- **Bundle id** `com.stockiq.app`, name "StockIQ", version 1.0.0, portrait, light.
+- **Bundle id** `com.stockiq.app`, name "StockiQ", version 1.0.0, portrait, light.
 - **Icons** (iOS + Android adaptive), **splash** now shows the logo (fixed).
 - **Sign in with Apple** entitlement wired (`usesAppleSignIn`) — confirmed present
   in the generated `.entitlements`.

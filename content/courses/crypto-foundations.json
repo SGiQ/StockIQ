@@ -1,7 +1,7 @@
 {
   "id": "crypto-foundations",
   "title": "Crypto Foundations: Different Rules",
-  "author": "StockIQ",
+  "author": "StockiQ",
   "category": "crypto",
   "cover": { "kind": "glyph", "name": "coin", "bg": "mint" },
   "blurb": "Digital assets don't play by stock-market rules. Learn what a token really is, who holds the keys, why the business-analysis math doesn't apply, and how not to get burned.",

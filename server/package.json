@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "StockIQ sync service \u2014 Postgres-backed last-write-wins record sync.",
+  "description": "StockiQ sync service \u2014 Postgres-backed last-write-wins record sync.",
   "engines": {
     "node": ">=20"
   },

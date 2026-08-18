@@ -1,5 +1,5 @@
 /**
- * StockIQ content schema — THE single source of truth.
+ * StockiQ content schema — THE single source of truth.
  *
  * Everything downstream derives from this file:
  *   - TypeScript types (via z.infer, re-exported from ./types)

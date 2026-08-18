@@ -69,7 +69,7 @@ export function ReadinessMeter({
       />
 
       <Text variant="caption" color={colors.slateLight} align="center">
-        Measures how much of the StockIQ curriculum you've mastered — not a signal to buy or sell.
+        Measures how much of the StockiQ curriculum you've mastered — not a signal to buy or sell.
         All investing carries risk.
       </Text>
     </CardSurface>

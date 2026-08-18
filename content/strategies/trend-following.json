@@ -205,7 +205,7 @@
       "type": "key_insight",
       "art": { "kind": "glyph", "name": "compass", "bg": "ink" },
       "insight": "Trend following does not predict. It reacts, loses small most of the time, and depends entirely on the rare trade nobody could identify in advance.",
-      "attribution": { "source": "Trend Following", "detail": "StockIQ strategy guide" }
+      "attribution": { "source": "Trend Following", "detail": "StockiQ strategy guide" }
     }
   ],
   "sources": [

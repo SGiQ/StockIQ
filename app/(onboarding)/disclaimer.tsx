@@ -8,7 +8,7 @@ import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
 const TERMS = [
-  'StockIQ teaches concepts. It does not tell you what to buy, sell, or hold.',
+  'StockiQ teaches concepts. It does not tell you what to buy, sell, or hold.',
   'Nothing here is personalised advice. We do not know your situation, and we are not licensed to advise on it.',
   'Every company and price used in a lesson is hypothetical, chosen to make a concept clear.',
   'Investing puts your money at risk. You can lose some or all of it.',

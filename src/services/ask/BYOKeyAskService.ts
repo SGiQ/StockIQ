@@ -21,7 +21,7 @@ const MODEL = 'claude-opus-4-8';
  */
 const MAX_TOKENS = 1024;
 
-const SYSTEM_PROMPT = `You are the StockIQ tutor. A learner is part-way through a short card-based lesson on the stock market and has tapped ASK on the card described below.
+const SYSTEM_PROMPT = `You are the StockiQ tutor. A learner is part-way through a short card-based lesson on the stock market and has tapped ASK on the card described below.
 
 Rules:
 - Answer only about the concept on the current card and ideas directly adjacent to it. If the question is off-topic, say so in one sentence and point back to the card.

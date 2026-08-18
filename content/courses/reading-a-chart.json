@@ -1,7 +1,7 @@
 {
   "id": "reading-a-chart",
   "title": "Reading a Chart: Price, Trend and Evidence",
-  "author": "StockIQ",
+  "author": "StockiQ",
   "category": "technicals",
   "cover": { "kind": "glyph", "name": "candle", "bg": "sky" },
   "blurb": "A chart is a record of what buyers and sellers actually did. Learn to read it without pretending it predicts the future.",

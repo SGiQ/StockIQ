@@ -1,4 +1,4 @@
-# StockIQ Retention Roadmap
+# StockiQ Retention Roadmap
 
 > The problem this solves: the 42-lesson catalog finishes in ~3–4 weeks, so
 > the courses are an **acquisition hook, not a retention engine**. Nobody pays

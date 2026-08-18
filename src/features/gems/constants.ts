@@ -3,7 +3,7 @@
  *
  * Dependency-free so the store, the player, and any screen can read these
  * without pulling each other in. Balancing the economy is editing this file;
- * nothing else hard-codes a number. Scaled to StockIQ's small XP economy
+ * nothing else hard-codes a number. Scaled to StockiQ's small XP economy
  * (~20 XP a lesson), not copied from Duolingo's larger one.
  */
 

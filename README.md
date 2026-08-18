@@ -1,4 +1,4 @@
-# StockIQ
+# StockiQ
 
 Bite-sized, card-based lessons that teach stock trading and investing — the
 Imprint interaction model applied to finance.
@@ -30,7 +30,7 @@ Still not deployed: the ASK proxy, which needs a Cloudflare login and an
 Anthropic key. Until then ASK falls back to bring-your-own-key. See
 [docs/deployment.md](docs/deployment.md).
 
-> Educational content only. StockIQ does not provide financial advice.
+> Educational content only. StockiQ does not provide financial advice.
 
 ## Run it
 

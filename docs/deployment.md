@@ -1,4 +1,4 @@
-# Deploying StockIQ
+# Deploying StockiQ
 
 **All three backend services are deployed and live:**
 
@@ -8,7 +8,7 @@
 | ASK proxy (Cloudflare) | https://stockiq-ask.sgiqbusiness.workers.dev | Haiku 4.5; Anthropic key as a secret; KV daily cap |
 | Narration (Cloudflare) | https://stockiq-narration.sgiqbusiness.workers.dev | Serves the R2 audio bucket over a stable origin |
 
-Railway project: StockIQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`). Verified
+Railway project: StockiQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`). Verified
 against the sync deployment: protocol, pairing, delete, and client-cycle suites
 all pass. The ASK proxy was verified end-to-end from the live web app (a real
 question streams, the request routes to the Worker, the not-advice guardrail
@@ -43,7 +43,7 @@ makes `railway up` upload only the service rather than the whole Expo repo:
 
 ```bash
 railway login
-railway init --name StockIQ
+railway init --name StockiQ
 railway add --database postgres
 railway add --service stockiq-sync
 
@@ -158,7 +158,7 @@ These steps are yours — I do not create accounts or handle live API keys.
 
    ```
    RESEND_API_KEY=re_...
-   EMAIL_FROM=StockIQ <login@yourdomain>
+   EMAIL_FROM=StockiQ <login@yourdomain>
    ```
 
    `EMAIL_FROM` must be **at the domain you verified**. That mismatch is the
@@ -168,7 +168,7 @@ These steps are yours — I do not create accounts or handle live API keys.
 
    ```bash
    cd server
-   RESEND_API_KEY=re_... EMAIL_FROM="StockIQ <login@yourdomain>" \
+   RESEND_API_KEY=re_... EMAIL_FROM="StockiQ <login@yourdomain>" \
      npm run check:email -- you@example.com
    ```
 
@@ -210,7 +210,7 @@ What defends a six-digit code, all four required:
 
 Requesting a code answers identically whether or not the address has an
 account. Otherwise this endpoint would be a way to test whether any given
-person uses StockIQ.
+person uses StockiQ.
 
 ### Sign in with Apple
 

@@ -47,8 +47,8 @@ export const PLAN_CAPABILITIES: Record<PlanId, PlanCapabilities> = {
 
 export const PLAN_LABEL: Record<PlanId, string> = {
   free: 'Free',
-  pro: 'StockIQ Pro',
-  elite: 'StockIQ Elite',
+  pro: 'StockiQ Pro',
+  elite: 'StockiQ Elite',
 };
 
 /** Free → Pro → Elite → Free, for the dev plan cycler. */

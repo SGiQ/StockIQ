@@ -129,7 +129,7 @@ const MILESTONE_BADGES: BadgeDef[] = [
   {
     id: 'curriculum',
     name: 'Full curriculum',
-    description: 'Complete every course in StockIQ.',
+    description: 'Complete every course in StockiQ.',
     glyph: 'tree',
     tier: 'gold',
     earned: (s) => s.totalCourses > 0 && s.coursesCompleted >= s.totalCourses,

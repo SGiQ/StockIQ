@@ -1,4 +1,4 @@
-# StockIQ — Complete Feature Inventory
+# StockiQ — Complete Feature Inventory
 
 Last updated: 2026-08-12
 
@@ -82,7 +82,7 @@ Each lesson: 8-15 cards, ~2 minutes. Tap navigation (right = advance, left = bac
 
 ---
 
-## ASK StockIQ (AI Tutor)
+## ASK StockiQ (AI Tutor)
 
 Two modes:
 1. **Standalone** — general investing/market questions

@@ -20,7 +20,7 @@ const GENERAL_CONTEXT: AskContext = {
     headline: 'Open question',
     body: 'A free-form question from the learner about investing and markets.',
   } as Card,
-  lessonTitle: 'Ask StockIQ',
+  lessonTitle: 'Ask StockiQ',
   courseTitle: 'Ask',
 };
 
@@ -123,7 +123,7 @@ export default function AskScreen() {
           </Svg>
         </Pressable>
         <Text variant="h2">
-          Ask StockIQ
+          Ask StockiQ
         </Text>
         <View style={styles.headerRight}>
           {active ? (

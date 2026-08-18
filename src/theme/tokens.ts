@@ -1,7 +1,7 @@
 /**
  * Design tokens.
  *
- * A plain TypeScript module rather than NativeWind/Tamagui: StockIQ is about
+ * A plain TypeScript module rather than NativeWind/Tamagui: StockiQ is about
  * a dozen bespoke, art-directed surfaces (seven card layouts, the unit path,
  * the grids), not a 200-screen CRUD app where a utility framework amortises.
  * A token file plus a handful of primitives gives the same consistency with

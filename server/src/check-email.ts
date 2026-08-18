@@ -7,7 +7,7 @@
  * a silent non-arrival.
  *
  * Run:
- *   RESEND_API_KEY=re_... EMAIL_FROM="StockIQ <login@yourdomain>" \
+ *   RESEND_API_KEY=re_... EMAIL_FROM="StockiQ <login@yourdomain>" \
  *     npm run check:email -- you@example.com
  */
 import { explainMailFailure, mailer } from './mailer.ts';
@@ -41,9 +41,9 @@ const stamp = Math.floor(Date.now() / 1000)
 try {
   await mailer.send({
     to,
-    subject: `StockIQ delivery test ${stamp}`,
+    subject: `StockiQ delivery test ${stamp}`,
     text: [
-      `This is a one-off test from the StockIQ sync service.`,
+      `This is a one-off test from the StockiQ sync service.`,
       ``,
       `If it arrived, sign-in codes will arrive too.`,
       ``,
@@ -58,7 +58,7 @@ try {
     console.log('   Set RESEND_API_KEY and EMAIL_FROM to test for real.');
   } else {
     console.log('✔  Resend accepted the message.');
-    console.log(`   Check ${to} — including spam — for "StockIQ delivery test ${stamp}".`);
+    console.log(`   Check ${to} — including spam — for "StockiQ delivery test ${stamp}".`);
     console.log('   Accepted is not the same as delivered: if it never lands,');
     console.log("   the Resend dashboard's Emails tab shows what happened to it.");
   }

@@ -2,7 +2,7 @@
 
 Status: **PLAN — awaiting review before any JSON is generated.**
 
-Goal: broaden StockIQ from an equities-and-options curriculum toward a general
+Goal: broaden StockiQ from an equities-and-options curriculum toward a general
 retail-investing app. Crypto and bonds become **core** (part of "ready to
 trade"); forex / commodities / real estate ship as an **optional enrichment
 course**, explicitly *not* required to be ready to trade.
