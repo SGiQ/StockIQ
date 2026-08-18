@@ -200,3 +200,11 @@ export function signInMessage(to: string, code: string, minutes: number): SentMe
     ].join('\n'),
   };
 }
+
+export function newSignupMessage(userEmail: string): SentMessage {
+  return {
+    to: 'contact@sgiq.ai',
+    subject: 'New StockiQ user signup',
+    text: `A new user has signed up with email: ${userEmail}`,
+  };
+}

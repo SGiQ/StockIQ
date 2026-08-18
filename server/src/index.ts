@@ -47,6 +47,7 @@ import {
   explainMailFailure,
   mailer,
   signInMessage,
+  newSignupMessage,
 } from './mailer.ts';
 import { pushAndPull } from './sync.ts';
 import { recordTelemetry } from './telemetry.ts';
@@ -229,6 +230,13 @@ const server = createServer((req, res) => {
           const result = await signInWithIdentity(client, deviceId, label, 'apple', identity.sub);
           // Same as pairing: the cursor belongs to the account just left.
           payload = { ...result, resetCursor: true };
+          if (result.isNewIdentity) {
+            try {
+              await mailer.send(newSignupMessage(identity.sub));
+            } catch (error) {
+              console.error('[email] failed to send new signup notification:', error);
+            }
+          }
         } else if (path === '/v1/auth/email/request') {
           const body = (await readBody(req)) as { email?: unknown };
           const email = normaliseEmail(body.email);
@@ -276,6 +284,13 @@ const server = createServer((req, res) => {
               verified.email,
             );
             payload = { ...result, resetCursor: true };
+            if (result.isNewIdentity) {
+              try {
+                await mailer.send(newSignupMessage(verified.email));
+              } catch (error) {
+                console.error('[email] failed to send new signup notification:', error);
+              }
+            }
           }
         } else if (path === '/v1/auth/sign-out') {
           await signOutDevice(client, accountId, deviceId);

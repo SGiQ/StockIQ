@@ -205,6 +205,10 @@ export interface SignInResult {
    * copy one person's progress into another's.
    */
   merge: boolean;
+  /**
+   * Whether this is the first time this identity has been used.
+   */
+  isNewIdentity: boolean;
 }
 
 /**
@@ -262,7 +266,7 @@ export async function signInWithIdentity(
         now,
       ]);
     }
-    return { accountId: target, merge: true };
+    return { accountId: target, merge: true, isNewIdentity: false };
   }
 
   // Any identity already on this account counts as "claimed", regardless of
@@ -279,7 +283,7 @@ export async function signInWithIdentity(
       'INSERT INTO identities (provider, subject, account_id, created_at) VALUES ($1, $2, $3, $4)',
       [provider, subject, currentAccount, now],
     );
-    return { accountId: currentAccount, merge: true };
+    return { accountId: currentAccount, merge: true, isNewIdentity: true };
   }
 
   // Case 3 — a different person on a device that is already signed in.
@@ -294,7 +298,7 @@ export async function signInWithIdentity(
     accountId,
     now,
   ]);
-  return { accountId, merge: false };
+  return { accountId, merge: false, isNewIdentity: true };
 }
 
 export interface DeviceRow {
