@@ -9,6 +9,7 @@ import { GemCounter } from '@/components/Currency';
 import { TodayCard } from '@/components/TodayCard';
 import { KeepSharpCard } from '@/components/KeepSharpCard';
 import { ThisWeekCard } from '@/components/ThisWeekCard';
+import { ResumeCard } from '@/components/ResumeCard';
 import { LEAGUES_ENABLED } from '@/features/leagues';
 import {
   CardSurface,
@@ -166,6 +167,8 @@ export default function LearnTab() {
             </Pressable>
           </View>
         </View>
+
+        <ResumeCard />
 
         <Pressable
           onPress={() => router.push('/streak' as never)}

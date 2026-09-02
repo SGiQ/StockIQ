@@ -73,3 +73,52 @@ export function verdictOf(state: CardUiState | undefined): boolean | undefined {
   }
   return undefined;
 }
+
+/**
+ * Rebuilds the UI state of cards the learner already answered, for resuming
+ * a lesson part-way through.
+ *
+ * The persisted progress row records the resume card and one attempt per
+ * interactive card, but not the option that was picked. For a correct answer
+ * the pick is the answer itself; for a wrong one on a two-option card it is
+ * the other option. Only cards BEFORE the resume point are seeded — the card
+ * being resumed on, and anything after it, must be answered fresh — so a
+ * swipe back shows the verdict already given rather than demanding the same
+ * answer twice, and the advance gate lets the learner return to where they
+ * were.
+ */
+export function seedResumeStates(
+  cards: Card[],
+  attempts: ReadonlyArray<{ cardId: CardId; correct: boolean }>,
+  resumeIndex: number,
+): CardStateMap {
+  const verdicts = new Map(attempts.map((a) => [a.cardId, a.correct]));
+  const seeded: CardStateMap = {};
+
+  cards.forEach((card, i) => {
+    if (i >= resumeIndex) return;
+    const correct = verdicts.get(card.id);
+    if (correct === undefined) return;
+
+    if (card.type === 'binary_choice') {
+      const selected = card.options.find((o) => o.correct === correct)?.id;
+      seeded[card.id] = { kind: 'choice', selected, checked: true, correct };
+    } else if (card.type === 'fill_blank') {
+      seeded[card.id] = {
+        kind: 'blank',
+        choicesOpen: true,
+        picked: correct ? card.answer : undefined,
+        checked: true,
+        correct,
+      };
+    }
+  });
+
+  return seeded;
+}
+
+/** Clamps a stored resume point onto the deck, so a stale row can never overshoot. */
+export function clampResumeIndex(index: number | undefined, cardCount: number): number {
+  if (!Number.isFinite(index) || cardCount <= 0) return 0;
+  return Math.min(Math.max(0, Math.floor(index as number)), cardCount - 1);
+}
