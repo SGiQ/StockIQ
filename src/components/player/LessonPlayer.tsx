@@ -27,6 +27,7 @@ import { trackTelemetry } from '@/services/telemetry';
 import {
   canAdvance,
   consumesTap,
+  clampResumeIndex,
   initialStateFor,
   type CardStateMap,
   type CardUiState,
@@ -49,6 +50,14 @@ export interface LessonPlayerProps {
   onAnswered?: (cardId: CardId, correct: boolean) => void;
   /** Fired as the learner moves forward, for the resume point. */
   onCardIndex?: (index: number) => void;
+  /**
+   * Card to open on, for resuming a lesson part-way through. Read once on
+   * mount and clamped onto the deck; later changes are ignored so a progress
+   * write mid-lesson can never yank the deck to a different card.
+   */
+  initialIndex?: number;
+  /** Pre-answered card states to open with — see `seedResumeStates`. */
+  initialStates?: CardStateMap;
   isCardSaved?: (cardId: CardId) => boolean;
   onToggleSave?: (cardId: CardId) => void;
   isCardReported?: (cardId: CardId) => boolean;
@@ -91,6 +100,8 @@ export function LessonPlayer({
   onComplete,
   onAnswered,
   onCardIndex,
+  initialIndex = 0,
+  initialStates,
   isCardSaved,
   onToggleSave,
   isCardReported,
@@ -121,8 +132,8 @@ export function LessonPlayer({
   const stageId = `card-stage-${useId()}`;
   useUnscrollableStage(stageId);
 
-  const [index, setIndex] = useState(0);
-  const [states, setStates] = useState<CardStateMap>({});
+  const [index, setIndex] = useState(() => clampResumeIndex(initialIndex, cards.length));
+  const [states, setStates] = useState<CardStateMap>(() => initialStates ?? {});
   const [tutorialVisible, setTutorialVisible] = useState(showTutorial);
   const [askOpen, setAskOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);

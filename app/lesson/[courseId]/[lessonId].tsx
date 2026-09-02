@@ -10,8 +10,9 @@ import { PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
 import { GemIcon } from '@/components/Currency';
 import { SourceLinks } from '@/components/kb/SourceLinks';
-import { reportId, savedCardId } from '@/store';
+import { progressId, reportId, savedCardId } from '@/store';
 import { useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
+import { clampResumeIndex, seedResumeStates } from '@/components/player/cardState';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 import { trackTelemetry } from '@/services/telemetry';
@@ -44,12 +45,29 @@ export default function LessonScreen() {
 
   const [completion, setCompletion] = useState<LessonCompletion | null>(null);
 
+  /**
+   * Where to pick up. Captured once on mount from the store, so the writes
+   * this screen makes as the learner moves on never feed back into the
+   * deck's starting position. Only an open lesson resumes: a completed one
+   * replays from the first card, and a fresh one has nothing to resume.
+   */
+  const [resume] = useState(() => {
+    const existing = useAppStore.getState().progress[progressId(courseId, lessonId)];
+    if (!lesson || existing?.status !== 'in_progress') return { index: 0, states: undefined };
+    const index = clampResumeIndex(existing.lastCardIndex, lesson.cards.length);
+    return { index, states: seedResumeStates(lesson.cards, existing.attempts, index) };
+  });
+
   useEffect(() => {
     if (lesson) {
       void startLesson(courseId, lessonId);
-      void trackTelemetry('lesson_started', `${courseId}/${lessonId}`);
+      void trackTelemetry(
+        'lesson_started',
+        `${courseId}/${lessonId}`,
+        resume.index > 0 ? `resumed:${resume.index}` : undefined,
+      );
     }
-  }, [courseId, lesson, lessonId, startLesson]);
+  }, [courseId, lesson, lessonId, resume.index, startLesson]);
 
   const handleComplete = useCallback(async () => {
     haptics.success();
@@ -92,6 +110,8 @@ export default function LessonScreen() {
       onExit={exit}
       onComplete={handleComplete}
       onCardIndex={(index) => void recordCardIndex(courseId, lessonId, index)}
+      initialIndex={resume.index}
+      initialStates={resume.states}
       onAnswered={(cardId, correct) => {
         void recordAttempt(courseId, lessonId, { cardId, correct, at: Date.now() });
         void trackTelemetry('quiz_answered', `${courseId}/${lessonId}`, correct ? 'correct' : 'incorrect');
