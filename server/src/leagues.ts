@@ -76,7 +76,9 @@ async function weeklyXp(
   const out = new Map<string, number>(accountIds.map((id) => [id, 0]));
   if (accountIds.length === 0) return out;
   const { rows } = await db.query(
-    `SELECT owner_id, COALESCE(SUM((payload->>'xpAwarded')::numeric), 0)::bigint AS xp
+    `SELECT owner_id,
+            COALESCE(SUM(CASE WHEN jsonb_typeof(payload->'xpAwarded') = 'number'
+                              THEN (payload->>'xpAwarded')::numeric END), 0)::bigint AS xp
        FROM records
       WHERE collection = 'progress'
         AND deleted_at IS NULL

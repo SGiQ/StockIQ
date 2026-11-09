@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "StockiQ sync service \u2014 Postgres-backed last-write-wins record sync.",
+  "description": "StockiQ sync service — Postgres-backed last-write-wins record sync.",
   "engines": {
     "node": ">=20"
   },
@@ -11,6 +11,7 @@
     "start": "tsx src/index.ts",
     "migrate": "tsx src/migrate.ts",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/rateLimit.test.ts test/protocol.test.ts test/telemetry.test.ts test/leagues.test.ts",
     "test:sync": "node test/sync.test.mjs",
     "test:pairing": "node test/pairing.test.mjs",
     "test:apple": "tsx test/apple.test.mjs",

@@ -1,6 +1,7 @@
 import { randomBytes, randomInt } from 'node:crypto';
 import type { PoolClient } from 'pg';
 import { ProtocolError } from './protocol.ts';
+import { deleteChallengesFor } from './emailAuth.ts';
 
 /**
  * Device identity, account resolution, and pairing.
@@ -8,6 +9,8 @@ import { ProtocolError } from './protocol.ts';
 
 /** How long a pairing code is valid. Short, because the code is short. */
 const CODE_TTL_MS = 5 * 60 * 1000;
+/** Spent or expired codes are deleted after this; nothing reads them. */
+const LINK_CODE_RETENTION_MS = 60 * 60 * 1000;
 
 /**
  * Crockford base32 without I, L, O, U — the characters people misread when
@@ -111,6 +114,10 @@ export async function createLinkCode(
   accountId: string,
 ): Promise<{ code: string; expiresAt: number }> {
   const now = Date.now();
+
+  // Retention: codes are useless an hour after they expire, and a table that
+  // only grows is a table nobody looks at. Indexed on expires_at.
+  await client.query('DELETE FROM link_codes WHERE expires_at < $1', [now - LINK_CODE_RETENTION_MS]);
 
   // Any earlier unused codes for this account are retired. Two live codes for
   // one account doubles the guessing surface for no benefit.
@@ -393,6 +400,14 @@ export async function signOutDevice(
  * right under GDPR/CCPA: unlike sign-out, no rows are left behind.
  */
 export async function deleteAccount(client: PoolClient, accountId: string): Promise<void> {
+  // `email_challenges` is keyed by address, not account, so the cascade does
+  // not reach it. Erase those rows first, while the identities that name the
+  // addresses still exist.
+  const emails = await client.query<{ subject: string }>(
+    "SELECT subject FROM identities WHERE account_id = $1 AND provider = 'email'",
+    [accountId],
+  );
+  await deleteChallengesFor(client, emails.rows.map((r) => r.subject));
   await client.query('DELETE FROM records WHERE owner_id = $1', [accountId]);
   await client.query('DELETE FROM accounts WHERE id = $1', [accountId]);
 }
