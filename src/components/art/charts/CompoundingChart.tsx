@@ -5,6 +5,7 @@ import {
   PLOT,
   domainOf,
   formatMoney,
+  polylineLength,
   smoothPath,
   xAt,
   yAt,
@@ -34,9 +35,11 @@ function project(principal: number, rate: number, years: number, contribution = 
 export function CompoundingChart({
   spec,
   theme,
+  progress = 1,
 }: {
   spec: CompoundingSpec;
   theme: ChartTheme;
+  progress?: number;
 }) {
   const { principal, rate, years, contribution, compareRate } = spec;
 
@@ -49,6 +52,13 @@ export function CompoundingChart({
   const domain = domainOf([0, ...main, ...(compare ?? [])], 0.05);
   const toPoints = (series: number[]) =>
     series.map((value, i) => ({ x: xAt(i, series.length), y: yAt(value, domain) }));
+  // Entrance: the main curve draws from year 0 forward; the comparison curve
+  // and the end labels fade in behind it (the labels are the payoff — they
+  // should land last).
+  const drawing = progress < 1;
+  const mainPoints = toPoints(main);
+  const mainLength = polylineLength(mainPoints) * 1.08 + 4;
+  const labelReveal = Math.max(0, Math.min(1, (progress - 0.6) / 0.4));
 
   return (
     <G>
@@ -63,7 +73,7 @@ export function CompoundingChart({
             stroke={theme.ink}
             strokeWidth={2.5}
             strokeDasharray="6 5"
-            opacity={0.45}
+            opacity={0.45 * progress}
             strokeLinecap="round"
           />
           <SvgText
@@ -72,7 +82,7 @@ export function CompoundingChart({
             fill={theme.ink}
             fontSize={9}
             fontFamily={fontFamily.bodyBold}
-            opacity={0.7}
+            opacity={0.7 * labelReveal}
             textAnchor="end"
           >
             {`${Math.round(compareRate! * 100)}% · ${formatMoney(compare[compare.length - 1])}`}
@@ -81,11 +91,13 @@ export function CompoundingChart({
       )}
 
       <Path
-        d={smoothPath(toPoints(main))}
+        d={smoothPath(mainPoints)}
         fill="none"
         stroke={theme.ink}
         strokeWidth={3.5}
         strokeLinecap="round"
+        strokeDasharray={drawing ? mainLength : undefined}
+        strokeDashoffset={drawing ? mainLength * (1 - Math.min(1, progress / 0.8)) : undefined}
       />
 
       <SvgText
@@ -95,6 +107,7 @@ export function CompoundingChart({
         fontSize={11}
         fontFamily={fontFamily.bodyBold}
         textAnchor="end"
+        opacity={labelReveal}
       >
         {`${Math.round(rate * 100)}% · ${formatMoney(main[main.length - 1])}`}
       </SvgText>

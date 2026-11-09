@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Glyph } from '@/components/art/Glyph';
+import { TickerTape } from '@/components/landing/TickerTape';
 import { PillButton, Text } from '@/components/primitives';
 import { fontFamily, palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -171,6 +172,9 @@ export default function LandingPage() {
           </View>
         </View>
       </View>
+
+      {/* ── Ticker tape — real delayed quotes, or nothing ───────────── */}
+      <TickerTape />
 
       {/* ── Social proof strip ──────────────────────────────────────── */}
       <View style={[styles.proofStrip, compactSection, compact && styles.proofStripCompact]}>

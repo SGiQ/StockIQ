@@ -135,3 +135,30 @@ export function formatMoney(value: number): string {
   if (abs >= 1_000) return `$${Math.round(value / 1_000)}k`;
   return `$${Math.round(value)}`;
 }
+
+/**
+ * Per-element reveal for a staggered entrance.
+ *
+ * `progress` is the chart's overall 0..1 entrance; element `i` of `count`
+ * starts `staggerFrac` later than the one before it and takes the remaining
+ * share of the timeline, so the last element still lands at progress 1.
+ * Returns 0..1. At progress 1 everything is 1, which is also the static
+ * render (no progress passed) — the charts never draw a partial state unless
+ * an entrance is actually running.
+ */
+export function revealAt(progress: number, i: number, count: number, staggerFrac = 0.6): number {
+  if (progress >= 1) return 1;
+  if (count <= 1) return Math.max(0, Math.min(1, progress));
+  const start = (i / (count - 1)) * staggerFrac;
+  const span = 1 - staggerFrac;
+  return Math.max(0, Math.min(1, (progress - start) / span));
+}
+
+/** Sum of the straight segments through `points`; a smooth path through them is slightly longer. */
+export function polylineLength(points: Array<{ x: number; y: number }>): number {
+  let total = 0;
+  for (let i = 1; i < points.length; i += 1) {
+    total += Math.hypot(points[i]!.x - points[i - 1]!.x, points[i]!.y - points[i - 1]!.y);
+  }
+  return total;
+}

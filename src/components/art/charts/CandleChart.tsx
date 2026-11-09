@@ -1,7 +1,7 @@
 import { G, Line, Path, Rect, Text as SvgText } from 'react-native-svg';
 import type { ChartSpec } from '@/content/types';
 import { palette, fontFamily } from '@/theme/tokens';
-import { PLOT, domainOf, smoothPath } from './scale';
+import { PLOT, domainOf, revealAt, smoothPath } from './scale';
 import type { ChartTheme } from './LineChart';
 
 type CandleSpec = Extract<ChartSpec, { type: 'candles' }>;
@@ -26,7 +26,7 @@ function computeSma(closes: number[], period: number): (number | null)[] {
  * When candles carry volume data the plot splits: candles in the top ~72%,
  * volume bars in the bottom ~22%, with a gap between.
  */
-export function CandleChart({ spec, theme }: { spec: CandleSpec; theme: ChartTheme }) {
+export function CandleChart({ spec, theme, progress = 1 }: { spec: CandleSpec; theme: ChartTheme; progress?: number }) {
   const { candles, annotations, levels, sma } = spec;
   const hasVolume = candles.some((c) => c.v != null);
 
@@ -133,6 +133,7 @@ export function CandleChart({ spec, theme }: { spec: CandleSpec; theme: ChartThe
           const barWidth = Math.max(2, Math.min(12, width * 0.5));
           const rising = candle.c >= candle.o;
           const barTop = yVol(v);
+          const r = revealAt(progress, i, candles.length);
           return (
             <Rect
               key={`vol-${i}`}
@@ -141,7 +142,7 @@ export function CandleChart({ spec, theme }: { spec: CandleSpec; theme: ChartThe
               width={barWidth}
               height={PLOT.y1 - barTop}
               fill={rising ? palette.emerald : palette.danger}
-              opacity={0.3}
+              opacity={0.3 * r}
             />
           );
         })}
@@ -158,9 +159,17 @@ export function CandleChart({ spec, theme }: { spec: CandleSpec; theme: ChartThe
         const yClose = yPrice(candle.c);
         const bodyTop = Math.min(yOpen, yClose);
         const bodyHeight = Math.max(2, Math.abs(yClose - yOpen));
+        // Entrance: candles print one after another, left to right, the way
+        // a session unfolds — each fading in and scaling up about its centre.
+        const r = revealAt(progress, i, candles.length);
+        const cy = (yHigh + yLow) / 2;
 
         return (
-          <G key={`candle-${i}`}>
+          <G
+            key={`candle-${i}`}
+            opacity={r}
+            transform={r < 1 ? `translate(${centre} ${cy}) scale(${0.6 + 0.4 * r}) translate(${-centre} ${-cy})` : undefined}
+          >
             <Line
               x1={centre}
               y1={yHigh}

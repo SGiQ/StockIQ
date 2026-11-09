@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { usePathname } from 'expo-router';
+import { StageBackdrop } from '@/components/StageBackdrop';
 import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 /**
@@ -68,6 +69,8 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
 
   return (
     <View style={[styles.page, { backgroundColor: isDark ? '#1A1A1A' : '#E8E8E6' }]}>
+      {/* Painted behind the frame; the frame, its shadow and everything inside are unchanged. */}
+      <StageBackdrop />
       <View
         style={[
           styles.device,

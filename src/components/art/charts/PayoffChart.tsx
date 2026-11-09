@@ -1,7 +1,7 @@
 import { G, Line, Path, Text as SvgText } from 'react-native-svg';
 import type { ChartSpec, OptionLeg } from '@/content/types';
 import { palette, fontFamily } from '@/theme/tokens';
-import { PLOT, domainOf, xAt, yAt } from './scale';
+import { PLOT, domainOf, polylineLength, xAt, yAt } from './scale';
 import type { ChartTheme } from './LineChart';
 
 type PayoffSpec = Extract<ChartSpec, { type: 'payoff' }>;
@@ -34,7 +34,7 @@ const totalPayoff = (legs: OptionLeg[], spot: number): number =>
  * loss halves filled in semantic green and red — the shape of the kink at
  * each strike is the entire lesson, and it falls out of the arithmetic.
  */
-export function PayoffChart({ spec, theme }: { spec: PayoffSpec; theme: ChartTheme }) {
+export function PayoffChart({ spec, theme, progress = 1 }: { spec: PayoffSpec; theme: ChartTheme; progress?: number }) {
   const { legs, spotRange } = spec;
 
   const strikes = legs.map((l) => l.strike ?? 0).filter((s) => s > 0);
@@ -51,6 +51,11 @@ export function PayoffChart({ spec, theme }: { spec: PayoffSpec; theme: ChartThe
 
   const points = values.map((value, i) => ({ x: xAt(i, SAMPLES), y: yAt(value, domain) }));
   const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x} ${p.y}`).join(' ');
+  // Entrance: the payoff line draws across the spot range, then the profit
+  // and loss fills come up behind it so the kink reads before the colour.
+  const drawing = progress < 1;
+  const lineLength = polylineLength(points) + 2;
+  const fillReveal = Math.max(0, Math.min(1, (progress - 0.5) / 0.5));
 
   // Fill between the payoff line and the zero line, clipped to each side by
   // splitting the polygon at the break-even crossings.
@@ -76,8 +81,8 @@ export function PayoffChart({ spec, theme }: { spec: PayoffSpec; theme: ChartThe
     <G>
       <Line x1={PLOT.x0} y1={PLOT.y0} x2={PLOT.x0} y2={PLOT.y1} stroke={theme.ink} strokeWidth={2.5} />
 
-      <Path d={fillPath('profit')} fill={palette.emerald} opacity={0.35} />
-      <Path d={fillPath('loss')} fill={palette.danger} opacity={0.28} />
+      <Path d={fillPath('profit')} fill={palette.emerald} opacity={0.35 * fillReveal} />
+      <Path d={fillPath('loss')} fill={palette.danger} opacity={0.28 * fillReveal} />
 
       {/* break-even */}
       <Line
@@ -130,7 +135,15 @@ export function PayoffChart({ spec, theme }: { spec: PayoffSpec; theme: ChartThe
         );
       })}
 
-      <Path d={line} fill="none" stroke={theme.ink} strokeWidth={3.5} strokeLinejoin="round" />
+      <Path
+        d={line}
+        fill="none"
+        stroke={theme.ink}
+        strokeWidth={3.5}
+        strokeLinejoin="round"
+        strokeDasharray={drawing ? lineLength : undefined}
+        strokeDashoffset={drawing ? lineLength * (1 - Math.min(1, progress / 0.7)) : undefined}
+      />
 
       <SvgText
         x={0}
