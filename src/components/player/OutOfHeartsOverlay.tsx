@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PillButton, Text } from '@/components/primitives';
+import { FadeUp, PillButton, Text } from '@/components/primitives';
 import { formatCountdown, snapshot } from '@/features/hearts';
 import { HEART_REFILL_COST } from '@/features/gems';
 import { useAppStore } from '@/store/slices/useAppStore';
@@ -83,7 +83,7 @@ export function OutOfHeartsOverlay({
 
   return (
     <View style={[styles.root, { paddingTop: insets.top + space.xl, paddingBottom: insets.bottom + space.lg, backgroundColor: colors.paper }]}>
-      <View style={styles.body}>
+      <FadeUp style={styles.body} distance={24} durationMs={360}>
         <BrokenHeart />
 
         <Text variant="display" align="center">
@@ -113,9 +113,9 @@ export function OutOfHeartsOverlay({
               : `${gemBalance} / ${HEART_REFILL_COST} gems — earn more in lessons and review`}
           </Text>
         </View>
-      </View>
+      </FadeUp>
 
-      <View style={styles.actions}>
+      <FadeUp style={styles.actions} delayMs={120} distance={18} durationMs={320}>
         {canAffordRefill ? (
           <PillButton
             label={`Refill hearts · ${HEART_REFILL_COST} gems`}
@@ -125,7 +125,7 @@ export function OutOfHeartsOverlay({
         ) : null}
         <PillButton label="Go Unlimited" variant="primary" onPress={onGoUnlimited} />
         <PillButton label="Leave lesson" variant="ghost" onPress={onExit} />
-      </View>
+      </FadeUp>
     </View>
   );
 }

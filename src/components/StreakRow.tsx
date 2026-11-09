@@ -12,6 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Text } from '@/components/primitives';
 import { trailingWeek, type DayISO } from '@/lib/dates';
+import { linearClamped } from '@/lib/easing';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -53,9 +54,9 @@ function FlickerFlame({ active, flicker }: { active: boolean; flicker: boolean }
     t.value = withDelay(
       220,
       withSequence(
-        withTiming(1, { duration: 130, reduceMotion: ReduceMotion.System }),
-        withTiming(-1, { duration: 150, reduceMotion: ReduceMotion.System }),
-        withTiming(0, { duration: 120, reduceMotion: ReduceMotion.System }),
+        withTiming(1, { duration: 130, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(-1, { duration: 150, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(0, { duration: 120, easing: linearClamped, reduceMotion: ReduceMotion.System }),
       ),
     );
   }, [play, t]);

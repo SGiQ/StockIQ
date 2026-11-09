@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
-import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import { AnimatedNumber, Bump, CardSurface, FadeUp, PillButton, Screen, Text } from '@/components/primitives';
 import { GemIcon } from '@/components/Currency';
 import { MAX_FREEZES } from '@/features/streak';
 import { STREAK_FREEZE_COST } from '@/features/gems';
@@ -70,9 +70,14 @@ export default function StreakScreen() {
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <CardSurface style={styles.hero}>
-          <Text variant="display" color={palette.flame}>
-            {`${streak?.currentStreak ?? 0}`}
-          </Text>
+          <AnimatedNumber
+            from={0}
+            value={streak?.currentStreak ?? 0}
+            durationMs={700}
+            format={(n) => String(Math.round(n))}
+            variant="display"
+            color={palette.flame}
+          />
           <Text variant="body" color={colors.slate}>
             {streak && streak.currentStreak > 0
               ? `day streak · longest ${streak.longestStreak}`
@@ -96,20 +101,24 @@ export default function StreakScreen() {
               {week.map((day, di) => (
                 <View key={di} style={styles.cell}>
                   {day ? (
-                    <View
-                      style={[
-                        styles.dayDot,
-                        active.has(day) && styles.dayActive,
-                        day === today && styles.dayToday,
-                      ]}
-                    >
-                      <Text
-                        variant="caption"
-                        color={active.has(day) ? colors.paper : colors.slate}
+                    // Cells cascade in row by row — a short stagger so the
+                    // month reads as filling up rather than popping.
+                    <FadeUp delayMs={(wi * 7 + di) * 14} distance={6} durationMs={220}>
+                      <View
+                        style={[
+                          styles.dayDot,
+                          active.has(day) && styles.dayActive,
+                          day === today && styles.dayToday,
+                        ]}
                       >
-                        {String(Number(day.slice(-2)))}
-                      </Text>
-                    </View>
+                        <Text
+                          variant="caption"
+                          color={active.has(day) ? colors.paper : colors.slate}
+                        >
+                          {String(Number(day.slice(-2)))}
+                        </Text>
+                      </View>
+                    </FadeUp>
                   ) : null}
                 </View>
               ))}
@@ -122,9 +131,11 @@ export default function StreakScreen() {
             <Text variant="h3">
               Streak freezes
             </Text>
-            <Text variant="label" color={palette.azure} uppercase>
-              {`${freezes} / ${MAX_FREEZES}`}
-            </Text>
+            <Bump value={freezes} peak={1.3}>
+              <Text variant="label" color={palette.azure} uppercase>
+                {`${freezes} / ${MAX_FREEZES}`}
+              </Text>
+            </Bump>
           </View>
           <Text variant="caption" color={colors.slate}>
             A freeze protects your streak for one missed day — it's spent

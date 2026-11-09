@@ -184,6 +184,21 @@ export default {
       const settled = await fetchStaggered(symbols, (s) => fetchSpark(s, key));
       const sparks = settled.flatMap((r) => (r.status === 'fulfilled' && r.value.points.length > 0 ? [r.value] : []));
       if (sparks.length === 0 && settled.every((r) => r.status === 'rejected')) {
+        // Finnhub answers 403 on /stock/candle when the plan does not include
+        // candles, while the same key serves /quote fine. That is not a dead
+        // key, so it must not be reported as one: an empty, cacheable 200
+        // lets the app draw rows without sparklines and keeps the real
+        // key-rejected signal (401) meaningful on the quotes route.
+        const statuses = settled.map((r) =>
+          r.status === 'rejected' && r.reason instanceof UpstreamError ? r.reason.status : 0,
+        );
+        if (statuses.every((code) => code === 403)) {
+          console.warn('finnhub candles not included in this plan (403); sparklines disabled');
+          return new Response(JSON.stringify({ sparks: [], unavailable: 'plan' }), {
+            status: 200,
+            headers: { 'content-type': 'application/json', 'cache-control': `public, max-age=${SPARK_TTL_SECONDS}`, ...CORS },
+          });
+        }
         return allFailed(settled, 'spark');
       }
       return new Response(JSON.stringify({ sparks }), {

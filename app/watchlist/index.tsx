@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import Animated, {
@@ -12,7 +12,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { CardSurface, Screen, Skeleton, SkeletonSwap, Text, useDelayedPending } from '@/components/primitives';
+import { CardSurface, Screen, Skeleton, SkeletonSwap, Spin, Text, useDelayedPending } from '@/components/primitives';
 import { Sparkline } from '@/components/Sparkline';
 import { easeOutQuad } from '@/lib/easing';
 import {
@@ -134,13 +134,11 @@ export default function WatchlistScreen() {
           Watchlist
         </Text>
         <Pressable onPress={() => void load()} hitSlop={8} style={styles.refresh} accessibilityRole="button" accessibilityLabel="Refresh quotes">
-          {loading ? (
-            <ActivityIndicator size="small" color={colors.slate} />
-          ) : (
+          <Spin spinning={loading}>
             <Svg width={22} height={22} viewBox="0 0 24 24">
               <Path d="M20 11a8 8 0 10-.9 3.7M20 5v6h-6" fill="none" stroke={colors.slate} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
             </Svg>
-          )}
+          </Spin>
         </Pressable>
       </View>
 

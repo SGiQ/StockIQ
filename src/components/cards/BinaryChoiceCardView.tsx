@@ -1,11 +1,19 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import * as haptics from '@/lib/haptics';
 import type { BinaryChoiceCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { ArtView } from '@/components/art/ArtView';
-import { PillButton, RichTextView, Text } from '@/components/primitives';
+import { FadeUp, PillButton, RichTextView, Text } from '@/components/primitives';
+import { easeOutQuad, linearClamped } from '@/lib/easing';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -96,19 +104,22 @@ export function BinaryChoiceCardView({
                 : undefined
             : undefined;
 
+          const verdict = !checked ? null : option.correct ? 'correct' : isSelected ? 'wrong' : null;
+
           return (
-            <PillButton
-              key={option.id}
-              label={option.label}
-              variant={variant}
-              disabled={checked}
-              haptic={false}
-              onPress={() => select(option.id)}
-              style={{
-                ...(overrideColor ? { backgroundColor: overrideColor } : null),
-                ...(index === 0 ? {} : {}),
-              }}
-            />
+            <VerdictShell key={option.id} verdict={verdict}>
+              <PillButton
+                label={option.label}
+                variant={variant}
+                disabled={checked}
+                haptic={false}
+                onPress={() => select(option.id)}
+                style={{
+                  ...(overrideColor ? { backgroundColor: overrideColor } : null),
+                  ...(index === 0 ? {} : {}),
+                }}
+              />
+            </VerdictShell>
           );
         })}
 
@@ -124,7 +135,7 @@ export function BinaryChoiceCardView({
       </Animated.View>
 
       {checked && (
-        <View
+        <FadeUp
           pointerEvents="none"
           style={[
             styles.explanation,
@@ -140,10 +151,45 @@ export function BinaryChoiceCardView({
             color={colors.inkSoft}
             style={styles.explanationBody}
           />
-        </View>
+        </FadeUp>
       )}
     </View>
   );
+}
+
+/**
+ * The verdict beat on an option: the correct one swells once (1 → 1.04 → 1),
+ * a wrong pick shakes sideways. Plays when the verdict lands, not on every
+ * re-render, and not under reduced motion. The tint is the PillButton's own.
+ */
+export function VerdictShell({ verdict, children }: { verdict: 'correct' | 'wrong' | null; children: ReactNode }) {
+  const reduceMotion = useReducedMotion();
+  const scale = useSharedValue(1);
+  const shift = useSharedValue(0);
+
+  useEffect(() => {
+    if (!verdict || reduceMotion) return;
+    if (verdict === 'correct') {
+      scale.value = withSequence(
+        withTiming(1.04, { duration: 160, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+        withTiming(1, { duration: 220, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+      );
+    } else {
+      shift.value = withSequence(
+        withTiming(-7, { duration: 60, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(7, { duration: 80, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(-4, { duration: 80, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(4, { duration: 70, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(0, { duration: 70, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+      );
+    }
+  }, [verdict, reduceMotion, scale, shift]);
+
+  const style = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }, { translateX: shift.value }],
+  }));
+
+  return <Animated.View style={style}>{children}</Animated.View>;
 }
 
 const styles = StyleSheet.create({

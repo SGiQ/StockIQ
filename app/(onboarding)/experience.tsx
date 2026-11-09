@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
-import { PillButton, Screen, Text } from '@/components/primitives';
+import { Bump, PillButton, Screen, Text } from '@/components/primitives';
 import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { CourseId } from '@/content/types';
@@ -161,7 +161,7 @@ function Option({
         </Text>
       </View>
       {mode === 'check' ? (
-        <View style={[styles.check, { borderColor: colors.hairline }, selected && styles.checkOn]}>
+        <Bump value={selected} playWhen={selected} peak={1.25} style={[styles.check, { borderColor: colors.hairline }, selected && styles.checkOn]}>
           {selected ? (
             <Svg width={14} height={14} viewBox="0 0 24 24">
               <Path
@@ -174,11 +174,11 @@ function Option({
               />
             </Svg>
           ) : null}
-        </View>
+        </Bump>
       ) : (
-        <View style={[styles.radio, { borderColor: colors.hairline }, selected && styles.radioOn]}>
+        <Bump value={selected} playWhen={selected} peak={1.25} style={[styles.radio, { borderColor: colors.hairline }, selected && styles.radioOn]}>
           {selected ? <View style={styles.radioDot} /> : null}
-        </View>
+        </Bump>
       )}
     </Pressable>
   );

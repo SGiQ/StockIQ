@@ -1,14 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
+  ReduceMotion,
   useAnimatedStyle,
+  useReducedMotion,
   useSharedValue,
+  withDelay,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import type { StickerRevealCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
+import { easeOutCubic } from '@/lib/easing';
 import { motion, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -82,27 +87,40 @@ export function StickerRevealCardView({ card, state }: StickerRevealCardViewProp
  */
 function Sticker({ sticker }: { sticker: StickerRevealCard['stickers'][number] }) {
   const colors = useColors();
+  const reduceMotion = useReducedMotion();
   const progress = useSharedValue(0);
+  // The label lands a beat after the panel, like a sticker's caption being
+  // pressed on second.
+  const label = useSharedValue(reduceMotion ? 1 : 0);
   const land = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    progress.value = withSpring(1, motion.spring);
+    progress.value = withSpring(1, { ...motion.spring, damping: 13, reduceMotion: ReduceMotion.System });
+    label.value = withDelay(140, withTiming(1, { duration: 240, easing: easeOutCubic, reduceMotion: ReduceMotion.System }));
     land.current = setTimeout(() => {
       progress.value = 1;
+      label.value = 1;
     }, motion.normal + 240);
     return () => {
       if (land.current) clearTimeout(land.current);
     };
-  }, [progress]);
+  }, [progress, label]);
 
+  const rotation = sticker.rotation ?? 0;
   const animated = useAnimatedStyle(() => ({
-    opacity: progress.value,
+    opacity: Math.min(1, progress.value * 1.4),
     transform: [
       { translateX: -60 },
       { translateY: -52 },
-      { rotate: `${sticker.rotation ?? 0}deg` },
+      // Swings in from a few degrees past its resting tilt; the lighter
+      // damping above lets the spring overshoot once and settle.
+      { rotate: `${rotation + (1 - progress.value) * -10}deg` },
       { scale: 0.72 + progress.value * 0.28 },
     ],
+  }));
+  const labelStyle = useAnimatedStyle(() => ({
+    opacity: label.value,
+    transform: [{ translateY: (1 - label.value) * 6 }],
   }));
 
   return (
@@ -118,11 +136,11 @@ function Sticker({ sticker }: { sticker: StickerRevealCard['stickers'][number] }
       ]}
     >
       <ArtView spec={sticker.art} aspectRatio={1} rounded glyphSize={44} style={styles.stickerArt} />
-      <View style={styles.stickerLabel}>
+      <Animated.View style={[styles.stickerLabel, labelStyle]}>
         <Text variant="label" uppercase numberOfLines={2} align="center">
           {sticker.label}
         </Text>
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 }

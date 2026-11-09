@@ -4,7 +4,7 @@ import Animated from 'react-native-reanimated';
 import * as haptics from '@/lib/haptics';
 import type { FillBlankCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
-import { PillButton, RichTextView, Text } from '@/components/primitives';
+import { FadeUp, PillButton, RichTextView, Text } from '@/components/primitives';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -119,7 +119,7 @@ export function FillBlankCardView({
       </Animated.View>
 
       {checked && (
-        <View
+        <FadeUp
           pointerEvents="none"
           style={[
             styles.explanation,
@@ -137,7 +137,7 @@ export function FillBlankCardView({
               style={styles.explanationBody}
             />
           )}
-        </View>
+        </FadeUp>
       )}
     </View>
   );

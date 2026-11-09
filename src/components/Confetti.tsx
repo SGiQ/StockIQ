@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
-  Easing,
   ReduceMotion,
   useAnimatedStyle,
   useReducedMotion,
@@ -10,6 +9,7 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
+import { linearClamped } from '@/lib/easing';
 import { artPalettes, palette } from '@/theme/tokens';
 
 /** How long a burst lasts, launch to last piece gone. */
@@ -104,7 +104,7 @@ export function Confetti({ play, count = 40 }: { play: boolean; count?: number }
     progress.value = 0;
     progress.value = withDelay(
       LAUNCH_DELAY_MS,
-      withTiming(1, { duration: DURATION_MS, easing: Easing.linear, reduceMotion: ReduceMotion.System }),
+      withTiming(1, { duration: DURATION_MS, easing: linearClamped, reduceMotion: ReduceMotion.System }),
     );
     const t = setTimeout(() => setLive(false), LAUNCH_DELAY_MS + DURATION_MS + 50);
     return () => clearTimeout(t);
