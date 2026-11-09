@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>StockiQ</title>
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      /* These styles make the body full-height */
+      html,
+      body {
+        height: 100%;
+      }
+      /* These styles disable body scrolling if you are using <ScrollView> */
+      body {
+        overflow: hidden;
+      }
+      /* These styles make the root element full-height */
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+    <!--
+      Pre-JS splash. The web bundle is several megabytes, so for the first
+      seconds after navigation nothing but this file has arrived. Without it
+      the page is a white rectangle until React mounts, which reads as broken.
+      This paints the app's ground colour and wordmark immediately; React
+      replaces the contents of #root the moment it renders, and the layout
+      shows the same splash while the store hydrates, so the hand-off is
+      invisible. Pure HTML and CSS on purpose: nothing here can fail to load.
+    -->
+    <style id="stockiq-splash">
+      :root {
+        color-scheme: light dark;
+        --splash-bg: #e8e8e6;
+        --splash-card: #fafaf8;
+        --splash-ink: #1d5e4a;
+        --splash-muted: #7a7a76;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --splash-bg: #1a1a1a;
+          --splash-card: #242422;
+          --splash-ink: #9fd8c3;
+          --splash-muted: #8a8a86;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--splash-bg);
+      }
+      .stockiq-splash {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--splash-bg);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      .stockiq-splash__card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 40px 48px;
+        border-radius: 28px;
+        background: var(--splash-card);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        animation: stockiq-fade 240ms ease-out both;
+      }
+      .stockiq-splash__wordmark {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--splash-ink);
+      }
+      .stockiq-splash__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--splash-ink);
+        opacity: 0.35;
+        animation: stockiq-pulse 1.1s ease-in-out infinite;
+      }
+      .stockiq-splash__hint {
+        font-size: 13px;
+        color: var(--splash-muted);
+      }
+      @keyframes stockiq-fade {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes stockiq-pulse {
+        0%, 100% { opacity: 0.25; transform: scale(0.9); }
+        50% { opacity: 0.9; transform: scale(1.1); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .stockiq-splash__card, .stockiq-splash__dot { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <!-- The root element for your Expo app. React replaces these children on mount. -->
+    <div id="root">
+      <div class="stockiq-splash" role="status" aria-live="polite">
+        <div class="stockiq-splash__card">
+          <div class="stockiq-splash__wordmark">StockiQ</div>
+          <div class="stockiq-splash__dot"></div>
+          <div class="stockiq-splash__hint">Loading your lessons…</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
