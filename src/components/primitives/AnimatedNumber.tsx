@@ -5,6 +5,7 @@ import {
   useAnimatedReaction,
   useReducedMotion,
   useSharedValue,
+  withDelay,
   withTiming,
 } from 'react-native-reanimated';
 import { easeOutCubic } from '@/lib/easing';
@@ -17,6 +18,10 @@ export interface AnimatedNumberProps extends Omit<TextProps, 'children'> {
   format?: (n: number) => string;
   /** Tween length when the value changes. */
   durationMs?: number;
+  /** Count from here to `value` on mount (a reward counting up from 0). Default: show `value` at once. */
+  from?: number;
+  /** Wait before a tween starts. */
+  delayMs?: number;
 }
 
 /**
@@ -33,14 +38,17 @@ export function AnimatedNumber({
   value,
   format = formatPrice,
   durationMs = 650,
+  from,
+  delayMs = 0,
   ...textProps
 }: AnimatedNumberProps) {
   const reduceMotion = useReducedMotion();
-  const progress = useSharedValue(value);
-  const [shown, setShown] = useState(value);
-  const prev = useRef(value);
+  const start = from ?? value;
+  const progress = useSharedValue(start);
+  const [shown, setShown] = useState(start);
+  const prev = useRef(start);
   /** The interval the current tween moves through; frames outside it are clamped. */
-  const bounds = useRef<[number, number]>([value, value]);
+  const bounds = useRef<[number, number]>([start, start]);
 
   useEffect(() => {
     if (prev.current === value) return;
@@ -51,12 +59,13 @@ export function AnimatedNumber({
       setShown(value);
       return;
     }
-    progress.value = withTiming(value, {
+    const tween = withTiming(value, {
       duration: durationMs,
       easing: easeOutCubic,
       reduceMotion: ReduceMotion.System,
     });
-  }, [value, durationMs, reduceMotion, progress]);
+    progress.value = delayMs > 0 ? withDelay(delayMs, tween) : tween;
+  }, [value, durationMs, delayMs, reduceMotion, progress]);
 
   const show = useCallback((n: number) => {
     const [lo, hi] = bounds.current;

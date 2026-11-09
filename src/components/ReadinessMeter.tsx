@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import { CardSurface, PillButton, Text } from '@/components/primitives';
 import type { MarketReadiness } from '@/features/achievements';
-import { radius, space } from '@/theme/tokens';
+import { useTweenedValue } from '@/lib/useTweenedValue';
+import { motion, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
 /**
@@ -51,12 +60,7 @@ export function ReadinessMeter({
               {component.label}
             </Text>
             <View style={[styles.componentTrack, { backgroundColor: colors.hairline }]}>
-              <View
-                style={[
-                  styles.componentFill,
-                  { width: `${Math.round(component.value * 100)}%`, backgroundColor: tier.color },
-                ]}
-              />
+              <ComponentFill value={component.value} color={tier.color} />
             </View>
           </View>
         ))}
@@ -76,6 +80,23 @@ export function ReadinessMeter({
   );
 }
 
+/**
+ * A component bar. Full width, scaled on X from the left so a score change
+ * springs the fill without touching layout.
+ */
+function ComponentFill({ value, color }: { value: number; color: string }) {
+  const reduceMotion = useReducedMotion();
+  const fill = useSharedValue(Math.max(0, Math.min(1, value)));
+
+  useEffect(() => {
+    const next = Math.max(0, Math.min(1, value));
+    fill.value = reduceMotion ? next : withSpring(next, { ...motion.spring, reduceMotion: ReduceMotion.System });
+  }, [value, fill, reduceMotion]);
+
+  const style = useAnimatedStyle(() => ({ transform: [{ scaleX: fill.value }] }));
+  return <Animated.View style={[styles.componentFill, { backgroundColor: color }, style]} />;
+}
+
 function Ring({ score, color }: { score: number; color: string }) {
   const colors = useColors();
   const size = 96;
@@ -84,7 +105,10 @@ function Ring({ score, color }: { score: number; color: string }) {
   const cx = size / 2;
   const cy = size / 2;
   const circumference = 2 * Math.PI * r;
-  const arc = (Math.max(0, Math.min(100, score)) / 100) * circumference;
+  // Springs to a new score instead of snapping; the arc and the number read
+  // off the same tweened value so they never disagree mid-motion.
+  const shown = useTweenedValue(Math.max(0, Math.min(100, score)), { precision: 1 });
+  const arc = (shown / 100) * circumference;
 
   return (
     <View style={styles.ringWrap}>
@@ -111,7 +135,7 @@ function Ring({ score, color }: { score: number; color: string }) {
       </Svg>
       <View style={styles.ringLabel}>
         <Text variant="h1">
-          {score}
+          {Math.round(shown)}
         </Text>
         <Text variant="label" color={colors.slateLight}>
           /100
@@ -136,5 +160,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     overflow: 'hidden',
   },
-  componentFill: { height: '100%', borderRadius: radius.pill },
+  componentFill: { width: '100%', height: '100%', borderRadius: radius.pill, transformOrigin: 'left' },
 });

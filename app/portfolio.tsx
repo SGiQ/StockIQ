@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, TextInput, UIManager, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import Svg, { Circle, G, Line, Path, Rect } from 'react-native-svg';
+import Svg, { Circle, Defs, G, Line, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 import Animated, {
   ReduceMotion,
   useAnimatedStyle,
@@ -40,6 +40,7 @@ import { useAppStore } from '@/store/slices/useAppStore';
 import type { Card } from '@/content/types';
 import { motion, palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
+import { useTweenedValue } from '@/lib/useTweenedValue';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -190,9 +191,11 @@ function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; curren
   const toX = (i: number) => CHART_PAD.x + (i / Math.max(points.length, 1)) * plotW;
   const toY = (v: number) => CHART_PAD.y + plotH - ((v - min) / range) * plotH;
 
-  const pathParts = points.map((s, i) => `${i === 0 ? 'M' : 'L'}${toX(i)} ${toY(s.v)}`);
-  pathParts.push(`L${toX(points.length)} ${toY(current)}`);
-  const d = pathParts.join(' ');
+  const xy = [...points.map((s, i) => [toX(i), toY(s.v)] as const), [toX(points.length), toY(current)] as const];
+  const d = xy.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x} ${y}`).join(' ');
+  // Straight segments, so the exact path length is a sum — no measuring the
+  // rendered node, which native SVG cannot do synchronously anyway.
+  const length = xy.reduce((sum, [x, y], i) => (i === 0 ? 0 : sum + Math.hypot(x - xy[i - 1]![0], y - xy[i - 1]![1])), 0);
 
   const fillD = `${d} L${toX(points.length)} ${CHART_H} L${toX(0)} ${CHART_H} Z`;
 
@@ -200,15 +203,35 @@ function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; curren
   const lineColor = gain ? palette.mint : palette.flameSoft;
   const fillColor = gain ? palette.mint : palette.flameSoft;
 
+  // Draws in once on mount, left to right, over ~800 ms: the dash offset
+  // retreats from the full length to zero. Later data changes just render;
+  // the tween target is already 1. Reduced motion snaps to the drawn state.
+  const drawn = useTweenedValue(1, { kind: 'timing', durationMs: 800, from: 0, precision: 3 });
+
   const startLabel = formatPrice(points[0].v);
   const endLabel = formatPrice(current);
 
   return (
     <View style={chartStyles.wrap}>
       <Svg width="100%" height={CHART_H} viewBox={`0 0 ${CHART_W} ${CHART_H}`} preserveAspectRatio="none">
-        <Path d={fillD} fill={fillColor} opacity={0.15} />
-        <Path d={d} fill="none" stroke={lineColor} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-        <Circle cx={toX(points.length)} cy={toY(current)} r={3} fill={lineColor} />
+        <Defs>
+          <LinearGradient id="portfolioValueFill" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor={fillColor} stopOpacity={0.3} />
+            <Stop offset="1" stopColor={fillColor} stopOpacity={0.02} />
+          </LinearGradient>
+        </Defs>
+        <Path d={fillD} fill="url(#portfolioValueFill)" opacity={drawn} />
+        <Path
+          d={d}
+          fill="none"
+          stroke={lineColor}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray={length}
+          strokeDashoffset={length * (1 - drawn)}
+        />
+        <Circle cx={toX(points.length)} cy={toY(current)} r={3} fill={lineColor} opacity={drawn} />
       </Svg>
       <View style={chartStyles.labels}>
         <Text variant="caption" color={palette.mintSoft}>{startLabel}</Text>

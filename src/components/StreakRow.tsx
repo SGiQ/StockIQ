@@ -1,5 +1,15 @@
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import { Text } from '@/components/primitives';
 import { trailingWeek, type DayISO } from '@/lib/dates';
 import { palette, radius, space } from '@/theme/tokens';
@@ -27,10 +37,46 @@ function Flame({ active }: { active: boolean }) {
   );
 }
 
+/**
+ * One subtle flicker — a scale/rotate wiggle of about 400 ms — played once
+ * when the streak has just been extended. Static otherwise, and under
+ * reduced motion.
+ */
+function FlickerFlame({ active, flicker }: { active: boolean; flicker: boolean }) {
+  const reduceMotion = useReducedMotion();
+  const play = flicker && active && !reduceMotion;
+  const t = useSharedValue(0);
+
+  useEffect(() => {
+    if (!play) return;
+    t.value = 0;
+    t.value = withDelay(
+      220,
+      withSequence(
+        withTiming(1, { duration: 130, reduceMotion: ReduceMotion.System }),
+        withTiming(-1, { duration: 150, reduceMotion: ReduceMotion.System }),
+        withTiming(0, { duration: 120, reduceMotion: ReduceMotion.System }),
+      ),
+    );
+  }, [play, t]);
+
+  const style = useAnimatedStyle(() => ({
+    transform: [{ scale: 1 + Math.abs(t.value) * 0.18 }, { rotate: `${t.value * 7}deg` }],
+  }));
+
+  return (
+    <Animated.View style={style}>
+      <Flame active={active} />
+    </Animated.View>
+  );
+}
+
 export interface StreakRowProps {
   activeDays: DayISO[];
   /** Today is drawn in a stadium outline, matching the screenshots. */
   today?: DayISO;
+  /** The streak was extended just now: today's flame flickers once. */
+  celebrateToday?: boolean;
 }
 
 /**
@@ -40,7 +86,7 @@ export interface StreakRowProps {
  * looks like one object the learner is maintaining rather than two separate
  * widgets that happen to agree.
  */
-export function StreakRow({ activeDays, today }: StreakRowProps) {
+export function StreakRow({ activeDays, today, celebrateToday = false }: StreakRowProps) {
   const colors = useColors();
   const week = trailingWeek(activeDays, today);
 
@@ -52,7 +98,11 @@ export function StreakRow({ activeDays, today }: StreakRowProps) {
             {day.initial}
           </Text>
           <View style={[styles.slot, day.isToday && styles.slotToday]}>
-            <Flame active={day.active} />
+            {day.isToday ? (
+              <FlickerFlame active={day.active} flicker={celebrateToday} />
+            ) : (
+              <Flame active={day.active} />
+            )}
           </View>
         </View>
       ))}

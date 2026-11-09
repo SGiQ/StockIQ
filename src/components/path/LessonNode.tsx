@@ -1,9 +1,20 @@
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 import { Glyph } from '@/components/art/Glyph';
 import { Text } from '@/components/primitives';
 import type { GlyphName } from '@/content/types';
 import type { LessonNodeStatus } from '@/store/slices/useAppStore';
+import { easeOutCubic, easeOutQuad } from '@/lib/easing';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -16,7 +27,17 @@ export interface LessonNodeProps {
   starred?: boolean;
   isCurrent?: boolean;
   onPress: () => void;
+  /**
+   * Returning from a lesson: 'completed' draws this node's line forward over
+   * ~600 ms; 'next' draws its line after that and pulses the station once.
+   * Undefined renders the resting state, which is also what reduced motion
+   * gets.
+   */
+  reveal?: 'completed' | 'next';
 }
+
+/** How long the completed node's line takes to draw. */
+const LINE_DRAW_MS = 600;
 
 const categoryFor = (id: string): string => {
   if (id.includes('candle') || id.includes('chart') || id.includes('trend')) return 'Chart reading';
@@ -49,21 +70,59 @@ export function LessonNode({
   starred,
   isCurrent,
   onPress,
+  reveal,
 }: LessonNodeProps) {
   const colors = useColors();
+  const reduceMotion = useReducedMotion();
   const locked = status === 'locked';
   const completed = status === 'completed';
+  const animate = reveal !== undefined && !reduceMotion;
+
+  // The green line is drawn as a scaleY from the top over the grey one, so a
+  // reveal is transform-only; at rest it simply covers the track.
+  const draw = useSharedValue(animate ? 0 : 1);
+  const pulse = useSharedValue(1);
+
+  useEffect(() => {
+    if (!animate) {
+      draw.value = 1;
+      return;
+    }
+    draw.value = 0;
+    if (reveal === 'completed') {
+      draw.value = withTiming(1, { duration: LINE_DRAW_MS, easing: easeOutCubic, reduceMotion: ReduceMotion.System });
+    } else {
+      draw.value = withDelay(
+        LINE_DRAW_MS,
+        withTiming(1, { duration: 400, easing: easeOutCubic, reduceMotion: ReduceMotion.System }),
+      );
+      pulse.value = withDelay(
+        LINE_DRAW_MS + 120,
+        withSequence(
+          withTiming(1.12, { duration: 200, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+          withTiming(1, { duration: 260, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+        ),
+      );
+    }
+  }, [animate, reveal, draw, pulse]);
+
+  const lineStyle = useAnimatedStyle(() => ({ transform: [{ scaleY: draw.value }] }));
+  const stationStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
 
   return (
     <View style={[styles.row, isCurrent && styles.currentRow]}>
-      <View style={[styles.line, completed || isCurrent ? styles.lineComplete : styles.lineLocked]} />
-      <View
+      <View style={[styles.line, styles.lineLocked]} />
+      {completed || isCurrent ? (
+        <Animated.View style={[styles.line, styles.lineComplete, lineStyle]} />
+      ) : null}
+      <Animated.View
         style={[
           styles.station,
           { borderColor: colors.paperWarm },
           completed && styles.stationComplete,
           isCurrent && [styles.stationCurrent, { borderColor: colors.paper }],
           locked && styles.stationLocked,
+          stationStyle,
         ]}
       >
         <Glyph
@@ -72,7 +131,7 @@ export function LessonNode({
           color={completed || isCurrent ? colors.paper : colors.slateLight}
           strokeWidth={2.3}
         />
-      </View>
+      </Animated.View>
 
       {isCurrent ? (
         <Pressable
@@ -122,7 +181,7 @@ export function LessonNode({
 const styles = StyleSheet.create({
   row: { position: 'relative', minHeight: 112, paddingLeft: 70, paddingRight: space.xs, paddingBottom: space.lg },
   currentRow: { minHeight: 286 },
-  line: { position: 'absolute', left: 25, top: 0, bottom: 0, width: 4 },
+  line: { position: 'absolute', left: 25, top: 0, bottom: 0, width: 4, transformOrigin: 'top' },
   lineComplete: { backgroundColor: palette.emeraldDeep },
   lineLocked: { backgroundColor: '#D8DED9' },
   station: { position: 'absolute', left: 8, top: 4, width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 4, zIndex: 2 },

@@ -7,7 +7,7 @@ import { getCourse, getLesson, getNextLesson } from '@/content/registry';
 import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { Glyph } from '@/components/art/Glyph';
 import { BadgeMedallion } from '@/components/BadgeMedallion';
-import { PillButton, Screen, Text } from '@/components/primitives';
+import { AnimatedNumber, PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
 import { GemIcon } from '@/components/Currency';
 import { SourceLinks } from '@/components/kb/SourceLinks';
@@ -233,16 +233,32 @@ function CompletionScreen({
         {completion.xpAwarded > 0 ? (
           <View style={styles.rewardRow}>
             <View style={styles.xpPill}>
-              <Text variant="label" color={palette.forestDeep} uppercase>
-                {`+${completion.xpAwarded} XP`}
-              </Text>
+              {/* Counts up from the pre-lesson value (nothing awarded yet) to
+                  the reward — a learning moment, so it may celebrate. */}
+              <AnimatedNumber
+                from={0}
+                value={completion.xpAwarded}
+                delayMs={250}
+                durationMs={900}
+                format={(n) => `+${Math.round(n)} XP`}
+                variant="label"
+                color={palette.forestDeep}
+                uppercase
+              />
             </View>
             {completion.gemsAwarded > 0 ? (
               <View style={styles.gemPill}>
                 <GemIcon size={15} />
-                <Text variant="label" color={palette.azure} uppercase>
-                  {`+${completion.gemsAwarded}`}
-                </Text>
+                <AnimatedNumber
+                  from={0}
+                  value={completion.gemsAwarded}
+                  delayMs={400}
+                  durationMs={900}
+                  format={(n) => `+${Math.round(n)}`}
+                  variant="label"
+                  color={palette.azure}
+                  uppercase
+                />
               </View>
             ) : null}
           </View>
@@ -255,7 +271,7 @@ function CompletionScreen({
         {/* Same component as the home screen, so the streak reads as one
             object the learner is maintaining rather than two widgets. */}
         <View style={styles.streakRow}>
-          <StreakRow activeDays={completion.streak.activeDays} />
+          <StreakRow activeDays={completion.streak.activeDays} celebrateToday={completion.streakExtended} />
         </View>
 
         {completion.streakMilestone ? (
@@ -282,7 +298,7 @@ function CompletionScreen({
             </Text>
             <View style={styles.badgesUnlockedRow}>
               {completion.newBadges.map((badge) => (
-                <BadgeMedallion key={badge.id} badge={badge} earned size={54} showLabel />
+                <BadgeMedallion key={badge.id} badge={badge} earned size={54} showLabel celebrate />
               ))}
             </View>
           </View>

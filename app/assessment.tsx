@@ -262,7 +262,7 @@ function Result({
           </Text>
           <View style={styles.badgeRow}>
             {earnedBadges.map((badge) => (
-              <BadgeMedallion key={badge.id} badge={badge} earned size={52} showLabel />
+              <BadgeMedallion key={badge.id} badge={badge} earned size={52} showLabel celebrate />
             ))}
           </View>
         </CardSurface>
