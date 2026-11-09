@@ -9,7 +9,7 @@ import { isMarketConfigured } from '@/config';
 import { quotesWithBackfill as backfill } from './backfill';
 import { MockMarketService } from './MockMarketService';
 import { ProxyMarketService } from './ProxyMarketService';
-import type { MarketService, Quote } from './types';
+import type { MarketService, Quote, Spark } from './types';
 
 export const marketService: MarketService = isMarketConfigured()
   ? new ProxyMarketService()
@@ -28,7 +28,33 @@ export const quotesWithBackfill = (
   isCancelled: () => boolean = () => false,
 ): Promise<void> => backfill(marketService, symbols, onUpdate, isCancelled);
 
+/**
+ * Session cache of the last good sparkline per symbol. Sparklines are
+ * decoration, so a failed refresh must never take one away or surface an
+ * error: this returns what it has, merged with whatever just arrived, and
+ * swallows every failure. One batched call per watchlist load.
+ */
+const sparkCache = new Map<string, Spark>();
+
+export async function sparksCached(symbols: string[]): Promise<Record<string, Spark>> {
+  if (symbols.length > 0) {
+    try {
+      for (const s of await marketService.sparks(symbols)) {
+        if (s.points.length >= 2) sparkCache.set(s.symbol, s);
+      }
+    } catch {
+      // Decoration only — see above.
+    }
+  }
+  const out: Record<string, Spark> = {};
+  for (const sym of symbols) {
+    const s = sparkCache.get(sym);
+    if (s) out[sym] = s;
+  }
+  return out;
+}
+
 export { MarketError, marketErrorMessage } from './types';
-export type { Quote, QuoteAsOf, MarketService, MarketFailure } from './types';
+export type { Quote, QuoteAsOf, Spark, MarketService, MarketFailure } from './types';
 export { formatPrice, formatChange, changeTone, asOfLabel } from './format';
 export type { ChangeTone } from './format';

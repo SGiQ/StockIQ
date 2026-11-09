@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import * as haptics from '@/lib/haptics';
 import { BadgeMedallion } from '@/components/BadgeMedallion';
+import { Confetti } from '@/components/Confetti';
 import { CardSurface, PillButton, RichTextView, Screen, Text } from '@/components/primitives';
 import { buildAssessment, type BadgeDef } from '@/features/achievements';
 import { useAppStore } from '@/store/slices/useAppStore';
@@ -239,6 +240,11 @@ function Result({
       : 'Worth another pass through the lessons — then try again.';
 
   return (
+    <View style={styles.resultWrap}>
+    {/* A pass on the readiness check is a learning milestone — the one kind
+        of moment the brand lets celebrate. Nothing like this ever fires on a
+        trade. */}
+    <Confetti play={strong} />
     <ScrollView contentContainerStyle={styles.resultBody} showsVerticalScrollIndicator={false}>
       <View style={[styles.scoreDisc, { backgroundColor: strong ? palette.emerald : palette.azure }]}>
         <Text variant="display" color={colors.paper}>
@@ -262,7 +268,7 @@ function Result({
           </Text>
           <View style={styles.badgeRow}>
             {earnedBadges.map((badge) => (
-              <BadgeMedallion key={badge.id} badge={badge} earned size={52} showLabel />
+              <BadgeMedallion key={badge.id} badge={badge} earned size={52} showLabel celebrate />
             ))}
           </View>
         </CardSurface>
@@ -273,6 +279,7 @@ function Result({
         <PillButton label="Retake" variant="ghost" onPress={onRetake} />
       </View>
     </ScrollView>
+    </View>
   );
 }
 
@@ -330,6 +337,7 @@ const styles = StyleSheet.create({
   introBody: { padding: space.lg, paddingBottom: space.xxl, gap: space.md },
   introNote: { padding: space.md, backgroundColor: palette.mintSoft },
   introActions: { gap: space.sm, marginTop: space.md },
+  resultWrap: { flex: 1 },
   resultBody: {
     padding: space.lg,
     paddingBottom: space.xxl,

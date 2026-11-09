@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import type { MainIdeaCard } from '@/content/types';
 import { PillButton, RichTextView, Text } from '@/components/primitives';
-import { palette, space } from '@/theme/tokens';
-import { useColors } from '@/theme/ThemeProvider';
+import { artPalettes, palette, radius, space } from '@/theme/tokens';
+import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 export interface MainIdeaCardViewProps {
   card: MainIdeaCard;
@@ -16,11 +16,20 @@ export interface MainIdeaCardViewProps {
  */
 export function MainIdeaCardView({ card, onContinue }: MainIdeaCardViewProps) {
   const colors = useColors();
+  const isDark = useIsDark();
   return (
     // Root is box-none so the Continue button stays tappable, but the prose
     // above it is explicitly "none" — otherwise that subtree would capture
     // forward taps meant for the navigation zones underneath.
     <View style={styles.container} pointerEvents="box-none">
+      {/* A butter-cream wash for the recap, behind the prose; inert. */}
+      <View
+        pointerEvents="none"
+        style={[
+          styles.wash,
+          { backgroundColor: isDark ? colors.flameSoft + '2E' : artPalettes.butter.bg + 'B3' },
+        ]}
+      />
       <View style={styles.prose} pointerEvents="none">
         <Text variant="label" color={colors.slate} uppercase>
           {card.title ?? 'The Main Idea'}
@@ -54,6 +63,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: space.md,
     gap: space.md,
+  },
+  wash: {
+    ...StyleSheet.absoluteFill,
+    margin: -space.md,
+    borderRadius: radius.lg,
   },
   prose: {
     gap: space.md,

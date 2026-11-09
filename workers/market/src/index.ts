@@ -15,6 +15,7 @@
  */
 
 import { normalizeQuote, type FinnhubQuote, type Quote } from './quote';
+import { normalizeSpark, type FinnhubCandles, type Spark } from './spark';
 
 interface Env {
   FINNHUB_API_KEY: string;
@@ -37,6 +38,15 @@ const QUOTE_TTL_SECONDS = 60;
  * spaced out. With the 60s cache a watchlist only pays this on a cold load.
  */
 const STAGGER_MS = 500;
+/**
+ * Intraday sparklines change slowly and are decoration, so they cache for far
+ * longer than quotes. The upstream request window is rounded to this step too
+ * (see sparkWindow) so the URL — and therefore the cache key — is stable for
+ * the whole TTL instead of changing every second.
+ */
+const SPARK_TTL_SECONDS = 300;
+/** Candle resolution in minutes. */
+const SPARK_RESOLUTION = '5';
 
 const CORS = {
   'access-control-allow-origin': '*',
@@ -77,18 +87,56 @@ async function fetchQuote(symbol: string, key: string): Promise<Quote> {
   return normalizeQuote(symbol, (await res.json()) as FinnhubQuote);
 }
 
-/** Fetch quotes one at a time, spaced by STAGGER_MS, so a batch never bursts. */
-async function fetchStaggered(symbols: string[], key: string): Promise<PromiseSettledResult<Quote>[]> {
-  const out: PromiseSettledResult<Quote>[] = [];
+/**
+ * The candle window: the last five days (so a Monday morning still finds
+ * Friday's session) ending at `now` rounded down to the cache TTL.
+ */
+export function sparkWindow(nowMs: number = Date.now()): { from: number; to: number } {
+  const to = Math.floor(nowMs / 1000 / SPARK_TTL_SECONDS) * SPARK_TTL_SECONDS;
+  return { from: to - 5 * 86400, to };
+}
+
+async function fetchSpark(symbol: string, key: string): Promise<Spark> {
+  const { from, to } = sparkWindow();
+  const url =
+    `https://finnhub.io/api/v1/stock/candle?symbol=${encodeURIComponent(symbol)}` +
+    `&resolution=${SPARK_RESOLUTION}&from=${from}&to=${to}&token=${key}`;
+  const res = await fetch(url, { cf: { cacheTtl: SPARK_TTL_SECONDS, cacheEverything: true } });
+  if (!res.ok) throw new UpstreamError(res.status);
+  return normalizeSpark(symbol, (await res.json()) as FinnhubCandles);
+}
+
+/** Fetch one at a time, spaced by STAGGER_MS, so a batch never bursts. */
+async function fetchStaggered<T>(
+  symbols: string[],
+  fetchOne: (symbol: string) => Promise<T>,
+): Promise<PromiseSettledResult<T>[]> {
+  const out: PromiseSettledResult<T>[] = [];
   for (let i = 0; i < symbols.length; i += 1) {
     if (i > 0) await new Promise((r) => setTimeout(r, STAGGER_MS));
     try {
-      out.push({ status: 'fulfilled', value: await fetchQuote(symbols[i]!, key) });
+      out.push({ status: 'fulfilled', value: await fetchOne(symbols[i]!) });
     } catch (reason) {
       out.push({ status: 'rejected', reason });
     }
   }
   return out;
+}
+
+/**
+ * When nothing at all came back, say why in a way the app can map to a
+ * message: 401/403 is a dead key, 429 the provider's limit, anything else an
+ * outage. Shared by both routes so they stay diagnosable the same way.
+ */
+function allFailed(settled: PromiseSettledResult<unknown>[], what: string): Response {
+  const firstErr = settled.find((r) => r.status === 'rejected') as PromiseRejectedResult | undefined;
+  const upstream = firstErr?.reason instanceof UpstreamError ? firstErr.reason.status : 0;
+  console.error(`finnhub error (${what})`, upstream, String(firstErr?.reason));
+  if (upstream === 401 || upstream === 403) {
+    return json(502, { error: 'market key rejected by Finnhub — check the FINNHUB_API_KEY secret', upstream });
+  }
+  if (upstream === 429) return json(429, { error: 'Finnhub rate limit reached', upstream });
+  return json(502, { error: 'market data is unavailable', upstream: upstream || undefined });
 }
 
 async function withinLimit(env: Env, deviceId: string): Promise<boolean> {
@@ -108,7 +156,8 @@ export default {
 
     const url = new URL(request.url);
     if (url.pathname === '/health') return json(200, { ok: true });
-    if (request.method !== 'GET' || url.pathname !== '/v1/quotes') {
+    const route = url.pathname === '/v1/quotes' ? 'quotes' : url.pathname === '/v1/spark' ? 'spark' : null;
+    if (request.method !== 'GET' || !route) {
       return json(404, { error: 'not found' });
     }
 
@@ -126,23 +175,35 @@ export default {
       return json(429, { error: 'daily quote limit reached' });
     }
 
+    const key = env.FINNHUB_API_KEY;
+
+    if (route === 'spark') {
+      // Sparklines are decoration: a symbol with no candles (or a plan that
+      // does not include candles) is simply omitted, and the client draws the
+      // row without one. Only a total failure is reported, same as quotes.
+      const settled = await fetchStaggered(symbols, (s) => fetchSpark(s, key));
+      const sparks = settled.flatMap((r) => (r.status === 'fulfilled' && r.value.points.length > 0 ? [r.value] : []));
+      if (sparks.length === 0 && settled.every((r) => r.status === 'rejected')) {
+        return allFailed(settled, 'spark');
+      }
+      return new Response(JSON.stringify({ sparks }), {
+        status: 200,
+        headers: {
+          'content-type': 'application/json',
+          'cache-control': `public, max-age=${SPARK_TTL_SECONDS}`,
+          ...CORS,
+        },
+      });
+    }
+
     // Per-symbol, not all-or-nothing: one symbol hitting a rate limit or a
     // transient error must not blank the whole watchlist. Settle each, return
     // what succeeded, and only fail the request when EVERY symbol failed (a
     // real problem — bad key, or a full outage) so that case stays diagnosable.
-    const settled = await fetchStaggered(symbols, env.FINNHUB_API_KEY);
+    const settled = await fetchStaggered(symbols, (s) => fetchQuote(s, key));
     const quotes = settled.flatMap((r) => (r.status === 'fulfilled' ? [r.value] : []));
 
-    if (quotes.length === 0) {
-      const firstErr = settled.find((r) => r.status === 'rejected') as PromiseRejectedResult | undefined;
-      const upstream = firstErr?.reason instanceof UpstreamError ? firstErr.reason.status : 0;
-      console.error('finnhub error', upstream, String(firstErr?.reason));
-      if (upstream === 401 || upstream === 403) {
-        return json(502, { error: 'market key rejected by Finnhub — check the FINNHUB_API_KEY secret', upstream });
-      }
-      if (upstream === 429) return json(429, { error: 'Finnhub rate limit reached', upstream });
-      return json(502, { error: 'market data is unavailable', upstream: upstream || undefined });
-    }
+    if (quotes.length === 0) return allFailed(settled, 'quotes');
     return json(200, { quotes });
   },
 };

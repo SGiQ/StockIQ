@@ -2,8 +2,8 @@ import { StyleSheet, View } from 'react-native';
 import type { DiagramCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
-import { space } from '@/theme/tokens';
-import { useColors } from '@/theme/ThemeProvider';
+import { artPalettes, radius, space } from '@/theme/tokens';
+import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 /**
  * A card where the visual *is* the content — the annotated chart, given the
@@ -11,8 +11,16 @@ import { useColors } from '@/theme/ThemeProvider';
  */
 export function DiagramCardView({ card, active = true }: { card: DiagramCard; active?: boolean }) {
   const colors = useColors();
+  const isDark = useIsDark();
   return (
     <View style={styles.container} pointerEvents="none">
+      {/* A cream wash behind the diagram — same layer trick as the concept card. */}
+      <View
+        style={[
+          styles.wash,
+          { backgroundColor: isDark ? colors.flameSoft + '33' : artPalettes.parchment.bg + 'B3' },
+        ]}
+      />
       {card.title && (
         <Text variant="label" color={colors.slate} uppercase>
           {card.title}
@@ -36,5 +44,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: space.md,
     gap: space.lg,
+  },
+  wash: {
+    ...StyleSheet.absoluteFill,
+    margin: -space.md,
+    borderRadius: radius.lg,
   },
 });

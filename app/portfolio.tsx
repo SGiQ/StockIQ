@@ -1,8 +1,24 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LayoutAnimation, Platform, Pressable, ScrollView, StyleSheet, TextInput, UIManager, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import Svg, { Circle, G, Line, Path, Rect } from 'react-native-svg';
-import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import Svg, { Circle, Defs, G, Line, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
+import {
+  AnimatedNumber,
+  CardSurface,
+  PillButton,
+  Screen,
+  Skeleton,
+  SkeletonSwap,
+  Text,
+} from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
 import { asOfLabel, formatPrice, marketErrorMessage, marketService, quotesWithBackfill, type Quote } from '@/services/market';
 import { type AskContext } from '@/services/ask';
@@ -22,8 +38,9 @@ import { ASK_FREE_DAILY } from '@/features/advisor';
 import { useAsk } from '@/features/advisor/useAsk';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { Card } from '@/content/types';
-import { palette, radius, space } from '@/theme/tokens';
+import { motion, palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
+import { useTweenedValue } from '@/lib/useTweenedValue';
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -174,9 +191,11 @@ function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; curren
   const toX = (i: number) => CHART_PAD.x + (i / Math.max(points.length, 1)) * plotW;
   const toY = (v: number) => CHART_PAD.y + plotH - ((v - min) / range) * plotH;
 
-  const pathParts = points.map((s, i) => `${i === 0 ? 'M' : 'L'}${toX(i)} ${toY(s.v)}`);
-  pathParts.push(`L${toX(points.length)} ${toY(current)}`);
-  const d = pathParts.join(' ');
+  const xy = [...points.map((s, i) => [toX(i), toY(s.v)] as const), [toX(points.length), toY(current)] as const];
+  const d = xy.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x} ${y}`).join(' ');
+  // Straight segments, so the exact path length is a sum — no measuring the
+  // rendered node, which native SVG cannot do synchronously anyway.
+  const length = xy.reduce((sum, [x, y], i) => (i === 0 ? 0 : sum + Math.hypot(x - xy[i - 1]![0], y - xy[i - 1]![1])), 0);
 
   const fillD = `${d} L${toX(points.length)} ${CHART_H} L${toX(0)} ${CHART_H} Z`;
 
@@ -184,15 +203,35 @@ function ValueChart({ snapshots, current }: { snapshots: ValueSnapshot[]; curren
   const lineColor = gain ? palette.mint : palette.flameSoft;
   const fillColor = gain ? palette.mint : palette.flameSoft;
 
+  // Draws in once on mount, left to right, over ~800 ms: the dash offset
+  // retreats from the full length to zero. Later data changes just render;
+  // the tween target is already 1. Reduced motion snaps to the drawn state.
+  const drawn = useTweenedValue(1, { kind: 'timing', durationMs: 800, from: 0, precision: 3 });
+
   const startLabel = formatPrice(points[0].v);
   const endLabel = formatPrice(current);
 
   return (
     <View style={chartStyles.wrap}>
       <Svg width="100%" height={CHART_H} viewBox={`0 0 ${CHART_W} ${CHART_H}`} preserveAspectRatio="none">
-        <Path d={fillD} fill={fillColor} opacity={0.15} />
-        <Path d={d} fill="none" stroke={lineColor} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-        <Circle cx={toX(points.length)} cy={toY(current)} r={3} fill={lineColor} />
+        <Defs>
+          <LinearGradient id="portfolioValueFill" x1="0" y1="0" x2="0" y2="1">
+            <Stop offset="0" stopColor={fillColor} stopOpacity={0.3} />
+            <Stop offset="1" stopColor={fillColor} stopOpacity={0.02} />
+          </LinearGradient>
+        </Defs>
+        <Path d={fillD} fill="url(#portfolioValueFill)" opacity={drawn} />
+        <Path
+          d={d}
+          fill="none"
+          stroke={lineColor}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray={length}
+          strokeDashoffset={length * (1 - drawn)}
+        />
+        <Circle cx={toX(points.length)} cy={toY(current)} r={3} fill={lineColor} opacity={drawn} />
       </Svg>
       <View style={chartStyles.labels}>
         <Text variant="caption" color={palette.mintSoft}>{startLabel}</Text>
@@ -285,6 +324,46 @@ const COACH_CONTEXT: AskContext = {
 const toneColor = (n: number, slate: string) =>
   n > 0 ? palette.emeraldDeep : n < 0 ? palette.danger : slate;
 
+/** How long the confirmation check stays beside the fill line. */
+const CHECK_VISIBLE_MS = 2500;
+
+/**
+ * The check beside a fill confirmation: pops in on a spring, holds, fades.
+ * Confirmation, not celebration — a trade is a process step, so this is the
+ * same quiet check a form shows, in the brand green, and nothing more.
+ */
+function TradeCheck({ onHidden }: { onHidden: () => void }) {
+  const colors = useColors();
+  const reduceMotion = useReducedMotion();
+  const scale = useSharedValue(reduceMotion ? 1 : 0.4);
+  const opacity = useSharedValue(reduceMotion ? 1 : 0);
+
+  useEffect(() => {
+    if (!reduceMotion) {
+      scale.value = withSpring(1, { ...motion.spring, reduceMotion: ReduceMotion.System });
+      opacity.value = withTiming(1, { duration: 160, reduceMotion: ReduceMotion.System });
+    }
+    const hide = setTimeout(() => {
+      opacity.value = withTiming(0, { duration: reduceMotion ? 0 : 220, reduceMotion: ReduceMotion.System });
+      setTimeout(onHidden, reduceMotion ? 0 : 240);
+    }, CHECK_VISIBLE_MS);
+    return () => clearTimeout(hide);
+  }, [onHidden, opacity, reduceMotion, scale]);
+
+  const style = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Animated.View testID="trade-check" style={[styles.check, { backgroundColor: colors.emeraldDeep }, style]} aria-hidden>
+      <Svg width={12} height={12} viewBox="0 0 24 24">
+        <Path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke={colors.paper} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+      </Svg>
+    </Animated.View>
+  );
+}
+
 const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '-' : ''}${formatPrice(Math.abs(n)).slice(1)}`;
 
 export default function PortfolioScreen() {
@@ -302,6 +381,12 @@ export default function PortfolioScreen() {
   const [tradeSymbol, setTradeSymbol] = useState('');
   const [tradeShares, setTradeShares] = useState('');
   const [error, setError] = useState<string | null>(null);
+  /** Confirmation of the last fill, e.g. "Bought 1 AAPL at $350.21". */
+  const [notice, setNotice] = useState<string | null>(null);
+  /** Bumped per fill so a second trade re-runs the check even with identical text. */
+  const [fillCount, setFillCount] = useState(0);
+  const [checkVisible, setCheckVisible] = useState(false);
+  const hideCheck = useCallback(() => setCheckVisible(false), []);
   /** Market-data failure, separate from a trade's own validation message. */
   const [marketError, setMarketError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -371,6 +456,11 @@ export default function PortfolioScreen() {
   }, [sym]);
 
   const priceOf = useCallback((s: string) => (quotes[s]?.valid ? quotes[s]!.price : undefined), [quotes]);
+  // A quote is "settled" once it has arrived at all, valid or not — an unknown
+  // symbol should read "at cost", not sit on a skeleton forever. A market
+  // error settles everything too; the banner says why.
+  const settled = useCallback((s: string) => quotes[s] !== undefined || marketError !== null, [quotes, marketError]);
+  const summaryPending = held.some((s) => !settled(s));
 
   const value = totalValue(portfolio, priceOf);
   const ret = totalReturn(portfolio, priceOf);
@@ -405,6 +495,7 @@ export default function PortfolioScreen() {
   const trade = useCallback(
     async (side: 'buy' | 'sell') => {
       setError(null);
+      setNotice(null);
       const shares = Number(tradeShares);
       if (!sym) return setError('Enter a symbol.');
       if (!Number.isFinite(shares) || shares <= 0) return setError('Enter how many shares.');
@@ -421,7 +512,20 @@ export default function PortfolioScreen() {
           ? await buyShares(sym, q.price, shares)
           : await sellShares(sym, q.price, shares);
         if (!res.ok) setError(res.reason);
-        else { setTradeShares(''); loadTrades(); loadSnapshots(); }
+        else {
+          // Say what happened. Balances updating silently reads as "nothing
+          // happened" to a first-time learner, who then taps again.
+          const total = formatPrice(q.price * shares);
+          const asOf = asOfLabel(q.asOf);
+          setNotice(
+            `${side === 'buy' ? 'Bought' : 'Sold'} ${shares} ${sym} at ${formatPrice(q.price)} · ${total}${asOf ? ` (${asOf})` : ''}`,
+          );
+          setFillCount((n) => n + 1);
+          setCheckVisible(true);
+          setTradeShares('');
+          loadTrades();
+          loadSnapshots();
+        }
       } catch (e) {
         // Without this, a failed quote fetch escaped as an unhandled rejection:
         // no message, no confirmation, cash untouched, and nothing to tell the
@@ -465,15 +569,29 @@ export default function PortfolioScreen() {
           <Text variant="label" color={palette.mintSoft} uppercase>
             Portfolio value
           </Text>
-          <Text variant="display" color={colors.paper}>
-            {formatPrice(value)}
-          </Text>
-          <Text variant="h3" color={ret.abs > 0 ? palette.mint : ret.abs < 0 ? palette.flame : palette.mintSoft}>
-            {`${signed(ret.abs)} (${ret.pct > 0 ? '+' : ''}${ret.pct.toFixed(2)}%)`}
-          </Text>
-          <Text variant="caption" color={palette.mintSoft}>
-            {`${formatPrice(portfolio.cash)} cash · started at ${formatPrice(STARTING_CASH)}`}
-          </Text>
+          <SkeletonSwap
+            pending={summaryPending}
+            style={styles.summaryValues}
+            skeleton={
+              <View style={styles.summaryValues}>
+                <Skeleton width={180} height={34} radius={radius.sm} style={styles.summarySkeletonTint} />
+                <Skeleton width={120} height={18} style={styles.summarySkeletonTint} />
+              </View>
+            }
+          >
+            <View style={styles.summaryValues}>
+              <AnimatedNumber value={value} variant="display" color={colors.paper} />
+              <Text variant="h3" color={ret.abs > 0 ? palette.mint : ret.abs < 0 ? palette.flame : palette.mintSoft}>
+                {`${signed(ret.abs)} (${ret.pct > 0 ? '+' : ''}${ret.pct.toFixed(2)}%)`}
+              </Text>
+            </View>
+          </SkeletonSwap>
+          <View style={styles.cashLine}>
+            <AnimatedNumber value={portfolio.cash} variant="caption" color={palette.mintSoft} />
+            <Text variant="caption" color={palette.mintSoft}>
+              {` cash · started at ${formatPrice(STARTING_CASH)}`}
+            </Text>
+          </View>
           {snapshots.length > 1 && <ValueChart snapshots={snapshots} current={value} />}
         </CardSurface>
 
@@ -519,6 +637,14 @@ export default function PortfolioScreen() {
               {error}
             </Text>
           ) : null}
+          {notice ? (
+            <View style={styles.noticeRow}>
+              {checkVisible ? <TradeCheck key={fillCount} onHidden={hideCheck} /> : null}
+              <Text variant="caption" color={palette.emeraldDeep} accessibilityLiveRegion="polite" style={styles.noticeText}>
+                {notice}
+              </Text>
+            </View>
+          ) : null}
         </CardSurface>
 
         {watchSymbols.length > 0 && (
@@ -534,13 +660,15 @@ export default function PortfolioScreen() {
                     <Text variant="h3">
                       {ws}
                     </Text>
-                    {q?.valid ? (
-                      <Text variant="caption" color={toneColor(q.change, colors.slate)}>
-                        {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%${asOfLabel(q.asOf) ? ` · ${asOfLabel(q.asOf)}` : ''}`}
-                      </Text>
-                    ) : (
-                      <Text variant="caption" color={colors.slateLight}>loading</Text>
-                    )}
+                    <SkeletonSwap pending={!settled(ws)} skeleton={<Skeleton width={150} height={12} />}>
+                      {q?.valid ? (
+                        <Text variant="caption" color={toneColor(q.change, colors.slate)}>
+                          {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%${asOfLabel(q.asOf) ? ` · ${asOfLabel(q.asOf)}` : ''}`}
+                        </Text>
+                      ) : (
+                        <Text variant="caption" color={colors.slateLight}>No price available</Text>
+                      )}
+                    </SkeletonSwap>
                   </View>
                   <Pressable
                     onPress={() => setTradeSymbol(ws)}
@@ -577,14 +705,23 @@ export default function PortfolioScreen() {
                       {`${pos.shares} @ ${formatPrice(pos.avgCost)}`}
                     </Text>
                   </View>
-                  <View style={styles.posRight}>
-                    <Text variant="bodyEm" color={live ? colors.ink : colors.slate}>
-                      {formatPrice(positionValue(pos, price))}
-                    </Text>
-                    <Text variant="caption" color={live ? toneColor(pnl, colors.slate) : colors.slateLight}>
-                      {live ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : 'at cost'}
-                    </Text>
-                  </View>
+                  <SkeletonSwap
+                    pending={!settled(pos.symbol)}
+                    style={styles.posRight}
+                    skeleton={
+                      <View style={[styles.posRight, { gap: space.sm }]}>
+                        <Skeleton width={84} height={16} />
+                        <Skeleton width={110} height={10} />
+                      </View>
+                    }
+                  >
+                    <View style={styles.posRight}>
+                      <AnimatedNumber value={positionValue(pos, price)} variant="bodyEm" color={live ? colors.ink : colors.slate} />
+                      <Text variant="caption" color={live ? toneColor(pnl, colors.slate) : colors.slateLight}>
+                        {live ? `${signed(pnl)} (${pnlPct > 0 ? '+' : ''}${pnlPct.toFixed(2)}%)` : 'at cost'}
+                      </Text>
+                    </View>
+                  </SkeletonSwap>
                 </CardSurface>
               );
             })}
@@ -698,6 +835,13 @@ const styles = StyleSheet.create({
     backgroundColor: palette.danger + '12',
   },
   summary: { alignItems: 'center', gap: space.xxs, paddingVertical: space.lg },
+  summaryValues: { alignItems: 'center', gap: space.xxs },
+  /** The forest card is dark in both modes; the hairline token is too faint on it. */
+  summarySkeletonTint: { backgroundColor: palette.mintSoft + '55' },
+  cashLine: { flexDirection: 'row', alignItems: 'baseline' },
+  noticeRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  noticeText: { flex: 1 },
+  check: { width: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
   tradeCard: { gap: space.sm },
   coachCard: { gap: space.sm },
   tradeInputs: { flexDirection: 'row', gap: space.sm },
@@ -709,7 +853,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   symInput: { flex: 1 },
-  sharesInput: { width: 110 },
+  sharesInput: { width: 132, paddingHorizontal: space.md + 2 },
   tradeButtons: { flexDirection: 'row', gap: space.sm },
   empty: { marginTop: space.md },
   positions: { gap: space.sm },

@@ -1,7 +1,7 @@
 import { MARKET_URL } from '@/config';
 import { getDeviceId } from '@/lib/deviceId';
 import { marketErrorFromResponse } from './proxyErrors';
-import { MarketError, type MarketService, type Quote } from './types';
+import { MarketError, type MarketService, type Quote, type Spark } from './types';
 
 /**
  * Quotes via the Cloudflare Worker. The Finnhub key lives on the Worker, so
@@ -15,10 +15,21 @@ export class ProxyMarketService implements MarketService {
   }
 
   async quotes(symbols: string[]): Promise<Quote[]> {
-    if (!this.baseUrl) throw new MarketError('not_configured', 'No market proxy URL is configured.');
-    if (symbols.length === 0) return [];
+    const body = await this.get<{ quotes?: Quote[] }>('/v1/quotes', symbols);
+    return body?.quotes ?? [];
+  }
 
-    const url = `${this.baseUrl}/v1/quotes?symbols=${encodeURIComponent(symbols.join(','))}`;
+  async sparks(symbols: string[]): Promise<Spark[]> {
+    const body = await this.get<{ sparks?: Spark[] }>('/v1/spark', symbols);
+    return body?.sparks ?? [];
+  }
+
+  /** One batched GET against the Worker; null for an empty symbol list. */
+  private async get<T>(path: string, symbols: string[]): Promise<T | null> {
+    if (!this.baseUrl) throw new MarketError('not_configured', 'No market proxy URL is configured.');
+    if (symbols.length === 0) return null;
+
+    const url = `${this.baseUrl}${path}?symbols=${encodeURIComponent(symbols.join(','))}`;
     let res: Response;
     try {
       res = await fetch(url, { headers: { 'x-device-id': await getDeviceId() } });
@@ -35,7 +46,6 @@ export class ProxyMarketService implements MarketService {
       throw err;
     }
 
-    const body = (await res.json()) as { quotes?: Quote[] };
-    return body.quotes ?? [];
+    return (await res.json()) as T;
   }
 }

@@ -2,8 +2,8 @@ import { StyleSheet, View } from 'react-native';
 import type { ConceptCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
-import { radius, space } from '@/theme/tokens';
-import { useColors } from '@/theme/ThemeProvider';
+import { artPalettes, radius, space } from '@/theme/tokens';
+import { useColors, useIsDark } from '@/theme/ThemeProvider';
 
 /**
  * The workhorse card: a short headline, a short body, optional art.
@@ -13,11 +13,20 @@ import { useColors } from '@/theme/ThemeProvider';
  */
 export function ConceptCardView({ card, active = true }: { card: ConceptCard; active?: boolean }) {
   const colors = useColors();
+  const isDark = useIsDark();
   // Wholly inert: "none" rather than "box-none" so taps fall through to the
   // navigation zones underneath. box-none would leave the text subtree as a
   // hit target on web and silently swallow every forward tap.
   return (
     <View style={styles.container} pointerEvents="none">
+      {/* A pale green wash, drawn as a layer behind the content and inset
+          outward so the text and art keep exactly the geometry they had. */}
+      <View
+        style={[
+          styles.wash,
+          { backgroundColor: isDark ? colors.successSoft + '59' : artPalettes.mint.bg + 'B3' },
+        ]}
+      />
       <RichTextView value={card.headline} variant="h1" color={colors.ink} />
 
       {card.art && (
@@ -37,6 +46,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: space.xs,
     gap: space.sm,
+  },
+  wash: {
+    ...StyleSheet.absoluteFill,
+    margin: -space.md,
+    borderRadius: radius.lg,
   },
   /**
    * Shrinks before the text does.

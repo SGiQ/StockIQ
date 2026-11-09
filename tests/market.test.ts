@@ -43,6 +43,7 @@ import { marketErrorFromResponse } from '../src/services/market/proxyErrors';
 import { MarketError, marketErrorMessage, type MarketService, type Quote } from '../src/services/market/types';
 import { asOfLabel } from '../src/services/market/format';
 import { normalizeQuote, STALE_AFTER_MS } from '../workers/market/src/quote';
+import { downsample, lastSessionBars, normalizeSpark, SPARK_POINTS } from '../workers/market/src/spark';
 
 const q = (symbol: string, over: Partial<Quote> = {}): Quote => ({
   symbol, price: 100, change: 1, changePercent: 1, previousClose: 99, valid: true, asOf: 'delayed', ...over,
@@ -50,6 +51,7 @@ const q = (symbol: string, over: Partial<Quote> = {}): Quote => ({
 
 const service = (impl: (symbols: string[]) => Promise<Quote[]>): MarketService => ({
   quotes: impl,
+  sparks: async () => [],
   isLive: () => true,
 });
 
@@ -168,4 +170,54 @@ test('normalizeQuote: all zeros is an unknown symbol', () => {
   const out = normalizeQuote('ZZZZQQ', { c: 0, d: 0, dp: 0, pc: 0, t: 0 });
   assert.equal(out.valid, false);
   assert.equal(out.price, 0);
+});
+
+// ── Sparklines ───────────────────────────────────────────────────────────────
+
+test('MockMarketService.sparks: deterministic, ends on the quote price, agrees on direction', async () => {
+  const svc = new MockMarketService();
+  const [a] = await svc.sparks(['AAPL']);
+  const [b] = await svc.sparks(['AAPL']);
+  assert.deepEqual(a, b);
+  const [q] = await svc.quotes(['AAPL']);
+  assert.equal(a!.symbol, 'AAPL');
+  assert.ok(a!.points.length >= 2);
+  assert.equal(a!.points.at(-1), q!.price, 'the line ends on the price shown beside it');
+  const dir = Math.sign(a!.points.at(-1)! - a!.points[0]!);
+  assert.equal(dir, Math.sign(q!.change), 'line direction matches the day change');
+});
+
+test('lastSessionBars: keeps only the bars from the most recent UTC day', () => {
+  const day = 86400;
+  const t = [10 * day + 50000, 10 * day + 51000, 11 * day + 50000, 11 * day + 51000, 11 * day + 52000];
+  const c = [1, 2, 3, 4, 5];
+  assert.deepEqual(lastSessionBars(c, t), { c: [3, 4, 5], t: t.slice(2) });
+  assert.deepEqual(lastSessionBars([], []), { c: [], t: [] });
+});
+
+test('downsample: thins evenly, keeps first and last, leaves short series alone', () => {
+  const series = Array.from({ length: 78 }, (_, i) => i);
+  const out = downsample(series, 32);
+  assert.equal(out.length, 32);
+  assert.equal(out[0], 0);
+  assert.equal(out.at(-1), 77);
+  assert.deepEqual(downsample([1, 2, 3], 32), [1, 2, 3]);
+});
+
+test('normalizeSpark: ok payload becomes a capped series with a time range', () => {
+  const day = 86400;
+  const t = Array.from({ length: 78 }, (_, i) => 20 * day + 48600 + i * 300);
+  const c = t.map((_, i) => 100 + Math.sin(i / 5));
+  const out = normalizeSpark('AAPL', { s: 'ok', c, t });
+  assert.equal(out.symbol, 'AAPL');
+  assert.equal(out.points.length, SPARK_POINTS);
+  assert.equal(out.start, t[0]! * 1000);
+  assert.equal(out.end, t.at(-1)! * 1000);
+  assert.equal(out.points.at(-1), c.at(-1));
+});
+
+test('normalizeSpark: no_data, missing arrays, or a single bar yield an empty series', () => {
+  assert.deepEqual(normalizeSpark('ZZZZQQ', { s: 'no_data' }), { symbol: 'ZZZZQQ', points: [] });
+  assert.deepEqual(normalizeSpark('AAPL', { s: 'ok' }), { symbol: 'AAPL', points: [] });
+  assert.deepEqual(normalizeSpark('AAPL', { s: 'ok', c: [1], t: [1] }), { symbol: 'AAPL', points: [] });
 });

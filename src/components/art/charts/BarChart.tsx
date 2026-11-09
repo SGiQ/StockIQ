@@ -1,7 +1,7 @@
 import { G, Line, Rect, Text as SvgText } from 'react-native-svg';
 import type { ChartSpec } from '@/content/types';
 import { fontFamily } from '@/theme/tokens';
-import { PLOT, bandAt, fitLabel, yAt, type Domain } from './scale';
+import { PLOT, bandAt, fitLabel, revealAt, yAt, type Domain } from './scale';
 import type { ChartTheme } from './LineChart';
 
 type BarSpec = Extract<ChartSpec, { type: 'bars' }>;
@@ -12,7 +12,7 @@ type BarSpec = Extract<ChartSpec, { type: 'bars' }>;
  * zero misrepresents proportion, and this app is teaching people to read
  * charts honestly.
  */
-export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) {
+export function BarChart({ spec, theme, progress = 1 }: { spec: BarSpec; theme: ChartTheme; progress?: number }) {
   const { values, labels, highlightIndex, highlightTone, yLabel } = spec;
   // The highlighted bar carries meaning when a tone is set (green = good/kept,
   // rust = cost/loss/risk); otherwise it just marks focus in the neutral accent.
@@ -55,6 +55,9 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
         // Labels are fitted to their own band, so multi-word categories wrap
         // and shrink instead of colliding with their neighbours.
         const label = fitLabel(labels[i] ?? '', width - 2);
+        // Entrance: each bar scales up from the zero line a beat after the
+        // previous one; its value label fades in behind it.
+        const r = revealAt(progress, i, values.length);
 
         return (
           <G key={`bar-${i}`}>
@@ -67,6 +70,7 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
               fill={highlighted ? highlightFill : theme.bg}
               stroke={theme.ink}
               strokeWidth={2.5}
+              transform={r < 1 ? `translate(0 ${zeroY}) scale(1 ${Math.max(r, 0.001)}) translate(0 ${-zeroY})` : undefined}
             />
             {values.length <= 4 ? (
               <SvgText
@@ -76,6 +80,7 @@ export function BarChart({ spec, theme }: { spec: BarSpec; theme: ChartTheme }) 
                 fontSize={10}
                 fontFamily={fontFamily.bodyBold}
                 textAnchor="middle"
+                opacity={r}
               >
                 {Number.isInteger(value) ? value : value.toFixed(1)}
               </SvgText>

@@ -1,6 +1,6 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { getCourse, getLesson } from '@/content/registry';
 import { LessonNode } from '@/components/path/LessonNode';
@@ -11,11 +11,24 @@ import {
   courseEarnedXp,
   courseNodeStatuses,
   useAppStore,
+  type LessonNodeStatus,
 } from '@/store/slices/useAppStore';
 import { progressId } from '@/store';
 import { toPlainText } from '@/content/richtext';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
+
+type Statuses = Record<string, LessonNodeStatus>;
+
+/**
+ * The statuses each course path last rendered with, kept across mounts.
+ *
+ * "Back to course" replaces the route, so the path remounts and a ref would
+ * start empty; this is what lets a remounted path still know which node was
+ * completed since the learner last looked at it. A first-ever open has no
+ * entry and animates nothing.
+ */
+const lastShown = new Map<string, Statuses>();
 
 /**
  * The course path.
@@ -53,6 +66,32 @@ export default function CourseScreen() {
     const sorted = course.units.slice().sort((a, b) => a.index - b.index);
     return (sorted.find((u) => u.lessonIds.includes(currentLessonId ?? '')) ?? sorted[0])?.name;
   }, [course, currentLessonId]);
+
+  // Returning after a lesson: the node that just turned complete draws its
+  // line forward and the newly unlocked node pulses once. Diffed against what
+  // this path last showed (see `lastShown`), so opening a course cold, or
+  // re-rendering for any other reason, animates nothing. The diff is only
+  // noted here; it plays on focus, because the store updates while the lesson
+  // modal still covers this screen and an animation run then is never seen.
+  const [reveal, setReveal] = useState<{ completedId: string; nextId?: string } | null>(null);
+  const pendingReveal = useRef<{ completedId: string; nextId?: string } | null>(null);
+  useEffect(() => {
+    const prev = lastShown.get(courseId);
+    lastShown.set(courseId, statuses);
+    if (!prev) return;
+    const completedId = Object.keys(statuses).find(
+      (id) => statuses[id] === 'completed' && prev[id] !== undefined && prev[id] !== 'completed',
+    );
+    if (completedId) pendingReveal.current = { completedId, nextId: currentLessonId };
+  }, [statuses, courseId, currentLessonId]);
+  useFocusEffect(
+    useCallback(() => {
+      if (pendingReveal.current) {
+        setReveal(pendingReveal.current);
+        pendingReveal.current = null;
+      }
+    }, []),
+  );
 
   if (!course) {
     return (
@@ -143,6 +182,13 @@ export default function CourseScreen() {
                       status={statuses[lessonId] ?? 'locked'}
                       starred={record?.starred}
                       isCurrent={lessonId === currentLessonId}
+                      reveal={
+                        reveal?.completedId === lessonId
+                          ? 'completed'
+                          : reveal?.nextId === lessonId
+                            ? 'next'
+                            : undefined
+                      }
                       onPress={() =>
                         router.push(`/lesson/${course.id}/${lessonId}` as never)
                       }

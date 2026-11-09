@@ -5,6 +5,8 @@ import {
   PLOT,
   domainOf,
   fitLabel,
+  polylineLength,
+  revealAt,
   smoothPath,
   type Domain,
 } from './scale';
@@ -40,7 +42,7 @@ function computeSma(values: number[], period: number): (number | null)[] {
  * When volume or sma data is present, switches to a "stock chart" layout
  * with price labels, volume bars, and SMA overlays.
  */
-export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }) {
+export function LineChart({ spec, theme, progress = 1 }: { spec: LineSpec; theme: ChartTheme; progress?: number }) {
   const {
     series,
     compareSeries,
@@ -89,6 +91,14 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
   const points = toPoints(series);
   const lineFn = isStockMode ? straightPath : smoothPath;
   const path = lineFn(points);
+  // Entrance: the main line draws left to right over the first part of the
+  // timeline (a dash the length of the path, offset retreating to zero);
+  // dots, volume bars and overlays follow the line in. A smooth path is a
+  // little longer than its polyline, so the dash is padded and the overshoot
+  // simply means the last few points land a frame early.
+  const drawing = progress < 1;
+  const lineLength = polylineLength(points) * 1.08 + 4;
+  const lineReveal = Math.min(1, progress / 0.7);
 
   const shade = (() => {
     if (shadeFrom === undefined || shadeFrom >= series.length - 1) return null;
@@ -177,6 +187,7 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
           const barWidth = Math.max(2, Math.min(12, (chartWidth / series.length) * 0.5));
           const barTop = volTop + volHeight - (v / maxVol) * volHeight;
           const rising = i === 0 || series[i] >= series[i - 1];
+          const r = revealAt(progress, i, series.length);
           return (
             <Rect
               key={`vol-${i}`}
@@ -185,12 +196,13 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
               width={barWidth}
               height={PLOT.y1 - barTop}
               fill={rising ? palette.emerald : palette.danger}
-              opacity={0.25}
+              opacity={0.25 * r}
+              transform={r < 1 ? `translate(0 ${PLOT.y1}) scale(1 ${Math.max(r, 0.001)}) translate(0 ${-PLOT.y1})` : undefined}
             />
           );
         })}
 
-      {shade && <Path d={shade} fill={theme.accent} opacity={0.35} />}
+      {shade && <Path d={shade} fill={theme.accent} opacity={0.35 * progress} />}
 
       {/* Compare series */}
       {compareSeries && (
@@ -231,21 +243,25 @@ export function LineChart({ spec, theme }: { spec: LineSpec; theme: ChartTheme }
         strokeWidth={isStockMode ? 2 : 3}
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeDasharray={drawing ? lineLength : undefined}
+        strokeDashoffset={drawing ? lineLength * (1 - lineReveal) : undefined}
       />
 
       {/* Data point dots (non-stock mode only) */}
       {!isStockMode &&
         points.map((point, index) => {
           const last = index === points.length - 1;
+          const r = revealAt(progress, index, points.length);
           return (
             <Circle
               key={`point-${index}`}
               cx={point.x}
               cy={point.y}
-              r={last ? 4.5 : 2.25}
+              r={(last ? 4.5 : 2.25) * Math.max(r, 0.001)}
               fill={last ? theme.accent : theme.bg}
               stroke={theme.ink}
               strokeWidth={last ? 2.25 : 1.5}
+              opacity={r}
             />
           );
         })}

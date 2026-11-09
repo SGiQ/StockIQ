@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
-import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
+import { CardSurface, PillButton, Screen, Skeleton, SkeletonSwap, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
 import { type AskContext } from '@/services/ask';
 import { asOfLabel, changeTone, formatChange, formatPrice, marketErrorMessage, marketService, type Quote } from '@/services/market';
@@ -102,31 +102,42 @@ export default function TickerScreen() {
 
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <CardSurface style={styles.quoteCard}>
-          {loadingQuote ? (
-            <ActivityIndicator color={colors.slate} />
-          ) : quote && quote.valid ? (
-            <>
-              <Text variant="display">
-                {formatPrice(quote.price)}
-              </Text>
-              <Text variant="h3" color={toneColor(tone, colors.slate)}>
-                {formatChange(quote.change, quote.changePercent)}
-              </Text>
-              {asOfLabel(quote.asOf) ? (
-                <Text variant="caption" color={colors.slateLight}>
-                  {asOfLabel(quote.asOf)}
+          <SkeletonSwap
+            pending={loadingQuote}
+            style={styles.quoteBlock}
+            skeleton={
+              <View style={styles.quoteBlock}>
+                <Skeleton width={168} height={40} radius={radius.sm} />
+                <Skeleton width={128} height={20} />
+              </View>
+            }
+          >
+            <View style={styles.quoteBlock}>
+              {quote && quote.valid ? (
+                <>
+                  <Text variant="display">
+                    {formatPrice(quote.price)}
+                  </Text>
+                  <Text variant="h3" color={toneColor(tone, colors.slate)}>
+                    {formatChange(quote.change, quote.changePercent)}
+                  </Text>
+                  {asOfLabel(quote.asOf) ? (
+                    <Text variant="caption" color={colors.slateLight}>
+                      {asOfLabel(quote.asOf)}
+                    </Text>
+                  ) : null}
+                </>
+              ) : error ? (
+                <Text variant="body" color={colors.slate}>
+                  Could not load a price for {symbol} — see below.
                 </Text>
-              ) : null}
-            </>
-          ) : error ? (
-            <Text variant="body" color={colors.slate}>
-              Could not load a price for {symbol} — see below.
-            </Text>
-          ) : (
-            <Text variant="body" color={colors.slate}>
-              No market data for {symbol}.
-            </Text>
-          )}
+              ) : (
+                <Text variant="body" color={colors.slate}>
+                  No market data for {symbol}.
+                </Text>
+              )}
+            </View>
+          </SkeletonSwap>
         </CardSurface>
 
         {quote && quote.valid ? (
@@ -198,6 +209,7 @@ const styles = StyleSheet.create({
   },
   body: { padding: space.lg, gap: space.md, paddingBottom: space.xxl },
   quoteCard: { alignItems: 'center', gap: space.xs, paddingVertical: space.lg },
+  quoteBlock: { alignItems: 'center', gap: space.xs, minHeight: 72, justifyContent: 'center' },
   explainCard: { gap: space.sm },
   removeRow: { alignItems: 'center', paddingVertical: space.md },
   disclaimer: { marginTop: space.sm },
