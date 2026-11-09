@@ -89,6 +89,17 @@ export const CLIENT_WRITABLE_COLLECTIONS = new Set([
 ]);
 
 /**
+ * Collections only the server writes, which a client may still send back.
+ *
+ * App builds before the fix re-uploaded the entitlement row they had pulled
+ * whenever they signed in, and refusing it failed the whole sync for that
+ * device on every retry. These rows are dropped instead: never stored, so the
+ * guarantee above holds, but the rest of the request goes through. A
+ * collection that is neither here nor writable is still refused loudly.
+ */
+export const SERVER_OWNED_COLLECTIONS = new Set(['entitlement']);
+
+/**
  * How far ahead of the server clock a client timestamp may run.
  *
  * Last-write-wins compares client `updatedAt`s, so a device with a clock
@@ -151,10 +162,14 @@ export function parseSyncRequest(body: unknown): SyncRequest {
     fail(`changes may not exceed ${LIMITS.maxChangesPerRequest} records`);
   }
 
-  return { since, changes: changes.map(parseRecord) };
+  return {
+    since,
+    changes: changes.map(parseRecord).filter((r): r is RecordRow => r !== null),
+  };
 }
 
-function parseRecord(raw: unknown, index: number): RecordRow {
+/** A validated row, or null for a server-owned row that is dropped unstored. */
+function parseRecord(raw: unknown, index: number): RecordRow | null {
   if (typeof raw !== 'object' || raw === null) fail(`changes[${index}] must be an object`);
   const r = raw as Record<string, unknown>;
 
@@ -166,6 +181,7 @@ function parseRecord(raw: unknown, index: number): RecordRow {
   ) {
     fail(`changes[${index}].collection is missing or too long`);
   }
+  if (SERVER_OWNED_COLLECTIONS.has(collection)) return null;
   if (!CLIENT_WRITABLE_COLLECTIONS.has(collection)) {
     fail(`changes[${index}].collection '${collection}' is not writable by clients`);
   }

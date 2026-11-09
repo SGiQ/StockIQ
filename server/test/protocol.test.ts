@@ -3,7 +3,7 @@ import test from 'node:test';
 import {
   CLIENT_WRITABLE_COLLECTIONS,
   MAX_CLOCK_SKEW_MS,
-  ProtocolError,
+  SERVER_OWNED_COLLECTIONS,
   clampRecordClocks,
   parseSyncRequest,
   type RecordRow,
@@ -24,12 +24,35 @@ test('parseSyncRequest accepts every client collection', () => {
   assert.equal(parsed.changes.length, changes.length);
 });
 
-test('parseSyncRequest refuses an entitlement row from a client', () => {
-  assert.throws(
-    () => parseSyncRequest({ since: 0, changes: [record({ collection: 'entitlement', payload: { plan: 'pro' } })] }),
-    (e: unknown) => e instanceof ProtocolError && /'entitlement' is not writable/.test(e.message),
+test('parseSyncRequest drops an entitlement row from a client and keeps the rest', () => {
+  // Older apps re-uploaded the entitlement they had pulled whenever they
+  // signed in. Refusing it failed their whole sync; dropping it never stores
+  // it, which is the guarantee that matters.
+  const parsed = parseSyncRequest({
+    since: 0,
+    changes: [
+      record({ id: 'a' }),
+      record({ collection: 'entitlement', id: 'entitlement', payload: { plan: 'pro' } }),
+      record({ id: 'b' }),
+    ],
+  });
+  assert.deepEqual(
+    parsed.changes.map((r) => `${r.collection}/${r.id}`),
+    ['progress/a', 'progress/b'],
   );
   assert.equal(CLIENT_WRITABLE_COLLECTIONS.has('entitlement'), false);
+  assert.equal(SERVER_OWNED_COLLECTIONS.has('entitlement'), true);
+});
+
+test('parseSyncRequest still reports the original index after a dropped row', () => {
+  assert.throws(
+    () =>
+      parseSyncRequest({
+        since: 0,
+        changes: [record({ collection: 'entitlement', id: 'entitlement' }), record({ collection: 'secrets' })],
+      }),
+    /changes\[1\]\.collection 'secrets' is not writable/,
+  );
 });
 
 test('parseSyncRequest refuses unknown collections by name', () => {
