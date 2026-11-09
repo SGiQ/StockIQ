@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Text } from '@/components/primitives';
+import { Text, SpringFill } from '@/components/primitives';
 import { SpeakerIcon } from '@/components/primitives/SpeakerIcon';
 import { Sparkle } from './AskSheet';
 import { palette, radius, shadow, space } from '@/theme/tokens';
@@ -10,11 +10,10 @@ import { useColors } from '@/theme/ThemeProvider';
 /** Thin mint progress bar pinned to the top of the player. */
 export function ProgressBar({ current, total }: { current: number; total: number }) {
   const colors = useColors();
-  // A plain width derived straight from the card index. This used to animate
-  // with a reanimated spring, which silently stopped re-driving in the
-  // production web build — the bar froze near the start and never advanced.
-  // The bar reports progress the learner relies on, so correctness wins over
-  // the animation; the review screen's bar has always been a plain width too.
+  // The width is still a plain percentage from the card index — a reanimated
+  // width once froze in the production web build and never advanced. The
+  // spring in SpringFill is a transform on top that converges to identity,
+  // so if it ever fails to drive the bar is simply static and still correct.
   const pct = Math.max(2, Math.min(100, ((current + 1) / Math.max(1, total)) * 100));
 
   return (
@@ -23,7 +22,7 @@ export function ProgressBar({ current, total }: { current: number; total: number
       accessibilityRole="progressbar"
       accessibilityValue={{ min: 0, max: total, now: current + 1 }}
     >
-      <View style={[styles.fill, { width: `${pct}%` }]} />
+      <SpringFill pct={pct} color={palette.mint} />
     </View>
   );
 }
@@ -181,11 +180,6 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: radius.pill,
     overflow: 'hidden',
-  },
-  fill: {
-    height: '100%',
-    borderRadius: radius.pill,
-    backgroundColor: palette.mint,
   },
   exit: {
     width: 40,

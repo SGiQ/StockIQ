@@ -24,3 +24,9 @@ export function easeOutQuad(t: number): number {
   const c = t < 0 ? 0 : t > 1 ? 1 : t;
   return 1 - (1 - c) * (1 - c);
 }
+
+/** Linear, clamped. For shakes and timelines where `Easing.linear` would run negative on web's first frame. */
+export function linearClamped(t: number): number {
+  'worklet';
+  return t < 0 ? 0 : t > 1 ? 1 : t;
+}

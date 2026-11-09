@@ -6,3 +6,5 @@ export { RichTextView, type RichTextViewProps } from './RichTextView';
 export { SpeakerIcon } from './SpeakerIcon';
 export { Skeleton, SkeletonSwap, useDelayedPending, type SkeletonProps, type SkeletonSwapProps } from './Skeleton';
 export { AnimatedNumber, type AnimatedNumberProps } from './AnimatedNumber';
+export { FadeUp, type FadeUpProps } from './FadeUp';
+export { SpringFill, type SpringFillProps } from './SpringFill';

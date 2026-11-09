@@ -1,5 +1,15 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
+import { easeOutQuad, linearClamped } from '@/lib/easing';
 import { Text } from '@/components/primitives';
 import { snapshot, MAX_HEARTS } from '@/features/hearts';
 import type { HeartsValue } from '@/store/repository';
@@ -48,9 +58,41 @@ export interface HeartPipsProps {
  */
 export function HeartPips({ state, now, onPress }: HeartPipsProps) {
   const colors = useColors();
+  const reduceMotion = useReducedMotion();
   const count = state ? snapshot(state, now).count : MAX_HEARTS;
   const empty = count <= 0;
   const color = empty ? colors.slateLight : palette.danger;
+
+  // Losing a heart is the stakes moment of a lesson: the heart shrinks and
+  // shakes once. Getting one back pulses it. Nothing on first render.
+  const prev = useRef(count);
+  const scale = useSharedValue(1);
+  const shift = useSharedValue(0);
+  useEffect(() => {
+    const before = prev.current;
+    prev.current = count;
+    if (before === count || reduceMotion) return;
+    if (count < before) {
+      scale.value = withSequence(
+        withTiming(0.7, { duration: 110, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+        withTiming(1, { duration: 260, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+      );
+      shift.value = withSequence(
+        withTiming(-5, { duration: 60, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(5, { duration: 70, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(-3, { duration: 70, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+        withTiming(0, { duration: 70, easing: linearClamped, reduceMotion: ReduceMotion.System }),
+      );
+    } else {
+      scale.value = withSequence(
+        withTiming(1.3, { duration: 160, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+        withTiming(1, { duration: 240, easing: easeOutQuad, reduceMotion: ReduceMotion.System }),
+      );
+    }
+  }, [count, reduceMotion, scale, shift]);
+  const heartStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: shift.value }, { scale: scale.value }],
+  }));
 
   return (
     <Pressable
@@ -60,7 +102,9 @@ export function HeartPips({ state, now, onPress }: HeartPipsProps) {
       accessibilityLabel={`${count} of ${MAX_HEARTS} hearts remaining`}
       style={styles.wrap}
     >
-      <HeartIcon size={18} filled={!empty} color={color} />
+      <Animated.View style={heartStyle}>
+        <HeartIcon size={18} filled={!empty} color={color} />
+      </Animated.View>
       <Text variant="label" color={color}>
         {String(count)}
       </Text>

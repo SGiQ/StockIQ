@@ -12,13 +12,16 @@ import { ThisWeekCard } from '@/components/ThisWeekCard';
 import { ResumeCard } from '@/components/ResumeCard';
 import { LEAGUES_ENABLED } from '@/features/leagues';
 import {
+  AnimatedNumber,
   CardSurface,
   PillButton,
   Screen,
   Skeleton,
   SpeakerIcon,
+  SpringFill,
   Text,
 } from '@/components/primitives';
+import { useFocusHeld } from '@/lib/useFocusHeld';
 import {
   courseCompletion,
   courseEarnedXp,
@@ -29,14 +32,18 @@ import {
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
+const formatXp = (n: number) => `${Math.round(n)} XP`;
+
 export default function LearnTab() {
   const colors = useColors();
   const router = useRouter();
   const courses = listCourses();
   const hydrated = useAppStore((s) => s.hydrated);
-  const totalXp = useAppStore((s) => totalEarnedXp(s.progress));
+  // Held until this tab is focused again, so the count-up after a lesson
+  // plays when the learner is looking at Home rather than under the modal.
+  const totalXp = useFocusHeld(useAppStore((s) => totalEarnedXp(s.progress)));
   const streak = useAppStore((s) => s.streak);
-  const gemBalance = useAppStore((s) => s.gems?.balance ?? 0);
+  const gemBalance = useFocusHeld(useAppStore((s) => s.gems?.balance ?? 0));
   const selectedCourseId = useAppStore((s) => s.profile?.selectedCourseId ?? null);
   const narrationEnabled = useAppStore(
     (s) => s.profile?.narrationEnabled ?? false,
@@ -66,9 +73,13 @@ export default function LearnTab() {
             <View style={styles.statusCluster}>
               <GemCounter balance={gemBalance} />
               <View style={styles.xp}>
-                <Text variant="label" color={palette.forestDeep} uppercase>
-                  {`${totalXp} XP`}
-                </Text>
+                <AnimatedNumber
+                  value={totalXp}
+                  format={formatXp}
+                  variant="label"
+                  color={palette.forestDeep}
+                  uppercase
+                />
               </View>
             </View>
           </View>
@@ -279,8 +290,8 @@ function CourseCard({ courseId }: { courseId: string }) {
   const course = listCourses().find((c) => c.id === courseId)!;
   const progressMap = useAppStore((s) => s.progress);
 
-  const progress = useMemo(() => courseCompletion(progressMap, courseId), [progressMap, courseId]);
-  const earnedXp = useMemo(() => courseEarnedXp(progressMap, courseId), [progressMap, courseId]);
+  const progress = useFocusHeld(useMemo(() => courseCompletion(progressMap, courseId), [progressMap, courseId]));
+  const earnedXp = useFocusHeld(useMemo(() => courseEarnedXp(progressMap, courseId), [progressMap, courseId]));
   const nextLesson = useMemo(() => nextLessonId(progressMap, courseId), [progressMap, courseId]);
   const nextTitle = nextLesson ? getLesson(courseId, nextLesson)?.title : undefined;
   const done = progress >= 1;
@@ -304,7 +315,7 @@ function CourseCard({ courseId }: { courseId: string }) {
       </View>
 
       <View style={[styles.track, { backgroundColor: colors.hairline }]}>
-        <View style={[styles.fill, { width: `${Math.max(2, progress * 100)}%` }]} />
+        <SpringFill pct={Math.max(2, progress * 100)} color={palette.emerald} />
       </View>
 
       {nextTitle && !done && (
@@ -414,11 +425,6 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: radius.pill,
     overflow: 'hidden',
-  },
-  fill: {
-    height: '100%',
-    borderRadius: radius.pill,
-    backgroundColor: palette.emerald,
   },
   actions: {
     gap: space.sm,

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { Text } from '@/components/primitives';
+import { AnimatedNumber } from '@/components/primitives';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -29,14 +29,14 @@ export function GemIcon({ size = 18, color = palette.azure }: { size?: number; c
   );
 }
 
-/** The gem balance chip: icon + count, for headers and reward rows. */
+const wholeNumber = (n: number) => String(Math.round(n));
+
+/** The gem balance chip: icon + count, for headers and reward rows. Counts to a new balance. */
 export function GemCounter({ balance, size = 18 }: { balance: number; size?: number }) {
   return (
     <View style={styles.chip} accessibilityLabel={`${balance} gems`}>
       <GemIcon size={size} />
-      <Text variant="label" color={palette.azure}>
-        {String(balance)}
-      </Text>
+      <AnimatedNumber value={balance} format={wholeNumber} variant="label" color={palette.azure} />
     </View>
   );
 }

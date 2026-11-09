@@ -128,6 +128,7 @@ export function StageBackdrop() {
 }
 
 const styles = StyleSheet.create({
-  clip: { overflow: 'hidden' },
+  // Decorative text must not end up in a select-all or a find-in-page.
+  clip: { overflow: 'hidden', userSelect: 'none' },
   drift: { position: 'absolute', left: 0, top: 0, flexDirection: 'row', width: TILE_W * 3, height: TILE_H },
 });
