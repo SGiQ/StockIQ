@@ -1,12 +1,13 @@
 # Deploying StockiQ
 
-**All three backend services are deployed and live:**
+**All four backend services are deployed and live:**
 
 | Service | URL | Notes |
 |---|---|---|
 | Sync (Railway) | https://stockiq-sync-production.up.railway.app | `stockiq-sync` + Postgres; migrations 0001–0005 |
 | ASK proxy (Cloudflare) | https://stockiq-ask.sgiqbusiness.workers.dev | Haiku 4.5; Anthropic key as a secret; KV daily cap |
 | Narration (Cloudflare) | https://stockiq-narration.sgiqbusiness.workers.dev | Serves the R2 audio bucket over a stable origin |
+| Market (Cloudflare) | https://stockiq-market.sgiqbusiness.workers.dev | Delayed quotes proxy; Finnhub key as a secret |
 
 Railway project: StockiQ (`a8359ffc-446b-4ada-991c-a9b16fac3509`). Verified
 against the sync deployment: protocol, pairing, delete, and client-cycle suites
@@ -32,6 +33,7 @@ bring-your-own-key. Undeployed is a supported state, not a broken one.
 | Sync service (`server/`) | Railway | Colocated with Postgres — a pooled DB connection across providers is latency and a connection-limit problem you do not need |
 | ASK proxy (`workers/ask/`) | Cloudflare Workers | Stateless, edge-close for streaming, and holds the Anthropic key as a secret |
 | Narration (`workers/narration/`) | Cloudflare Workers | Serves the R2 audio bucket over a stable production origin — the raw `r2.dev` URL is rate-limited and documented by Cloudflare as dev-only |
+| Market data (`workers/market/`) | Cloudflare Workers | Stateless quote proxy at the edge; keeps the Finnhub key off the device and rate-limits callers |
 | Web app | Vercel | Hosts the exported web app at `stockiq-delta.vercel.app`, plus the static legal pages under `/legal/` |
 
 ---
@@ -407,7 +409,7 @@ This is a supported configuration, not a degraded one:
 
 | Feature | Expo Go, no Apple account |
 |---|---|
-| All 37 lessons, saved cards, streaks | ✅ |
+| All 56 lessons, saved cards, streaks | ✅ |
 | Local storage (SQLite, keychain) | ✅ |
 | Sync to the live Railway service | ✅ |
 | Device pairing by code | ✅ |
@@ -495,6 +497,32 @@ needed, and everything else is already set.
 | `RATE_LIMIT` (KV) | `npm run setup` |
 | `DAILY_LIMIT` | Already in `wrangler.toml`, defaults to 100 |
 
+### Cloudflare — `stockiq-market`
+
+| Variable | How |
+|---|---|
+| `FINNHUB_API_KEY` | `cd workers/market && npx wrangler secret put FINNHUB_API_KEY` |
+| `RATE_LIMIT` (KV) | Optional; see `workers/market/wrangler.toml`. Fails open without it. |
+
+The Worker tells you exactly which hop failed, and since the client surfaces
+these, so does the app:
+
+| Worker response | Meaning | Fix |
+|---|---|---|
+| `500 proxy is not configured` | Secret never set | `wrangler secret put FINNHUB_API_KEY` |
+| `502 … upstream: 401` | Finnhub rejected the key (dead, rotated, or plan lapsed) | Issue a new key at finnhub.io and `secret put` it again |
+| `429` | Finnhub free-tier limit | Wait, or upgrade the plan |
+
+Quick check from a terminal (the device header must be at least 16 chars):
+
+```bash
+curl -s -H "x-device-id: diag-probe-0123456789abcdef" \
+  "https://stockiq-market.sgiqbusiness.workers.dev/v1/quotes?symbols=AAPL"
+```
+
+Quotes carry `asOf: "delayed" | "last_close"`. Outside market hours the price
+is the previous session's close and the app labels it "as of last close".
+
 ### The app — `.env` / `eas.json`
 
 | Variable | Value |
@@ -502,6 +530,7 @@ needed, and everything else is already set.
 | `EXPO_PUBLIC_SYNC_URL` | `https://stockiq-sync-production.up.railway.app` |
 | `EXPO_PUBLIC_ASK_PROXY_URL` | `https://stockiq-ask.sgiqbusiness.workers.dev` |
 | `EXPO_PUBLIC_SPEECH_URL` | `https://stockiq-narration.sgiqbusiness.workers.dev` |
+| `EXPO_PUBLIC_MARKET_URL` | `https://stockiq-market.sgiqbusiness.workers.dev` — unset, the app shows placeholder prices |
 | `EXPO_PUBLIC_SITE_URL` | `https://stockiq-delta.vercel.app` — native uses it to open the legal pages |
 
 All are inlined into the bundle and readable by anyone with the app, so only
@@ -516,11 +545,12 @@ values — already set in `vercel.json`, `eas.json`, and `.env.example`:
 EXPO_PUBLIC_SYNC_URL=https://stockiq-sync-production.up.railway.app
 EXPO_PUBLIC_ASK_PROXY_URL=https://stockiq-ask.sgiqbusiness.workers.dev
 EXPO_PUBLIC_SPEECH_URL=https://stockiq-narration.sgiqbusiness.workers.dev
+EXPO_PUBLIC_MARKET_URL=https://stockiq-market.sgiqbusiness.workers.dev
 EXPO_PUBLIC_SITE_URL=https://stockiq-delta.vercel.app
 ```
 
 `EXPO_PUBLIC_*` values are **inlined into the bundle** and are readable by
-anyone with the app. That is fine for all four — they are public endpoint
+anyone with the app. That is fine for all five — they are public endpoint
 URLs. Never put a key or token in an `EXPO_PUBLIC_` variable; that would undo
 the entire reason the proxy exists.
 

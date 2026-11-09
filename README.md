@@ -3,11 +3,11 @@
 Bite-sized, card-based lessons that teach stock trading and investing — the
 Imprint interaction model applied to finance.
 
-**Phases 1–6 are complete.** Five courses (37 lessons, 740 XP)
+**Phases 1–6 are complete.** Nine courses (56 lessons)
 play end to end with all seven card types, advance-gating, XP, streaks, and
 local persistence — behind a five-tab shell with onboarding, an Explore grid,
 a Saved Cards gallery, and share-as-image. The knowledge base adds 8 traders,
-7 strategies, and 5 book guides, cross-linked, with strategies gated behind
+7 strategies, 5 book guides, and 86 glossary terms, cross-linked, with strategies gated behind
 the lessons that teach them. A card-scoped Claude tutor and a report action
 sit in the player, and storage runs on SQLite behind an unchanged repository
 interface. Phase 6 adds a Postgres-backed multi-device sync service and a
@@ -26,9 +26,7 @@ the protocol, pairing and client-cycle suites passing against it, and
 **passwordless email sign-in is delivering** through Resend from
 `no-reply@sgiq.ai` — confirmed by a real code arriving in a real inbox.
 
-Still not deployed: the ASK proxy, which needs a Cloudflare login and an
-Anthropic key. Until then ASK falls back to bring-your-own-key. See
-[docs/deployment.md](docs/deployment.md).
+See [docs/deployment.md](docs/deployment.md) for what runs where.
 
 > Educational content only. StockiQ does not provide financial advice.
 
@@ -76,7 +74,7 @@ src/
   components/           primitives · cards (7 renderers) · player · path · art
   content/              schema.ts (Zod, source of truth) · richtext · registry
   store/                repository.ts (the persistence boundary) · sqlite · local · sync · slices
-  services/ask/         Claude tutor — proxy when deployed, BYO key otherwise
+  services/ask/         Claude tutor — Cloudflare proxy (live), BYO key fallback when no proxy URL is set
   theme/                tokens.ts
 server/                 Railway sync service — Postgres, migrations, protocol
 workers/ask/            Cloudflare Worker holding the Anthropic key
@@ -155,7 +153,7 @@ off a device and read it. So ASK has two modes, chosen by one ternary in
   client cannot strip it and where it can be corrected without an app release.
   This is the only mode fit to ship.
 - **Bring-your-own-key otherwise.** Your key, your keychain, your credits.
-  Fine personally, and it keeps ASK working before anything is deployed.
+  Fine personally, and it keeps ASK working when no proxy URL is configured.
 
 Phase 4 predicted the proxy would differ "by a URL and a header and nothing
 else moves." That held: adding it changed one composition file and no UI.
@@ -212,8 +210,7 @@ already just numbers.
   when they drift, and that warning caught five stale entries during the
   rewrite.
 
-- **The sync service and Resend email sign-in are deployed;** the ASK proxy is
-  deferred. The live service is at
+- **The sync service, Resend email sign-in and the ASK proxy are deployed.** The live sync service is at
   `stockiq-sync-production.up.railway.app` and the protocol, pairing and
   client-cycle suites all pass against it.
 - **Orphaned accounts accumulate.** A device that pairs into another account
