@@ -86,27 +86,48 @@ export async function resolveAccount(
 ): Promise<string> {
   const now = Date.now();
 
+  // Known device: touch it and return. The UPDATE doubles as the lookup.
   const existing = await client.query<{ account_id: string }>(
-    'SELECT account_id FROM devices WHERE id = $1',
-    [deviceId],
+    'UPDATE devices SET last_seen_at = $2 WHERE id = $1 RETURNING account_id',
+    [deviceId, now],
   );
-
-  if (existing.rows.length) {
-    await client.query('UPDATE devices SET last_seen_at = $2 WHERE id = $1', [deviceId, now]);
-    return existing.rows[0]!.account_id;
-  }
+  if (existing.rows.length) return existing.rows[0]!.account_id;
 
   // New device: its own account. The account id is deliberately NOT the
   // device id — they are different things, and reusing the value would make
   // it impossible to tell a device secret from an account reference later.
+  //
+  // First contact is also where two requests race: a fresh install fires its
+  // first syncs together, both miss the lookup above, and both try to insert
+  // the device. A plain INSERT then fails with a duplicate key on
+  // devices_pkey and aborts the whole sync transaction (seen in production
+  // logs). ON CONFLICT DO NOTHING lets the loser notice it lost — Postgres
+  // waits for the winner's transaction, so the conflict is visible even when
+  // the winner has not committed yet — give back the account it minted, and
+  // carry on with the account the winner created.
   const accountId = `acct_${randomBytes(12).toString('hex')}`;
   await client.query('INSERT INTO accounts (id, created_at) VALUES ($1, $2)', [accountId, now]);
-  await client.query(
+  const inserted = await client.query<{ account_id: string }>(
     `INSERT INTO devices (id, account_id, label, created_at, last_seen_at)
-     VALUES ($1, $2, $3, $4, $4)`,
+     VALUES ($1, $2, $3, $4, $4)
+     ON CONFLICT (id) DO NOTHING
+     RETURNING account_id`,
     [deviceId, accountId, label, now],
   );
-  return accountId;
+  if (inserted.rows.length) return accountId;
+
+  await client.query('DELETE FROM accounts WHERE id = $1', [accountId]);
+  const winner = await client.query<{ account_id: string }>(
+    'UPDATE devices SET last_seen_at = $2 WHERE id = $1 RETURNING account_id',
+    [deviceId, now],
+  );
+  if (!winner.rows.length) {
+    // The winning row vanished between the conflict and this read (deleted
+    // account racing a first sync). Vanishingly rare; the caller's retry on
+    // the next sync tick will simply mint a fresh account.
+    throw new ProtocolError('device registration raced; retry');
+  }
+  return winner.rows[0]!.account_id;
 }
 
 export async function createLinkCode(

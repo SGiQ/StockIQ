@@ -2,6 +2,7 @@ import type { LocalRecord } from '@/store/sqlite/SqliteRepository';
 import type { Repository, SyncStatus } from '@/store/repository';
 import type { SyncTransport } from './SyncClient';
 import { SyncError } from './errors';
+import { pushableChanges } from './serverOwned';
 import { reportSilent } from '@/lib/reportSilent';
 
 /**
@@ -245,7 +246,10 @@ export class SyncingRepository implements Repository {
       const cursor = Number(await this.local.getMeta('cursor')) || 0;
       const dirty = await this.local.listDirty(BATCH);
 
-      const response = await this.client.sync(cursor, dirty);
+      // Server-owned rows (the entitlement) are never sent, but they are still
+      // cleared below with the rest: there is nothing of ours to deliver, and
+      // leaving them dirty would only re-filter them every cycle.
+      const response = await this.client.sync(cursor, pushableChanges(dirty));
 
       // Order matters. Apply the server's records BEFORE clearing dirty, so a
       // crash in between leaves records still marked dirty — they get pushed
