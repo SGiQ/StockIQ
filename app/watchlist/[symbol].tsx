@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
-import { AskError, askService, type AskContext } from '@/services/ask';
-import { changeTone, formatChange, formatPrice, marketService, type Quote } from '@/services/market';
-import { ASK_FREE_DAILY, asksRemaining, canAsk, moveExplanationPrompt } from '@/features/advisor';
-import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
-import { toDayISO } from '@/lib/dates';
+import { type AskContext } from '@/services/ask';
+import { asOfLabel, changeTone, formatChange, formatPrice, marketErrorMessage, marketService, type Quote } from '@/services/market';
+import { ASK_FREE_DAILY, moveExplanationPrompt } from '@/features/advisor';
+import { useAsk } from '@/features/advisor/useAsk';
+import { useAppStore } from '@/store/slices/useAppStore';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -32,22 +32,16 @@ export default function TickerScreen() {
   const { symbol: raw } = useLocalSearchParams<{ symbol: string }>();
   const symbol = (raw ?? '').toUpperCase();
   const router = useRouter();
-  const profile = useAppStore((s) => s.profile);
-  const recordAsk = useAppStore((s) => s.recordAsk);
   const removeFromWatchlist = useAppStore((s) => s.removeFromWatchlist);
-  const entitlement = useEntitlement();
+  const advisor = useAsk();
 
   const [quote, setQuote] = useState<Quote | null>(null);
   const [loadingQuote, setLoadingQuote] = useState(true);
   const [explanation, setExplanation] = useState('');
   const [explaining, setExplaining] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [upsellOpen, setUpsellOpen] = useState(false);
-  const controller = useRef<AbortController | null>(null);
 
-  const unlimited = entitlement.unlimitedAsk;
-  const remaining = asksRemaining(profile, toDayISO(), unlimited);
-  const allowed = canAsk(profile, toDayISO(), unlimited);
+  const { unlimited, remaining, upsellOpen, closeUpsell } = advisor;
 
   useEffect(() => {
     let cancelled = false;
@@ -57,8 +51,8 @@ export default function TickerScreen() {
       .then((qs) => {
         if (!cancelled) setQuote(qs[0] ?? null);
       })
-      .catch(() => {
-        if (!cancelled) setError('Could not load this quote.');
+      .catch((e: unknown) => {
+        if (!cancelled) setError(marketErrorMessage(e, 'Could not load this quote.'));
       })
       .finally(() => {
         if (!cancelled) setLoadingQuote(false);
@@ -70,32 +64,21 @@ export default function TickerScreen() {
 
   const explain = useCallback(async () => {
     if (!quote || explaining) return;
-    if (!allowed) {
-      setUpsellOpen(true);
-      return;
-    }
-    controller.current?.abort();
-    const next = new AbortController();
-    controller.current = next;
-    setExplaining(true);
-    setExplanation('');
-    setError(null);
-    let full = '';
-    try {
-      full = await askService.ask(
-        moveExplanationPrompt(symbol, quote.changePercent),
-        GENERAL_CONTEXT,
-        (delta) => setExplanation((prev) => prev + delta),
-        next.signal,
-      );
-    } catch (e) {
-      setError(e instanceof AskError ? e.message : 'Could not explain right now.');
-      setExplaining(false);
-      return;
-    }
+    const outcome = await advisor.ask({
+      question: moveExplanationPrompt(symbol, quote.changePercent),
+      historyQuestion: `What's behind ${symbol}'s move today?`,
+      context: GENERAL_CONTEXT,
+      onDelta: (delta) => setExplanation((prev) => prev + delta),
+      fallbackMessage: 'Could not explain right now.',
+      onStart: () => {
+        setExplaining(true);
+        setExplanation('');
+        setError(null);
+      },
+    });
     setExplaining(false);
-    if (full.trim()) await recordAsk(`What's behind ${symbol}'s move today?`, full);
-  }, [allowed, explaining, quote, recordAsk, symbol]);
+    if (outcome.status === 'failed') setError(outcome.error.message);
+  }, [advisor, explaining, quote, symbol]);
 
   const tone = quote ? changeTone(quote.change) : 'flat';
 
@@ -129,7 +112,16 @@ export default function TickerScreen() {
               <Text variant="h3" color={toneColor(tone, colors.slate)}>
                 {formatChange(quote.change, quote.changePercent)}
               </Text>
+              {asOfLabel(quote.asOf) ? (
+                <Text variant="caption" color={colors.slateLight}>
+                  {asOfLabel(quote.asOf)}
+                </Text>
+              ) : null}
             </>
+          ) : error ? (
+            <Text variant="body" color={colors.slate}>
+              Could not load a price for {symbol} — see below.
+            </Text>
           ) : (
             <Text variant="body" color={colors.slate}>
               No market data for {symbol}.
@@ -191,7 +183,7 @@ export default function TickerScreen() {
         </Text>
       </ScrollView>
 
-      <UnlimitedUpsellSheet visible={upsellOpen} onClose={() => setUpsellOpen(false)} />
+      <UnlimitedUpsellSheet visible={upsellOpen} onClose={closeUpsell} />
     </Screen>
   );
 }

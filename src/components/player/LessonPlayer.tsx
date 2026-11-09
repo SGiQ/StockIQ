@@ -141,6 +141,9 @@ export function LessonPlayer({
 
   // One score per card per session, so a re-render never double-counts.
   const scoredRef = useRef<Set<CardId>>(new Set());
+  // The final forward tap bypasses `settle`'s debounce (there is no next card
+  // to settle on), so a double tap would fire onComplete twice. Once is enough.
+  const completingRef = useRef(false);
 
   /* ---------------------------------------------------------------- *
    * Hearts gate (course lessons only, and only for free learners)
@@ -307,6 +310,8 @@ export function LessonPlayer({
       return;
     }
     if (atLast) {
+      if (completingRef.current) return;
+      completingRef.current = true;
       stopNarration();
       onComplete();
       return;

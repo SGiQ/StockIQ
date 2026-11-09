@@ -75,3 +75,36 @@ test('moveExplanationPrompt: direction, magnitude, and the no-advice clause', ()
 
   assert.match(moveExplanationPrompt('NVDA', 0), /roughly flat today/);
 });
+
+/* ── how one ASK request ends ─────────────────────────────────────── */
+
+import { settleAsk } from '../src/features/advisor/outcome';
+import { AskError } from '../src/services/ask/types';
+
+test('settleAsk: an abort is silence, whether the service threw or returned partial text', () => {
+  // Pressing New / Stop mid-stream used to surface "Something went wrong."
+  assert.deepEqual(settleAsk({ ok: false, error: new Error('AbortError') }, true, 'fallback'), { status: 'aborted' });
+  assert.deepEqual(settleAsk({ ok: true, answer: 'partial answ' }, true, 'fallback'), { status: 'aborted' });
+});
+
+test('settleAsk: a non-empty answer is recorded; an empty one is not', () => {
+  assert.deepEqual(settleAsk({ ok: true, answer: 'Bonds are loans.' }, false, 'fallback'), {
+    status: 'answered',
+    answer: 'Bonds are loans.',
+  });
+  assert.deepEqual(settleAsk({ ok: true, answer: '   ' }, false, 'fallback'), { status: 'aborted' });
+});
+
+test('settleAsk: failures keep an AskError and wrap anything else with the screen copy', () => {
+  const known = new AskError('rate_limited', 'Slow down.');
+  const kept = settleAsk({ ok: false, error: known }, false, 'fallback');
+  assert.equal(kept.status, 'failed');
+  if (kept.status === 'failed') assert.equal(kept.error, known);
+
+  const wrapped = settleAsk({ ok: false, error: new TypeError('network') }, false, 'Could not coach right now.');
+  assert.equal(wrapped.status, 'failed');
+  if (wrapped.status === 'failed') {
+    assert.equal(wrapped.error.reason, 'unknown');
+    assert.equal(wrapped.error.message, 'Could not coach right now.');
+  }
+});

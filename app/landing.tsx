@@ -66,7 +66,7 @@ const TIERS = [
       'Paper trading',
       'Knowledge Base previews',
       '5 hearts per session',
-      '3 AI tutor questions / day',
+      '5 AI tutor questions / day',
     ],
     highlight: false,
     cta: 'Get started',

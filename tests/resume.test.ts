@@ -114,3 +114,43 @@ test('seedResumeStates: a wrong binary pick is reconstructed as the other option
 test('seedResumeStates: a fresh start seeds nothing', () => {
   assert.deepEqual(seedResumeStates(cards, [{ cardId: 'q1', correct: true }], 0), {});
 });
+
+/* ── one completion per lesson at a time ─────────────────────────── */
+
+import { singleFlight } from '../src/lib/singleFlight';
+
+test('singleFlight: concurrent calls for one key share a single run', async () => {
+  const inFlight = new Map<string, Promise<number>>();
+  let runs = 0;
+  let release!: (n: number) => void;
+  const run = () => {
+    runs += 1;
+    return new Promise<number>((resolve) => {
+      release = resolve;
+    });
+  };
+
+  // A double tap on the last card: two calls before the first has settled.
+  const first = singleFlight(inFlight, 'c/l', run);
+  const second = singleFlight(inFlight, 'c/l', run);
+  assert.equal(runs, 1);
+  assert.equal(first, second);
+
+  release(42);
+  assert.deepEqual(await Promise.all([first, second]), [42, 42]);
+
+  // Once settled the key is free again (a replay later is a new completion).
+  assert.equal(inFlight.has('c/l'), false);
+  assert.equal(await singleFlight(inFlight, 'c/l', async () => 7), 7);
+});
+
+test('singleFlight: different keys run independently, and a failure releases the key', async () => {
+  const inFlight = new Map<string, Promise<string>>();
+  const a = singleFlight(inFlight, 'a', async () => 'a');
+  const b = singleFlight(inFlight, 'b', async () => 'b');
+  assert.notEqual(a, b);
+  assert.deepEqual(await Promise.all([a, b]), ['a', 'b']);
+
+  await assert.rejects(singleFlight(inFlight, 'x', async () => { throw new Error('disk full'); }), /disk full/);
+  assert.equal(inFlight.has('x'), false);
+});

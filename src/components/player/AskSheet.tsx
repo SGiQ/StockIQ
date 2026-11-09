@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -15,7 +15,9 @@ import Svg, { Path } from 'react-native-svg';
 import type { Card } from '@/content/types';
 import { Chip, PillButton, Text } from '@/components/primitives';
 import { AskError, SUGGESTED_QUESTIONS, askService } from '@/services/ask';
+import { useAsk } from '@/features/advisor/useAsk';
 import * as haptics from '@/lib/haptics';
+import { UnlimitedUpsellSheet } from './UnlimitedUpsellSheet';
 import { palette, radius, shadow, space, type as typeScale } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -45,7 +47,10 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
   const [keyDraft, setKeyDraft] = useState('');
   const [saving, setSaving] = useState(false);
 
-  const controller = useRef<AbortController | null>(null);
+  // Metering, abort-on-unmount and history live in the shared hook, so the
+  // in-lesson sheet counts against the same daily allowance as every other
+  // ASK surface.
+  const advisor = useAsk();
 
   useEffect(() => {
     if (!visible) return;
@@ -53,14 +58,9 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
   }, [visible]);
 
   const abort = useCallback(() => {
-    controller.current?.abort();
-    controller.current = null;
+    advisor.abort();
     setStreaming(false);
-  }, []);
-
-  // Abort on unmount as well as on dismiss — a backgrounded modal that keeps
-  // a stream open is the same wasted spend.
-  useEffect(() => () => controller.current?.abort(), []);
+  }, [advisor]);
 
   const dismiss = useCallback(() => {
     abort();
@@ -100,34 +100,23 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
       const trimmed = text.trim();
       if (!trimmed || streaming) return;
 
-      abort();
-      const next = new AbortController();
-      controller.current = next;
-
       setQuestion(trimmed);
       setAnswer('');
       setError(null);
       setStreaming(true);
       haptics.tap();
 
-      try {
-        await askService.ask(
-          trimmed,
-          { card, lessonTitle, courseTitle },
-          (delta) => setAnswer((prev) => prev + delta),
-          next.signal,
-        );
-      } catch (e) {
-        // An abort is the learner closing the sheet, not a failure.
-        if (!next.signal.aborted) {
-          setError(e instanceof AskError ? e : new AskError('unknown', 'Something went wrong.'));
-        }
-      } finally {
-        if (controller.current === next) controller.current = null;
-        setStreaming(false);
-      }
+      const outcome = await advisor.ask({
+        question: trimmed,
+        context: { card, lessonTitle, courseTitle },
+        onDelta: (delta) => setAnswer((prev) => prev + delta),
+      });
+      // An abort is the learner closing the sheet, not a failure; a block
+      // means the hook has opened the upsell.
+      if (outcome.status === 'failed') setError(outcome.error);
+      setStreaming(false);
     },
-    [abort, card, courseTitle, lessonTitle, streaming],
+    [advisor, card, courseTitle, lessonTitle, streaming],
   );
 
   return (
@@ -244,6 +233,8 @@ export function AskSheet({ visible, onClose, card, lessonTitle, courseTitle }: A
           </Text>
         </View>
       </KeyboardAvoidingView>
+
+      <UnlimitedUpsellSheet visible={advisor.upsellOpen} onClose={advisor.closeUpsell} />
     </Modal>
   );
 }

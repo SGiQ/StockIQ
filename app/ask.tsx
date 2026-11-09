@@ -4,10 +4,10 @@ import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
-import { AskError, askService, type AskContext } from '@/services/ask';
-import { ASK_FREE_DAILY, asksRemaining, buildContextualQuestion, type AskTurn } from '@/features/advisor';
-import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
-import { toDayISO } from '@/lib/dates';
+import { AskError, type AskContext } from '@/services/ask';
+import { ASK_FREE_DAILY, buildContextualQuestion, type AskTurn } from '@/features/advisor';
+import { useAsk } from '@/features/advisor/useAsk';
+import { useAppStore } from '@/store/slices/useAppStore';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -34,23 +34,17 @@ const SUGGESTIONS = [
 export default function AskScreen() {
   const colors = useColors();
   const router = useRouter();
-  const profile = useAppStore((s) => s.profile);
   const history = useAppStore((s) => s.askThreads);
-  const recordAsk = useAppStore((s) => s.recordAsk);
-  const entitlement = useEntitlement();
+  const advisor = useAsk();
 
   const [turns, setTurns] = useState<AskTurn[]>([]);
   const [pending, setPending] = useState<string | null>(null);
   const [answer, setAnswer] = useState('');
   const [draft, setDraft] = useState('');
   const [error, setError] = useState<AskError | null>(null);
-  const [upsellOpen, setUpsellOpen] = useState(false);
-  const controller = useRef<AbortController | null>(null);
   const scroll = useRef<ScrollView | null>(null);
 
-  const today = toDayISO();
-  const unlimited = entitlement.unlimitedAsk;
-  const remaining = asksRemaining(profile, today, unlimited);
+  const { unlimited, remaining, upsellOpen, closeUpsell, openUpsell } = advisor;
   const outOfAsks = !unlimited && remaining <= 0;
   const streaming = pending !== null;
   const active = turns.length > 0 || streaming;
@@ -64,50 +58,41 @@ export default function AskScreen() {
     async (raw: string) => {
       const q = raw.trim();
       if (!q || streaming) return;
-      if (outOfAsks) {
-        setUpsellOpen(true);
-        return;
-      }
-      controller.current?.abort();
-      const next = new AbortController();
-      controller.current = next;
 
       const priorTurns = turns;
-      setDraft('');
-      setPending(q);
-      setAnswer('');
-      setError(null);
-      let full = '';
-      try {
-        full = await askService.ask(
-          buildContextualQuestion(priorTurns, q),
-          GENERAL_CONTEXT,
-          (delta) => setAnswer((prev) => prev + delta),
-          next.signal,
-        );
-      } catch (e) {
-        setError(e instanceof AskError ? e : new AskError('unknown', 'Something went wrong.'));
-        setPending(null);
-        setAnswer('');
-        return;
-      }
+      const outcome = await advisor.ask({
+        question: buildContextualQuestion(priorTurns, q),
+        historyQuestion: q,
+        context: GENERAL_CONTEXT,
+        onDelta: (delta) => setAnswer((prev) => prev + delta),
+        onStart: () => {
+          setDraft('');
+          setPending(q);
+          setAnswer('');
+          setError(null);
+        },
+      });
+      // Pressing New mid-stream aborts: `reset` has already cleared the thread,
+      // and an abort is not an error to show. A block has opened the upsell.
+      if (outcome.status === 'aborted' || outcome.status === 'blocked') return;
       setPending(null);
       setAnswer('');
-      if (full.trim()) {
-        setTurns((prev) => [...prev, { question: q, answer: full }]);
-        await recordAsk(q, full);
+      if (outcome.status === 'failed') {
+        setError(outcome.error);
+        return;
       }
+      setTurns((prev) => [...prev, { question: q, answer: outcome.answer }]);
     },
-    [outOfAsks, recordAsk, streaming, turns],
+    [advisor, streaming, turns],
   );
 
   const reset = useCallback(() => {
-    controller.current?.abort();
+    advisor.abort();
     setTurns([]);
     setPending(null);
     setAnswer('');
     setError(null);
-  }, []);
+  }, [advisor]);
 
   return (
     <Screen tone="warm" edges={['top']}>
@@ -193,7 +178,7 @@ export default function AskScreen() {
             <Text variant="caption" color={colors.slate}>
               {`Free includes ${ASK_FREE_DAILY} a day. They reset tomorrow — or go unlimited with Pro.`}
             </Text>
-            <PillButton label="Go Unlimited" variant="primary" onPress={() => setUpsellOpen(true)} />
+            <PillButton label="Go Unlimited" variant="primary" onPress={openUpsell} />
           </CardSurface>
         ) : null}
 
@@ -269,7 +254,7 @@ export default function AskScreen() {
         </Pressable>
       </View>
 
-      <UnlimitedUpsellSheet visible={upsellOpen} onClose={() => setUpsellOpen(false)} />
+      <UnlimitedUpsellSheet visible={upsellOpen} onClose={closeUpsell} />
     </Screen>
   );
 }

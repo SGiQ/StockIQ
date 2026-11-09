@@ -33,6 +33,7 @@ export class MockMarketService implements MarketService {
         changePercent,
         previousClose: Number((price - change).toFixed(2)),
         valid: true,
+        asOf: 'delayed',
       };
     });
   }

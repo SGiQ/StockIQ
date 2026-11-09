@@ -2,6 +2,7 @@ import type { LocalRecord } from '@/store/sqlite/SqliteRepository';
 import type { Repository, SyncStatus } from '@/store/repository';
 import type { SyncTransport } from './SyncClient';
 import { SyncError } from './errors';
+import { reportSilent } from '@/lib/reportSilent';
 
 /**
  * What `SyncingRepository` needs from the local store: the whole `Repository`
@@ -177,7 +178,8 @@ export class SyncingRepository implements Repository {
       const session = await this.client.getSession();
       if (session.email) await this.local.setMeta('signedInEmail', session.email);
       return session;
-    } catch {
+    } catch (error) {
+      reportSilent(error, 'sync.getSession');
       const email = await this.local.getMeta('signedInEmail');
       return { signedIn: Boolean(email), email };
     }

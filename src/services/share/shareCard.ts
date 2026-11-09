@@ -10,6 +10,7 @@
 import { Platform } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
+import { reportSilent } from '@/lib/reportSilent';
 
 export type ShareResult = 'shared' | 'unavailable' | 'failed';
 
@@ -39,7 +40,8 @@ export async function shareViewAsImage(
       UTI: 'public.png',
     });
     return 'shared';
-  } catch {
+  } catch (error) {
+    reportSilent(error, 'share.card');
     return 'failed';
   }
 }
