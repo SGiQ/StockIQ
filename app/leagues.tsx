@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
-import { CardSurface, Screen, Text } from '@/components/primitives';
+import Animated, { FadeIn, LinearTransition, ReduceMotion } from 'react-native-reanimated';
+import { Breathe, CardSurface, Screen, Text } from '@/components/primitives';
 import { PROMOTE_TOP, RELEGATE_BOTTOM, currentWeekXp, daysLeftInWeek, type Outcome } from '@/features/leagues';
 import { fetchLeagueStandings, simulatedView, type LeagueView } from '@/services/leagues';
 import { useAppStore } from '@/store/slices/useAppStore';
@@ -77,8 +78,15 @@ export default function LeaguesScreen() {
         </View>
 
         <View style={[styles.list, { backgroundColor: colors.paper }]}>
+          {/* Rows are keyed by competitor, so when the live cohort replaces
+              the sample (or ranks shift) each row slides to its new place
+              instead of the list re-painting. */}
           {entries.map((e, i) => (
-            <View key={`${e.name}-${i}`}>
+            <Animated.View
+              key={e.isYou ? 'you' : e.name}
+              layout={LinearTransition.springify().damping(18).reduceMotion(ReduceMotion.System)}
+              entering={FadeIn.delay(Math.min(i, 12) * 30).duration(260).reduceMotion(ReduceMotion.System)}
+            >
               {i === PROMOTE_TOP && entries.length > PROMOTE_TOP + RELEGATE_BOTTOM ? (
                 <View style={[styles.divider, { backgroundColor: palette.emeraldDeep }]} />
               ) : null}
@@ -86,6 +94,9 @@ export default function LeaguesScreen() {
                 <View style={[styles.divider, { backgroundColor: palette.danger }]} />
               ) : null}
               <View style={[styles.row, e.isYou && styles.youRow]}>
+                {i < PROMOTE_TOP ? (
+                  <Breathe style={[StyleSheet.absoluteFill, { backgroundColor: palette.emeraldDeep }]} />
+                ) : null}
                 <Text variant="bodyEm" color={colors.slate} style={styles.rank}>
                   {e.rank}
                 </Text>
@@ -97,7 +108,7 @@ export default function LeaguesScreen() {
                   {`${e.xp} XP`}
                 </Text>
               </View>
-            </View>
+            </Animated.View>
           ))}
         </View>
 

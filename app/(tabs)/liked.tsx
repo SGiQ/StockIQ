@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { resolveRef, type ResolvedRef } from '@/content/registry';
 import { Glyph } from '@/components/art/Glyph';
-import { CardSurface, Screen, Text } from '@/components/primitives';
+import { CardSurface, Float, Screen, Text } from '@/components/primitives';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -53,9 +53,11 @@ export default function LikedTab() {
 
         {items.length === 0 ? (
           <View style={styles.empty}>
-            <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
-              <Glyph name="heart" size={30} color={colors.slate} />
-            </View>
+            <Float>
+              <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
+                <Glyph name="heart" size={30} color={colors.slate} />
+              </View>
+            </Float>
             <Text variant="h3" align="center">
               Nothing liked yet
             </Text>

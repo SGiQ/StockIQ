@@ -6,7 +6,7 @@ import { toPlainText } from '@/content/richtext';
 import type { KeyInsightCard } from '@/content/types';
 import { KeyInsightPoster } from '@/components/cards/KeyInsightCardView';
 import { ArtView } from '@/components/art/ArtView';
-import { Chip, Screen, Text } from '@/components/primitives';
+import { Chip, Float, Screen, Text } from '@/components/primitives';
 import { Glyph } from '@/components/art/Glyph';
 import { useAppStore } from '@/store/slices/useAppStore';
 import type { SavedCard } from '@/store';
@@ -142,9 +142,11 @@ function Empty() {
   const colors = useColors();
   return (
     <View style={styles.empty}>
-      <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
-        <Glyph name="bell" size={30} color={colors.slate} />
-      </View>
+      <Float>
+        <View style={[styles.emptyBadge, { backgroundColor: colors.hairline }]}>
+          <Glyph name="bell" size={30} color={colors.slate} />
+        </View>
+      </Float>
       <Text variant="h3" align="center">
         Nothing saved yet
       </Text>

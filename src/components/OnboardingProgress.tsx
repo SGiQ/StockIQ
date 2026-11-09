@@ -1,5 +1,13 @@
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { radius, space } from '@/theme/tokens';
+import Animated, {
+  ReduceMotion,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+import { motion, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
 export interface OnboardingProgressProps {
@@ -27,10 +35,23 @@ export function OnboardingProgress({ step, total }: OnboardingProgressProps) {
       accessibilityLabel={`Step ${step} of ${total}`}
     >
       {Array.from({ length: total }, (_, i) => (
-        <View key={i} style={[styles.segment, i < step ? { backgroundColor: colors.paper } : styles.off]} />
+        <Segment key={i} filled={i < step} fresh={i === step - 1} color={colors.paper} />
       ))}
     </View>
   );
+}
+
+/** The segment for the current step springs in from the left when the step mounts. */
+function Segment({ filled, fresh, color }: { filled: boolean; fresh: boolean; color: string }) {
+  const reduceMotion = useReducedMotion();
+  const scale = useSharedValue(fresh && !reduceMotion ? 0.15 : 1);
+  useEffect(() => {
+    if (!fresh || reduceMotion) return;
+    scale.value = withSpring(1, { ...motion.spring, reduceMotion: ReduceMotion.System });
+  }, [fresh, reduceMotion, scale]);
+  const animated = useAnimatedStyle(() => ({ transform: [{ scaleX: scale.value }] }));
+  if (!filled) return <View style={[styles.segment, styles.off]} />;
+  return <Animated.View style={[styles.segment, { backgroundColor: color, transformOrigin: 'left' }, animated]} />;
 }
 
 const styles = StyleSheet.create({

@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { listCourses } from '@/content/registry';
 import { ArtView } from '@/components/art/ArtView';
-import { PillButton, Screen, Text } from '@/components/primitives';
+import { FadeUp, PillButton, Screen, Text } from '@/components/primitives';
 import { OnboardingProgress } from '@/components/OnboardingProgress';
 import { useAppStore } from '@/store/slices/useAppStore';
 import { palette, radius, shadow, space } from '@/theme/tokens';
@@ -35,11 +35,11 @@ export default function ChooseCourse() {
         </View>
 
         <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
-          {courses.map((course) => {
+          {courses.map((course, i) => {
             const isSelected = selected === course.id;
             return (
+              <FadeUp key={course.id} delayMs={Math.min(i, 8) * 55} distance={12}>
               <Pressable
-                key={course.id}
                 onPress={() => setSelected(course.id)}
                 accessibilityRole="button"
                 accessibilityState={{ selected: isSelected }}
@@ -53,14 +53,16 @@ export default function ChooseCourse() {
                     {course.title}
                   </Text>
                   {course.id === recommended ? (
-                    <View style={styles.recommendedTag}>
+                    // The recommendation lands after its row has settled.
+                    <FadeUp delayMs={Math.min(i, 8) * 55 + 320} distance={8} style={styles.recommendedTag}>
                       <Text variant="label" color={palette.forestDeep} uppercase>
                         Recommended for you
                       </Text>
-                    </View>
+                    </FadeUp>
                   ) : null}
                 </View>
               </Pressable>
+              </FadeUp>
             );
           })}
         </ScrollView>
