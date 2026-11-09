@@ -7,6 +7,7 @@ import { getCourse, getLesson, getNextLesson } from '@/content/registry';
 import { LessonPlayer } from '@/components/player/LessonPlayer';
 import { Glyph } from '@/components/art/Glyph';
 import { BadgeMedallion } from '@/components/BadgeMedallion';
+import { Confetti } from '@/components/Confetti';
 import { AnimatedNumber, PillButton, Screen, Text } from '@/components/primitives';
 import { StreakRow } from '@/components/StreakRow';
 import { GemIcon } from '@/components/Currency';
@@ -213,9 +214,16 @@ function CompletionScreen({
   const router = useRouter();
   const colors = useColors();
   const next = getNextLesson(courseId, lessonId);
+  // Confetti for the bigger beats only — a perfect run, a streak milestone,
+  // or finishing the whole course — so an ordinary completion keeps its
+  // quieter check-and-XP moment and the burst still means something.
+  const celebrate =
+    completion.xpAwarded > 0 &&
+    (completion.starred || completion.streakMilestone !== null || next === null);
 
   return (
     <Screen tone="paper">
+      <Confetti play={celebrate} />
       <ScrollView contentContainerStyle={styles.completion} showsVerticalScrollIndicator={false}>
         <View style={styles.badge}>
           <Glyph
