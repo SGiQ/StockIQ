@@ -14,6 +14,8 @@
  * serve. The cap, when configured, only protects the Finnhub free-tier quota.
  */
 
+import { normalizeQuote, type FinnhubQuote, type Quote } from './quote';
+
 interface Env {
   FINNHUB_API_KEY: string;
   /** Optional KV namespace for a per-caller daily cap. */
@@ -60,20 +62,6 @@ function parseSymbols(raw: string | null): string[] {
   return [...seen];
 }
 
-interface Quote {
-  symbol: string;
-  /** Current price. */
-  price: number;
-  /** Absolute change on the day. */
-  change: number;
-  /** Percent change on the day. */
-  changePercent: number;
-  /** Previous close, for context. */
-  previousClose: number;
-  /** False when Finnhub has no data for the symbol (all-zero response). */
-  valid: boolean;
-}
-
 class UpstreamError extends Error {
   constructor(readonly status: number) {
     super(`finnhub ${status}`);
@@ -84,18 +72,9 @@ async function fetchQuote(symbol: string, key: string): Promise<Quote> {
   const url = `https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${key}`;
   const res = await fetch(url, { cf: { cacheTtl: QUOTE_TTL_SECONDS, cacheEverything: true } });
   if (!res.ok) throw new UpstreamError(res.status);
-  const q = (await res.json()) as { c?: number; d?: number; dp?: number; pc?: number };
-  const price = q.c ?? 0;
-  // Finnhub returns all zeros for an unknown symbol.
-  const valid = price > 0;
-  return {
-    symbol,
-    price,
-    change: q.d ?? 0,
-    changePercent: q.dp ?? 0,
-    previousClose: q.pc ?? 0,
-    valid,
-  };
+  // Closed-market payloads and the "as of last close" flag are handled in
+  // normalizeQuote; see quote.ts.
+  return normalizeQuote(symbol, (await res.json()) as FinnhubQuote);
 }
 
 /** Fetch quotes one at a time, spaced by STAGGER_MS, so a batch never bursts. */

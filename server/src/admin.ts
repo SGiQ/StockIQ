@@ -39,6 +39,16 @@ export interface UserRow {
 
 const now = () => Date.now();
 const dayMs = 86_400_000;
+
+/**
+ * SQL for a payload field read as a number, or NULL when it is not one.
+ *
+ * Payloads are written by clients, so a bare `(payload->>'x')::bigint` is a
+ * 500 waiting for the first malformed row. `jsonb_typeof` guards the cast and
+ * a bad row simply drops out of the aggregate instead of breaking the page.
+ */
+const num = (field: string): string =>
+  `CASE WHEN jsonb_typeof(payload->'${field}') = 'number' THEN (payload->>'${field}')::numeric END`;
 const countOf = (r: { rows: { count: string }[] }) => Number(r.rows[0]?.count ?? 0);
 
 export async function adminOverview(client: PoolClient): Promise<AdminOverview> {
@@ -83,7 +93,7 @@ export async function adminOverview(client: PoolClient): Promise<AdminOverview> 
       `SELECT count(*) FROM records WHERE collection = 'progress' AND payload->>'status' = 'completed'`,
     ).then(countOf),
     client.query<{ count: string }>(
-      `SELECT count(*) FROM records WHERE collection = 'progress' AND payload->>'status' = 'completed' AND (payload->>'completedAt')::bigint >= $1`,
+      `SELECT count(*) FROM records WHERE collection = 'progress' AND payload->>'status' = 'completed' AND ${num('completedAt')} >= $1`,
       [todayStart],
     ).then(countOf),
     client.query<{ avg: string | null }>(
@@ -93,7 +103,7 @@ export async function adminOverview(client: PoolClient): Promise<AdminOverview> 
       `SELECT count(*) FROM records WHERE collection = 'advisor'`,
     ).then(countOf),
     client.query<{ count: string }>(
-      `SELECT count(*) FROM records WHERE collection = 'advisor' AND (payload->>'at')::bigint >= $1`,
+      `SELECT count(*) FROM records WHERE collection = 'advisor' AND ${num('at')} >= $1`,
       [todayStart],
     ).then(countOf),
     client.query<{ count: string }>(
@@ -125,7 +135,13 @@ export async function adminOverview(client: PoolClient): Promise<AdminOverview> 
   };
 }
 
+export function clampInt(value: number, min: number, max: number, fallback: number): number {
+  if (!Number.isFinite(value)) return fallback;
+  return Math.min(max, Math.max(min, Math.trunc(value)));
+}
+
 export async function signupTimeline(client: PoolClient, days: number = 30): Promise<SignupRow[]> {
+  days = clampInt(days, 1, 366, 30);
   const n = now();
   const start = n - days * dayMs;
   const { rows } = await client.query<{ day: string; count: string }>(
@@ -144,6 +160,10 @@ export async function listUsers(
   limit: number = 50,
   offset: number = 0,
 ): Promise<{ users: UserRow[]; total: number }> {
+  // Query-string numbers arrive unvalidated; NaN would be a pg error and 1e9
+  // would dump the table.
+  limit = clampInt(limit, 1, 500, 50);
+  offset = clampInt(offset, 0, 10_000_000, 0);
   const totalR = await client.query<{ count: string }>('SELECT count(*) FROM accounts');
   const total = Number(totalR.rows[0]?.count ?? 0);
 
@@ -164,9 +184,12 @@ export async function listUsers(
        (SELECT count(*) FROM devices d WHERE d.account_id = a.id) AS devices,
        (SELECT max(last_seen_at) FROM devices d WHERE d.account_id = a.id) AS last_seen,
        (SELECT i.provider FROM identities i WHERE i.account_id = a.id LIMIT 1) AS provider,
-       COALESCE((SELECT (r.payload->>'totalXp')::int FROM records r WHERE r.owner_id = a.id AND r.collection = 'profile' LIMIT 1), 0) AS total_xp,
+       -- Summed from completed lessons, as leagues.ts does. The profile row's
+       -- own totalXp is a known-bad source: it is a singleton that clobbers to
+       -- 0 when a device signs in, so the dashboard would show 0 for real users.
+       COALESCE((SELECT sum(${num('xpAwarded')}) FROM records r WHERE r.owner_id = a.id AND r.collection = 'progress' AND r.deleted_at IS NULL AND r.payload->>'status' = 'completed'), 0) AS total_xp,
        (SELECT count(*) FROM records r WHERE r.owner_id = a.id AND r.collection = 'progress' AND r.payload->>'status' = 'completed') AS lessons_completed,
-       COALESCE((SELECT (r.payload->>'currentStreak')::int FROM records r WHERE r.owner_id = a.id AND r.collection = 'streak' LIMIT 1), 0) AS current_streak,
+       COALESCE((SELECT ${num('currentStreak')} FROM records r WHERE r.owner_id = a.id AND r.collection = 'streak' LIMIT 1), 0) AS current_streak,
        COALESCE((SELECT r.payload->>'plan' FROM records r WHERE r.owner_id = a.id AND r.collection = 'entitlement' LIMIT 1), 'free') AS plan
      FROM accounts a
      ORDER BY a.created_at DESC
@@ -194,6 +217,7 @@ export async function telemetrySummary(
   client: PoolClient,
   days: number = 7,
 ): Promise<{ event_type: string; count: number }[]> {
+  days = clampInt(days, 1, 366, 7);
   const start = now() - days * dayMs;
   const { rows } = await client.query<{ event_type: string; count: string }>(
     `SELECT event_type, count(*)

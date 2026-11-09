@@ -11,6 +11,7 @@
 import { SYNC_URL, isSyncConfigured } from '@/config';
 import { getDeviceId } from '@/lib/deviceId';
 import { buildStandings, type Standing } from '@/features/leagues';
+import { reportSilent } from '@/lib/reportSilent';
 
 export interface LeagueView {
   tier: string;
@@ -50,8 +51,9 @@ export async function fetchLeagueStandings(youXp: number, now: number): Promise<
           };
         }
       }
-    } catch {
+    } catch (error) {
       // fall through to the sim
+      reportSilent(error, 'leagues.fetch');
     }
   }
   return simulatedView(youXp, now);

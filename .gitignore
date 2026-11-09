@@ -40,9 +40,11 @@ yarn-error.*
 /ios
 /android
 
-# Deployment URLs and any local secrets
-.env
-.env.local
+# Deployment URLs and any local secrets. Every .env variant is ignored
+# (including .env.production, which the older `.env` + `.env*.local` pair
+# missed); only the placeholder-filled example is tracked.
+.env*
+!.env.example
 .vercel
 
 # Visual reference from other apps — copyrighted, must never be committed.

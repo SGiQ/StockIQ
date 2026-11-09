@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import * as Sentry from '@sentry/react-native';
 import * as haptics from '@/lib/haptics';
 import { getCourse, getLesson, getNextLesson } from '@/content/registry';
 import { LessonPlayer } from '@/components/player/LessonPlayer';
@@ -11,7 +12,7 @@ import { StreakRow } from '@/components/StreakRow';
 import { GemIcon } from '@/components/Currency';
 import { SourceLinks } from '@/components/kb/SourceLinks';
 import { progressId, reportId, savedCardId } from '@/store';
-import { useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
+import { courseNodeStatuses, useAppStore, type LessonCompletion } from '@/store/slices/useAppStore';
 import { clampResumeIndex, seedResumeStates } from '@/components/player/cardState';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -44,6 +45,16 @@ export default function LessonScreen() {
   const [showTutorial] = useState(!seenTutorial);
 
   const [completion, setCompletion] = useState<LessonCompletion | null>(null);
+  /** The result could not be written; the learner can retry rather than lose it. */
+  const [saveFailed, setSaveFailed] = useState(false);
+
+  // The path gates lessons in order, but the route is reachable by URL. Derive
+  // the same status the course screen shows and refuse a locked one here too.
+  const progressMap = useAppStore((s) => s.progress);
+  const locked = useMemo(
+    () => courseNodeStatuses(progressMap, courseId)[lessonId] === 'locked',
+    [progressMap, courseId, lessonId],
+  );
 
   /**
    * Where to pick up. Captured once on mount from the store, so the writes
@@ -59,7 +70,7 @@ export default function LessonScreen() {
   });
 
   useEffect(() => {
-    if (lesson) {
+    if (lesson && !locked) {
       void startLesson(courseId, lessonId);
       void trackTelemetry(
         'lesson_started',
@@ -67,12 +78,23 @@ export default function LessonScreen() {
         resume.index > 0 ? `resumed:${resume.index}` : undefined,
       );
     }
-  }, [courseId, lesson, lessonId, resume.index, startLesson]);
+  }, [courseId, lesson, lessonId, locked, resume.index, startLesson]);
 
   const handleComplete = useCallback(async () => {
     haptics.success();
-    setCompletion(await completeLesson(courseId, lessonId));
-    void trackTelemetry('lesson_completed', `${courseId}/${lessonId}`);
+    setSaveFailed(false);
+    try {
+      setCompletion(await completeLesson(courseId, lessonId));
+      void trackTelemetry('lesson_completed', `${courseId}/${lessonId}`);
+    } catch (error) {
+      // A storage failure must not strand the learner on a finished deck with
+      // no explanation: show it, offer a retry, and make sure we hear about it.
+      Sentry.captureException(error, {
+        tags: { context: 'lesson.complete' },
+        extra: { courseId, lessonId },
+      });
+      setSaveFailed(true);
+    }
   }, [completeLesson, courseId, lessonId]);
 
   const exit = useCallback(() => {
@@ -86,6 +108,41 @@ export default function LessonScreen() {
         <View style={styles.centre}>
           <Text variant="h2">Lesson not found</Text>
           <PillButton label="Go back" variant="dark" fullWidth={false} onPress={exit} />
+        </View>
+      </Screen>
+    );
+  }
+
+  if (locked) {
+    return (
+      <Screen tone="paper">
+        <View style={styles.centre}>
+          <Glyph name="lock" size={48} color={palette.slate} strokeWidth={2} />
+          <Text variant="h2" align="center">This lesson is locked</Text>
+          <Text variant="body" color={palette.slate} align="center">
+            Finish the lesson before it to unlock this one.
+          </Text>
+          <PillButton
+            label="Back to course"
+            variant="dark"
+            fullWidth={false}
+            onPress={() => router.replace(`/course/${courseId}` as never)}
+          />
+        </View>
+      </Screen>
+    );
+  }
+
+  if (saveFailed) {
+    return (
+      <Screen tone="paper">
+        <View style={styles.centre} accessibilityRole="alert">
+          <Text variant="h2" align="center">Couldn't save your result</Text>
+          <Text variant="body" color={palette.slate} align="center">
+            Your answers are still here. Try again to record the lesson.
+          </Text>
+          <PillButton label="Retry" variant="dark" fullWidth={false} onPress={() => void handleComplete()} />
+          <PillButton label="Exit" variant="ghost" fullWidth={false} onPress={exit} />
         </View>
       </Screen>
     );

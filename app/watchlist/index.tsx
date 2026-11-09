@@ -4,11 +4,12 @@ import { useRouter } from 'expo-router';
 import Svg, { Path } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import {
-  MarketError,
+  asOfLabel,
   changeTone,
   formatChange,
   formatPrice,
   isMarketLive,
+  marketErrorMessage,
   quotesWithBackfill,
   type Quote,
 } from '@/services/market';
@@ -55,7 +56,7 @@ export default function WatchlistScreen() {
       );
     } catch (e) {
       if (runId.current === myRun) {
-        setError(e instanceof MarketError ? e.message : 'Market data is unavailable.');
+        setError(marketErrorMessage(e));
       }
     } finally {
       if (runId.current === myRun) setLoading(false);
@@ -181,6 +182,11 @@ export default function WatchlistScreen() {
                         <Text variant="caption" color={toneColor(tone, colors.slate)}>
                           {formatChange(q.change, q.changePercent)}
                         </Text>
+                        {asOfLabel(q.asOf) ? (
+                          <Text variant="caption" color={colors.slateLight}>
+                            {asOfLabel(q.asOf)}
+                          </Text>
+                        ) : null}
                       </>
                     ) : (
                       <Text variant="caption" color={colors.slateLight}>

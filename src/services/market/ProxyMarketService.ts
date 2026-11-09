@@ -1,5 +1,6 @@
 import { MARKET_URL } from '@/config';
 import { getDeviceId } from '@/lib/deviceId';
+import { marketErrorFromResponse } from './proxyErrors';
 import { MarketError, type MarketService, type Quote } from './types';
 
 /**
@@ -24,8 +25,15 @@ export class ProxyMarketService implements MarketService {
     } catch {
       throw new MarketError('offline', 'Could not reach market data.');
     }
-    if (res.status === 429) throw new MarketError('rate_limited', 'Too many requests — try again shortly.');
-    if (!res.ok) throw new MarketError('unknown', 'Market data is unavailable.');
+
+    if (!res.ok) {
+      const body: unknown = await res.json().catch(() => undefined);
+      const err = marketErrorFromResponse(res.status, body);
+      // Keep the Worker's own wording visible to whoever is debugging a live
+      // outage, without putting it in front of a learner.
+      if (err.detail) console.warn(`[market] ${res.status}: ${err.detail}`);
+      throw err;
+    }
 
     const body = (await res.json()) as { quotes?: Quote[] };
     return body.quotes ?? [];

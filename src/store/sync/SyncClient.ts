@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import type { LocalRecord } from '@/store/sqlite/SqliteRepository';
 import { getDeviceId } from '@/lib/deviceId';
 import { SyncError } from './errors';
+import { reportSilent } from '@/lib/reportSilent';
 
 /**
  * HTTP client for the sync service.
@@ -124,7 +125,10 @@ export class SyncClient implements SyncTransport {
       // "Sign-in email is unavailable right now" are actionable, whereas
       // "request failed with 503" tells them nothing they can do anything
       // about.
-      const payload = (await response.json().catch(() => ({}))) as { error?: string };
+      const payload = (await response.json().catch((e: unknown) => {
+        reportSilent(e, 'sync.errorBody');
+        return {};
+      })) as { error?: string };
 
       // 400 is the server refusing this specific input — retrying the same
       // thing cannot help, so it stays distinguishable from a transient fault.

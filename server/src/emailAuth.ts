@@ -28,6 +28,13 @@ import { ProtocolError } from './protocol.ts';
 
 const CODE_TTL_MS = 10 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
+/**
+ * Challenges older than this are deleted. The address is personal data and
+ * nothing reads a challenge after it expires, so keeping rows around only
+ * widens what a database leak exposes and leaves emails behind after an
+ * account is erased.
+ */
+export const CHALLENGE_RETENTION_MS = 24 * 60 * 60 * 1000;
 
 /** Requests per address per window, so an inbox cannot be flooded. */
 const REQUEST_LIMIT = 5;
@@ -76,6 +83,10 @@ export async function createEmailChallenge(
   email: string,
 ): Promise<Challenge> {
   const now = Date.now();
+
+  // Retention runs here because this is the only writer to the table; the
+  // index on expires_at keeps it a cheap range delete.
+  await purgeExpiredChallenges(client, now);
 
   const recent = await client.query<{ count: string }>(
     'SELECT COUNT(*) AS count FROM email_challenges WHERE email = $1 AND created_at > $2',
@@ -184,4 +195,18 @@ export async function verifyEmailCode(
   ]);
 
   return { ok: true, email };
+}
+
+/** Delete challenges past the retention window. Safe to call on every request. */
+export async function purgeExpiredChallenges(client: PoolClient, now: number = Date.now()): Promise<void> {
+  await client.query('DELETE FROM email_challenges WHERE expires_at < $1', [now - CHALLENGE_RETENTION_MS]);
+}
+
+/**
+ * Erase every challenge for an address. Called from account deletion so the
+ * person's email does not outlive the account it was used to secure.
+ */
+export async function deleteChallengesFor(client: PoolClient, emails: string[]): Promise<void> {
+  if (emails.length === 0) return;
+  await client.query('DELETE FROM email_challenges WHERE email = ANY($1)', [emails]);
 }

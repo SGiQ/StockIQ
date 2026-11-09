@@ -21,6 +21,8 @@ import {
 } from '@/content/registry';
 import type { Card, CardId, CourseId, EntityRef, LessonId, StrategyId } from '@/content/types';
 import { toDayISO } from '@/lib/dates';
+import { reportSilent } from '@/lib/reportSilent';
+import { singleFlight } from '@/lib/singleFlight';
 import {
   computeAchievementStats,
   computeReadiness,
@@ -220,6 +222,13 @@ interface AppState {
 }
 
 const EMPTY_ATTEMPTS: CardAttempt[] = [];
+
+/**
+ * Lesson completions in flight, by progress id. A double tap on the last card
+ * (or any two concurrent callers) must pay gems and quest rewards once: XP is
+ * max-merged and safe, but gems and quest claims are read-then-write.
+ */
+const completionsInFlight = new Map<string, Promise<LessonCompletion>>();
 
 export const useAppStore = create<AppState>((set, get) => ({
   hydrated: false,
@@ -439,8 +448,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     set((state) => ({ progress: { ...state.progress, [key]: record } }));
   },
 
-  completeLesson: async (courseId, lessonId, cardsOverride) => {
+  completeLesson: (courseId, lessonId, cardsOverride) => {
     const key = progressId(courseId, lessonId);
+    return singleFlight(completionsInFlight, key, async () => {
     const lesson = getLesson(courseId, lessonId);
     const existing = get().progress[key];
     const previousStreak = get().streak;
@@ -551,6 +561,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       gemsAwarded,
       streakMilestone,
     };
+    });
   },
 
   toggleSavedCard: async (courseId, lessonId, cardId) => {
@@ -667,9 +678,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (res.ok) {
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
-      void recordTrade(sym, 'buy', shares, price);
+      void recordTrade(sym, 'buy', shares, price).catch((e: unknown) => reportSilent(e, 'paper.recordTrade'));
       const posValue = res.portfolio.positions.reduce((s, p) => s + p.shares * (p.symbol === sym ? price : p.avgCost), 0);
-      void recordSnapshot(res.portfolio.cash + posValue);
+      void recordSnapshot(res.portfolio.cash + posValue).catch((e: unknown) => reportSilent(e, 'paper.recordSnapshot'));
     }
     return res;
   },
@@ -680,9 +691,9 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (res.ok) {
       const saved = await repository.paper.set(res.portfolio);
       set({ portfolio: { cash: saved.cash, positions: saved.positions } });
-      void recordTrade(sym, 'sell', shares, price);
+      void recordTrade(sym, 'sell', shares, price).catch((e: unknown) => reportSilent(e, 'paper.recordTrade'));
       const posValue = res.portfolio.positions.reduce((s, p) => s + p.shares * (p.symbol === sym ? price : p.avgCost), 0);
-      void recordSnapshot(res.portfolio.cash + posValue);
+      void recordSnapshot(res.portfolio.cash + posValue).catch((e: unknown) => reportSilent(e, 'paper.recordSnapshot'));
     }
     return res;
   },
@@ -690,8 +701,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   resetPortfolio: async () => {
     const saved = await repository.paper.set(emptyPortfolio());
     set({ portfolio: { cash: saved.cash, positions: saved.positions } });
-    void clearTrades();
-    void clearSnapshots();
+    void clearTrades().catch((e: unknown) => reportSilent(e, 'paper.clearTrades'));
+    void clearSnapshots().catch((e: unknown) => reportSilent(e, 'paper.clearSnapshots'));
   },
 
   markWeeklyNotesSeen: async () => {

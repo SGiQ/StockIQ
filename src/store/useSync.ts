@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import { AppState } from 'react-native';
 import { repository } from '.';
 import { useAppStore } from './slices/useAppStore';
+import { SyncError } from './sync/errors';
+import { reportSilent } from '@/lib/reportSilent';
 
 /**
  * Drives the sync cycle.
@@ -45,7 +47,12 @@ export function useSync(hydrated: boolean): { syncNow: () => void } {
         // Offline is the normal steady state on a phone, and a failed sync
         // costs nothing: records stay dirty and go out next time. Surfacing
         // it would train people to ignore a warning that is usually wrong.
-        if (__DEV__) console.log('[sync]', (error as Error)?.message ?? error);
+        // Offline and unconfigured are the quiet steady states, not bugs — only
+        // a rejected payload, a server fault, or something unexpected reports.
+        const expected =
+          error instanceof SyncError && (error.kind === 'offline' || error.kind === 'unconfigured');
+        if (!expected) reportSilent(error, 'sync.push');
+        else if (__DEV__) console.log('[sync]', (error as Error)?.message ?? error);
       })
       .finally(() => {
         running.current = false;

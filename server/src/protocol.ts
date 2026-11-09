@@ -63,6 +63,41 @@ export const LIMITS = {
   maxOwnerIdLength: 128,
 } as const;
 
+/**
+ * Collections a CLIENT may write through /v1/sync.
+ *
+ * Mirrors `Collection` in the app's src/store/repository.ts, minus
+ * `entitlement`. Only a server-side billing webhook may write an entitlement
+ * row — otherwise one curl with a device id would hand that account Pro on
+ * every device. Anything not listed is refused with a 400 naming it, so a new
+ * client collection fails loudly here instead of being stored as junk.
+ */
+export const CLIENT_WRITABLE_COLLECTIONS = new Set([
+  'profile',
+  'progress',
+  'saved',
+  'liked',
+  'reports',
+  'streak',
+  'hearts',
+  'gems',
+  'badges',
+  'reviews',
+  'advisor',
+  'watchlist',
+  'paper',
+]);
+
+/**
+ * How far ahead of the server clock a client timestamp may run.
+ *
+ * Last-write-wins compares client `updatedAt`s, so a device with a clock
+ * years ahead (or a malicious client sending 9e15) writes rows that no honest
+ * device can ever overwrite or tombstone. Clamping to "now plus a little
+ * skew" keeps the LWW model intact while bounding the damage to five minutes.
+ */
+export const MAX_CLOCK_SKEW_MS = 5 * 60 * 1000;
+
 export class ProtocolError extends Error {}
 
 function fail(message: string): never {
@@ -131,6 +166,9 @@ function parseRecord(raw: unknown, index: number): RecordRow {
   ) {
     fail(`changes[${index}].collection is missing or too long`);
   }
+  if (!CLIENT_WRITABLE_COLLECTIONS.has(collection)) {
+    fail(`changes[${index}].collection '${collection}' is not writable by clients`);
+  }
 
   const id = r.id;
   if (typeof id !== 'string' || !id || id.length > LIMITS.maxIdLength) {
@@ -154,4 +192,18 @@ function parseRecord(raw: unknown, index: number): RecordRow {
   }
 
   return { collection, id, updatedAt, deletedAt, payload: r.payload };
+}
+
+/**
+ * Bound a record's clocks to the server's. Pure; applied in `pushAndPull`
+ * just before the upsert so the stored `updatedAt` can never outrun the
+ * server by more than MAX_CLOCK_SKEW_MS. A clamped record still wins over
+ * older rows — it just cannot become un-overwritable.
+ */
+export function clampRecordClocks(record: RecordRow, serverNow: number): RecordRow {
+  const ceiling = serverNow + MAX_CLOCK_SKEW_MS;
+  const updatedAt = Math.min(record.updatedAt, ceiling);
+  const deletedAt = record.deletedAt === null ? null : Math.min(record.deletedAt, ceiling);
+  if (updatedAt === record.updatedAt && deletedAt === record.deletedAt) return record;
+  return { ...record, updatedAt, deletedAt };
 }

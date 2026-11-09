@@ -21,3 +21,12 @@ export function formatChange(change: number, changePercent: number): string {
   const sign = change > 0 ? '+' : change < 0 ? '-' : '';
   return `${sign}${Math.abs(change).toFixed(2)} (${sign}${Math.abs(changePercent).toFixed(2)}%)`;
 }
+
+/**
+ * Short note to print beside a price that is not a live print, or null when
+ * it is. Every surface that shows `quote.price` shows this too — a last-close
+ * number must never look like a live one.
+ */
+export function asOfLabel(asOf: 'delayed' | 'last_close' | undefined): string | null {
+  return asOf === 'last_close' ? 'as of last close' : null;
+}

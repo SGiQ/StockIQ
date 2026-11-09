@@ -4,8 +4,8 @@ import { useRouter } from 'expo-router';
 import Svg, { Circle, G, Line, Path, Rect } from 'react-native-svg';
 import { CardSurface, PillButton, Screen, Text } from '@/components/primitives';
 import { UnlimitedUpsellSheet } from '@/components/player/UnlimitedUpsellSheet';
-import { formatPrice, marketService, quotesWithBackfill, type Quote } from '@/services/market';
-import { AskError, askService, type AskContext } from '@/services/ask';
+import { asOfLabel, formatPrice, marketErrorMessage, marketService, quotesWithBackfill, type Quote } from '@/services/market';
+import { type AskContext } from '@/services/ask';
 import {
   STARTING_CASH,
   portfolioCoachPrompt,
@@ -18,9 +18,9 @@ import {
 } from '@/features/paper';
 import { getTrades, type PaperTrade } from '@/features/paper/tradeHistory';
 import { getSnapshots, recordSnapshot, type ValueSnapshot } from '@/features/paper/valueHistory';
-import { ASK_FREE_DAILY, asksRemaining, canAsk } from '@/features/advisor';
-import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
-import { toDayISO } from '@/lib/dates';
+import { ASK_FREE_DAILY } from '@/features/advisor';
+import { useAsk } from '@/features/advisor/useAsk';
+import { useAppStore } from '@/store/slices/useAppStore';
 import type { Card } from '@/content/types';
 import { palette, radius, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -296,25 +296,23 @@ export default function PortfolioScreen() {
   const sellShares = useAppStore((s) => s.sellShares);
   const resetPortfolio = useAppStore((s) => s.resetPortfolio);
 
-  const recordAsk = useAppStore((s) => s.recordAsk);
-  const profile = useAppStore((s) => s.profile);
-  const entitlement = useEntitlement();
+  const advisor = useAsk();
 
   const [quotes, setQuotes] = useState<Record<string, Quote>>({});
   const [tradeSymbol, setTradeSymbol] = useState('');
   const [tradeShares, setTradeShares] = useState('');
   const [error, setError] = useState<string | null>(null);
+  /** Market-data failure, separate from a trade's own validation message. */
+  const [marketError, setMarketError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [coachText, setCoachText] = useState('');
   const [coaching, setCoaching] = useState(false);
-  const [upsellOpen, setUpsellOpen] = useState(false);
   const [trades, setTrades] = useState<PaperTrade[]>([]);
   const [snapshots, setSnapshots] = useState<ValueSnapshot[]>([]);
   const snapshotted = useRef(false);
   const runId = useRef(0);
 
-  const unlimited = entitlement.unlimitedAsk;
-  const remaining = asksRemaining(profile, toDayISO(), unlimited);
+  const { unlimited, remaining, upsellOpen, closeUpsell } = advisor;
 
   const loadTrades = useCallback(() => { void getTrades().then(setTrades); }, []);
   useEffect(loadTrades, [loadTrades]);
@@ -331,13 +329,16 @@ export default function PortfolioScreen() {
   useEffect(() => {
     if (held.length === 0) return;
     const myRun = (runId.current += 1);
-    void quotesWithBackfill(
+    setMarketError(null);
+    quotesWithBackfill(
       held,
       (bySymbol) => {
         if (runId.current === myRun) setQuotes((prev) => ({ ...prev, ...bySymbol }));
       },
       () => runId.current !== myRun,
-    );
+    ).catch((e: unknown) => {
+      if (runId.current === myRun) setMarketError(marketErrorMessage(e));
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [heldKey]);
 
@@ -351,17 +352,20 @@ export default function PortfolioScreen() {
     if (watchSymbols.length === 0) return;
     void marketService.quotes(watchSymbols).then((qs) => {
       setQuotes((prev) => ({ ...prev, ...Object.fromEntries(qs.map((q) => [q.symbol, q])) }));
-    }).catch(() => {});
+    }).catch((e: unknown) => setMarketError(marketErrorMessage(e)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchKey]);
 
-  // The trade symbol is a single quote, fetched once typing settles.
+  // The trade symbol is a single quote, fetched once typing settles. A failure
+  // here is shown rather than swallowed, so a dead proxy is visible before the
+  // learner even taps Buy.
   useEffect(() => {
     if (!sym) return;
     const t = setTimeout(() => {
       void marketService.quotes([sym]).then((qs) => {
         setQuotes((prev) => ({ ...prev, ...Object.fromEntries(qs.map((q) => [q.symbol, q])) }));
-      }).catch(() => {});
+        setMarketError(null);
+      }).catch((e: unknown) => setMarketError(marketErrorMessage(e)));
     }, 450);
     return () => clearTimeout(t);
   }, [sym]);
@@ -382,28 +386,21 @@ export default function PortfolioScreen() {
 
   const coach = useCallback(async () => {
     if (coaching) return;
-    if (!canAsk(profile, toDayISO(), unlimited)) {
-      setUpsellOpen(true);
-      return;
-    }
-    setCoaching(true);
-    setCoachText('');
-    setError(null);
-    let full = '';
-    try {
-      full = await askService.ask(
-        portfolioCoachPrompt(portfolio, priceOf),
-        COACH_CONTEXT,
-        (delta) => setCoachText((prev) => prev + delta),
-      );
-    } catch (e) {
-      setError(e instanceof AskError ? e.message : 'Could not coach right now.');
-      setCoaching(false);
-      return;
-    }
+    const outcome = await advisor.ask({
+      question: portfolioCoachPrompt(portfolio, priceOf),
+      historyQuestion: 'Coach my practice portfolio',
+      context: COACH_CONTEXT,
+      onDelta: (delta) => setCoachText((prev) => prev + delta),
+      fallbackMessage: 'Could not coach right now.',
+      onStart: () => {
+        setCoaching(true);
+        setCoachText('');
+        setError(null);
+      },
+    });
     setCoaching(false);
-    if (full.trim()) await recordAsk('Coach my practice portfolio', full);
-  }, [coaching, portfolio, priceOf, profile, recordAsk, unlimited]);
+    if (outcome.status === 'failed') setError(outcome.error.message);
+  }, [advisor, coaching, portfolio, priceOf]);
 
   const trade = useCallback(
     async (side: 'buy' | 'sell') => {
@@ -419,12 +416,17 @@ export default function PortfolioScreen() {
           if (fetched) setQuotes((prev) => ({ ...prev, [sym]: fetched }));
           q = fetched;
         }
-        if (!q || !q.valid) return setError(`No live price for ${sym}.`);
+        if (!q || !q.valid) return setError(`No price available for ${sym}.`);
         const res = side === 'buy'
           ? await buyShares(sym, q.price, shares)
           : await sellShares(sym, q.price, shares);
         if (!res.ok) setError(res.reason);
         else { setTradeShares(''); loadTrades(); loadSnapshots(); }
+      } catch (e) {
+        // Without this, a failed quote fetch escaped as an unhandled rejection:
+        // no message, no confirmation, cash untouched, and nothing to tell the
+        // learner why. Every failure now lands in the error line under Buy/Sell.
+        setError(marketErrorMessage(e, 'Could not complete the trade.'));
       } finally {
         setBusy(false);
       }
@@ -475,6 +477,14 @@ export default function PortfolioScreen() {
           {snapshots.length > 1 && <ValueChart snapshots={snapshots} current={value} />}
         </CardSurface>
 
+        {marketError ? (
+          <View style={[styles.marketBanner, { borderColor: palette.danger + '55' }]}>
+            <Text variant="caption" color={palette.danger}>
+              {marketError}
+            </Text>
+          </View>
+        ) : null}
+
         <CardSurface style={styles.tradeCard}>
           <View style={styles.tradeInputs}>
             <TextInput
@@ -497,7 +507,7 @@ export default function PortfolioScreen() {
           </View>
           {tradeQuote && tradeQuote.valid ? (
             <Text variant="caption" color={colors.slate}>
-              {`${sym} at ${formatPrice(tradeQuote.price)}${tradeShares ? ` · ${formatPrice(tradeQuote.price * Number(tradeShares || 0))} total` : ''}`}
+              {`${sym} at ${formatPrice(tradeQuote.price)}${asOfLabel(tradeQuote.asOf) ? ` (${asOfLabel(tradeQuote.asOf)})` : ''}${tradeShares ? ` · ${formatPrice(tradeQuote.price * Number(tradeShares || 0))} total` : ''}`}
             </Text>
           ) : null}
           <View style={styles.tradeButtons}>
@@ -526,7 +536,7 @@ export default function PortfolioScreen() {
                     </Text>
                     {q?.valid ? (
                       <Text variant="caption" color={toneColor(q.change, colors.slate)}>
-                        {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%`}
+                        {`${formatPrice(q.price)} · ${q.change >= 0 ? '+' : ''}${q.changePercent.toFixed(2)}%${asOfLabel(q.asOf) ? ` · ${asOfLabel(q.asOf)}` : ''}`}
                       </Text>
                     ) : (
                       <Text variant="caption" color={colors.slateLight}>loading</Text>
@@ -663,7 +673,7 @@ export default function PortfolioScreen() {
         </Text>
       </ScrollView>
 
-      <UnlimitedUpsellSheet visible={upsellOpen} onClose={() => setUpsellOpen(false)} />
+      <UnlimitedUpsellSheet visible={upsellOpen} onClose={closeUpsell} />
     </Screen>
   );
 }
@@ -680,6 +690,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   body: { padding: space.lg, gap: space.md, paddingBottom: space.xxl },
+  marketBanner: {
+    borderRadius: radius.md,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+    borderWidth: 1,
+    backgroundColor: palette.danger + '12',
+  },
   summary: { alignItems: 'center', gap: space.xxs, paddingVertical: space.lg },
   tradeCard: { gap: space.sm },
   coachCard: { gap: space.sm },

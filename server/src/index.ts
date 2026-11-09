@@ -19,8 +19,20 @@
  * accounts exist, this needs real per-user auth. Nothing here should be read
  * as a claim that a capability token is equivalent to authentication.
  */
+import { timingSafeEqual } from 'node:crypto';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { pool } from './db.ts';
+import {
+  EMAIL_REQUEST_DAILY,
+  EMAIL_REQUEST_HOURLY,
+  EMAIL_VERIFY_HOURLY,
+  LINK_CLAIM_10MIN,
+  RateLimitError,
+  clientIp,
+  emailDailyCap,
+  enforce,
+  enforceAll,
+} from './rateLimit.ts';
 import {
   ProtocolError,
   parseDeviceId,
@@ -52,7 +64,7 @@ import {
 import { pushAndPull } from './sync.ts';
 import { recordTelemetry } from './telemetry.ts';
 import { leagueStandings } from './leagues.ts';
-import { adminOverview, signupTimeline, listUsers, telemetrySummary } from './admin.ts';
+import { adminOverview, clampInt, signupTimeline, listUsers, telemetrySummary } from './admin.ts';
 
 const PORT = Number(process.env.PORT ?? 8080);
 /** Requests larger than this are refused before being buffered. */
@@ -109,6 +121,27 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
   }
 }
 
+/**
+ * Constant-time check of the admin bearer token. `!==` on strings short-
+ * circuits at the first differing byte; over a network the leak is tiny, but
+ * `timingSafeEqual` costs nothing and removes the question.
+ */
+function adminAuthorised(header: unknown, secret: string | undefined): boolean {
+  if (!secret || typeof header !== 'string') return false;
+  const expected = Buffer.from(`Bearer ${secret}`);
+  const given = Buffer.from(header);
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
+
+/** `decodeURIComponent` that answers 400, not 500, to a malformed escape. */
+function safeDecode(segment: string): string {
+  try {
+    return decodeURIComponent(segment);
+  } catch {
+    throw new ProtocolError('malformed path');
+  }
+}
+
 const server = createServer((req, res) => {
   void (async () => {
     try {
@@ -142,8 +175,7 @@ const server = createServer((req, res) => {
       const rawUrl = req.url ?? '';
       const path = rawUrl.split('?')[0] ?? '';
       if (path.startsWith('/v1/admin/')) {
-        const secret = process.env.ADMIN_SECRET;
-        if (!secret || req.headers['authorization'] !== `Bearer ${secret}`) {
+        if (!adminAuthorised(req.headers['authorization'], process.env.ADMIN_SECRET)) {
           return send(res, 401, { error: 'unauthorized' });
         }
         const client = await pool.connect();
@@ -155,11 +187,15 @@ const server = createServer((req, res) => {
           if (path === '/v1/admin/overview') {
             payload = await adminOverview(client);
           } else if (path === '/v1/admin/signups') {
-            payload = await signupTimeline(client, Number(qs.get('days') ?? 30));
+            payload = await signupTimeline(client, clampInt(Number(qs.get('days') ?? 30), 1, 366, 30));
           } else if (path === '/v1/admin/users') {
-            payload = await listUsers(client, Number(qs.get('limit') ?? 50), Number(qs.get('offset') ?? 0));
+            payload = await listUsers(
+              client,
+              clampInt(Number(qs.get('limit') ?? 50), 1, 500, 50),
+              clampInt(Number(qs.get('offset') ?? 0), 0, 10_000_000, 0),
+            );
           } else if (path === '/v1/admin/telemetry') {
-            payload = await telemetrySummary(client, Number(qs.get('days') ?? 7));
+            payload = await telemetrySummary(client, clampInt(Number(qs.get('days') ?? 7), 1, 366, 7));
           } else {
             await client.query('ROLLBACK');
             return send(res, 404, { error: 'not found' });
@@ -200,10 +236,31 @@ const server = createServer((req, res) => {
       const deviceId = parseDeviceId(req.headers['x-device-id']);
       const label = parseDeviceLabel(req.headers['x-device-label']);
 
+      // Abuse brakes keyed by source IP, which the caller cannot rotate the
+      // way it can the device header or the target address. These run on the
+      // pool (autocommit) BEFORE the transaction below, so a refused request
+      // still records its own attempt — inside the transaction the ROLLBACK
+      // on the thrown error would erase the increment.
+      const ip = clientIp(req.headers, req.socket.remoteAddress);
+      if (path === '/v1/auth/email/request') {
+        await enforceAll(pool, [EMAIL_REQUEST_HOURLY, EMAIL_REQUEST_DAILY], ip);
+      } else if (path === '/v1/auth/email/verify') {
+        await enforce(pool, EMAIL_VERIFY_HOURLY, ip);
+      } else if (path === '/v1/link/claim') {
+        await enforce(pool, LINK_CLAIM_10MIN, ip);
+      }
+
       const client = await pool.connect();
       try {
         await client.query('BEGIN');
-        const accountId = await resolveAccount(client, deviceId, label);
+        // Requesting or verifying an email code must not mint an account:
+        // before this, every unauthenticated hit on those two routes created
+        // an `accounts` + `devices` pair, so a script rotating device ids
+        // filled the table with ghosts. Verification creates the account
+        // itself (through signInWithIdentity) once the code checks out, and
+        // the request route needs no account at all.
+        const needsAccount = path !== '/v1/auth/email/request' && path !== '/v1/auth/email/verify';
+        const accountId = needsAccount ? await resolveAccount(client, deviceId, label) : '';
         let payload: unknown;
         // A failed email code must still COMMIT — the attempt counter lives in
         // that transaction, and rolling it back would uncap guessing. So the
@@ -211,7 +268,7 @@ const server = createServer((req, res) => {
         let status = 200;
 
         if (isRevoke) {
-          const target = decodeURIComponent(path.slice('/v1/devices/'.length));
+          const target = safeDecode(path.slice('/v1/devices/'.length));
           await revokeDevice(client, accountId, deviceId, target);
           payload = { ok: true };
         } else if (path === '/v1/sync') {
@@ -253,12 +310,21 @@ const server = createServer((req, res) => {
           // answering `ok: true` when no mail can be sent leaves the person
           // waiting forever for a code that was never going to arrive.
           try {
+            // Global daily send cap: a server-wide condition, so reporting it
+            // as 503 leaks nothing about the address. Counted on the pool so
+            // it survives this transaction either way, and checked before a
+            // challenge row is minted for an email that will not be sent.
+            await enforce(pool, emailDailyCap(), 'all');
             const challenge = await createEmailChallenge(client, email);
             const minutes = Math.round((challenge.expiresAt - Date.now()) / 60000);
             await mailer.send(signInMessage(email, challenge.code, minutes));
             payload = { ok: true };
           } catch (error) {
-            if (error instanceof MailNotConfiguredError || error instanceof MailDeliveryError) {
+            if (error instanceof RateLimitError) {
+              console.error('[email] global daily send cap reached');
+              status = 503;
+              payload = { error: 'Sign-in email is unavailable right now.' };
+            } else if (error instanceof MailNotConfiguredError || error instanceof MailDeliveryError) {
               console.error('[email] delivery failed:', explainMailFailure(error));
               status = 503;
               payload = { error: 'Sign-in email is unavailable right now.' };
@@ -329,6 +395,9 @@ const server = createServer((req, res) => {
     } catch (error) {
       if (error instanceof ProtocolError) {
         return send(res, 400, { error: error.message });
+      }
+      if (error instanceof RateLimitError) {
+        return send(res, 429, { error: error.message });
       }
       // Log server-side, return nothing specific: an error string from
       // Postgres can name columns and constraints.

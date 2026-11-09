@@ -1,5 +1,5 @@
 import type { PoolClient } from 'pg';
-import { LIMITS, type RecordRow, type SyncResponse } from './protocol.ts';
+import { LIMITS, clampRecordClocks, type RecordRow, type SyncResponse } from './protocol.ts';
 
 interface DbRow {
   collection: string;
@@ -39,7 +39,11 @@ export async function pushAndPull(
   since: number,
   changes: RecordRow[],
 ): Promise<SyncResponse> {
-  for (const record of changes) {
+  const serverNow = Date.now();
+  for (const raw of changes) {
+    // A client clock far ahead would make this row permanent; see
+    // MAX_CLOCK_SKEW_MS in protocol.ts.
+    const record = clampRecordClocks(raw, serverNow);
     await client.query(
       `INSERT INTO records
          (owner_id, collection, id, updated_at, deleted_at, payload, server_seq)
@@ -83,6 +87,6 @@ export async function pushAndPull(
     cursor,
     changes: page.map(toRecord),
     hasMore,
-    serverTime: Date.now(),
+    serverTime: serverNow,
   };
 }

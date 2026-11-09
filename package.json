@@ -44,6 +44,10 @@
   "devDependencies": {
     "@types/node": "^26.1.2",
     "@types/react": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~57.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.10",
     "tsx": "^4.23.1",
     "typescript": "~6.0.3"
   },
@@ -71,7 +75,9 @@
     "gen:voice-previews": "tsx scripts/generate-voice-previews.ts",
     "upload:speech": "tsx scripts/upload-speech-r2.ts",
     "art:apply-scenes": "tsx scripts/apply-scene-illustrations.ts",
-    "art:optimize": "node scripts/optimize-lesson-art.mjs"
+    "art:optimize": "node scripts/optimize-lesson-art.mjs",
+    "lint": "eslint .",
+    "format:check": "prettier --check \"app/**/*.{ts,tsx}\" \"src/**/*.{ts,tsx}\""
   },
   "private": true
 }
