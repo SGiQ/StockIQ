@@ -302,6 +302,8 @@ export default function PortfolioScreen() {
   const [tradeSymbol, setTradeSymbol] = useState('');
   const [tradeShares, setTradeShares] = useState('');
   const [error, setError] = useState<string | null>(null);
+  /** Confirmation of the last fill, e.g. "Bought 1 AAPL at $350.21". */
+  const [notice, setNotice] = useState<string | null>(null);
   /** Market-data failure, separate from a trade's own validation message. */
   const [marketError, setMarketError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -405,6 +407,7 @@ export default function PortfolioScreen() {
   const trade = useCallback(
     async (side: 'buy' | 'sell') => {
       setError(null);
+      setNotice(null);
       const shares = Number(tradeShares);
       if (!sym) return setError('Enter a symbol.');
       if (!Number.isFinite(shares) || shares <= 0) return setError('Enter how many shares.');
@@ -421,7 +424,18 @@ export default function PortfolioScreen() {
           ? await buyShares(sym, q.price, shares)
           : await sellShares(sym, q.price, shares);
         if (!res.ok) setError(res.reason);
-        else { setTradeShares(''); loadTrades(); loadSnapshots(); }
+        else {
+          // Say what happened. Balances updating silently reads as "nothing
+          // happened" to a first-time learner, who then taps again.
+          const total = formatPrice(q.price * shares);
+          const asOf = asOfLabel(q.asOf);
+          setNotice(
+            `${side === 'buy' ? 'Bought' : 'Sold'} ${shares} ${sym} at ${formatPrice(q.price)} · ${total}${asOf ? ` (${asOf})` : ''}`,
+          );
+          setTradeShares('');
+          loadTrades();
+          loadSnapshots();
+        }
       } catch (e) {
         // Without this, a failed quote fetch escaped as an unhandled rejection:
         // no message, no confirmation, cash untouched, and nothing to tell the
@@ -517,6 +531,11 @@ export default function PortfolioScreen() {
           {error ? (
             <Text variant="caption" color={palette.danger}>
               {error}
+            </Text>
+          ) : null}
+          {notice ? (
+            <Text variant="caption" color={palette.emeraldDeep} accessibilityLiveRegion="polite">
+              {notice}
             </Text>
           ) : null}
         </CardSurface>
@@ -709,7 +728,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   symInput: { flex: 1 },
-  sharesInput: { width: 110 },
+  sharesInput: { width: 132, paddingHorizontal: space.md + 2 },
   tradeButtons: { flexDirection: 'row', gap: space.sm },
   empty: { marginTop: space.md },
   positions: { gap: space.sm },
