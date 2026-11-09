@@ -24,6 +24,16 @@ export interface Quote {
   updatedAt?: number;
 }
 
+/** A small intraday series for a sparkline — decoration beside a price, not a chart. */
+export interface Spark {
+  symbol: string;
+  /** Closes across the last session, oldest first. */
+  points: number[];
+  /** Unix ms of the first and last point, when the source reports them. */
+  start?: number;
+  end?: number;
+}
+
 export type MarketFailure =
   /** No EXPO_PUBLIC_MARKET_URL, or the Worker has no provider key. */
   | 'not_configured'
@@ -62,6 +72,11 @@ export const marketErrorMessage = (e: unknown, fallback = 'Market data is unavai
 export interface MarketService {
   /** Live quotes for the given symbols. Order is not guaranteed. */
   quotes(symbols: string[]): Promise<Quote[]>;
+  /**
+   * Last-session sparkline series for the given symbols, in one request.
+   * Symbols with no usable series are omitted; the caller draws nothing.
+   */
+  sparks(symbols: string[]): Promise<Spark[]>;
   /** True when backed by the real proxy (false = dev mock). */
   isLive(): boolean;
 }

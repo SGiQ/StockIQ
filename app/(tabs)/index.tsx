@@ -15,6 +15,7 @@ import {
   CardSurface,
   PillButton,
   Screen,
+  Skeleton,
   SpeakerIcon,
   Text,
 } from '@/components/primitives';
@@ -32,6 +33,7 @@ export default function LearnTab() {
   const colors = useColors();
   const router = useRouter();
   const courses = listCourses();
+  const hydrated = useAppStore((s) => s.hydrated);
   const totalXp = useAppStore((s) => totalEarnedXp(s.progress));
   const streak = useAppStore((s) => s.streak);
   const gemBalance = useAppStore((s) => s.gems?.balance ?? 0);
@@ -46,6 +48,12 @@ export default function LearnTab() {
     const chosen = courses.find((c) => c.id === selectedCourseId);
     return chosen ? [chosen, ...courses.filter((c) => c.id !== selectedCourseId)] : courses;
   }, [courses, selectedCourseId]);
+
+  // The root layout hydrates the store behind the boot splash, so in the
+  // normal flow this never renders — it is the guarantee that Home never
+  // paints zeros and "Start a streak" against an empty store if it is ever
+  // mounted earlier (a deep link, a relaxed gate).
+  if (!hydrated) return <HomeSkeleton />;
 
   return (
     <Screen tone="warm" edges={['top']}>
@@ -219,6 +227,52 @@ export default function LearnTab() {
   );
 }
 
+/** The Home layout with every data-bearing element greyed: header counters, streak card, course cards. */
+function HomeSkeleton() {
+  return (
+    <Screen tone="warm" edges={['top']}>
+      <View style={styles.content} accessibilityLabel="Loading" accessibilityRole="progressbar">
+        <View style={styles.header}>
+          <View style={styles.headerTop}>
+            <Skeleton width={170} height={30} radius={radius.sm} />
+            <View style={styles.statusCluster}>
+              <Skeleton width={56} height={26} radius={radius.pill} />
+              <Skeleton width={72} height={32} radius={radius.pill} />
+            </View>
+          </View>
+          <View style={styles.headerActions}>
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <Skeleton key={i} width={40} height={40} radius={radius.pill} />
+            ))}
+          </View>
+        </View>
+        <CardSurface style={styles.streakCard}>
+          <Skeleton width={140} height={20} />
+          <Skeleton width={96} height={12} />
+          <View style={styles.skeletonWeek}>
+            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+              <Skeleton key={i} width={34} height={42} radius={radius.pill} />
+            ))}
+          </View>
+        </CardSurface>
+        {[0, 1].map((i) => (
+          <CardSurface key={i} style={styles.card}>
+            <View style={styles.cardRow}>
+              <Skeleton width={72} height={72} radius={radius.md} />
+              <View style={styles.cardText}>
+                <Skeleton width="80%" height={18} />
+                <Skeleton width="50%" height={12} />
+              </View>
+            </View>
+            <Skeleton height={8} radius={radius.pill} />
+            <Skeleton height={56} radius={radius.pill} />
+          </CardSurface>
+        ))}
+      </View>
+    </Screen>
+  );
+}
+
 function CourseCard({ courseId }: { courseId: string }) {
   const colors = useColors();
   const router = useRouter();
@@ -319,6 +373,10 @@ const styles = StyleSheet.create({
   },
   streakCard: {
     gap: space.md,
+  },
+  skeletonWeek: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   streakTop: {
     flexDirection: 'row',
