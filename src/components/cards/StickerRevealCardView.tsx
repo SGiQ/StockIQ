@@ -13,6 +13,7 @@ import type { StickerRevealCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { ArtView } from '@/components/art/ArtView';
 import { RichTextView, Text } from '@/components/primitives';
+import { CardScroll } from './CardScroll';
 import { easeOutCubic } from '@/lib/easing';
 import { motion, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -52,6 +53,7 @@ export function StickerRevealCardView({ card, state }: StickerRevealCardViewProp
   const revealed = state.kind === 'sticker' ? state.revealed : 0;
 
   return (
+    <CardScroll inert>
     <View style={styles.container} pointerEvents="none">
       <RichTextView value={card.body} variant="body" color={colors.inkSoft} />
 
@@ -72,6 +74,7 @@ export function StickerRevealCardView({ card, state }: StickerRevealCardViewProp
         </View>
       )}
     </View>
+    </CardScroll>
   );
 }
 

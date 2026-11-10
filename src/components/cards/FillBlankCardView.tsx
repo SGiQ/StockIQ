@@ -5,6 +5,7 @@ import * as haptics from '@/lib/haptics';
 import type { FillBlankCard } from '@/content/types';
 import type { CardUiState } from '@/components/player/cardState';
 import { FadeUp, PillButton, RichTextView, Text } from '@/components/primitives';
+import { CardScroll } from './CardScroll';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
 
@@ -58,6 +59,7 @@ export function FillBlankCardView({
   return (
     // The sentence is inert so taps on it still reach the navigation zones;
     // only the word bank and Check Answer are hit targets.
+    <CardScroll>
     <View style={styles.container} pointerEvents="box-none">
       <View pointerEvents="none">
         <RichTextView
@@ -140,6 +142,7 @@ export function FillBlankCardView({
         </FadeUp>
       )}
     </View>
+    </CardScroll>
   );
 }
 

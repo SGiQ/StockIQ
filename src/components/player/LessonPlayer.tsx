@@ -14,6 +14,7 @@ import type { Card, CardId } from '@/content/types';
 import type { ReportReason } from '@/store/repository';
 import { useAppStore, useEntitlement } from '@/store/slices/useAppStore';
 import { CardRenderer } from '@/components/cards/CardRenderer';
+import { CardNavigationContext, type CardNavigation } from '@/components/cards/CardScroll';
 import {
   narrationUrlFor,
   narrationFeedbackCardId,
@@ -407,6 +408,13 @@ export function LessonPlayer({
   const saved = isCardSaved?.(card.id) ?? false;
   const reported = isCardReported?.(card.id) ?? false;
 
+  // For cards that have to scroll on a short viewport, which then own their
+  // own touches and lay a second set of tap zones under their content.
+  const cardNavigation = useMemo<CardNavigation>(
+    () => ({ onBack: goBack, onForward: goForward }),
+    [goBack, goForward],
+  );
+
   const exit = useCallback(() => {
     stopNarration();
     onExit();
@@ -463,6 +471,7 @@ export function LessonPlayer({
       </View>
 
 
+      <CardNavigationContext.Provider value={cardNavigation}>
       <GestureDetector gesture={pan}>
         {/*
           `pinnedScroll` is undefined on native. On web it holds this box at
@@ -545,6 +554,7 @@ export function LessonPlayer({
           {tutorialVisible && <TapZoneTutorial />}
         </View>
       </GestureDetector>
+      </CardNavigationContext.Provider>
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + space.md }]}>
         <ActionPill
