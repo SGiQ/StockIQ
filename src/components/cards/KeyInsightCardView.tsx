@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { KeyInsightCard } from '@/content/types';
 import { ArtView } from '@/components/art/ArtView';
 import { Text } from '@/components/primitives';
+import { CardScroll } from './CardScroll';
 import { lessonArtRatios } from '@/content/index.generated';
 import { palette, radius, shadow, space } from '@/theme/tokens';
 import { useColors } from '@/theme/ThemeProvider';
@@ -108,13 +109,18 @@ export function KeyInsightPoster({
 
 export function KeyInsightCardView({ card, active = true }: { card: KeyInsightCard; active?: boolean }) {
   const colors = useColors();
+  // The poster keeps its geometry (it is what gets captured for sharing), so
+  // on a phone browser too short for it the card scrolls rather than the
+  // poster squashing.
   return (
+    <CardScroll inert>
     <View style={styles.container} pointerEvents="none">
       <Text variant="label" color={colors.slate} uppercase align="center">
         Key Insight
       </Text>
       <KeyInsightPoster card={card} active={active} />
     </View>
+    </CardScroll>
   );
 }
 
